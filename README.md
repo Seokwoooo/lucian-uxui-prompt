@@ -2,6 +2,14 @@
 
 # Lucian UX/UI Prompt
 
+<!-- gitreels:start -->
+<p align="center">
+  <a href="https://gitreels.com/Seokwoooo/lucian-uxui-prompt"><img src="https://gitreels.com/Seokwoooo/lucian-uxui-prompt.webp" alt="Seokwoooo/lucian-uxui-prompt in 15 seconds" width="100%"></a>
+  <br>
+  <a href="https://gitreels.com"><img src="https://gitreels.com/badge.svg" alt="Made with GitReels" height="24"></a>
+</p>
+<!-- gitreels:end -->
+
 ![Lucian UX/UI Prompt: 400 interactive UI elements](.github/cover.png)
 
 400 interactive UI elements you can try live, then take into your project as an AI prompt or as working code: 200 interface parts, from buttons and charts to workflow screens, and 200 website sections and animations, from heroes and pricing to scroll and text motion. Every element supports light and dark themes, pointer, touch and keyboard input, and reduced motion. No dependencies.
