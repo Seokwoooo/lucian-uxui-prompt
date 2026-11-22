@@ -1,121 +1,74 @@
-<!-- @meta {"title":"약관 전체 동의","category":"로그인·가입","summary":"한국 가입 화면에서 흔히 쓰는 약관 동의 단계입니다. ‘전체 동의’ 한 번에 모두 체크되고, 일부만 고르면 전체 동의 상자가 중간 상태(–)로 바뀝니다. 항목마다 필수·선택 꼬리표와 ‘보기’가 있어 약관을 시트로 읽고 바로 동의할 수 있고, 필수 항목을 모두 체크해야 다음 버튼이 켜집니다.","hint":"항목을 하나씩 체크해 전체 동의 상자가 바뀌는 걸 보고, ‘보기’로 약관을 열어 보세요","shape":"square","hue":"#6366F1","hue2":"#22C3A6","tags":["terms","agreement","consent","checkbox","indeterminate","sign-up","korea"]} -->
-<!-- @demo [["wait",900],["tap",".u411-it label",1,{"after":650}],["tap",".u411-view",1,{"after":1400}],["tap",".u411-ok",0,{"after":800}],["tap",".u411-it label",0,{"after":650}],["tap",".u411-all",0,{"after":900}],["tap",".u411-sub label",1,{"after":900}],["tap",".u411-next",0,{"after":2300}],["reset"]] -->
-<!-- @en {"title":"Agree to all terms","summary":"The terms step common to Korean sign-up screens. “Agree to all” checks everything at once, and picking only some turns that box into a mixed (–) state. Every item has a Required or Optional tag and a View link that opens the document in a sheet where you can agree right away; the Next button only turns on once every required item is checked.","hint":"Check items one at a time to watch the Agree-to-all box change, and open a document with View","map":[
-  [">약관에 동의해 주세요<", ">Review our terms<"],
+<!-- @meta {"title":"약관 동의","category":"로그인·가입","summary":"전체 동의와 약관 세 줄뿐인 동의 시트입니다. 전체 동의를 누르면 아래 항목의 체크가 위에서부터 차례로 그려지고, 필수 두 개가 모두 켜지는 순간 ‘동의하고 계속’ 버튼이 왼쪽에서 오른쪽으로 차오르며 깨어납니다. 일부만 고르면 전체 동의에는 반쯤 찬 표시가 뜹니다.","hint":"전체 동의를 누른 뒤 항목을 하나씩 꺼 보세요","shape":"square","hue":"#6366F1","hue2":"#22C3A6","tags":["terms","agreement","consent","checkbox","cascade","sign-up"]} -->
+<!-- @demo [["wait",700],["tap",".u411-r",0,{"after":1400}],["tap",".u411-r",3,{"after":750}],["tap",".u411-r",1,{"after":950}],["tap",".u411-r",1,{"after":1000}],["tap",".u411-go",0,{"after":1600}],["reset"]] -->
+<!-- @en {"title":"Terms agreement","summary":"An agreement sheet with just Agree to all and three terms. Checking Agree to all draws the checks down the list one after another, and the moment both required items are on, the Agree and continue button fills from left to right and wakes up. Pick only some and Agree to all shows a half-filled mark.","hint":"Press Agree to all, then turn items off one by one","map":[
   [">전체 동의<", ">Agree to all<"],
-  [">선택 항목을 포함해 모두 동의해요<", ">Includes optional items<"],
   [">필수<", ">Required<"],
   [">선택<", ">Optional<"],
-  [">만 14세 이상이에요<", ">I’m 14 or older<"],
-  [">서비스 이용약관<", ">Terms of Service<"],
-  [">개인정보 수집·이용<", ">Privacy notice<"],
-  [">마케팅 정보 수신<", ">Marketing messages<"],
-  [">이메일<", ">Email<"],
-  [">문자<", ">SMS<"],
-  [">보기<", ">View<"],
-  ["aria-label=\"서비스 이용약관 보기\"", "aria-label=\"View Terms of Service\""],
-  ["aria-label=\"개인정보 수집·이용 보기\"", "aria-label=\"View privacy notice\""],
-  ["aria-label=\"마케팅 정보 수신 보기\"", "aria-label=\"View marketing terms\""],
-  ["aria-label=\"마케팅 수신 방법\"", "aria-label=\"Marketing channels\""],
-  [">동의하고 계속하기<", ">Agree and continue<"],
-  [">확인하는 중…<", ">Saving…<"],
+  [">이용약관<", ">Terms of service<"],
+  [">개인정보 수집·이용<", ">Personal data use<"],
+  [">마케팅 정보 수신<", ">Marketing emails<"],
+  [">동의하고 계속<", ">Agree and continue<"],
   [">동의했어요<", ">Agreed<"],
-  ["aria-label=\"닫기\"", "aria-label=\"Close\""],
-  [">동의하기<", ">Agree<"],
-  ["left: function (n) { return '필수 항목 ' + n + '개가 남았어요'; }", "left: function (n) { return n + ' required ' + (n === 1 ? 'item' : 'items') + ' left'; }"],
-  ["ready: '필수 항목에 모두 동의했어요'", "ready: 'All required items agreed'"],
-  ["'<b>제1조 (목적)</b><p>이 약관은 루시안(이하 ‘회사’)이 제공하는 서비스의 이용 조건과 절차, 회사와 회원의 권리와 의무를 정합니다.</p><b>제2조 (약관의 효력)</b><p>약관은 서비스 화면에 게시하며, 내용이 바뀌면 시행 7일 전에 미리 알려 드려요.</p><b>제3조 (회원 가입)</b><p>가입 신청자가 약관에 동의하고 회사가 승낙하면 가입이 완료됩니다.</p>'", "'<b>Article 1 (Purpose)</b><p>These terms set out the conditions and procedures for using the services Lucian (the “Company”) provides, and the rights and duties of the Company and its members.</p><b>Article 2 (Effect)</b><p>The terms are posted in the service. If they change, we’ll let you know 7 days before they take effect.</p><b>Article 3 (Membership)</b><p>Membership begins once you agree to these terms and the Company accepts your application.</p>'"],
-  ["'<dl><dt>수집 항목</dt><dd>이름, 이메일, 휴대폰 번호</dd><dt>이용 목적</dt><dd>회원 식별, 서비스 제공, 고객 상담</dd><dt>보관 기간</dt><dd>회원 탈퇴 후 30일까지</dd></dl><p>동의하지 않을 수 있지만, 그러면 가입할 수 없어요.</p>'", "'<dl><dt>What we collect</dt><dd>Name, email, phone number</dd><dt>Why</dt><dd>Identifying members, running the service, support</dd><dt>How long</dt><dd>Until 30 days after you leave</dd></dl><p>You may decline, but you won’t be able to sign up.</p>'"],
-  ["'<p>새 기능과 혜택 소식을 이메일과 문자로 보내 드려요.</p><p>동의하지 않아도 서비스는 그대로 쓸 수 있고, 설정에서 언제든 끌 수 있어요.</p>'", "'<p>We’ll send news about features and offers by email and SMS.</p><p>You can use the service without agreeing, and turn this off any time in settings.</p>'"],
-  ["'서비스 이용약관 (필수)'", "'Terms of Service (required)'"],
-  ["'개인정보 수집·이용 (필수)'", "'Privacy notice (required)'"],
-  ["'마케팅 정보 수신 (선택)'", "'Marketing messages (optional)'"]
+  ["view: function (n) { return n + ' 보기'; }", "view: function (n) { return 'View ' + n; }"],
+  ["done: '약관에 동의했어요'", "done: 'Terms accepted'"]
 ]} -->
 <style>
-.u411{position:relative;width:340px;padding:20px 20px 18px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u411-hd{margin:0 0 14px}
-.u411-hd b{display:block;font-size:18px;font-weight:700;letter-spacing:-.03em}
-.u411-hd span{display:block;margin-top:3px;font-size:12px;color:var(--ux-ink-3)}
-.u411 input{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
-.u411-box{position:relative;flex:none;width:18px;height:18px;border-radius:6px;background:var(--ux-surface);box-shadow:inset 0 0 0 1.5px var(--ux-line-2);transition:background .2s,box-shadow .2s}
-.u411-box::before{content:"";position:absolute;left:4px;right:4px;top:50%;height:2px;margin-top:-1px;border-radius:1px;background:var(--ux-accent-ink);transform:scaleX(0);transition:transform .2s var(--ux-ease)}
-.u411-box svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--ux-accent-ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:14;stroke-dashoffset:14;transition:stroke-dashoffset .25s var(--ux-ease)}
-.u411 label:hover .u411-box{box-shadow:inset 0 0 0 1.5px var(--ux-ink-3)}
-.u411 input:checked+.u411-box,.u411 input:indeterminate+.u411-box{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
-.u411 input:checked+.u411-box svg{stroke-dashoffset:0}
-.u411 input:indeterminate+.u411-box svg{stroke-dashoffset:14;transition:none}
-.u411 input:indeterminate+.u411-box::before{transform:none}
-.u411 input:focus-visible+.u411-box{outline:2px solid var(--ux-accent);outline-offset:2px}
-.u411-all{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);cursor:pointer;transition:background .2s,box-shadow .2s}
-.u411-all:hover{background:var(--ux-surface-3)}
-.u411-all .u411-box{width:22px;height:22px;border-radius:7px}
-.u411-all .u411-box::before{left:5px;right:5px}
-.u411-all:has(input:checked){box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 40%,transparent);background:var(--ux-accent-soft)}
-.u411-at b{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.02em}
-.u411-at small{display:block;margin-top:1px;font-size:11px;color:var(--ux-ink-3)}
-.u411-ls{margin:6px 0 0;padding:0 2px 0 14px;list-style:none}
-.u411-it{display:flex;align-items:center;gap:8px;min-height:33px}
-.u411-it>label{flex:1;min-width:0;display:flex;align-items:center;gap:10px;height:33px;cursor:pointer;font-size:13px;color:var(--ux-ink)}
-.u411-it>label>span:last-child{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u411-tag{flex:none;font-size:11.5px;font-weight:600;color:var(--ux-ink-3);margin-right:-4px}
-.u411-tag.is-req{color:var(--ux-accent)}
-.u411-view{flex:none;height:26px;padding:0 6px;margin-right:-6px;border:0;border-radius:6px;background:none;font-size:11.5px;font-weight:500;color:var(--ux-ink-3);text-decoration:underline;text-decoration-color:var(--ux-line-2);text-underline-offset:3px;transition:color .2s,background .2s}
-.u411-view:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
-.u411-sub{display:flex;gap:18px;padding:0 0 4px 28px}
-.u411-sub label{display:flex;align-items:center;gap:7px;height:26px;font-size:12px;color:var(--ux-ink-2);cursor:pointer}
-.u411-sub .u411-box{width:16px;height:16px;border-radius:5px}
-.u411-next{position:relative;width:100%;height:44px;margin-top:12px;display:grid;place-items:center;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:600;transition:background .3s,color .3s,transform .2s var(--ux-ease),opacity .2s}
-.u411-next:hover:not(:disabled){opacity:.9}
-.u411-next:active:not(:disabled){transform:scale(.985)}
-.u411-next:disabled{background:var(--ux-surface-3);color:var(--ux-ink-3);cursor:not-allowed}
-.u411 .u411-next:focus-visible{outline-offset:2px}
-.u411-next>span{grid-area:1/1;display:flex;align-items:center;gap:8px;transition:opacity .2s,transform .3s var(--ux-ease)}
-.u411-next .s1,.u411-next .s2{opacity:0;transform:translateY(8px)}
-.u411-next .s1 i{width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u411-spin .75s linear infinite}
-@keyframes u411-spin{to{rotate:360deg}}
-.u411-next .s2 svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.u411-next.is-busy .s0,.u411-next.is-ok .s0,.u411-next.is-ok .s1{opacity:0;transform:translateY(-8px)}
-.u411-next.is-busy .s1,.u411-next.is-ok .s2{opacity:1;transform:none}
-.u411-next.is-ok{background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12)}
-.u411-scrim{position:absolute;inset:0;background:rgba(15,15,20,.3);background:light-dark(rgba(15,15,20,.3),rgba(0,0,0,.55));opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
-.u411.is-sheet .u411-scrim{opacity:1;visibility:visible;transition-delay:0s}
-.u411-sh{position:absolute;left:0;right:0;bottom:0;height:258px;display:flex;flex-direction:column;border-radius:18px 18px 0 0;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 -1px 0 var(--ux-line-2),0 -16px 36px -18px var(--ux-shadow-strong);transform:translateY(105%);visibility:hidden;transition:transform .4s cubic-bezier(.4,0,.6,1),visibility 0s .4s}
-.u411.is-sheet .u411-sh{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.2,.9,.25,1),visibility 0s}
-.u411-shd{display:flex;align-items:center;justify-content:space-between;padding:14px 10px 6px 18px}
-.u411-shd b{font-size:14.5px;font-weight:700;letter-spacing:-.02em}
-.u411-x{width:30px;height:30px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--ux-ink-3)}
-.u411-x:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
-.u411-x svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-.u411-doc{flex:1;min-height:0;overflow:auto;margin:0 18px;padding:2px 0 10px;font-size:12px;line-height:1.6;color:var(--ux-ink-2);scrollbar-width:thin}
-.u411-doc b{display:block;margin-top:8px;font-size:12px;font-weight:600;color:var(--ux-ink)}
-.u411-doc b:first-child{margin-top:0}
-.u411-doc p{margin:2px 0 0}
-.u411-doc dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 8px;padding:10px 12px;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u411-doc dt{color:var(--ux-ink-3)}
-.u411-doc dd{margin:0;color:var(--ux-ink);font-weight:500}
-.u411-ok{flex:none;height:40px;margin:0 18px 16px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13.5px;font-weight:600}
-.u411-ok:hover{opacity:.9}
-.u411 .u411-ok:focus-visible{outline-offset:2px}
+.u411{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u411-s{width:284px;padding:12px;border-radius:22px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 46px -26px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow)}
+.u411-row{display:flex;align-items:center}
+.u411-r{position:relative;flex:1;display:flex;align-items:center;gap:10px;min-width:0;height:38px;padding:0 8px;border-radius:11px;font-size:13.5px;color:var(--ux-ink);cursor:pointer;transition:background .2s}
+.u411-r:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u411-r input{position:absolute;left:8px;top:50%;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
+.u411-all{height:50px;margin-bottom:8px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));font-size:15px;font-weight:650;letter-spacing:-.01em}
+.u411-all:hover{background:var(--ux-surface-3);background:light-dark(var(--ux-surface-3),color-mix(in srgb,var(--ux-surface-3) 80%,var(--ux-ink)))}
+.u411-cb{position:relative;width:20px;height:20px;flex:none;display:grid;place-items:center}
+.u411-cb svg{width:20px;height:20px;overflow:visible;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.u411-cb .ck{stroke:var(--ux-line-2);stroke-width:2;stroke-dasharray:14;transition:stroke .25s}
+.u411-r input:checked+.u411-cb .ck{stroke:var(--ux-accent);animation:u411-draw .35s var(--ux-ease)}
+@keyframes u411-draw{from{stroke-dashoffset:14}}
+.u411-all .u411-cb{width:24px;height:24px}
+.u411-all .u411-cb svg{width:24px;height:24px}
+.u411-all .bg{fill:var(--ux-surface);fill:light-dark(var(--ux-surface),var(--ux-surface-2));stroke:var(--ux-line-2);stroke-width:1.5;transform-origin:12px 12px;transition:fill .25s,stroke .25s}
+.u411-all .ck{stroke:transparent;stroke-width:2.2}
+.u411-all .dash{stroke:transparent;stroke-width:2.2;transition:stroke .2s}
+.u411-all input:checked+.u411-cb .bg,.u411-all input:indeterminate+.u411-cb .bg{fill:var(--ux-accent);stroke:var(--ux-accent)}
+.u411-all input:checked+.u411-cb .bg{animation:u411-pop .45s var(--ux-spring)}
+.u411-all input:checked+.u411-cb .ck{stroke:#FFFFFF;stroke:light-dark(#FFFFFF,#0B0C12)}
+.u411-all input:indeterminate+.u411-cb .dash{stroke:#FFFFFF;stroke:light-dark(#FFFFFF,#0B0C12)}
+@keyframes u411-pop{40%{transform:scale(1.18)}}
+.u411-r input:focus-visible+.u411-cb{outline:2px solid var(--ux-accent);outline-offset:3px;border-radius:50%}
+.u411-tag{font-size:12px;font-weight:600;color:var(--ux-accent)}
+.u411-tag.is-opt{color:var(--ux-ink-3)}
+.u411-nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.u411-v{width:30px;height:30px;flex:none;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--ux-ink-3);transition:background .2s,color .2s,transform .35s var(--ux-spring)}
+.u411-v:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u411-v:active{transform:translateX(2px)}
+.u411 .u411-v:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u411-v svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u411-go{position:relative;display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;width:100%;height:46px;margin-top:12px;border:0;border-radius:14px;background:var(--ux-surface-3);color:var(--ux-ink-3);font-size:14.5px;font-weight:600;overflow:clip;cursor:not-allowed;transition:color .3s .15s,transform .4s var(--ux-spring)}
+.u411-go::before{content:"";position:absolute;inset:0;background:var(--ux-ink);transform:scaleX(0);transform-origin:left;transition:transform .55s cubic-bezier(.6,0,.2,1),background .35s}
+.u411-go>span{position:relative;grid-area:1/1;display:flex;align-items:center;gap:6px;transition:opacity .2s,transform .4s var(--ux-spring),filter .2s}
+.u411-go>span:last-child{opacity:0;transform:translateY(9px);filter:blur(2px)}
+.u411-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u411-go.is-ready{color:var(--ux-surface);cursor:pointer}
+.u411-go.is-ready::before{transform:none}
+.u411-go.is-ready:hover{transform:translateY(-1px)}
+.u411-go.is-ready:active{transform:scale(.97,.93);transition-duration:.3s,.1s}
+.u411 .u411-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u411-go.is-ok{color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12)}
+.u411-go.is-ok::before{background:var(--ux-mint)}
+.u411-go.is-ok>span:first-child{opacity:0;transform:translateY(-9px);filter:blur(2px)}
+.u411-go.is-ok>span:last-child{opacity:1;transform:none;filter:none}
 .u411-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.u411-go::before{transition-duration:.2s}}
 </style>
 <div class="ux u411">
-  <div class="u411-main">
-    <div class="u411-hd"><b>약관에 동의해 주세요</b></div>
-    <label class="u411-all"><input type="checkbox"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span><span class="u411-at"><b>전체 동의</b><small>선택 항목을 포함해 모두 동의해요</small></span></label>
-    <ul class="u411-ls">
-      <li class="u411-it"><label><input type="checkbox" data-req="1"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span><span class="u411-tag is-req">필수</span><span>만 14세 이상이에요</span></label></li>
-      <li class="u411-it"><label><input type="checkbox" data-req="1"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span><span class="u411-tag is-req">필수</span><span>서비스 이용약관</span></label><button type="button" class="u411-view" data-d="0" aria-label="서비스 이용약관 보기">보기</button></li>
-      <li class="u411-it"><label><input type="checkbox" data-req="1"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span><span class="u411-tag is-req">필수</span><span>개인정보 수집·이용</span></label><button type="button" class="u411-view" data-d="1" aria-label="개인정보 수집·이용 보기">보기</button></li>
-      <li class="u411-it"><label><input type="checkbox" class="u411-mk"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span><span class="u411-tag">선택</span><span>마케팅 정보 수신</span></label><button type="button" class="u411-view" data-d="2" aria-label="마케팅 정보 수신 보기">보기</button></li>
-      <li class="u411-sub" role="group" aria-label="마케팅 수신 방법"><label><input type="checkbox" data-ch="1"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span>이메일</label><label><input type="checkbox" data-ch="1"><span class="u411-box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 9.2l3 2.9 6-6.3"/></svg></span>문자</label></li>
-    </ul>
-    <button type="button" class="u411-next" disabled><span class="s0">동의하고 계속하기</span><span class="s1" aria-hidden="true"><i></i>확인하는 중…</span><span class="s2" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg>동의했어요</span></button>
-  </div>
-  <div class="u411-scrim"></div>
-  <div class="u411-sh" role="dialog" aria-modal="true">
-    <div class="u411-shd"><b></b><button type="button" class="u411-x" aria-label="닫기"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button></div>
-    <div class="u411-doc" tabindex="0"></div>
-    <button type="button" class="u411-ok">동의하기</button>
+  <div class="u411-s">
+    <label class="u411-r u411-all"><input type="checkbox"><span class="u411-cb" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="bg" cx="12" cy="12" r="11"/><path class="ck" d="M7.4 12.4l3.1 3.1 6.1-6.6"/><path class="dash" d="M8 12h8"/></svg></span><span>전체 동의</span></label>
+    <div class="u411-row"><label class="u411-r" data-req="1"><input type="checkbox"><span class="u411-cb" aria-hidden="true"><svg viewBox="0 0 20 20"><path class="ck" d="M4.6 10.4l3.6 3.6 7.2-7.8"/></svg></span><span class="u411-tag">필수</span><span class="u411-nm">이용약관</span></label><button type="button" class="u411-v"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2.5 9.5 7 5 11.5"/></svg></button></div>
+    <div class="u411-row"><label class="u411-r" data-req="1"><input type="checkbox"><span class="u411-cb" aria-hidden="true"><svg viewBox="0 0 20 20"><path class="ck" d="M4.6 10.4l3.6 3.6 7.2-7.8"/></svg></span><span class="u411-tag">필수</span><span class="u411-nm">개인정보 수집·이용</span></label><button type="button" class="u411-v"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2.5 9.5 7 5 11.5"/></svg></button></div>
+    <div class="u411-row"><label class="u411-r"><input type="checkbox"><span class="u411-cb" aria-hidden="true"><svg viewBox="0 0 20 20"><path class="ck" d="M4.6 10.4l3.6 3.6 7.2-7.8"/></svg></span><span class="u411-tag is-opt">선택</span><span class="u411-nm">마케팅 정보 수신</span></label><button type="button" class="u411-v"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 2.5 9.5 7 5 11.5"/></svg></button></div>
+    <button type="button" class="u411-go" aria-disabled="true"><span>동의하고 계속</span><span aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg>동의했어요</span></button>
   </div>
   <p class="u411-live" role="status"></p>
 </div>
@@ -123,72 +76,39 @@
 (function () {
   var root = document.currentScript.previousElementSibling;
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = {
-    left: function (n) { return '필수 항목 ' + n + '개가 남았어요'; },
-    ready: '필수 항목에 모두 동의했어요'
-  };
-  var DOCS = [
-    ['서비스 이용약관 (필수)', '<b>제1조 (목적)</b><p>이 약관은 루시안(이하 ‘회사’)이 제공하는 서비스의 이용 조건과 절차, 회사와 회원의 권리와 의무를 정합니다.</p><b>제2조 (약관의 효력)</b><p>약관은 서비스 화면에 게시하며, 내용이 바뀌면 시행 7일 전에 미리 알려 드려요.</p><b>제3조 (회원 가입)</b><p>가입 신청자가 약관에 동의하고 회사가 승낙하면 가입이 완료됩니다.</p>'],
-    ['개인정보 수집·이용 (필수)', '<dl><dt>수집 항목</dt><dd>이름, 이메일, 휴대폰 번호</dd><dt>이용 목적</dt><dd>회원 식별, 서비스 제공, 고객 상담</dd><dt>보관 기간</dt><dd>회원 탈퇴 후 30일까지</dd></dl><p>동의하지 않을 수 있지만, 그러면 가입할 수 없어요.</p>'],
-    ['마케팅 정보 수신 (선택)', '<p>새 기능과 혜택 소식을 이메일과 문자로 보내 드려요.</p><p>동의하지 않아도 서비스는 그대로 쓸 수 있고, 설정에서 언제든 끌 수 있어요.</p>']
-  ];
-  var main = root.querySelector('.u411-main'), all = root.querySelector('.u411-all input');
-  var req = [].slice.call(root.querySelectorAll('input[data-req]')), mk = root.querySelector('.u411-mk'), ch = [].slice.call(root.querySelectorAll('input[data-ch]'));
-  var leaves = req.concat(ch), next = root.querySelector('.u411-next'), live = root.querySelector('.u411-live');
-  var sh = root.querySelector('.u411-sh'), shTitle = sh.querySelector('.u411-shd b'), doc = sh.querySelector('.u411-doc'), ok = sh.querySelector('.u411-ok');
-  var uid = 'u411' + Math.random().toString(36).slice(2, 8), cur = -1, opener = null, lastLeft = -1, gen = 0;
-  shTitle.id = uid + 't'; sh.setAttribute('aria-labelledby', shTitle.id);
-  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
-  // 마케팅은 수신 방법(이메일·문자)에서, 전체 동의는 모든 항목에서 상태를 계산합니다(일부만이면 중간 상태)
+  var T = { view: function (n) { return n + ' 보기'; }, done: '약관에 동의했어요' };
+  var all = root.querySelector('.u411-all input'), go = root.querySelector('.u411-go'), live = root.querySelector('.u411-live');
+  var labs = [].slice.call(root.querySelectorAll('.u411-row .u411-r'));
+  var items = labs.map(function (l) { return l.querySelector('input'); });
+  var req = labs.map(function (l) { return l.hasAttribute('data-req'); });
+  var gen = 0;
+  root.querySelectorAll('.u411-v').forEach(function (v, k) { v.setAttribute('aria-label', T.view(labs[k].querySelector('.u411-nm').textContent)); });
+  // 상태 맞추기: 전체 동의는 모두 켜지면 체크, 일부면 반쯤 찬 표시. 필수가 모두 켜지면 버튼이 차오릅니다
   function sync() {
-    var nc = ch.filter(function (c) { return c.checked; }).length;
-    mk.checked = nc === ch.length; mk.indeterminate = nc > 0 && nc < ch.length;
-    var n = leaves.filter(function (c) { return c.checked; }).length;
-    all.checked = n === leaves.length; all.indeterminate = n > 0 && n < leaves.length;
-    var left = req.filter(function (c) { return !c.checked; }).length;
-    next.disabled = left > 0;
-    if (left !== lastLeft && lastLeft !== -1) live.textContent = left ? T.left(left) : T.ready;
-    lastLeft = left;
+    var n = items.filter(function (i) { return i.checked; }).length;
+    all.checked = n === items.length; all.indeterminate = n > 0 && n < items.length;
+    var ok = items.every(function (i, k) { return !req[k] || i.checked; });
+    go.classList.toggle('is-ready', ok); go.setAttribute('aria-disabled', String(!ok));
+    if (!ok) go.classList.remove('is-ok');
   }
-  all.addEventListener('change', function () { leaves.forEach(function (c) { c.checked = all.checked; }); sync(); });
-  mk.addEventListener('change', function () { ch.forEach(function (c) { c.checked = mk.checked; }); sync(); });
-  leaves.forEach(function (c) { c.addEventListener('change', sync); });
-  // 보기: 약관을 시트로 열고, 동의하기를 누르면 그 항목을 체크하고 닫습니다
-  function openDoc(k, from) {
-    cur = k; opener = from;
-    shTitle.textContent = DOCS[k][0]; doc.innerHTML = DOCS[k][1]; doc.scrollTop = 0;
-    root.classList.add('is-sheet'); main.inert = true; sh.inert = false;
-    later(function () { ok.focus({ preventScroll: true }); }, rm ? 0 : 300);
-  }
-  function closeDoc(agree) {
-    if (agree) {
-      if (cur === 2) { ch.forEach(function (c) { c.checked = true; }); } else { req[cur + 1].checked = true; }
-      sync();
-    }
-    root.classList.remove('is-sheet'); main.inert = false; sh.inert = true;
-    if (opener) opener.focus({ preventScroll: true });
-  }
-  [].slice.call(root.querySelectorAll('.u411-view')).forEach(function (b) { b.addEventListener('click', function () { openDoc(+b.getAttribute('data-d'), b); }); });
-  ok.addEventListener('click', function () { closeDoc(true); });
-  root.querySelector('.u411-x').addEventListener('click', function () { closeDoc(false); });
-  root.querySelector('.u411-scrim').addEventListener('click', function () { closeDoc(false); });
-  sh.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); closeDoc(false); return; }
-    if (e.key !== 'Tab') return;
-    var f = [root.querySelector('.u411-x'), doc, ok];
-    var i = f.indexOf(document.activeElement);
-    if (e.shiftKey && i === 0) { e.preventDefault(); ok.focus(); }
-    else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); f[0].focus(); }
+  // 전체 동의: 켤 때는 위에서 아래로, 끌 때는 아래에서 위로 차례차례
+  all.addEventListener('change', function () {
+    var want = all.checked, g = ++gen;
+    all.indeterminate = false;
+    var order = want ? [0, 1, 2] : [2, 1, 0];
+    order.forEach(function (k, j) {
+      setTimeout(function () {
+        if (!root.isConnected || g !== gen) return;
+        items[k].checked = want; sync();
+        if (j < order.length - 1) { all.checked = want; all.indeterminate = false; }
+      }, rm ? 0 : j * 110);
+    });
   });
-  next.addEventListener('click', function () {
-    if (next.disabled || next.classList.contains('is-busy') || next.classList.contains('is-ok')) return;
-    next.classList.add('is-busy'); next.setAttribute('aria-busy', 'true');
-    later(function () {
-      next.classList.remove('is-busy'); next.removeAttribute('aria-busy'); next.classList.add('is-ok');
-      later(function () { next.classList.remove('is-ok'); }, rm ? 900 : 1500);
-    }, rm ? 300 : 800);
+  items.forEach(function (i) { i.addEventListener('change', function () { gen += 1; sync(); }); });
+  go.addEventListener('click', function () {
+    if (!go.classList.contains('is-ready') || go.classList.contains('is-ok')) return;
+    go.classList.add('is-ok'); live.textContent = T.done;
   });
-  sh.inert = true;
   sync();
 })();
 </script>

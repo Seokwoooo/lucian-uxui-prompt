@@ -1,8 +1,8 @@
 {
   "name": "Lucian UX/UI Prompt",
   "api": 1,
-  "version": "c93fa285bd",
-  "updated": "2026-11-22T16:11:43.204Z",
+  "version": "e541a46912",
+  "updated": "2026-11-22T17:26:27.801Z",
   "count": 450,
   "languages": [
     "en",
@@ -17,8 +17,8 @@
     "tokens": "{lang}/tokens.css"
   },
   "catalogs": {
-    "en": "9e2b5a81a9",
-    "ko": "fda63617e8"
+    "en": "dd4eb394c5",
+    "ko": "55a4e8606e"
   },
   "categories": [
     {

@@ -1,78 +1,44 @@
 <!-- Lucian UX/UI Prompt #406 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#406 -->
 <!--
-Element: Email verification code
-ID: 406 · Category: Sign-in & Sign-up · Tags: otp, verification-code, email, paste, countdown, form
-What it does: The production default for a “Check your email” card: a masked address and six code boxes. Filling a box moves to the next, Backspace steps back, and pasting a 6-digit code fills them all at once. A wrong code shakes the boxes with a message; the right one shows a check and moves on to a done screen. Resend unlocks only when its one-minute timer runs out.
+Element: Verification code
+ID: 406 · Category: Sign-in & Sign-up · Tags: otp, verification-code, paste, shake, merge, morph
+What it does: A six-box verification code input. Digits pop into their boxes and the cursor moves on; pasting fills them all at once. A wrong code shakes the boxes and clears them; the right one draws the six boxes together into a single check.
 How to use it: Try any wrong digits, then type or paste 482915
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#406
 -->
 <style>
-.u406{position:relative;width:340px;height:304px;padding:24px 22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u406-main{display:flex;flex-direction:column;height:100%;transition:opacity .3s,transform .45s var(--ux-ease)}
-.u406-ic{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:var(--ux-accent-soft);color:var(--ux-accent);margin-bottom:14px}
-.u406-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.u406 h4{margin:0;font-size:17px;font-weight:700;letter-spacing:-.03em}
-.u406-sub{margin:5px 0 0;font-size:12.5px;line-height:1.5;color:var(--ux-ink-3)}
-.u406-sub b{font-weight:600;color:var(--ux-ink)}
-.u406-code{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:20px}
-.u406-code.is-shake{animation:u406-shake .42s cubic-bezier(.36,.07,.19,.97)}
-@keyframes u406-shake{15%{transform:translateX(-6px)}35%{transform:translateX(5px)}55%{transform:translateX(-3px)}75%{transform:translateX(2px)}}
-.u406-d{width:100%;height:50px;min-width:0;padding:0;border:0;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);text-align:center;font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink);caret-color:var(--ux-accent);outline:none;transition:box-shadow .2s,background .2s,transform .3s var(--ux-spring)}
-.u406-d:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
-.u406-d.is-fill{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
-.u406 .u406-d:focus-visible,.u406-d:focus,.u406-d.is-cur{box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 3px var(--ux-accent-soft);outline:none}
-.u406-code.is-err .u406-d{box-shadow:inset 0 0 0 1px var(--ux-danger);background:color-mix(in srgb,var(--ux-danger) 6%,transparent)}
-.u406-code.is-good .u406-d{box-shadow:inset 0 0 0 1.5px var(--ux-mint);background:color-mix(in srgb,var(--ux-mint) 8%,transparent);animation:u406-pop .4s var(--ux-spring) both;animation-delay:calc(var(--i) * 40ms)}
-@keyframes u406-pop{50%{transform:translateY(-4px)}}
-.u406-code.is-busy .u406-d{opacity:.6}
-.u406-msg{min-height:22px;margin:0;padding-top:8px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ux-ink-3)}
-.u406-msg i{width:12px;height:12px;flex:none;border-radius:50%;border:1.8px solid currentColor;border-right-color:transparent;animation:u406-spin .75s linear infinite}
-@keyframes u406-spin{to{rotate:360deg}}
-.u406-msg.is-err{color:var(--ux-danger)}
-.u406-msg.is-good{color:var(--ux-mint)}
-.u406-ft{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:14px;border-top:1px solid var(--ux-line);font-size:12px;color:var(--ux-ink-3)}
-.u406-ft span{flex:1;display:flex;align-items:center;justify-content:space-between;gap:4px}
-.u406-rs{height:26px;padding:0 6px;border:0;border-radius:6px;background:none;font-size:12px;font-weight:600;color:var(--ux-accent);font-variant-numeric:tabular-nums;white-space:nowrap}
-.u406-rs:hover:not(:disabled){background:var(--ux-accent-soft)}
-.u406-rs:disabled{color:var(--ux-ink-3);cursor:default}
-.u406-done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .35s,transform .5s var(--ux-ease),visibility 0s .5s}
-.u406.is-done .u406-main{opacity:0;transform:translateY(-14px);pointer-events:none}
-.u406.is-done .u406-done{opacity:1;visibility:visible;transform:none;transition-delay:.1s,.1s,0s}
-.u406-big{width:60px;height:60px;margin-bottom:16px}
-.u406-big circle{fill:color-mix(in srgb,var(--ux-mint) 15%,transparent);stroke:var(--ux-mint);stroke-width:2}
-.u406-big path{fill:none;stroke:var(--ux-mint);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30}
-.u406.is-done .u406-big path{stroke-dashoffset:0;transition:stroke-dashoffset .45s var(--ux-ease) .35s}
-.u406-done b{font-size:18px;font-weight:700;letter-spacing:-.03em}
-.u406-done small{margin-top:4px;font-size:12.5px;color:var(--ux-ink-3)}
-.u406-go{margin-top:20px;height:38px;padding:0 22px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600}
-.u406-go:hover{opacity:.9}
-.u406 .u406-go:focus-visible{outline-offset:2px}
+.u406{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u406-row{position:relative;display:grid;grid-template-columns:repeat(6,42px);gap:8px}
+.u406-row.is-shake{animation:u406-shake .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u406-shake{15%{transform:translateX(-8px)}35%{transform:translateX(7px)}55%{transform:translateX(-4px)}75%{transform:translateX(2px)}}
+.u406-b{position:relative;width:42px;height:54px;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s,background .3s,transform .55s var(--ux-spring),opacity .3s;transition-delay:0s,0s,calc(var(--d,0) * 35ms),calc(var(--d,0) * 35ms)}
+.u406-b:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u406-b.is-fill{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u406-b.is-cur{box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 4px var(--ux-accent-soft)}
+.u406-in{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;border-radius:12px;background:none;text-align:center;font-size:22px;color:transparent;caret-color:var(--ux-accent);outline:none}
+.u406 .u406-in:focus-visible{outline:none}
+.u406-g{position:absolute;inset:0;display:grid;place-items:center;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink);pointer-events:none}
+.u406-g.is-pop{animation:u406-pop .45s var(--ux-spring)}
+@keyframes u406-pop{from{opacity:0;transform:translateY(10px) scale(.4)}}
+.u406-row.is-err .u406-b{box-shadow:inset 0 0 0 1px var(--ux-danger);background:color-mix(in srgb,var(--ux-danger) 7%,var(--ux-surface))}
+.u406-row.is-busy .u406-b{animation:u406-wave .8s var(--ux-ease) infinite;animation-delay:calc(var(--i) * 70ms)}
+@keyframes u406-wave{40%{transform:translateY(-4px)}}
+.u406-row.is-merge .u406-b{transform:translateX(var(--mx)) scale(.35);opacity:0;background:var(--ux-mint);box-shadow:none}
+.u406-row.is-merge .u406-g{opacity:0;transition:opacity .15s}
+.u406-ck{position:absolute;left:50%;top:50%;width:60px;height:60px;margin:-30px 0 0 -30px;opacity:0;transform:scale(.2);pointer-events:none;transition:transform .6s var(--ux-spring) .18s,opacity .2s .18s}
+.u406-ck circle{fill:var(--ux-mint)}
+.u406-ck path{fill:none;stroke:#FFFFFF;stroke:light-dark(#FFFFFF,#0B0C12);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:32;stroke-dashoffset:32;transition:stroke-dashoffset .45s var(--ux-ease) .45s}
+.u406-row.is-merge+.u406-ck{opacity:1;transform:none}
+.u406-row.is-merge+.u406-ck path{stroke-dashoffset:0}
+.u406-wrap{position:relative}
 .u406-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media (prefers-reduced-motion:reduce){.u406.is-done .u406-big path{transition-delay:0s!important}}
 </style>
 <div class="ux u406">
-  <div class="u406-main">
-    <span class="u406-ic" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2.5"/><path d="M3.5 6 10 10.5 16.5 6"/></svg></span>
-    <h4>Check your email</h4>
-    <p class="u406-sub">Enter the 6-digit code we sent to <b>s*****n@lucian.kr</b>.</p>
-    <div class="u406-code" role="group" aria-label="6-digit code">
-      <input class="u406-d" style="--i:0" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*">
-      <input class="u406-d" style="--i:1" inputmode="numeric" autocomplete="off" pattern="[0-9]*">
-      <input class="u406-d" style="--i:2" inputmode="numeric" autocomplete="off" pattern="[0-9]*">
-      <input class="u406-d" style="--i:3" inputmode="numeric" autocomplete="off" pattern="[0-9]*">
-      <input class="u406-d" style="--i:4" inputmode="numeric" autocomplete="off" pattern="[0-9]*">
-      <input class="u406-d" style="--i:5" inputmode="numeric" autocomplete="off" pattern="[0-9]*">
-    </div>
-    <p class="u406-msg" aria-live="polite">The code works for 10 minutes</p>
-    <div class="u406-ft"><span>Didn’t get it?</span></div>
-  </div>
-  <div class="u406-done" aria-hidden="true">
-    <svg class="u406-big" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="28"/><path d="M19 30.5l7.5 7.5L41.5 23"/></svg>
-    <b>You’re verified</b>
-    <small>seoyeon@lucian.kr</small>
-    <button type="button" class="u406-go" tabindex="-1">Continue</button>
+  <div class="u406-wrap">
+    <div class="u406-row" role="group" aria-label="6-digit code"></div>
+    <svg class="u406-ck" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="30"/><path d="M18 30.5l8 8L42.5 22"/></svg>
   </div>
   <p class="u406-live" role="status"></p>
 </div>
@@ -80,74 +46,66 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#406
 (function () {
   var root = document.currentScript.previousElementSibling;
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = {
-    digit: function (k) { return 'Digit ' + k; },
-    again: 'Resend code',
-    wait: function (t) { return 'Resend in ' + t; },
-    checking: 'Checking…',
-    wrong: 'That code didn’t match. Please check it again.',
-    sent: 'New code sent',
-    ok: 'Verified'
-  };
+  var T = { digit: function (k) { return 'Digit ' + k; }, wrong: 'That code didn’t match', ok: 'Verified' };
   var CODE = '482915';
-  var row = root.querySelector('.u406-code'), ds = [].slice.call(row.querySelectorAll('.u406-d'));
-  var msg = root.querySelector('.u406-msg'), live = root.querySelector('.u406-live'), main = root.querySelector('.u406-main');
-  var done = root.querySelector('.u406-done'), go = root.querySelector('.u406-go');
-  var vals = ['', '', '', '', '', ''], busy = false, gen = 0, tick = 0, left = 0, note0 = msg.textContent;
-  var rs = document.createElement('button');
-  rs.type = 'button'; rs.className = 'u406-rs';
-  root.querySelector('.u406-ft span').appendChild(rs);
-  ds.forEach(function (d, k) { d.setAttribute('aria-label', T.digit(k + 1)); });
-  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
-  function say(text, kind, spin) {
-    msg.className = 'u406-msg' + (kind ? ' is-' + kind : '');
-    msg.innerHTML = spin ? '<i aria-hidden="true"></i>' : '';
-    msg.appendChild(document.createTextNode(text || (kind ? '' : note0)));
+  var row = root.querySelector('.u406-row'), live = root.querySelector('.u406-live');
+  var vals = ['', '', '', '', '', ''], busy = false, gen = 0;
+  var bs = [], ins = [], gs = [];
+  for (var k = 0; k < 6; k++) {
+    var b = document.createElement('div');
+    b.className = 'u406-b'; b.style.setProperty('--i', k);
+    b.style.setProperty('--mx', ((2.5 - k) * 50) + 'px');
+    b.style.setProperty('--d', Math.abs(2.5 - k) * 2);
+    b.innerHTML = '<input class="u406-in" inputmode="numeric" pattern="[0-9]*" autocomplete="' + (k ? 'off' : 'one-time-code') + '"><span class="u406-g" aria-hidden="true"></span>';
+    b.querySelector('input').setAttribute('aria-label', T.digit(k + 1));
+    row.appendChild(b); bs.push(b); ins.push(b.querySelector('input')); gs.push(b.querySelector('.u406-g'));
   }
-  function render() { ds.forEach(function (d, k) { d.value = vals[k]; d.classList.toggle('is-fill', !!vals[k]); }); }
-  function cur(k) {
-    ds.forEach(function (d, j) { d.classList.toggle('is-cur', j === k); });
-    if (k >= 0 && ds[k]) ds[k].focus({ preventScroll: true });
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  function render(popAt) {
+    ins.forEach(function (d, j) {
+      d.value = vals[j]; bs[j].classList.toggle('is-fill', !!vals[j]);
+      if (gs[j].textContent !== vals[j]) {
+        gs[j].textContent = vals[j];
+        if (vals[j] && popAt && popAt.indexOf(j) >= 0) { gs[j].classList.remove('is-pop'); void gs[j].offsetWidth; gs[j].classList.add('is-pop'); }
+      }
+    });
+  }
+  function cur(j) {
+    bs.forEach(function (b, n) { b.classList.toggle('is-cur', n === j); });
+    if (j >= 0 && ins[j]) ins[j].focus({ preventScroll: true });
   }
   function fill(i, text) {
-    var digits = String(text).replace(/\D/g, '').split('');
-    if (!digits.length) return;
-    if (digits.length >= 6) i = 0;
-    digits.forEach(function (c, j) { if (i + j < 6) vals[i + j] = c; });
-    if (row.classList.contains('is-err')) { row.classList.remove('is-err'); say(''); }
-    render();
+    var ds = String(text).replace(/\D/g, '').split('');
+    if (!ds.length) return;
+    if (ds.length >= 6) i = 0;
+    var changed = [];
+    ds.forEach(function (c, j) { if (i + j < 6) { vals[i + j] = c; changed.push(i + j); } });
+    row.classList.remove('is-err');
+    render(changed);
     var next = vals.indexOf('');
-    if (next < 0) { cur(-1); ds[5].blur(); check(); } else cur(Math.max(next, Math.min(5, i + digits.length)));
+    if (next < 0) { cur(-1); ins[5].blur(); check(); } else cur(Math.max(next, Math.min(5, i + ds.length)));
   }
   function check() {
     busy = true; row.classList.add('is-busy');
-    ds.forEach(function (d) { d.readOnly = true; });
-    say(T.checking, '', true);
     later(function () {
-      row.classList.remove('is-busy'); busy = false;
+      row.classList.remove('is-busy');
       if (vals.join('') === CODE) {
-        row.classList.add('is-good'); say('');
-        live.textContent = T.ok;
+        row.classList.add('is-merge'); live.textContent = T.ok;
         later(function () {
-          root.classList.add('is-done'); main.inert = true;
-          done.removeAttribute('aria-hidden'); go.tabIndex = 0; clearInterval(tick);
-          go.focus({ preventScroll: true });
-        }, rm ? 200 : 600);
+          vals = ['', '', '', '', '', '']; render();
+          row.classList.remove('is-merge'); busy = false;
+        }, rm ? 1200 : 2200);
         return;
       }
-      row.classList.add('is-err'); say(T.wrong, 'err');
+      row.classList.add('is-err'); live.textContent = T.wrong;
       row.classList.remove('is-shake'); void row.offsetWidth; row.classList.add('is-shake');
-      later(function () {
-        vals = ['', '', '', '', '', '']; render();
-        ds.forEach(function (d) { d.readOnly = false; });
-        cur(0);
-      }, rm ? 300 : 650);
-    }, rm ? 300 : 900);
+      later(function () { vals = ['', '', '', '', '', '']; render(); row.classList.remove('is-err'); busy = false; cur(0); }, rm ? 300 : 700);
+    }, rm ? 200 : 700);
   }
-  ds.forEach(function (d, i) {
-    d.addEventListener('focus', function () { cur(-1); d.classList.add('is-cur'); if (d.select) d.select(); });
-    d.addEventListener('blur', function () { d.classList.remove('is-cur'); });
-    d.addEventListener('pointerdown', function () { if (!busy) { ds.forEach(function (o) { o.classList.toggle('is-cur', o === d); }); } });
+  ins.forEach(function (d, i) {
+    d.addEventListener('focus', function () { bs.forEach(function (b, n) { b.classList.toggle('is-cur', n === i); }); });
+    d.addEventListener('blur', function () { bs[i].classList.remove('is-cur'); });
+    d.addEventListener('pointerdown', function () { if (!busy) bs.forEach(function (b, n) { b.classList.toggle('is-cur', n === i); }); });
     d.addEventListener('input', function () {
       if (busy) { render(); return; }
       var v = d.value.replace(/\D/g, ''), old = vals[i];
@@ -166,36 +124,10 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#406
       if (busy) return;
       if (e.key === 'Backspace') {
         e.preventDefault();
-        if (vals[i]) { vals[i] = ''; render(); cur(i); }
-        else if (i > 0) { vals[i - 1] = ''; render(); cur(i - 1); }
+        if (vals[i]) { vals[i] = ''; render(); cur(i); } else if (i > 0) { vals[i - 1] = ''; render(); cur(i - 1); }
       } else if (e.key === 'ArrowLeft' && i > 0) { e.preventDefault(); cur(i - 1); }
       else if (e.key === 'ArrowRight' && i < 5) { e.preventDefault(); cur(i + 1); }
     });
   });
-  function fmt(s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
-  function cool() {
-    clearInterval(tick); left = 60;
-    rs.disabled = true; rs.textContent = T.wait(fmt(left));
-    tick = setInterval(function () {
-      if (!root.isConnected) { clearInterval(tick); return; }
-      left -= 1;
-      if (left <= 0) { clearInterval(tick); rs.disabled = false; rs.textContent = T.again; }
-      else rs.textContent = T.wait(fmt(left));
-    }, 1000);
-  }
-  rs.addEventListener('click', function () {
-    vals = ['', '', '', '', '', '']; render(); row.classList.remove('is-err');
-    say(T.sent, 'good'); cool(); cur(0);
-  });
-  go.addEventListener('click', function () {
-    gen += 1;
-    vals = ['', '', '', '', '', '']; render();
-    row.classList.remove('is-good', 'is-err'); say('');
-    ds.forEach(function (d) { d.readOnly = false; });
-    root.classList.remove('is-done'); main.inert = false;
-    done.setAttribute('aria-hidden', 'true'); go.tabIndex = -1;
-    cool(); cur(0);
-  });
-  cool();
 })();
 </script>

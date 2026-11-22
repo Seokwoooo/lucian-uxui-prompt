@@ -1,198 +1,85 @@
-<!-- @meta {"title":"반응형 헤더와 모바일 메뉴","category":"내비게이션","summary":"로고, 메뉴, 로그인, 시작하기 버튼이 있는 사이트 헤더입니다. 페이지를 내리면 헤더가 반투명하게 흐려지며 얇은 경계선이 생기고, 폭을 모바일로 줄이면 메뉴가 햄버거 버튼으로 접힙니다. 햄버거를 누르면 두 줄이 X로 바뀌며 전체 메뉴가 내려옵니다.","hint":"미리보기 안을 스크롤해 보고, 위에서 모바일을 고른 뒤 햄버거 버튼을 눌러 보세요","shape":"square","hue":"#0EA5E9","hue2":"#6366F1","tags":["header","navbar","responsive","hamburger","mobile-menu","sticky","container-query"]} -->
-<!-- @demo [["wait",900],["scroll",".u412-vp",0,190,1100],["wait",900],["scroll",".u412-vp",0,"top",700],["wait",300],["tap",".u412-seg button",1,{"after":1000}],["tap",".u412-bg",0,{"after":1500}],["hover",".u412-sheet a",1,{"after":700}],["tap",".u412-bg",0,{"after":800}],["tap",".u412-seg button",0,{"after":1200}],["reset"]] -->
-<!-- @en {"title":"Responsive header with mobile menu","summary":"A site header with a logo, links, Log in and a Sign up button. Scroll the page and the header turns frosted with a hairline edge; switch the width to mobile and the links fold into a hamburger. Press it and the two bars become an X as the full menu drops down.","hint":"Scroll inside the preview, pick Mobile at the top, then press the hamburger button","map":[
-  ["aria-label=\"미리보기 폭\"", "aria-label=\"Preview width\""],
-  [">데스크톱<", ">Desktop<"],
-  [">모바일<", ">Mobile<"],
+<!-- @meta {"title":"모바일 헤더 메뉴","category":"내비게이션","summary":"휴대폰 폭의 헤더 막대입니다. 햄버거 버튼을 누르면 두 줄이 X로 바뀌고, 막대가 아래로 늘어나며 메뉴 링크가 차례로 떨어지고 마지막에 시작하기 버튼이 나타납니다.","hint":"오른쪽 햄버거 버튼을 눌러 메뉴를 열고 닫아 보세요","shape":"square","hue":"#0EA5E9","hue2":"#6366F1","tags":["header","hamburger","mobile-menu","navbar","spring"]} -->
+<!-- @demo [["wait",800],["tap",".u412-bg",0,{"after":1500}],["hover",".u412-ln a",1,{"after":500}],["hover",".u412-ln a",2,{"after":600}],["tap",".u412-bg",0,{"after":1200}],["reset"]] -->
+<!-- @en {"title":"Mobile header menu","summary":"A phone-width header bar. Press the hamburger and its two bars become an X while the bar grows downward, dropping the menu links in turn and finishing with a Get started button.","hint":"Press the hamburger on the right to open and close the menu","map":[
   ["aria-label=\"Haru 홈\"", "aria-label=\"Haru home\""],
-  ["aria-label=\"주요 메뉴\"", "aria-label=\"Main\""],
-  ["aria-label=\"모바일 메뉴\"", "aria-label=\"Mobile menu\""],
-  [">제품<", ">Product<"],
-  [">가격<", ">Pricing<"],
-  [">블로그<", ">Blog<"],
-  [">고객 사례<", ">Customers<"],
-  [">로그인<", ">Log in<"],
-  [">시작하기<", ">Sign up<"],
-  [">무료로 시작하기<", ">Start for free<"],
+  ["aria-label=\"메뉴 열기\"", "aria-label=\"Open menu\""],
   ["'메뉴 닫기'", "'Close menu'"],
   ["'메뉴 열기'", "'Open menu'"],
-  ["aria-label=\"메뉴 열기\"", "aria-label=\"Open menu\""],
-  [">새 기능 · 팀 캘린더<", ">New · Team calendar<"],
-  [">일정과 할 일을<br>한곳에서<", ">Plans and tasks,<br>in one place<"],
-  [">흩어진 업무를 하나로 모아 팀이 같은 화면을 봅니다.<", ">Bring scattered work together so the whole team sees one screen.<"],
-  [">무료로 시작<", ">Start free<"],
-  [">데모 보기<", ">Watch demo<"],
-  [">이번 주<", ">This week<"],
-  [">디자인 리뷰<", ">Design review<"],
-  [">출시 준비<", ">Launch prep<"],
-  [">실시간 협업<", ">Co-editing<"],
-  [">자동 일정<", ">Scheduling<"],
-  [">보안<", ">Security<"],
-  ["padding:5px 5px;border-radius:7px;font-size:11px;", "padding:5px 5px;border-radius:7px;font-size:10.5px;"]
+  ["aria-label=\"주요 메뉴\"", "aria-label=\"Main\""],
+  [">제품<", ">Product<"],
+  [">가격<", ">Pricing<"],
+  [">고객 사례<", ">Customers<"],
+  [">블로그<", ">Blog<"],
+  [">무료로 시작하기<", ">Get started free<"]
 ]} -->
 <style>
-.u412{position:relative;width:340px;height:340px;padding:10px 10px 10px;border-radius:24px;background:var(--ux-surface-2);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);display:flex;flex-direction:column;align-items:center;gap:10px;overflow:hidden}
-.u412-top{align-self:stretch;display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 2px}
-.u412-seg{position:relative;display:flex;padding:2px;border-radius:10px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u412-th{position:absolute;left:2px;top:2px;bottom:2px;width:calc(50% - 2px);border-radius:8px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 2px 6px -2px var(--ux-shadow);transition:transform .42s cubic-bezier(.3,1.3,.5,1)}
-.u412.is-m .u412-th{transform:translateX(100%)}
-.u412-seg button{position:relative;z-index:1;flex:1;display:flex;align-items:center;justify-content:center;gap:5px;min-width:78px;height:26px;padding:0 10px;border:0;border-radius:8px;background:none;font-size:11.5px;font-weight:650;color:var(--ux-ink-3);transition:color .2s}
-.u412-seg button[aria-checked="true"]{color:var(--ux-ink)}
-.u412-seg button:hover{color:var(--ux-ink-2)}
-.u412-seg button[aria-checked="true"]:hover{color:var(--ux-ink)}
-.u412-seg svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.u412-seg button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
-.u412-px{display:flex;align-items:center;gap:6px;font:600 10.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;letter-spacing:0}
-.u412-px::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ux-mint);box-shadow:0 0 0 3px color-mix(in srgb,var(--ux-mint) 18%,transparent)}
-/* 미리보기 창: 폭이 바뀌면 컨테이너 쿼리로 헤더 배치가 바뀝니다 */
-.u412-fr{position:relative;width:320px;flex:1;min-height:0;border-radius:12px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 18px 36px -24px var(--ux-shadow-strong);overflow:hidden;transition:width .6s cubic-bezier(.32,1.15,.45,1),border-radius .6s var(--ux-ease)}
-.u412.is-m .u412-fr{width:184px;border-radius:24px}
-.u412-vp{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none;container-type:inline-size}
-.u412-vp::-webkit-scrollbar{display:none}
-.u412.is-open .u412-vp{overflow:hidden}
-.u412-hd{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:6px;height:44px;padding:0 10px 0 12px;background:transparent;box-shadow:0 1px 0 transparent;transition:background-color .3s var(--ux-ease),box-shadow .3s var(--ux-ease),-webkit-backdrop-filter .3s,backdrop-filter .3s}
-.u412-hd.is-sc{background:color-mix(in srgb,var(--ux-surface) 72%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.7);backdrop-filter:blur(14px) saturate(1.7);box-shadow:0 1px 0 var(--ux-line-2),0 10px 24px -18px var(--ux-shadow-strong)}
-.u412.is-open .u412-hd{background:var(--ux-surface);box-shadow:0 1px 0 var(--ux-line)}
-.u412-logo{display:flex;align-items:center;gap:6px;flex:none;color:var(--ux-ink);text-decoration:none;font-size:13.5px;font-weight:800;letter-spacing:-.03em;border-radius:6px}
-.u412-mk{display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
-.u412-mk svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
-.u412-nav{margin-left:4px}.u412-nav ul{display:flex;gap:0;margin:0;padding:0;list-style:none}
-.u412-nav a,.u412-login{display:block;flex:none;padding:5px 5px;border-radius:7px;font-size:11px;font-weight:560;color:var(--ux-ink-2);text-decoration:none;white-space:nowrap;transition:color .15s,background-color .15s}
-.u412-nav a:hover,.u412-login:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
-.u412-nav a[aria-current="page"]{color:var(--ux-ink)}
-.u412-login{margin-left:auto;margin-right:-4px}
-.u412-cta{display:flex;flex:none;align-items:center;height:26px;padding:0 10px;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;box-shadow:0 1px 2px var(--ux-shadow);transition:transform .25s var(--ux-spring),opacity .2s}
-.u412-cta:hover{opacity:.88}
-.u412-cta:active{transform:scale(.96)}
-.u412-bg{display:none;place-items:center;width:30px;height:30px;margin-left:auto;margin-right:-6px;border:0;border-radius:8px;background:none;color:var(--ux-ink);transition:background-color .15s}
+.u412{position:relative;width:340px;height:300px;display:flex;align-items:center;justify-content:center;color:var(--ux-ink)}
+/* 막대와 메뉴가 한 장의 카드입니다. 메뉴가 열리면 카드가 아래로 늘어나고, 루트가 가운데 정렬이라 막대는 위로 올라갑니다 */
+.u412-cd{width:292px;border-radius:18px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 18px 40px -22px var(--ux-shadow-strong);overflow:hidden}
+.u412-br{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 8px 0 16px}
+.u412-logo{display:flex;align-items:center;gap:7px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:800;letter-spacing:-.03em;border-radius:7px}
+.u412-mk{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u412-mk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.u412-bg{position:relative;display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:11px;background:none;color:var(--ux-ink);transition:background-color .2s,transform .3s var(--ux-spring)}
 .u412-bg:hover{background:var(--ux-surface-2)}
-.u412-bg i{position:absolute;width:15px;height:1.5px;border-radius:2px;background:currentColor;transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
-.u412-bg i:first-child{transform:translateY(-3px)}
-.u412-bg i:last-child{transform:translateY(3px)}
+.u412-bg:active{transform:scale(.9)}
+.u412-bg i{position:absolute;left:11px;width:16px;height:1.75px;border-radius:2px;background:currentColor;transition:transform .55s cubic-bezier(.3,1.6,.5,1)}
+.u412-bg i:first-child{transform:translateY(-3.5px)}
+.u412-bg i:last-child{transform:translateY(3.5px)}
 .u412.is-open .u412-bg i:first-child{transform:rotate(45deg)}
 .u412.is-open .u412-bg i:last-child{transform:rotate(-45deg)}
-.u412-bg span{position:relative;display:grid;place-items:center;width:15px;height:15px}
-.u412 a:focus-visible,.u412-bg:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
-@container (max-width:290px){.u412-login{display:none}.u412-cta{margin-left:auto}}
-@container (max-width:240px){.u412-nav,.u412-cta{display:none}.u412-bg{display:grid}}
-/* 모의 페이지 */
-.u412-pg{padding:6px 16px 20px}
-.u412-ey{display:inline-flex;align-items:center;height:20px;padding:0 8px;margin:6px 0 0;border-radius:99px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:9.5px;font-weight:700}
-.u412-pg h2{margin:9px 0 0;font-size:19px;line-height:1.22;font-weight:800;letter-spacing:-.04em}
-.u412-sub{margin:7px 0 0;font-size:10.5px;line-height:1.5;color:var(--ux-ink-3);max-width:230px}
-.u412-btns{display:flex;gap:6px;margin-top:11px}
-.u412-btns span{display:flex;align-items:center;white-space:nowrap;height:26px;padding:0 11px;border-radius:8px;font-size:10.5px;font-weight:700}
-.u412-btns .b1{background:var(--ux-ink);color:var(--ux-surface)}
-.u412-btns .b2{box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink-2)}
-.u412-shot{position:relative;margin-top:16px;height:150px;border-radius:12px;background:linear-gradient(135deg,#7B61FF,#3D8BFF 55%,#1FB89A);overflow:hidden;box-shadow:0 0 0 1px var(--ux-line)}
-.u412-shot::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 85% 10%,rgba(255,255,255,.35),transparent 60%),radial-gradient(50% 60% at 10% 100%,rgba(255,180,90,.55),transparent 70%)}
-.u412-win{position:absolute;left:14px;right:14px;top:16px;bottom:-10px;border-radius:9px;background:rgba(255,255,255,.92);box-shadow:0 10px 30px -10px rgba(20,10,60,.5);padding:10px}
-.u412-win b{display:block;font-size:9.5px;font-weight:800;color:#16151B}
-.u412-row{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:9px;font-weight:600;color:#57535F}
-.u412-row i{width:8px;height:8px;border-radius:3px;flex:none}
-.u412-row em{margin-left:auto;font-style:normal;height:5px;border-radius:3px;background:#E9E6F5}
-.u412-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:12px}
-@container (max-width:240px){.u412-pg h2{font-size:16px}.u412-cards{grid-template-columns:1fr}.u412-shot{height:120px}}
-.u412-cards span{display:block;padding:9px;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:9.5px;font-weight:700;color:var(--ux-ink-2)}
-.u412-cards span::before{content:"";display:block;width:14px;height:14px;margin-bottom:8px;border-radius:5px;background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 30%,transparent)}
-.u412-ln{display:block;height:7px;margin-top:9px;border-radius:4px;background:var(--ux-surface-3)}
-/* 모바일 메뉴 시트 */
-.u412-sheet{position:absolute;left:0;right:0;top:44px;bottom:0;z-index:4;display:flex;flex-direction:column;padding:4px 14px 18px;background:var(--ux-surface);clip-path:inset(0 0 100% 0);visibility:hidden;transition:clip-path .45s cubic-bezier(.3,1,.4,1),visibility 0s .45s}
-.u412.is-open .u412-sheet{clip-path:inset(0 0 0 0);visibility:visible;transition:clip-path .5s cubic-bezier(.3,1,.4,1),visibility 0s}
-.u412-sheet ul{margin:0;padding:0;list-style:none}
-.u412-sheet li{opacity:0;transform:translateY(-6px);transition:opacity .2s,transform .3s var(--ux-ease)}
-.u412.is-open .u412-sheet li,.u412.is-open .u412-acts{opacity:1;transform:none;transition:opacity .35s var(--ux-ease) calc(.08s + var(--i) * 45ms),transform .5s cubic-bezier(.3,1.3,.5,1) calc(.08s + var(--i) * 45ms)}
-.u412-sheet a.lk{display:flex;align-items:center;justify-content:space-between;height:36px;padding:0 6px;margin:0 -6px;border-radius:8px;border-bottom:1px solid var(--ux-line);font-size:13.5px;font-weight:700;letter-spacing:-.02em;color:var(--ux-ink);text-decoration:none;transition:background-color .15s}
-.u412-sheet a.lk:hover{background:var(--ux-surface-2)}
-.u412-sheet a.lk svg{width:12px;height:12px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s var(--ux-spring)}
-.u412-sheet a.lk:hover svg{transform:translateX(2px)}
-.u412-acts{margin-top:auto;display:grid;gap:6px;opacity:0;transform:translateY(8px);transition:opacity .2s,transform .3s}
-.u412-acts a{display:flex;align-items:center;justify-content:center;height:32px;border-radius:9px;font-size:11.5px;font-weight:700;text-decoration:none}
-.u412-acts .o{box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink)}
-.u412-acts .o:hover{background:var(--ux-surface-2)}
-.u412-acts .p{background:var(--ux-ink);color:var(--ux-surface)}
-.u412-acts .p:hover{opacity:.9}
-@media (prefers-reduced-motion:reduce){.u412-fr,.u412-th,.u412-sheet,.u412-sheet li,.u412-acts,.u412-bg i{transition:none!important}}
+.u412-sh{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.25,1,.35,1)}
+.u412.is-open .u412-sh{grid-template-rows:1fr}
+.u412-sh>div{min-height:0;overflow:hidden}
+.u412-ln{margin:0;padding:2px 8px 0;list-style:none;border-top:1px solid var(--ux-line)}
+.u412-ln li,.u412-go{opacity:0;transform:translateY(-10px);transition:opacity .15s,transform .2s}
+.u412.is-open .u412-ln li,.u412.is-open .u412-go{opacity:1;transform:none;transition:opacity .35s var(--ux-ease) calc(90ms + var(--i) * 55ms),transform .6s cubic-bezier(.3,1.5,.5,1) calc(90ms + var(--i) * 55ms)}
+.u412-ln a{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 10px;border-radius:11px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:700;letter-spacing:-.02em;transition:background-color .2s}
+.u412-ln a:hover{background:var(--ux-surface-2)}
+.u412-ln svg{width:14px;height:14px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ux-spring),stroke .2s}
+.u412-ln a:hover svg{transform:translateX(3px);stroke:var(--ux-ink)}
+.u412-go{display:flex;align-items:center;justify-content:center;height:40px;margin:6px 14px 14px;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);text-decoration:none;font-size:13px;font-weight:750}
+.u412-go:active{transform:scale(.97)!important}
+.u412 a:focus-visible,.u412 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u412-sh,.u412-ln li,.u412-go,.u412-bg i{transition:none!important}}
 </style>
 <div class="ux u412">
-  <div class="u412-top">
-    <div class="u412-seg" role="radiogroup" aria-label="미리보기 폭">
-      <span class="u412-th" aria-hidden="true"></span>
-      <button type="button" role="radio" aria-checked="true"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="2" width="11" height="7.5" rx="1.5"/><path d="M5 12h4M7 9.5V12"/></svg>데스크톱</button>
-      <button type="button" role="radio" aria-checked="false" tabindex="-1"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="4" y="1.5" width="6" height="11" rx="1.6"/><path d="M6.4 10.6h1.2"/></svg>모바일</button>
+  <header class="u412-cd">
+    <div class="u412-br">
+      <a class="u412-logo" href="#" aria-label="Haru 홈"><span class="u412-mk" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 8.9a4 4 0 0 1 8 0"/><path d="M1.8 11.4h10.4"/></svg></span>Haru</a>
+      <button class="u412-bg" type="button" aria-expanded="false" aria-label="메뉴 열기"><i></i><i></i></button>
     </div>
-    <span class="u412-px" aria-hidden="true">1280px</span>
-  </div>
-  <div class="u412-fr">
-    <div class="u412-vp">
-      <header class="u412-hd">
-        <a class="u412-logo" href="#" aria-label="Haru 홈"><span class="u412-mk" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.6 7.6a3.4 3.4 0 0 1 6.8 0"/><path d="M1.6 9.8h8.8"/></svg></span>Haru</a>
-        <nav class="u412-nav" aria-label="주요 메뉴"><ul><li><a href="#" aria-current="page">제품</a></li><li><a href="#">가격</a></li><li><a href="#">블로그</a></li></ul></nav>
-        <a class="u412-login" href="#">로그인</a>
-        <a class="u412-cta" href="#">시작하기</a>
-        <button class="u412-bg" type="button" aria-expanded="false" aria-label="메뉴 열기"><span aria-hidden="true"><i></i><i></i></span></button>
-      </header>
-      <main class="u412-pg" aria-hidden="true">
-        <p class="u412-ey">새 기능 · 팀 캘린더</p>
-        <h2>일정과 할 일을<br>한곳에서</h2>
-        <p class="u412-sub">흩어진 업무를 하나로 모아 팀이 같은 화면을 봅니다.</p>
-        <div class="u412-btns"><span class="b1">무료로 시작</span><span class="b2">데모 보기</span></div>
-        <div class="u412-shot"><div class="u412-win"><b>이번 주</b><div class="u412-row"><i style="background:#7B61FF"></i>디자인 리뷰<em style="width:38%"></em></div><div class="u412-row"><i style="background:#1FB89A"></i>출시 준비<em style="width:52%"></em></div><div class="u412-row"><i style="background:#F59E0B"></i>고객 사례<em style="width:28%"></em></div></div></div>
-        <div class="u412-cards"><span>실시간 협업</span><span>자동 일정</span><span>보안</span></div>
-        <i class="u412-ln" style="width:70%;margin-top:18px"></i><i class="u412-ln" style="width:92%"></i><i class="u412-ln" style="width:84%"></i><i class="u412-ln" style="width:60%"></i>
-      </main>
-    </div>
-    <div class="u412-sheet" aria-label="모바일 메뉴" role="region">
-      <ul>
-        <li style="--i:0"><a class="lk" href="#">제품<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a></li>
-        <li style="--i:1"><a class="lk" href="#">가격<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a></li>
-        <li style="--i:2"><a class="lk" href="#">블로그<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a></li>
-        <li style="--i:3"><a class="lk" href="#">고객 사례<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a></li>
+    <nav class="u412-sh" aria-label="주요 메뉴"><div>
+      <ul class="u412-ln">
+        <li style="--i:0"><a href="#">제품<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:1"><a href="#">가격<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:2"><a href="#">고객 사례<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:3"><a href="#">블로그<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
       </ul>
-      <div class="u412-acts" style="--i:4"><a class="o" href="#">로그인</a><a class="p" href="#">무료로 시작하기</a></div>
-    </div>
-  </div>
+      <a class="u412-go" href="#" style="--i:4">무료로 시작하기</a>
+    </div></nav>
+  </header>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var seg = Array.prototype.slice.call(root.querySelectorAll('.u412-seg button'));
-  var px = root.querySelector('.u412-px'), vp = root.querySelector('.u412-vp'), hd = root.querySelector('.u412-hd');
-  var bg = root.querySelector('.u412-bg'), sheet = root.querySelector('.u412-sheet');
+  var bg = root.querySelector('.u412-bg'), sh = root.querySelector('.u412-sh');
   var uid = 'u412-' + Math.random().toString(36).slice(2, 7);
-  var mode = 0, open = false;
-  sheet.id = uid + '-m'; bg.setAttribute('aria-controls', sheet.id);
-  sheet.inert = true;
-  function menu(v, back) {
+  var open = false;
+  sh.id = uid + '-m'; bg.setAttribute('aria-controls', sh.id);
+  sh.inert = true;
+  function set(v, back) {
     open = v;
     root.classList.toggle('is-open', v);
     bg.setAttribute('aria-expanded', String(v));
     bg.setAttribute('aria-label', v ? '메뉴 닫기' : '메뉴 열기');
-    sheet.inert = !v;
-    if (v) { vp.scrollTop = 0; hd.classList.remove('is-sc'); }
+    sh.inert = !v;
     if (back) bg.focus({ preventScroll: true });
   }
-  // 폭 전환: 미리보기 창의 폭만 바꾸고, 헤더는 컨테이너 쿼리로 스스로 접힙니다
-  function setMode(m, focus) {
-    mode = m;
-    root.classList.toggle('is-m', m === 1);
-    seg.forEach(function (b, i) { b.setAttribute('aria-checked', String(i === m)); b.tabIndex = i === m ? 0 : -1; });
-    px.textContent = m ? '390px' : '1280px';
-    if (!m && open) menu(false);
-    if (focus) seg[m].focus({ preventScroll: true });
-  }
-  seg.forEach(function (b, i) {
-    b.addEventListener('click', function () { setMode(i); });
-    b.addEventListener('keydown', function (e) {
-      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) < 0) return;
-      e.preventDefault(); setMode(1 - mode, true);
-    });
-  });
-  vp.addEventListener('scroll', function () { hd.classList.toggle('is-sc', vp.scrollTop > 4 && !open); }, { passive: true });
-  bg.addEventListener('click', function () { menu(!open); });
-  root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) { e.preventDefault(); e.stopPropagation(); menu(false, true); } });
+  bg.addEventListener('click', function () { set(!open); });
+  root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) { e.preventDefault(); e.stopPropagation(); set(false, true); } });
   root.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function (e) { e.preventDefault(); if (open && sheet.contains(a)) menu(false, true); });
+    a.addEventListener('click', function (e) { e.preventDefault(); if (sh.contains(a)) set(false, true); });
   });
 })();
 </script>

@@ -1,146 +1,61 @@
 <!-- Lucian UX/UI Prompt #433 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#433 -->
 <!--
 Element: 체크박스·라디오·스위치
-ID: 433 · Category: 토글·선택 · Tags: checkbox, radio, switch, indeterminate, settings, form-controls, disabled, focus-ring
-What it does: 알림 설정 카드 하나에 기본 선택 컨트롤 세 가지를 모았습니다. 하위 항목이 일부만 켜지면 전체 체크박스가 ‘일부 선택’으로 바뀌고, 끌 수 없는 항목과 Pro 전용 항목은 흐리게 잠깁니다. 푸시를 끄면 방해 금지 시간도 함께 잠기며, 바꿀 때마다 자동 저장 표시가 돕니다.
-How to use it: 하위 체크박스를 눌러 전체 체크박스가 바뀌는 걸 보고, 푸시 알림을 꺼 보세요. Tab과 방향키, Space로도 조작할 수 있습니다
-Footprint: fixed size, tall
+ID: 433 · Category: 토글·선택 · Tags: checkbox, radio, switch, toggle, spring, micro-interaction
+What it does: 기본 선택 컨트롤 세 가지를 손맛 있게 다듬었습니다. 체크박스는 통통 튀며 체크가 그려지고, 라디오는 점이 스프링처럼 옆 칸으로 옮겨 가며, 스위치는 누르는 동안 손잡이가 말랑하게 늘어났다가 미끄러집니다.
+How to use it: 세 컨트롤을 눌러 보세요. Tab과 Space, 방향키도 됩니다
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#433
 -->
 <style>
-.u433{position:relative;width:340px;height:648px;padding:22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u433 svg{display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
-.u433-hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
-.u433-hd div{flex:1;min-width:0}
-.u433-hd h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.02em}
-.u433-hd p{margin:3px 0 0;font-size:12.5px;color:var(--ux-ink-3)}
-.u433-sv{flex:none;display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:11px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap}
-.u433-sv i{width:6px;height:6px;border-radius:50%;background:var(--ux-mint)}
-.u433-sv.is-busy i{width:10px;height:10px;background:none;border:1.5px solid var(--ux-ink-3);border-right-color:transparent;animation:u433-spin .7s linear infinite}
-@keyframes u433-spin{to{transform:rotate(360deg)}}
-.u433-sec{padding:6px 0 8px}
-.u433-sec+.u433-sec{border-top:1px solid var(--ux-line);padding-top:12px}
-.u433-sec>h4{margin:0 0 4px;font-size:11.5px;font-weight:600;color:var(--ux-ink-3)}
-.u433-row{position:relative;display:flex;align-items:center;gap:12px;min-height:46px;padding:5px 0;cursor:pointer}
-.u433-row.is-sub{padding-left:30px}
-.u433-row.is-top{min-height:36px}
-.u433-tx{flex:1;min-width:0}
-.u433-tx b{display:flex;align-items:center;gap:6px;font-size:13.5px;font-weight:550;letter-spacing:-.01em}
-.u433-tx small{display:block;margin-top:2px;font-size:12px;line-height:1.35;color:var(--ux-ink-3)}
-.u433-ct{flex:none;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u433-pro{padding:1px 6px;border-radius:999px;background:var(--ux-accent-soft);font-size:10px;font-weight:700;letter-spacing:.02em;color:var(--ux-accent)}
+.u433{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u433-g{display:flex;flex-direction:column;gap:26px;width:230px}
+.u433-row{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:550;letter-spacing:-.01em;cursor:pointer;-webkit-user-select:none;user-select:none}
 .u433-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
-.u433-row.is-off{cursor:not-allowed}
-.u433-row.is-off .u433-tx b{color:var(--ux-ink-3)}
-.u433-cbx,.u433-rd{position:relative;flex:none;width:18px;height:18px;display:grid;place-items:center;background:var(--ux-surface);box-shadow:inset 0 0 0 1.5px var(--ux-line-2);transition:background-color .18s var(--ux-ease),box-shadow .18s var(--ux-ease)}
-.u433-cbx{border-radius:5.5px;color:var(--ux-accent-ink)}
+.u433-cb,.u433-rd{position:relative;flex:none;width:26px;height:26px;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:inset 0 0 0 1.75px var(--ux-line-2);transition:background-color .2s var(--ux-ease),box-shadow .2s var(--ux-ease)}
+.u433-cb{border-radius:8px;color:var(--ux-accent-ink)}
+.u433-row:hover .u433-cb,.u433-row:hover .u433-rd{box-shadow:inset 0 0 0 1.75px color-mix(in srgb,var(--ux-ink) 40%,transparent)}
+.u433-cb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u433-cb path{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .12s var(--ux-ease)}
+.u433-in:checked+.u433-cb{background:var(--ux-accent);box-shadow:inset 0 0 0 1.75px var(--ux-accent);animation:u433-bounce .5s cubic-bezier(.3,1.6,.5,1)}
+.u433-in:checked+.u433-cb path{stroke-dashoffset:0;transition:stroke-dashoffset .32s var(--ux-ease) .08s}
+@keyframes u433-bounce{0%{transform:scale(.8)}45%{transform:scale(1.14)}100%{transform:none}}
+.u433-rg{display:flex;gap:22px}
 .u433-rd{border-radius:50%}
-.u433-row:hover .u433-cbx,.u433-row:hover .u433-rd{box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--ux-ink) 40%,transparent)}
-.u433-cbx svg{width:12px;height:12px;stroke-width:2.6;transform:scale(.4);opacity:0;transition:transform .28s var(--ux-spring),opacity .12s}
-.u433-cbx svg .m{opacity:0}
-.u433-in:checked+.u433-cbx,.u433-in:indeterminate+.u433-cbx{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
-.u433-in:checked+.u433-cbx svg,.u433-in:indeterminate+.u433-cbx svg{transform:none;opacity:1}
-.u433-in:indeterminate+.u433-cbx svg .c{opacity:0}
-.u433-in:indeterminate+.u433-cbx svg .m{opacity:1}
-.u433-rd::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--ux-accent-ink);transform:scale(0);transition:transform .3s var(--ux-spring)}
-.u433-in:checked+.u433-rd{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
-.u433-in:checked+.u433-rd::after{transform:scale(.8)}
-.u433-sw{position:relative;flex:none;width:36px;height:21px;border-radius:999px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background-color .22s var(--ux-ease)}
-.u433-sw::after{content:"";position:absolute;left:2.5px;top:2.5px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18),0 2px 6px -1px rgba(0,0,0,.18);transition:transform .32s var(--ux-spring),width .2s var(--ux-ease)}
-.u433-row:active .u433-sw::after{width:19px}
+.u433-rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ux-accent-ink);transform:scale(0);transition:transform .2s var(--ux-ease)}
+.u433-in:checked+.u433-rd{background:var(--ux-accent);box-shadow:inset 0 0 0 1.75px var(--ux-accent)}
+.u433-in:checked+.u433-rd::after{transform:scale(1);transition:transform .55s cubic-bezier(.3,1.9,.5,1)}
+.u433-row:active .u433-cb,.u433-row:active .u433-rd{transform:scale(.88);transition:transform .1s var(--ux-ease)}
+.u433-sw{position:relative;flex:none;width:54px;height:32px;margin-left:auto;border-radius:999px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background-color .3s var(--ux-ease)}
+.u433-sw::after{content:"";position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 3px 8px -2px rgba(0,0,0,.25);transition:transform .55s cubic-bezier(.3,1.5,.5,1),width .3s cubic-bezier(.3,1.5,.5,1)}
 .u433-in:checked+.u433-sw{background:var(--ux-accent)}
-.u433-in:checked+.u433-sw::after{transform:translateX(15px)}
-.u433-row:active .u433-in:checked+.u433-sw::after{transform:translateX(12px)}
-.u433-row:active .u433-cbx,.u433-row:active .u433-rd{transform:scale(.92)}
-.u433-in:disabled+span{opacity:.45}
-.u433-row.is-off:hover .u433-cbx,.u433-row.is-off:hover .u433-rd{box-shadow:inset 0 0 0 1.5px var(--ux-line-2)}
-.u433-in:disabled:checked+.u433-cbx,.u433-in:disabled:checked+.u433-rd{box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
-.u433-row.is-off:active .u433-cbx,.u433-row.is-off:active .u433-rd{transform:none}
-.u433-row.is-off:active .u433-sw::after{width:16px}
-.u433-in:focus-visible+span{outline:2px solid var(--ux-accent);outline-offset:2px}
-.u433-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.u433-in:checked+.u433-sw::after{transform:translateX(22px)}
+.u433-row.is-press .u433-sw::after{width:33px}
+.u433-row.is-press .u433-in:checked+.u433-sw::after{transform:translateX(15px)}
+.u433-sw-row{gap:14px}
+.u433-in:focus-visible+span{outline:2px solid var(--ux-accent);outline-offset:3px}
 </style>
 <div class="ux u433">
-  <div class="u433-hd">
-    <div><h3>알림 설정</h3><p>어떤 소식을 어디로 받을지 정하세요.</p></div>
-    <span class="u433-sv" role="status"><i></i><span>저장됨</span></span>
-  </div>
-  <div class="u433-sec" role="group">
-    <h4 class="u433-h1">이메일</h4>
-    <label class="u433-row is-top"><input class="u433-in u433-all" type="checkbox"><span class="u433-cbx" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="c" d="m5.5 12.5 4 4 9-9.5"/><path class="m" d="M6.5 12h11"/></svg></span><span class="u433-tx"><b>이메일 알림 전체</b></span><span class="u433-ct"></span></label>
-    <label class="u433-row is-sub"><input class="u433-in u433-ch" type="checkbox" checked><span class="u433-cbx" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="c" d="m5.5 12.5 4 4 9-9.5"/><path class="m" d="M6.5 12h11"/></svg></span><span class="u433-tx"><b>댓글과 멘션</b><small>누군가 나를 언급하면 바로 알려요</small></span></label>
-    <label class="u433-row is-sub"><input class="u433-in u433-ch" type="checkbox"><span class="u433-cbx" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="c" d="m5.5 12.5 4 4 9-9.5"/><path class="m" d="M6.5 12h11"/></svg></span><span class="u433-tx"><b>주간 요약</b><small>월요일 아침, 지난주 활동을 정리해 보내요</small></span></label>
-    <label class="u433-row is-sub is-off"><input class="u433-in u433-ch" type="checkbox" checked disabled><span class="u433-cbx" aria-hidden="true"><svg viewBox="0 0 24 24"><path class="c" d="m5.5 12.5 4 4 9-9.5"/><path class="m" d="M6.5 12h11"/></svg></span><span class="u433-tx"><b>보안 알림</b><small>계정 보호를 위해 끌 수 없어요</small></span></label>
-  </div>
-  <div class="u433-sec" role="radiogroup">
-    <h4 class="u433-h2">알림 빈도</h4>
-    <label class="u433-row"><input class="u433-in" type="radio" value="now" checked><span class="u433-rd" aria-hidden="true"></span><span class="u433-tx"><b>바로 받기</b><small>새 소식이 생기면 그때그때</small></span></label>
-    <label class="u433-row"><input class="u433-in" type="radio" value="daily"><span class="u433-rd" aria-hidden="true"></span><span class="u433-tx"><b>하루 한 번 모아서</b><small>매일 오전 9시에 한 번에</small></span></label>
-    <label class="u433-row is-off"><input class="u433-in" type="radio" value="smart" disabled><span class="u433-rd" aria-hidden="true"></span><span class="u433-tx"><b>스마트 요약 <span class="u433-pro">Pro</span></b><small>중요한 소식만 골라 알려요</small></span></label>
-  </div>
-  <div class="u433-sec" role="group">
-    <h4 class="u433-h3">기기</h4>
-    <label class="u433-row"><span class="u433-tx"><b>푸시 알림</b><small>휴대폰과 데스크톱 앱으로 받아요</small></span><input class="u433-in u433-push" type="checkbox" role="switch" checked><span class="u433-sw" aria-hidden="true"></span></label>
-    <label class="u433-row"><span class="u433-tx"><b>방해 금지 시간</b><small class="u433-dnd">밤 10시부터 아침 8시까지 조용히</small></span><input class="u433-in u433-quiet" type="checkbox" role="switch"><span class="u433-sw" aria-hidden="true"></span></label>
-    <label class="u433-row is-off"><span class="u433-tx"><b>문자 알림</b><small>휴대폰 번호를 인증하면 켤 수 있어요</small></span><input class="u433-in" type="checkbox" role="switch" disabled><span class="u433-sw" aria-hidden="true"></span></label>
+  <div class="u433-g">
+    <label class="u433-row"><input class="u433-in" type="checkbox"><span class="u433-cb" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9.5"/></svg></span>약관에 동의해요</label>
+    <div class="u433-rg" role="radiogroup" aria-label="받는 주기">
+      <label class="u433-row"><input class="u433-in" type="radio" checked><span class="u433-rd" aria-hidden="true"></span>매일</label>
+      <label class="u433-row"><input class="u433-in" type="radio"><span class="u433-rd" aria-hidden="true"></span>매주</label>
+    </div>
+    <label class="u433-row u433-sw-row">푸시 알림<input class="u433-in" type="checkbox" role="switch" checked><span class="u433-sw" aria-hidden="true"></span></label>
   </div>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var q = function (s) { return root.querySelector(s); };
-  var all = q('.u433-all'), kids = root.querySelectorAll('.u433-ch'), ct = q('.u433-ct'), sv = q('.u433-sv'), svT = q('.u433-sv span'), push = q('.u433-push'), quiet = q('.u433-quiet'), dnd = q('.u433-dnd');
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { saved: '저장됨', saving: '저장 중…', count: '{a}/{b}개 켜짐', needPush: '푸시 알림을 켜면 쓸 수 있어요' };
   var uid = 'u433' + Math.random().toString(36).slice(2, 7);
-  var dndText = dnd.textContent;
-  // 라벨 연결: 그룹 제목과 설명 문구에 고유 id를 붙입니다
-  ['1', '2', '3'].forEach(function (n) {
-    var h = q('.u433-h' + n), g = h.parentNode;
-    h.id = uid + 'h' + n; g.setAttribute('aria-labelledby', h.id);
-  });
-  root.querySelectorAll('.u433-row').forEach(function (row, i) {
-    var inp = row.querySelector('input'), sm = row.querySelector('small');
-    if (sm) { sm.id = uid + 'd' + i; inp.setAttribute('aria-describedby', sm.id); }
-  });
-  root.querySelectorAll('input[type="radio"]').forEach(function (r) { r.name = uid + 'freq'; });
-  function enabledKids() { return Array.prototype.filter.call(kids, function (k) { return !k.disabled; }); }
-  // 켤 수 있는 하위 항목이 모두 켜지면 체크, 일부면 ‘일부 선택’, 하나도 없으면 빈 칸
-  function syncAll() {
-    var en = enabledKids(), on = en.filter(function (k) { return k.checked; }).length;
-    all.checked = on === en.length;
-    all.indeterminate = on > 0 && on < en.length;
-    var total = kids.length, onAll = Array.prototype.filter.call(kids, function (k) { return k.checked; }).length;
-    ct.textContent = T.count.replace('{a}', onAll).replace('{b}', total);
-  }
-  function syncPush() {
-    var off = !push.checked;
-    quiet.disabled = off;
-    quiet.closest('.u433-row').classList.toggle('is-off', off);
-    dnd.textContent = off ? T.needPush : dndText;
-  }
-  var saveT = 0;
-  function saved() {
-    sv.classList.add('is-busy');
-    svT.textContent = T.saving;
-    clearTimeout(saveT);
-    saveT = setTimeout(function () {
-      if (!root.isConnected) return;
-      sv.classList.remove('is-busy');
-      svT.textContent = T.saved;
-    }, rm ? 200 : 650);
-  }
-  all.addEventListener('change', function () {
-    // ‘일부 선택’이나 빈 칸에서 누르면 모두 켜고, 모두 켜져 있으면 모두 끕니다
-    var en = enabledKids(), every = en.every(function (k) { return k.checked; });
-    en.forEach(function (k) { k.checked = !every; });
-    syncAll();
-  });
-  kids.forEach(function (k) { k.addEventListener('change', syncAll); });
-  push.addEventListener('change', syncPush);
-  root.addEventListener('change', saved);
-  syncAll();
-  syncPush();
+  root.querySelectorAll('input[type="radio"]').forEach(function (r) { r.name = uid; });
+  // 스위치: 누르는 동안 손잡이가 늘어나고, 놓으면 스프링처럼 미끄러집니다
+  var sw = root.querySelector('.u433-sw-row');
+  sw.addEventListener('pointerdown', function (e) { if (e.button === 0) sw.classList.add('is-press'); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { sw.addEventListener(t, function () { sw.classList.remove('is-press'); }); });
+  sw.querySelector('input').addEventListener('keydown', function (e) { if (e.key === ' ') sw.classList.add('is-press'); });
+  sw.querySelector('input').addEventListener('keyup', function () { sw.classList.remove('is-press'); });
 })();
 </script>

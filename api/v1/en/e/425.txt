@@ -1,135 +1,51 @@
 <!-- Lucian UX/UI Prompt #425 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#425 -->
 <!--
-Element: CTA banner
-ID: 425 · Category: Hero & Backgrounds · Tags: cta, banner, mesh-gradient, signup, email-capture, landing
-What it does: A call-to-action band that closes the page. A bold line, short copy and two buttons sit on a softly drifting mesh gradient, and a gentle glow follows the pointer across the band. Press Start for free and the buttons turn into an email field, then a confirmation once you send it.
-How to use it: Move the pointer over the banner, then press Start for free and enter an email
+Element: CTA card
+ID: 425 · Category: Hero & Backgrounds · Tags: cta, gradient, shimmer, glow, button, spring
+What it does: A call-to-action card with one bold line and a single button on a gradient. A soft glow follows the pointer across the card, and a streak of light sweeps the button every few seconds. Press it and it squishes, then springs back.
+How to use it: Move the pointer over the card, then press the button
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#425
 -->
 <style>
-.u425{position:relative;width:340px;height:340px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
-.u425-tl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 16px 0;opacity:.7}
-.u425-tl i{height:44px;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u425{position:relative;width:340px;height:300px;display:grid;place-items:center}
 
-.u425-bn{position:relative;isolation:isolate;margin:14px 12px 0;padding:22px 18px 16px;border-radius:20px;background:#F4F1FF;background:light-dark(#F4F1FF,#14122A);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 18px 40px -26px var(--ux-shadow-strong);overflow:hidden;text-align:center}
-.u425-bn i.b{position:absolute;z-index:-2;width:220px;height:220px;border-radius:50%;filter:blur(30px);animation:u425-drift 14s ease-in-out infinite alternate}
-.u425-bn i.b1{left:-70px;top:-90px;background:#B3A6FF;background:light-dark(rgba(150,130,255,.55),rgba(110,85,240,.55))}
-.u425-bn i.b2{right:-80px;top:-40px;background:#9FD0FF;background:light-dark(rgba(110,180,255,.5),rgba(40,110,230,.5));animation-duration:17s;animation-delay:-5s}
-.u425-bn i.b3{left:40px;bottom:-140px;background:#9EEBD6;background:light-dark(rgba(110,225,195,.45),rgba(25,160,130,.42));animation-duration:19s;animation-delay:-9s}
-@keyframes u425-drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(26px,14px) scale(1.08)}100%{transform:translate(-18px,22px) scale(.95)}}
-.u425-sp{position:absolute;inset:0;z-index:-1;background:radial-gradient(160px circle at var(--mx,50%) var(--my,30%),rgba(255,255,255,.55),transparent 70%);background:radial-gradient(160px circle at var(--mx,50%) var(--my,30%),light-dark(rgba(255,255,255,.6),rgba(255,255,255,.09)),transparent 70%);opacity:0;transition:opacity .35s}
-.u425-bn:hover .u425-sp{opacity:1}
-.u425-bn h2{margin:0;text-wrap:balance;font-size:21px;line-height:1.25;font-weight:850;letter-spacing:-.045em}
-.u425-sub{margin:8px auto 0;max-width:250px;text-wrap:balance;font-size:11.5px;line-height:1.55;color:var(--ux-ink-2)}
-.u425-act{position:relative;height:38px;margin-top:16px}
-.u425-row,.u425-fm,.u425-done{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;transition:opacity .25s var(--ux-ease),transform .4s cubic-bezier(.3,1.25,.45,1),visibility 0s}
-.u425-fm,.u425-done{opacity:0;visibility:hidden;transform:translateY(8px) scale(.98);transition:opacity .2s,transform .3s,visibility 0s .3s}
-.u425.is-fm .u425-row,.u425.is-done .u425-row,.u425.is-done .u425-fm{opacity:0;visibility:hidden;transform:translateY(-8px) scale(.98);transition:opacity .2s,transform .3s,visibility 0s .3s}
-.u425.is-fm .u425-fm,.u425.is-done .u425-done{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ux-ease) .08s,transform .45s cubic-bezier(.3,1.25,.45,1) .05s,visibility 0s}
-.u425-go,.u425-ok{display:flex;align-items:center;gap:5px;height:38px;padding:0 15px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:12px;font-weight:750;white-space:nowrap;box-shadow:0 1px 2px var(--ux-shadow),0 8px 18px -10px var(--ux-shadow-strong);transition:transform .25s var(--ux-spring),opacity .15s}
-.u425-go:hover,.u425-ok:hover{transform:translateY(-1px)}
-.u425-go:active,.u425-ok:active{transform:scale(.97)}
-.u425-go svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
+.u425-cd{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;width:300px;height:200px;border-radius:24px;background:linear-gradient(135deg,#5B47E0 0%,#3D6FF0 55%,#1C9F8C 100%);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 24px 50px -24px rgba(50,40,160,.7);overflow:hidden;text-align:center;color:#fff}
+.u425-cd i.b{position:absolute;z-index:-2;border-radius:50%;filter:blur(28px);animation:u425-drift 12s ease-in-out infinite alternate}
+.u425-cd i.b1{width:180px;height:180px;left:-50px;top:-70px;background:rgba(190,170,255,.65)}
+.u425-cd i.b2{width:160px;height:160px;right:-50px;bottom:-80px;background:rgba(80,230,200,.5);animation-duration:15s;animation-delay:-6s}
+@keyframes u425-drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,18px) scale(1.1)}100%{transform:translate(-14px,26px) scale(.94)}}
+.u425-gl{position:absolute;inset:0;z-index:-1;background:radial-gradient(150px circle at var(--mx,50%) var(--my,40%),rgba(255,255,255,.32),transparent 70%);opacity:0;transition:opacity .4s}
+.u425-cd:hover .u425-gl{opacity:1}
+.u425-cd::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 40%);pointer-events:none}
+.u425-cd h2{margin:0;font-size:22px;line-height:1.3;font-weight:850;letter-spacing:-.045em;text-shadow:0 1px 12px rgba(20,10,80,.25)}
+
+.u425-go{position:relative;display:flex;align-items:center;gap:7px;height:44px;padding:0 20px;border:0;border-radius:99px;background:#fff;color:#2A1F8F;font-size:13.5px;font-weight:800;box-shadow:0 8px 20px -8px rgba(20,10,80,.55),inset 0 -2px 0 rgba(42,31,143,.08);overflow:hidden;transition:transform .5s cubic-bezier(.3,1.8,.5,1),box-shadow .3s}
+.u425-go::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:50%;background:linear-gradient(100deg,transparent,rgba(160,140,255,.45),transparent);transform:skewX(-20deg);animation:u425-shine 3.4s ease-in-out infinite}
+@keyframes u425-shine{0%,62%{left:-60%}100%{left:130%}}
+.u425-go:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 26px -10px rgba(20,10,80,.6)}
+.u425-go:active{transform:scale(.92);transition-duration:.12s}
+.u425-go svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.3,1.8,.5,1)}
 .u425-go:hover svg{transform:translateX(3px)}
-.u425-sl{display:flex;align-items:center;height:38px;padding:0 14px;border-radius:11px;background:color-mix(in srgb,var(--ux-surface) 55%,transparent);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12px;font-weight:700;color:var(--ux-ink);text-decoration:none;white-space:nowrap;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);transition:background-color .15s}
-.u425-sl:hover{background:color-mix(in srgb,var(--ux-surface) 80%,transparent)}
-.u425-fm label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.u425-in{flex:1;min-width:0;height:38px;padding:0 12px;border:0;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12px;color:var(--ux-ink);outline:none;transition:box-shadow .15s}
-.u425-in::placeholder{color:var(--ux-ink-3)}
-.u425-in:focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u425 .u425-in:focus-visible{outline:none}
-.u425-in[aria-invalid="true"]{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
-.u425-fm.is-bad{animation:u425-shake .36s cubic-bezier(.36,.07,.19,.97)}
-@keyframes u425-shake{20%,60%{transform:translateX(-3px)}40%,80%{transform:translateX(3px)}}
-.u425-ok{position:relative;padding:0 14px}
-.u425-ok[aria-busy="true"]{color:transparent;pointer-events:none}
-.u425-ok[aria-busy="true"]::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--ux-surface);border-right-color:transparent;animation:u425-spin .7s linear infinite}
-@keyframes u425-spin{to{transform:rotate(360deg)}}
-.u425-x{display:grid;place-items:center;width:30px;height:38px;flex:none;border:0;border-radius:10px;background:none;color:var(--ux-ink-3)}
-.u425-x:hover{color:var(--ux-ink);background:color-mix(in srgb,var(--ux-surface) 50%,transparent)}
-.u425-x svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-.u425-done{gap:10px;text-align:left}
-.u425-done i{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:50%;background:var(--ux-mint)}
-.u425-done i svg{width:15px;height:15px;fill:none;stroke:var(--ux-surface);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .45s var(--ux-ease) .25s}
-.u425.is-done .u425-done i svg{stroke-dashoffset:0}
-.u425-done b{display:block;font-size:12.5px;font-weight:800}
-.u425-done small{display:block;max-width:200px;font-size:10px;color:var(--ux-ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u425-tr{min-height:15px;margin:11px 0 0;font-size:10px;color:var(--ux-ink-3);transition:color .2s}
-.u425-tr.is-err{color:var(--ux-danger);font-weight:650}
-.u425 a:focus-visible,.u425 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
-.u425-pf{display:flex;align-items:center;gap:12px;margin-top:auto;padding:0 18px;height:40px;border-top:1px solid var(--ux-line);font-size:10px;color:var(--ux-ink-3)}
-.u425-pf span{margin-right:auto}
-.u425-pf a{color:inherit;text-decoration:none;border-radius:3px}
-.u425-pf a:hover{color:var(--ux-ink)}
-@media (prefers-reduced-motion:reduce){.u425-bn i.b{animation:none!important}.u425-row,.u425-fm,.u425-done,.u425-sp{transition:none!important}}
+.u425-go:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.u425-cd i.b,.u425-go::before{animation:none!important}.u425-go::before{display:none}}
 </style>
 <div class="ux u425">
-  <div class="u425-tl" aria-hidden="true"><i></i><i></i><i></i></div>
-  <section class="u425-bn">
-    <i class="b b1" aria-hidden="true"></i><i class="b b2" aria-hidden="true"></i><i class="b b3" aria-hidden="true"></i><span class="u425-sp" aria-hidden="true"></span>
+  <section class="u425-cd">
+    <i class="b b1" aria-hidden="true"></i><i class="b b2" aria-hidden="true"></i><span class="u425-gl" aria-hidden="true"></span>
     <h2>Start today,<br>meet shorter tomorrow</h2>
-    <p class="u425-sub">Your whole team gets every feature free for 14 days.</p>
-    <div class="u425-act">
-      <div class="u425-row"><button class="u425-go" type="button">Start for free<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7M6.5 3l3 3-3 3"/></svg></button><a class="u425-sl" href="#">Talk to sales</a></div>
-      <form class="u425-fm" novalidate><label>Work email</label><input class="u425-in" type="email" autocomplete="email" inputmode="email" placeholder="name@company.com" tabindex="-1"><button class="u425-ok" type="submit" tabindex="-1">Continue</button><button class="u425-x" type="button" aria-label="Cancel" tabindex="-1"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3 3 9"/></svg></button></form>
-      <div class="u425-done" role="status"><i aria-hidden="true"><svg viewBox="0 0 16 16"><path d="m4 8.4 2.6 2.6L12 5.3"/></svg></i><span><b>Check your inbox</b><small></small></span></div>
-    </div>
-    <p class="u425-tr" aria-live="polite">No card needed · Cancel anytime</p>
+    <button class="u425-go" type="button">Start for free<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7M6.5 3l3 3-3 3"/></svg></button>
   </section>
-  <div class="u425-pf"><span>© 2026 Haru Labs</span><a href="#">Terms</a><a href="#">Privacy</a></div>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var bn = root.querySelector('.u425-bn'), go = root.querySelector('.u425-go'), fm = root.querySelector('.u425-fm');
-  var inp = root.querySelector('.u425-in'), ok = root.querySelector('.u425-ok'), x = root.querySelector('.u425-x');
-  var tr = root.querySelector('.u425-tr'), done = root.querySelector('.u425-done small');
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var uid = 'u425-' + Math.random().toString(36).slice(2, 7);
-  var trust = tr.textContent, busy = false;
-  inp.id = uid + '-e'; fm.querySelector('label').setAttribute('for', inp.id);
-  tr.id = uid + '-t'; inp.setAttribute('aria-describedby', tr.id);
-  bn.addEventListener('pointermove', function (e) {
-    var r = bn.getBoundingClientRect();
-    bn.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-    bn.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  var cd = root.querySelector('.u425-cd');
+  cd.addEventListener('pointermove', function (e) {
+    var r = cd.getBoundingClientRect();
+    cd.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    cd.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
   });
-  function tab(el, on) { el.tabIndex = on ? 0 : -1; }
-  function mode(m) {
-    root.classList.toggle('is-fm', m === 'fm');
-    root.classList.toggle('is-done', m === 'done');
-    [inp, ok, x].forEach(function (el) { tab(el, m === 'fm'); });
-    tab(go, m === 'btn'); tab(root.querySelector('.u425-sl'), m === 'btn');
-    if (m !== 'fm') err('');
-    if (m === 'fm') inp.focus({ preventScroll: true });
-    if (m === 'btn') go.focus({ preventScroll: true });
-  }
-  function err(msg) {
-    tr.classList.toggle('is-err', !!msg);
-    tr.textContent = msg || trust;
-    if (msg) { inp.setAttribute('aria-invalid', 'true'); fm.classList.remove('is-bad'); void fm.offsetWidth; fm.classList.add('is-bad'); }
-    else inp.removeAttribute('aria-invalid');
-  }
-  go.addEventListener('click', function () { mode('fm'); });
-  x.addEventListener('click', function () { mode('btn'); });
-  fm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (busy) return;
-    var v = inp.value.trim();
-    if (!v) { err('Enter your email'); return; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { err('Check the email format'); return; }
-    err(''); busy = true; ok.setAttribute('aria-busy', 'true');
-    setTimeout(function () {
-      if (!root.isConnected) return;
-      busy = false; ok.removeAttribute('aria-busy');
-      done.textContent = 'Sign-in link sent to ' + v;
-      mode('done');
-    }, rm ? 200 : 1000);
-  });
-  inp.addEventListener('input', function () { if (inp.getAttribute('aria-invalid')) err(''); });
-  root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('is-fm')) { e.preventDefault(); e.stopPropagation(); mode('btn'); } });
-  root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
 })();
 </script>

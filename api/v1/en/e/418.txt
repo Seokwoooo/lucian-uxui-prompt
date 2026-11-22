@@ -1,191 +1,66 @@
 <!-- Lucian UX/UI Prompt #418 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#418 -->
 <!--
 Element: Footer
-ID: 418 · Category: Navigation · Tags: footer, newsletter, sitemap, social, language, legal, business-info
-What it does: A production footer for the bottom of a page: brand line and service status, newsletter signup, four link groups, social icons, a language picker, terms and company details. A mistyped email is flagged right away, subscribing turns the form into a confirmation, and the company details open on demand.
-How to use it: Subscribe to the newsletter with an email, then open the company details at the very bottom
-Footprint: fixed size, tall
+ID: 418 · Category: Navigation · Tags: footer, links, social, hover, spring
+What it does: A calm footer with a wordmark, three short link groups, social icons and a copyright line. Hover a link and an underline draws in from the left; social icons bounce up and take on their brand colors.
+How to use it: Move the pointer over the links and social icons
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#418
 -->
 <style>
-.u418{position:relative;width:340px;height:700px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
-
-.u418-end{flex:none;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:30px 20px 22px;background:linear-gradient(180deg,var(--ux-surface),var(--ux-surface-2))}
-.u418-end b{font-size:16px;font-weight:800;letter-spacing:-.035em;line-height:1.3}
-.u418-end span{display:flex;align-items:center;height:30px;padding:0 12px;border-radius:9px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:700}
-.u418-ft{flex:none;padding:22px 20px 18px;background:var(--ux-surface-2);box-shadow:0 -1px 0 var(--ux-line)}
-.u418-br{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.u418-logo{display:flex;align-items:center;gap:7px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:800;letter-spacing:-.03em;border-radius:6px}
-.u418-mk{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.u418{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u418-ft{width:300px;padding:20px 20px 16px;border-radius:20px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong)}
+.u418-tp{display:flex;align-items:center;justify-content:space-between}
+.u418-logo{display:flex;align-items:center;gap:7px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:800;letter-spacing:-.03em;border-radius:7px}
+.u418-mk{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
 .u418-mk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
-.u418-stt{display:flex;align-items:center;gap:6px;height:24px;padding:0 9px 0 8px;border-radius:99px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:10px;font-weight:650;color:var(--ux-ink-2);text-decoration:none;white-space:nowrap;transition:box-shadow .15s}
-.u418-stt:hover{box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u418-stt i{position:relative;width:6px;height:6px;border-radius:50%;background:#22C55E}
-.u418-stt i::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:1.5px solid #22C55E;opacity:0;animation:u418-pulse 2.4s ease-out infinite}
-@keyframes u418-pulse{0%{opacity:.7;transform:scale(.5)}100%{opacity:0;transform:scale(1.5)}}
-.u418-ln{margin:10px 0 0;font-size:11px;line-height:1.55;color:var(--ux-ink-3);max-width:270px}
+.u418-so{display:flex;gap:2px;margin:0 -6px 0 0;padding:0;list-style:none}
 
-.u418-nl{margin-top:16px;padding:14px;border-radius:14px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow)}
-.u418-nl h4{margin:0;font-size:12px;font-weight:750}
-.u418-nl>p{margin:3px 0 0;font-size:10.5px;line-height:1.5;color:var(--ux-ink-3)}
-.u418-fm{display:flex;gap:6px;margin-top:10px}
-.u418-fm.is-bad{animation:u418-shake .36s cubic-bezier(.36,.07,.19,.97)}
-@keyframes u418-shake{20%,60%{transform:translateX(-3px)}40%,80%{transform:translateX(3px)}}
-.u418-fm label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.u418-in{flex:1;min-width:0;height:34px;padding:0 11px;border:0;border-radius:9px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;color:var(--ux-ink);outline:none;transition:box-shadow .15s,background-color .15s}
-.u418-in::placeholder{color:var(--ux-ink-3)}
-.u418 .u418-in:focus-visible{outline:none}
-.u418-in:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent)}
-.u418-in:focus{background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u418-in[aria-invalid="true"]{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
-.u418-go{position:relative;flex:none;min-width:58px;height:34px;padding:0 13px;border:0;border-radius:9px;background:var(--ux-ink);color:var(--ux-surface);font-size:11.5px;font-weight:700;transition:opacity .15s,transform .2s var(--ux-spring)}
-.u418-go:hover{opacity:.88}
-.u418-go:active{transform:scale(.96)}
-.u418-go[aria-busy="true"]{color:transparent;pointer-events:none}
-.u418-go[aria-busy="true"]::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--ux-surface);border-right-color:transparent;animation:u418-spin .7s linear infinite}
-@keyframes u418-spin{to{transform:rotate(360deg)}}
-.u418-er{display:flex;align-items:center;gap:5px;min-height:0;margin:0;font-size:10px;font-weight:600;color:var(--ux-danger);overflow:hidden;max-height:0;transition:max-height .25s var(--ux-ease),margin .25s}
-.u418-er.is-on{max-height:20px;margin-top:7px}
-.u418-er svg{width:11px;height:11px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
-.u418-ok{display:none;align-items:center;gap:10px;margin-top:10px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--ux-mint) 12%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 30%,transparent)}
-.u418.is-sub .u418-ok{display:flex;animation:u418-pop .5s cubic-bezier(.3,1.4,.5,1)}
-.u418.is-sub .u418-fm,.u418.is-sub .u418-er{display:none}
-@keyframes u418-pop{from{opacity:0;transform:scale(.96) translateY(3px)}to{opacity:1;transform:none}}
-.u418-ok i{display:grid;place-items:center;width:22px;height:22px;flex:none;border-radius:50%;background:var(--ux-mint)}
-.u418-ok i svg{width:12px;height:12px;fill:none;stroke:var(--ux-surface);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:14;stroke-dashoffset:14;transition:stroke-dashoffset .4s var(--ux-ease) .15s}
-.u418.is-sub .u418-ok i svg{stroke-dashoffset:0}
-.u418-ok b{display:block;font-size:11.5px;font-weight:750}
-.u418-ok small{display:block;font-size:10px;color:var(--ux-ink-3)}
-
-.u418-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px 16px;margin-top:18px}
-.u418-cols h5{margin:0 0 6px;font-size:10.5px;font-weight:750;color:var(--ux-ink)}
-.u418-cols ul{margin:0;padding:0;list-style:none}
-.u418-cols a{display:inline-flex;align-items:center;gap:6px;height:22px;font-size:11.5px;font-weight:500;color:var(--ux-ink-3);text-decoration:none;border-radius:4px;transition:color .15s}
-.u418-cols a:hover{color:var(--ux-ink)}
-.u418-cols a em{font-style:normal;height:16px;padding:0 6px;border-radius:99px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:9px;font-weight:750;line-height:16px}
-.u418-mid{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--ux-line)}
-.u418-so{display:flex;gap:2px;margin:0 0 0 -6px;padding:0;list-style:none}
-.u418-so a{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;color:var(--ux-ink-3);transition:color .15s,background-color .15s,transform .25s var(--ux-spring)}
-.u418-so a:hover{color:var(--ux-ink);background:var(--ux-surface-3);transform:translateY(-1px)}
+.u418-so a{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;color:var(--ux-ink-3);transition:transform .5s cubic-bezier(.3,1.9,.5,1),color .25s,background-color .25s}
+.u418-so a:hover{transform:translateY(-3px) scale(1.14);background:var(--ux-surface-2);color:var(--b)}
+.u418-so a:active{transform:scale(.9)}
 .u418-so svg{width:14px;height:14px;fill:currentColor}
-.u418-lg{position:relative;display:flex;align-items:center}
-.u418-lg svg{position:absolute;pointer-events:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.u418-lg svg.gl{left:8px;width:13px;height:13px}
-.u418-lg svg.cv{right:7px;width:10px;height:10px;stroke-width:1.6}
-.u418-lg select{appearance:none;-webkit-appearance:none;height:30px;padding:0 24px 0 27px;border:0;border-radius:8px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11px;font-weight:600;color:var(--ux-ink-2);cursor:pointer;transition:box-shadow .15s}
-.u418-lg select:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent)}
-.u418-lg select:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u418-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:20px}
+.u418-cols h4{margin:0 0 8px;font-size:11px;font-weight:750;color:var(--ux-ink)}
+.u418-cols ul{margin:0;padding:0;list-style:none;display:grid;gap:7px}
 
-.u418-lgl{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-top:14px;font-size:10px;color:var(--ux-ink-3)}
-.u418-lgl a{color:var(--ux-ink-3);text-decoration:none;border-radius:3px}
-.u418-lgl a:hover{color:var(--ux-ink);text-decoration:underline;text-underline-offset:2px}
-.u418-lgl a.pv{font-weight:750;color:var(--ux-ink-2)}
-.u418-bz{display:inline-flex;align-items:center;gap:3px;height:22px;margin-left:auto;padding:0 4px 0 6px;border:0;border-radius:6px;background:none;font-size:10px;font-weight:650;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
-.u418-bz:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
-.u418-bz svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
-.u418-bz[aria-expanded="true"] svg{transform:rotate(180deg)}
-.u418-bi{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ux-ease)}
-.u418.is-biz .u418-bi{grid-template-rows:1fr}
-.u418-bi>div{min-height:0;overflow:hidden}
-.u418-bx{margin:10px 0 0;padding:10px 12px;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);overflow:hidden;opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .35s var(--ux-ease)}
-.u418.is-biz .u418-bx{opacity:1;transform:none;transition-delay:.1s}
-
-.u418-bw{display:flex;flex-wrap:wrap;margin:0 0 0 -9px;padding:0;list-style:none;font-size:9.5px;line-height:1.75;color:var(--ux-ink-3)}
-.u418-bw li{padding:0 8px;border-left:1px solid var(--ux-line-2);white-space:nowrap}
-.u418 a:focus-visible,.u418 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.u418-bi,.u418-bx,.u418-er{transition:none!important}.u418-fm.is-bad,.u418.is-sub .u418-ok{animation:none!important}}
+.u418-cols a{position:relative;display:inline-block;font-size:12px;color:var(--ux-ink-3);text-decoration:none;border-radius:3px;transition:color .2s}
+.u418-cols a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:100% 50%;transition:transform .35s var(--ux-ease)}
+.u418-cols a:hover{color:var(--ux-ink)}
+.u418-cols a:hover::after{transform:scaleX(1);transform-origin:0 50%}
+.u418-bt{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:12px;border-top:1px solid var(--ux-line);font-size:10.5px;color:var(--ux-ink-3)}
+.u418-bt a{color:var(--ux-ink-2);font-weight:650;text-decoration:none;border-radius:3px}
+.u418-bt a:hover{color:var(--ux-ink)}
+.u418 a:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u418-so .x{--b:#000000;--b:light-dark(#000000,#FFFFFF)}
+.u418-so .yt{--b:#FF0000}
+.u418-so .ig{--b:#E4405F}
+.u418-so .gh{--b:#181717;--b:light-dark(#181717,#FFFFFF)}
+@media (prefers-reduced-motion:reduce){.u418-so a,.u418-cols a::after{transition:none!important}}
 </style>
-<div class="ux u418">
-  <div class="u418-end" aria-hidden="true"><b>Make work feel lighter, today</b><span>Start for free</span></div>
-  <footer class="u418-ft">
-    <div class="u418-br">
+<footer class="ux u418">
+  <div class="u418-ft">
+    <div class="u418-tp">
       <a class="u418-logo" href="#" aria-label="Haru home"><span class="u418-mk" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 8.9a4 4 0 0 1 8 0"/><path d="M1.8 11.4h10.4"/></svg></span>Haru</a>
-      <a class="u418-stt" href="#"><i aria-hidden="true"></i>All systems normal</a>
-    </div>
-    <p class="u418-ln">Docs, projects and meetings in one place, so your team can focus on the work.</p>
-    <section class="u418-nl">
-      <h4>Newsletter</h4>
-      <p>Product news and work tips, once a month.</p>
-      <form class="u418-fm" novalidate>
-        <label>Email address</label>
-        <input class="u418-in" type="email" inputmode="email" autocomplete="email" placeholder="name@company.com">
-        <button class="u418-go" type="submit">Subscribe</button>
-      </form>
-      <p class="u418-er" aria-live="polite"><svg viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.8"/><path d="M6 3.6v2.8M6 8.3v.1"/></svg><span></span></p>
-      <div class="u418-ok" role="status"><i aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m3 6.2 2 2 4-4.4"/></svg></i><span><b>You’re subscribed</b><small>We sent a confirmation. Check your inbox.</small></span></div>
-    </section>
-    <nav class="u418-cols" aria-label="Site links">
-      <div><h5>Product</h5><ul><li><a href="#">Features</a></li><li><a href="#">Pricing</a></li><li><a href="#">Changelog</a></li><li><a href="#">Download</a></li></ul></div>
-      <div><h5>Company</h5><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers<em>Hiring</em></a></li><li><a href="#">Press</a></li></ul></div>
-      <div><h5>Resources</h5><ul><li><a href="#">Guides</a></li><li><a href="#">API docs</a></li><li><a href="#">Templates</a></li><li><a href="#">Community</a></li></ul></div>
-      <div><h5>Support</h5><ul><li><a href="#">Help center</a></li><li><a href="#">Contact us</a></li><li><a href="#">Security</a></li><li><a href="#">Status</a></li></ul></div>
-    </nav>
-    <div class="u418-mid">
-      <ul class="u418-so">
-        <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></li>
-        <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></li>
-        <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a></li>
-        <li><a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></li>
-        <li><a href="#" aria-label="KakaoTalk channel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22.125 0H1.875C.8394 0 0 .8394 0 1.875v20.25C0 23.1606.8394 24 1.875 24h20.25C23.1606 24 24 23.1606 24 22.125V1.875C24 .8394 23.1606 0 22.125 0zM12 18.75c-.591 0-1.1697-.0413-1.7317-.1209-.5626.3965-3.813 2.6797-4.1198 2.7225 0 0-.1258.0489-.2328-.0141s-.0876-.2282-.0876-.2282c.0322-.2198.8426-3.0183.992-3.5333-2.7452-1.36-4.5701-3.7686-4.5701-6.5135C2.25 6.8168 6.6152 3.375 12 3.375s9.75 3.4418 9.75 7.6875c0 4.2457-4.3652 7.6875-9.75 7.6875zM8.0496 9.8672h-.8777v3.3417c0 .2963-.2523.5372-.5625.5372s-.5625-.2409-.5625-.5372V9.8672h-.8777c-.3044 0-.552-.2471-.552-.5508s.2477-.5508.552-.5508h2.8804c.3044 0 .552.2471.552.5508s-.2477.5508-.552.5508zm10.9879 2.9566a.558.558 0 0 1 .108.4167.5588.5588 0 0 1-.2183.371.5572.5572 0 0 1-.3383.1135.558.558 0 0 1-.4493-.2236l-1.3192-1.7479-.1952.1952v1.2273a.5635.5635 0 0 1-.5627.5628.563.563 0 0 1-.5625-.5625V9.3281c0-.3102.2523-.5625.5625-.5625s.5625.2523.5625.5625v1.209l1.5694-1.5694c.0807-.0807.1916-.1252.312-.1252.1404 0 .2814.0606.3871.1661.0985.0984.1573.2251.1654.3566.0082.1327-.036.2542-.1241.3425l-1.2818 1.2817 1.3845 1.8344zm-8.3502-3.5023c-.095-.2699-.3829-.5475-.7503-.5557-.3663.0083-.6542.2858-.749.5551l-1.3455 3.5415c-.1708.5305-.0217.7272.1333.7988a.8568.8568 0 0 0 .3576.0776c.2346 0 .4139-.0952.4678-.2481l.2787-.7297 1.7152.0001.2785.7292c.0541.1532.2335.2484.4681.2484a.8601.8601 0 0 0 .3576-.0775c.1551-.0713.3041-.2681.1329-.7999l-1.3449-3.5398zm-1.3116 2.4433l.5618-1.5961.5618 1.5961H9.3757zm5.9056 1.3836c0 .2843-.2418.5156-.5391.5156h-1.8047c-.2973 0-.5391-.2314-.5391-.5156V9.3281c0-.3102.2576-.5625.5742-.5625s.5742.2523.5742.5625v3.3047h1.1953c.2974 0 .5392.2314.5392.5156z"/></svg></a></li>
+      <ul class="u418-so" aria-label="Social media">
+        <li><a class="x" href="#" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg></a></li>
+        <li><a class="yt" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a></li>
+        <li><a class="ig" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a></li>
+        <li><a class="gh" href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a></li>
       </ul>
-      <div class="u418-lg">
-        <svg class="gl" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.6"/><path d="M1.6 7h10.8M7 1.4c1.6 1.6 2.3 3.5 2.3 5.6S8.6 11 7 12.6C5.4 11 4.7 9.1 4.7 7S5.4 3 7 1.4z"/></svg>
-        <select aria-label="Language"><option lang="ko" selected>한국어</option><option lang="en">English</option><option lang="ja">日本語</option></select>
-        <svg class="cv" viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 4 5 6.5 7.5 4"/></svg>
-      </div>
     </div>
-    <div class="u418-lgl">
-      <span>© 2026 Haru Labs</span>
-      <a href="#">Terms</a>
-      <a class="pv" href="#">Privacy</a>
-      <button class="u418-bz" type="button" aria-expanded="false">Company info<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 4 5 6.5 7.5 4"/></svg></button>
-    </div>
-    <div class="u418-bi"><div><div class="u418-bx"><ul class="u418-bw"><li>Haru Labs Inc.</li><li>CEO Haru Kim</li><li>Business reg. 120-88-01234</li><li>Mail-order reg. 2026-Seoul Gangnam-01234</li><li>12F, 152 Teheran-ro, Gangnam-gu, Seoul</li><li>Support 1588-0000 (weekdays 10:00–18:00)</li></ul></div></div></div>
-  </footer>
-</div>
+    <nav class="u418-cols" aria-label="Site links">
+      <div><h4>Product</h4><ul><li><a href="#">Features</a></li><li><a href="#">Pricing</a></li><li><a href="#">Changelog</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="#">Careers</a></li></ul></div>
+      <div><h4>Support</h4><ul><li><a href="#">Help</a></li><li><a href="#">Contact</a></li><li><a href="#">Status</a></li></ul></div>
+    </nav>
+    <div class="u418-bt"><span>© 2026 Haru Labs</span><a href="#">Privacy</a></div>
+  </div>
+</footer>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var fm = root.querySelector('.u418-fm'), inp = root.querySelector('.u418-in'), go = root.querySelector('.u418-go');
-  var er = root.querySelector('.u418-er'), erT = er.querySelector('span'), bz = root.querySelector('.u418-bz'), bi = root.querySelector('.u418-bi');
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var uid = 'u418-' + Math.random().toString(36).slice(2, 7);
-  var busy = false;
-  inp.id = uid + '-e'; fm.querySelector('label').setAttribute('for', inp.id);
-  er.id = uid + '-er'; inp.setAttribute('aria-describedby', er.id);
-  bi.id = uid + '-bi'; bz.setAttribute('aria-controls', bi.id);
-  bi.inert = true;
-  function bad(msg) {
-    inp.setAttribute('aria-invalid', 'true');
-    erT.textContent = msg; er.classList.add('is-on');
-    fm.classList.remove('is-bad'); void fm.offsetWidth; fm.classList.add('is-bad');
-    inp.focus({ preventScroll: true });
-  }
-  function clear() { inp.removeAttribute('aria-invalid'); er.classList.remove('is-on'); }
-  fm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (busy) return;
-    var v = inp.value.trim();
-    if (!v) return bad('Enter your email address');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return bad('Check the email format');
-    clear(); busy = true;
-    go.setAttribute('aria-busy', 'true'); go.setAttribute('aria-label', 'Subscribing…');
-    inp.readOnly = true;
-    setTimeout(function () {
-      if (!root.isConnected) return;
-      busy = false; inp.readOnly = false;
-      go.removeAttribute('aria-busy'); go.removeAttribute('aria-label');
-      root.classList.add('is-sub');
-    }, rm ? 200 : 1100);
-  });
-  inp.addEventListener('input', function () { if (inp.getAttribute('aria-invalid')) clear(); });
-  bz.addEventListener('click', function () {
-    var v = !root.classList.contains('is-biz');
-    root.classList.toggle('is-biz', v);
-    bz.setAttribute('aria-expanded', String(v));
-    bi.inert = !v;
-  });
   root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
 })();
 </script>

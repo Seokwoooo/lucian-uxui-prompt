@@ -1,116 +1,52 @@
-<!-- @meta {"title":"날짜 선택","category":"입력·검색","summary":"예약 날짜 입력칸을 누르면 달력이 열립니다. 오늘에는 점이 찍히고 지난 날짜는 고를 수 없으며, 달을 넘기면 달력이 옆으로 밀려 바뀝니다. ‘오늘’, ‘내일’, ‘다음 주’로 바로 고를 수 있고, 날짜를 고르면 그날 예약할 수 있는 시간이 나옵니다.","hint":"‘내일’을 누르거나 다음 달로 넘겨 날짜를 골라 보세요. 달력 안에서는 방향키, PageUp·PageDown, Enter도 됩니다","shape":"square","hue":"#3D8BFF","hue2":"#22C3A6","tags":["date-picker","calendar","popover","booking","quick-picks","keyboard","disabled-dates"]} -->
-<!-- @demo [["wait",1200],["hover",".u431-d:not(:disabled)",3,{"after":500}],["tap",".u431-qp button",1,{"after":1300}],["tap",".u431-slot:not(:disabled)",2,{"after":1000}],["tap",".u431-tr",0,{"after":800}],["tap",".u431-nav button",1,{"after":900}],["tap",".u431-d:not(:disabled)",9,{"after":1500}],["tap",".u431-slot:not(:disabled)",0,{"after":1200}],["reset"]] -->
-<!-- @en {"title":"Date picker","summary":"Press the booking date field and a calendar opens. Today is marked with a dot, past dates can’t be picked, and changing months slides the calendar sideways. Pick instantly with Today, Tomorrow or Next week, and once a date is set the times you can book that day appear.","hint":"Press Tomorrow, or go to next month and pick a date. Inside the calendar, arrow keys, PageUp/PageDown and Enter work too","map":[
-  [">예약 날짜<", ">Booking date<"],
-  ["aria-label=\"날짜 선택\"", "aria-label=\"Choose a date\""],
-  ["aria-label=\"빠른 선택\"", "aria-label=\"Quick picks\""],
-  [">오늘<", ">Today<"],
-  [">내일<", ">Tomorrow<"],
-  [">다음 주<", ">Next week<"],
+<!-- @meta {"title":"날짜 선택","category":"입력·검색","summary":"한 달짜리 달력입니다. 날짜를 누르면 선택 동그라미가 스프링처럼 그 날로 튀어 가고, 달을 넘기면 달력이 옆으로 밀려 바뀝니다. 오늘에는 점이 찍히고 지난 날짜는 고를 수 없습니다.","hint":"날짜를 여러 번 눌러 보고, 화살표로 다음 달로 넘겨 보세요. 방향키도 됩니다","shape":"square","hue":"#3D8BFF","hue2":"#22C3A6","tags":["date-picker","calendar","spring","month-slide","keyboard"]} -->
+<!-- @demo [["wait",900],["tap",".u431-d:not(:disabled)",4,{"after":800}],["tap",".u431-d:not(:disabled)",6,{"after":800}],["tap",".u431-nav",1,{"after":900}],["tap",".u431-d:not(:disabled)",11,{"after":1100}],["reset"]] -->
+<!-- @en {"title":"Date picker","summary":"A single-month calendar. Tap a day and the selection circle springs over to it; change months and the calendar slides sideways. Today is marked with a dot, and past days can’t be picked.","hint":"Tap a few days and move to next month with the arrows. Arrow keys work too","map":[
   ["aria-label=\"이전 달\"", "aria-label=\"Previous month\""],
   ["aria-label=\"다음 달\"", "aria-label=\"Next month\""],
-  [">예약 가능한 시간<", ">Available times<"],
-  ["aria-label=\"예약 시간\"", "aria-label=\"Booking time\""],
-  [">날짜를 고르면 예약할 수 있는 시간이 보여요<", ">Pick a date to see open times<"],
-  [">흐린 시간은 예약이 찼어요<", ">Dimmed times are fully booked<"],
-  ["'날짜를 선택하세요'", "'Select a date'"],
-  ["'예약하기'", "'Book'"],
-  ["'{t}에 예약하기'", "'Book for {t}'"],
-  ["'{M} {d}일 ({w})'", "'{w}, {M} {d}'"],
+  ["aria-label=\"날짜\"", "aria-label=\"Dates\""],
   ["'{y}년 {M}'", "'{M} {y}'"],
   ["'{y}년 {M} {d}일 {W}'", "'{W}, {M} {d}, {y}'"],
   ["', 오늘'", "', today'"],
-  ["['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']", "['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']"],
-  ["['일', '월', '화', '수', '목', '금', '토']", "['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']"],
-  ["['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']", "['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']"],
-  ["var WDS = WD;", "var WDS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];"]
+  ["['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']", "['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']"],
+  ["['일', '월', '화', '수', '목', '금', '토']", "['S', 'M', 'T', 'W', 'T', 'F', 'S']"],
+  ["['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']", "['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']"]
 ]} -->
 <style>
-.u431{position:relative;width:340px;height:394px;padding:18px 20px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u431 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u431-tr{display:flex;align-items:center;gap:12px;width:100%;height:52px;padding:0 14px 0 10px;border:0;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-line);text-align:left;transition:box-shadow .18s var(--ux-ease)}
-.u431-tr:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent),0 1px 2px var(--ux-line)}
-.u431.is-open .u431-tr,.u431 .u431-tr:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u431-ti{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-2)}
-.u431-ti svg{width:16px;height:16px}
-.u431-tt{flex:1;min-width:0}
-.u431-tt small{display:block;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
-.u431-tt b{display:block;margin-top:1px;font-size:14px;font-weight:600;letter-spacing:-.015em}
-.u431-tr.is-empty .u431-tt b{font-weight:500;color:var(--ux-ink-3)}
-.u431-tr>svg{flex:none;width:16px;height:16px;color:var(--ux-ink-3);transition:transform .25s var(--ux-ease)}
-.u431.is-open .u431-tr>svg{transform:rotate(180deg)}
-.u431-tm{margin-top:20px}
-.u431-tm>p{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
-.u431-sl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.u431-slot{height:38px;border:0;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:box-shadow .15s,background-color .15s,transform .2s var(--ux-spring)}
-.u431-slot:hover:not(:disabled){background:var(--ux-surface-2)}
-.u431-slot:active:not(:disabled){transform:scale(.96)}
-.u431-slot[aria-checked="true"]{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1.5px var(--ux-accent);color:var(--ux-accent)}
-.u431-slot:disabled{background:var(--ux-surface-2);box-shadow:none;color:var(--ux-ink-3);text-decoration:line-through;text-decoration-color:var(--ux-line-2);cursor:not-allowed}
-.u431-note{margin:10px 0 0;font-size:11.5px;color:var(--ux-ink-3)}
-.u431-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:150px;border-radius:12px;border:1.5px dashed var(--ux-line-2);font-size:12px;color:var(--ux-ink-3);text-align:center}
-.u431-ph svg{width:20px;height:20px}
-.u431-go{position:absolute;left:20px;right:20px;bottom:20px;height:42px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600;transition:opacity .15s,transform .2s var(--ux-spring)}
-.u431-go:hover:not(:disabled){opacity:.88}
-.u431-go:active:not(:disabled){transform:scale(.98)}
-.u431-go:disabled{opacity:.3;cursor:not-allowed}
-.u431-pop{position:absolute;z-index:3;left:20px;right:20px;top:76px;padding:10px 10px 8px;border-radius:14px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -18px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.985);transform-origin:50% 0;transition:opacity .14s var(--ux-ease),transform .18s var(--ux-ease),visibility 0s linear .18s}
-.u431.is-open .u431-pop{opacity:1;visibility:visible;transform:none;transition:opacity .16s var(--ux-ease),transform .3s var(--ux-spring),visibility 0s}
-.u431-qp{display:flex;gap:6px;padding:0 2px 10px;margin-bottom:6px;border-bottom:1px solid var(--ux-line)}
-.u431-qp button{height:28px;padding:0 11px;border:0;border-radius:8px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:12px;font-weight:600;color:var(--ux-ink-2);transition:background-color .15s,color .15s,box-shadow .15s}
-.u431-qp button:hover{color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u431-qp button[aria-pressed="true"]{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 40%,transparent);color:var(--ux-accent)}
-.u431-hd{display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 2px 0 6px}
-.u431-hd b{font-size:13.5px;font-weight:700;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
-.u431-nav{display:flex;gap:2px}
-.u431-nav button{width:28px;height:28px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
-.u431-nav button:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
-.u431-nav button:disabled{opacity:.3;cursor:default}
-.u431-nav svg{width:15px;height:15px;stroke-width:2}
-.u431-wk,.u431-row{display:grid;grid-template-columns:repeat(7,1fr)}
-.u431-wk span{height:22px;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
-.u431-wk span:first-child{color:color-mix(in srgb,var(--ux-danger) 75%,var(--ux-ink-3))}
-.u431-wk span:last-child{color:color-mix(in srgb,var(--ux-accent-2) 75%,var(--ux-ink-3))}
-.u431-gw{overflow:hidden}
-.u431-g.is-l{animation:u431-l .32s var(--ux-ease)}
-.u431-g.is-r{animation:u431-r .32s var(--ux-ease)}
-@keyframes u431-l{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
-@keyframes u431-r{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
-.u431-row>span{height:31px;display:grid;place-items:center}
-.u431-d{position:relative;width:36px;height:29px;padding:0;border:0;border-radius:8px;background:none;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:background-color .12s,color .12s,transform .2s var(--ux-spring)}
-.u431-row>span:first-child .u431-d{color:var(--ux-danger)}
-.u431-row>span:last-child .u431-d{color:var(--ux-accent-2)}
-.u431-d:hover:not(:disabled){background:var(--ux-surface-2)}
-.u431-d:active:not(:disabled){transform:scale(.92)}
-.u431-d[aria-current="date"]{font-weight:700}
-.u431-d[aria-current="date"]::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ux-accent)}
-.u431 .u431-row>span .u431-d[aria-pressed="true"]{background:var(--ux-accent);color:var(--ux-accent-ink);font-weight:650}
-.u431-d[aria-pressed="true"]::after{background:var(--ux-accent-ink)}
-.u431 .u431-row>span .u431-d:disabled{color:var(--ux-ink-3);opacity:.55;cursor:default}
-.u431 .u431-d:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u431{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u431-c{width:292px;padding:12px 12px 10px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 20px 44px -22px var(--ux-shadow-strong)}
+.u431-hd{display:flex;align-items:center;height:32px;padding:0 2px 0 8px}
+.u431-hd b{flex:1;font-size:15px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.u431-nav{width:30px;height:30px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transform:scale(var(--k,1));transition:background-color .15s,color .15s,opacity .15s,transform .4s cubic-bezier(.34,1.7,.5,1)}
+.u431-nav:hover:not(:disabled){background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u431-nav:active:not(:disabled){--k:.86;transition:transform .1s var(--ux-ease)}
+.u431-nav:disabled{opacity:.25;cursor:default}
+.u431-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.u431-wk,.u431-g{display:grid;grid-template-columns:repeat(7,1fr)}
+.u431-wk{margin-top:4px}
+.u431-wk span{height:24px;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u431-gw{position:relative;overflow:hidden}
+.u431-g{position:relative;grid-template-rows:repeat(6,32px)}
+.u431-g.is-l{animation:u431-l .42s cubic-bezier(.25,1,.4,1)}
+.u431-g.is-r{animation:u431-r .42s cubic-bezier(.25,1,.4,1)}
+@keyframes u431-l{from{opacity:0;transform:translateX(44px)}}
+@keyframes u431-r{from{opacity:0;transform:translateX(-44px)}}
+.u431-sel{position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--ux-accent);box-shadow:0 6px 14px -6px var(--ux-accent);transform:translate(var(--sx,0px),var(--sy,0px)) scale(var(--ss,0));transition:transform .5s cubic-bezier(.3,1.45,.5,1);pointer-events:none}
+.u431-sel.is-jump{transition:none}
+.u431-d{position:relative;z-index:1;justify-self:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:none;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:color .2s var(--ux-ease),background-color .15s}
+.u431-d:hover:not(:disabled):not([aria-selected="true"]){background:color-mix(in srgb,var(--ux-ink) 7%,transparent)}
+.u431-d:disabled{color:var(--ux-ink-3);opacity:.5;cursor:default}
+.u431-d[aria-selected="true"]{color:var(--ux-accent-ink);font-weight:700;transition:color .2s var(--ux-ease) .12s}
+.u431-d[aria-current="date"]{font-weight:700;color:var(--ux-accent)}
+.u431-d[aria-current="date"]::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:currentColor}
+.u431-d[aria-current="date"][aria-selected="true"]{color:var(--ux-accent-ink)}
+.u431 .u431-d:focus-visible,.u431 .u431-nav:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
 .u431-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
-<div class="ux u431 is-open">
-  <button type="button" class="u431-tr is-empty" aria-haspopup="dialog" aria-expanded="true">
-    <span class="u431-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-    <span class="u431-tt"><small>예약 날짜</small><b></b></span>
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-  </button>
-  <div class="u431-tm">
-    <p>예약 가능한 시간</p>
-    <div class="u431-ph"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>날짜를 고르면 예약할 수 있는 시간이 보여요</div>
-    <div class="u431-sl" role="radiogroup" aria-label="예약 시간" hidden></div>
-    <p class="u431-note" hidden>흐린 시간은 예약이 찼어요</p>
-  </div>
-  <button type="button" class="u431-go" disabled></button>
-  <div class="u431-pop" role="dialog" aria-label="날짜 선택">
-    <div class="u431-qp" role="group" aria-label="빠른 선택"><button type="button" aria-pressed="false" data-add="0">오늘</button><button type="button" aria-pressed="false" data-add="1">내일</button><button type="button" aria-pressed="false" data-add="7">다음 주</button></div>
-    <div class="u431-hd">
-      <b aria-live="polite"></b>
-      <div class="u431-nav"><button type="button" aria-label="이전 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button><button type="button" aria-label="다음 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button></div>
-    </div>
+<div class="ux u431">
+  <div class="u431-c">
+    <div class="u431-hd"><b aria-live="polite"></b><button type="button" class="u431-nav" aria-label="이전 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button><button type="button" class="u431-nav" aria-label="다음 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button></div>
     <div class="u431-wk" aria-hidden="true"></div>
-    <div class="u431-gw"><div class="u431-g" role="grid"></div></div>
+    <div class="u431-gw"><i class="u431-sel" aria-hidden="true"></i><div class="u431-g" role="grid" aria-label="날짜"></div></div>
   </div>
   <p class="u431-live" role="status"></p>
 </div>
@@ -118,165 +54,80 @@
 (function () {
   var root = document.currentScript.previousElementSibling;
   var q = function (s) { return root.querySelector(s); };
-  var tr = q('.u431-tr'), trv = q('.u431-tt b'), pop = q('.u431-pop'), qp = q('.u431-qp'), hdT = q('.u431-hd b'), navs = root.querySelectorAll('.u431-nav button'), wk = q('.u431-wk'), grid = q('.u431-g'), ph = q('.u431-ph'), sl = q('.u431-sl'), note = q('.u431-note'), go = q('.u431-go'), live = q('.u431-live');
+  var hdT = q('.u431-hd b'), navs = root.querySelectorAll('.u431-nav'), wk = q('.u431-wk'), grid = q('.u431-g'), selEl = q('.u431-sel'), live = q('.u431-live');
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { ph: '날짜를 선택하세요', book: '예약하기', bookAt: '{t}에 예약하기', fmt: '{M} {d}일 ({w})', head: '{y}년 {M}', aria: '{y}년 {M} {d}일 {W}', today: ', 오늘' };
+  var T = { head: '{y}년 {M}', aria: '{y}년 {M} {d}일 {W}', today: ', 오늘' };
   var MON = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
   var WD = ['일', '월', '화', '수', '목', '금', '토'];
   var WDF = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
-  var WDS = WD;
-  var SLOTS = ['09:30', '10:00', '11:00', '13:30', '14:30', '15:00', '16:30', '17:00', '18:00'];
-  var now = new Date();
-  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  // 예약은 이번 달부터 석 달 안에서만 받습니다
-  var last = new Date(today.getFullYear(), today.getMonth() + 3, 0);
-  var view = new Date(today.getFullYear(), today.getMonth(), 1);
-  var sel = null, fd = new Date(today), slot = -1;
+  var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var first = new Date(today.getFullYear(), today.getMonth(), 1), last = new Date(today.getFullYear(), today.getMonth() + 4, 0);
+  // 처음에는 모레를 골라 둡니다
+  var sel = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2), view = new Date(sel.getFullYear(), sel.getMonth(), 1);
   wk.innerHTML = WD.map(function (w) { return '<span>' + w + '</span>'; }).join('');
-
   function key(d) { return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate(); }
-  function same(a, b) { return !!a && !!b && key(a) === key(b); }
-  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
-  function ok(d) { return key(d) >= key(today) && key(d) <= key(last); }
-  function fill(t, d) { return t.replace('{y}', d.getFullYear()).replace('{M}', MON[d.getMonth()]).replace('{d}', d.getDate()).replace('{w}', WDS[d.getDay()]).replace('{W}', WDF[d.getDay()]); }
-
-  var shown = -1;
-  // 달이 바뀔 때만 칸을 새로 만들고, 같은 달 안에서는 선택·초점 표시만 고칩니다(초점이 사라지지 않게)
-  function renderGrid(dir) {
-    var y = view.getFullYear(), m = view.getMonth();
-    if (shown !== y * 12 + m) {
-      shown = y * 12 + m;
-      var off = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate();
-      var html = '';
-      for (var r = 0; r < 6; r++) {
-        html += '<div class="u431-row" role="row">';
-        for (var c = 0; c < 7; c++) {
-          var day = r * 7 + c - off + 1;
-          if (day < 1 || day > n) { html += '<span role="gridcell"></span>'; continue; }
-          var d = new Date(y, m, day), isT = same(d, today);
-          html += '<span role="gridcell"><button type="button" class="u431-d" data-day="' + day + '"' + (isT ? ' aria-current="date"' : '') +
-            ' aria-label="' + fill(T.aria, d) + (isT ? T.today : '') + '"' + (ok(d) ? '' : ' disabled') + '>' + day + '</button></span>';
-        }
-        html += '</div>';
-      }
-      grid.innerHTML = html;
-      hdT.textContent = fill(T.head, view);
-      navs[0].disabled = y * 12 + m <= today.getFullYear() * 12 + today.getMonth();
-      navs[1].disabled = y * 12 + m >= last.getFullYear() * 12 + last.getMonth();
-      grid.classList.remove('is-l', 'is-r');
-      if (dir && !rm) { void grid.offsetWidth; grid.classList.add(dir > 0 ? 'is-l' : 'is-r'); }
+  function fill(t, d) { return t.replace('{y}', d.getFullYear()).replace('{M}', MON[d.getMonth()]).replace('{d}', d.getDate()).replace('{W}', WDF[d.getDay()]); }
+  function btn(day) { return grid.querySelector('[data-day="' + day + '"]'); }
+  function inView(d) { return !!d && d.getFullYear() === view.getFullYear() && d.getMonth() === view.getMonth(); }
+  // 선택 동그라미는 한 장뿐이고, 고른 날 자리로 스프링처럼 옮겨 갑니다
+  function moveSel(jump) {
+    var b = inView(sel) ? btn(sel.getDate()) : null;
+    selEl.classList.toggle('is-jump', !!jump);
+    if (b) { selEl.style.setProperty('--sx', b.offsetLeft + 'px'); selEl.style.setProperty('--sy', b.offsetTop + 'px'); }
+    selEl.style.setProperty('--ss', b ? 1 : 0);
+    if (jump) { void selEl.offsetWidth; selEl.classList.remove('is-jump'); }
+  }
+  function render(dir) {
+    var y = view.getFullYear(), m = view.getMonth(), off = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate(), html = '';
+    for (var i = 0; i < 42; i++) {
+      var day = i - off + 1;
+      if (day < 1 || day > n) { html += '<span role="gridcell"></span>'; continue; }
+      var d = new Date(y, m, day), isT = key(d) === key(today), ok = key(d) >= key(today) && key(d) <= key(last), isS = !!sel && key(d) === key(sel);
+      html += '<button type="button" role="gridcell" class="u431-d" data-day="' + day + '" tabindex="-1" aria-selected="' + isS + '"' + (isT ? ' aria-current="date"' : '') + ' aria-label="' + fill(T.aria, d) + (isT ? T.today : '') + '"' + (ok ? '' : ' disabled') + '>' + day + '</button>';
     }
-    Array.prototype.forEach.call(grid.querySelectorAll('.u431-d'), function (b) {
-      var d = new Date(y, m, +b.dataset.day), isS = same(d, sel);
-      b.setAttribute('aria-pressed', isS ? 'true' : 'false');
-      b.parentNode.setAttribute('aria-selected', isS ? 'true' : 'false');
-      b.tabIndex = same(d, fd) ? 0 : -1;
-    });
-    Array.prototype.forEach.call(qp.children, function (b) { b.setAttribute('aria-pressed', same(sel, addDays(today, +b.dataset.add)) ? 'true' : 'false'); });
+    grid.innerHTML = html;
+    var focusDay = inView(sel) ? sel.getDate() : (inView(today) ? today.getDate() : 1), fb = btn(focusDay);
+    if (fb && !fb.disabled) fb.tabIndex = 0; else { var en = grid.querySelector('.u431-d:not(:disabled)'); if (en) en.tabIndex = 0; }
+    hdT.textContent = fill(T.head, view);
+    navs[0].disabled = key(view) <= key(first);
+    navs[1].disabled = view.getFullYear() * 12 + m >= last.getFullYear() * 12 + last.getMonth();
+    grid.classList.remove('is-l', 'is-r');
+    if (dir && !rm) { void grid.offsetWidth; grid.classList.add(dir > 0 ? 'is-l' : 'is-r'); }
+    moveSel(true);
   }
-  function shiftMonth(n) {
-    var nv = new Date(view.getFullYear(), view.getMonth() + n, 1);
-    if (key(nv) < key(new Date(today.getFullYear(), today.getMonth(), 1)) || key(nv) > key(last)) return false;
-    view = nv;
-    renderGrid(n);
-    return true;
-  }
-  // 고른 날짜에 따라 예약이 찬 시간을 정합니다(같은 날짜는 늘 같은 결과)
-  function renderSlots() {
-    ph.hidden = !!sel;
-    sl.hidden = note.hidden = !sel;
-    if (!sel) { go.disabled = true; go.textContent = T.book; return; }
-    var seed = sel.getDate() * 7 + sel.getMonth() * 3;
-    sl.innerHTML = SLOTS.map(function (t, i) {
-      var full = (seed * 13 + i * 29 + i * i * 7) % 9 < 3;
-      return '<button type="button" class="u431-slot" role="radio" aria-checked="' + (i === slot) + '"' + (full ? ' disabled' : '') + '>' + t + '</button>';
-    }).join('');
-    go.disabled = slot < 0;
-    go.textContent = slot < 0 ? T.book : T.bookAt.replace('{t}', fill(T.fmt, sel) + ' ' + SLOTS[slot]);
-  }
-  function syncTrigger() {
-    tr.classList.toggle('is-empty', !sel);
-    trv.textContent = sel ? fill(T.fmt, sel) : T.ph;
-  }
-  function focusDay() {
-    var b = grid.querySelector('[data-day="' + fd.getDate() + '"]');
-    if (b) b.focus({ preventScroll: true });
-  }
-  function setOpen(v, focus) {
-    root.classList.toggle('is-open', v);
-    tr.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (v) {
-      fd = sel ? new Date(sel) : new Date(today);
-      view = new Date(fd.getFullYear(), fd.getMonth(), 1);
-      renderGrid(0);
-      if (focus) focusDay();
-    } else if (focus) tr.focus({ preventScroll: true });
-  }
-  var closeT = 0;
   function pick(d, focus) {
-    if (!ok(d)) return;
-    sel = new Date(d); fd = new Date(d); slot = -1;
-    if (sel.getMonth() !== view.getMonth() || sel.getFullYear() !== view.getFullYear()) { view = new Date(sel.getFullYear(), sel.getMonth(), 1); }
-    renderGrid(0);
-    syncTrigger();
-    renderSlots();
-    live.textContent = fill(T.aria, sel);
-    // 고른 날짜를 잠깐 보여 준 뒤 닫습니다
-    clearTimeout(closeT);
-    closeT = setTimeout(function () { if (root.isConnected) setOpen(false, focus); }, rm ? 0 : 220);
+    var prev = sel;
+    sel = d;
+    Array.prototype.forEach.call(grid.querySelectorAll('.u431-d'), function (b) { var on = +b.dataset.day === d.getDate(); b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
+    moveSel(!inView(prev));
+    if (!rm) { selEl.animate([{ borderRadius: '50%', filter: 'brightness(1.15)' }, { borderRadius: '50%', filter: 'none' }], { duration: 400 }); }
+    live.textContent = fill(T.aria, d);
+    if (focus) btn(d.getDate()).focus({ preventScroll: true });
   }
-
-  tr.addEventListener('click', function () { setOpen(!root.classList.contains('is-open'), true); });
-  tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true, true); } });
-  navs[0].addEventListener('click', function () { shiftMonth(-1); });
-  navs[1].addEventListener('click', function () { shiftMonth(1); });
-  qp.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) pick(addDays(today, +b.dataset.add), e.detail === 0); });
-  grid.addEventListener('click', function (e) {
-    var b = e.target.closest('.u431-d');
-    if (b && !b.disabled) pick(new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), e.detail === 0);
-  });
-  // 달력 키보드: 방향키 하루·한 주, Home/End 주의 처음·끝, PageUp/PageDown 한 달
+  function shift(n) {
+    var nv = new Date(view.getFullYear(), view.getMonth() + n, 1);
+    if (key(nv) < key(first) || key(nv) > key(last)) return false;
+    view = nv; render(n); return true;
+  }
+  navs[0].addEventListener('click', function () { shift(-1); });
+  navs[1].addEventListener('click', function () { shift(1); });
+  grid.addEventListener('click', function (e) { var b = e.target.closest('.u431-d'); if (b && !b.disabled) pick(new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), false); });
+  // 방향키로 하루·한 주씩, PageUp/PageDown으로 한 달씩 옮기며 바로 고릅니다
   grid.addEventListener('keydown', function (e) {
     var b = e.target.closest('.u431-d');
     if (!b) return;
     var cur = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), nd = null;
-    if (e.key === 'ArrowRight') nd = addDays(cur, 1);
-    else if (e.key === 'ArrowLeft') nd = addDays(cur, -1);
-    else if (e.key === 'ArrowDown') nd = addDays(cur, 7);
-    else if (e.key === 'ArrowUp') nd = addDays(cur, -7);
-    else if (e.key === 'Home') nd = addDays(cur, -cur.getDay());
-    else if (e.key === 'End') nd = addDays(cur, 6 - cur.getDay());
-    else if (e.key === 'PageDown' || e.key === 'PageUp') {
-      var dm = e.key === 'PageDown' ? 1 : -1;
-      nd = new Date(cur.getFullYear(), cur.getMonth() + dm, Math.min(cur.getDate(), new Date(cur.getFullYear(), cur.getMonth() + dm + 1, 0).getDate()));
-    } else return;
-    e.preventDefault();
-    e.stopPropagation();
+    var mv = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }[e.key];
+    if (mv) nd = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + mv);
+    else if (e.key === 'PageDown' || e.key === 'PageUp') nd = new Date(cur.getFullYear(), cur.getMonth() + (e.key === 'PageDown' ? 1 : -1), Math.min(cur.getDate(), 28));
+    else return;
+    e.preventDefault(); e.stopPropagation();
     if (key(nd) < key(today)) nd = new Date(today);
     if (key(nd) > key(last)) nd = new Date(last);
     var dir = (nd.getFullYear() * 12 + nd.getMonth()) - (view.getFullYear() * 12 + view.getMonth());
-    fd = nd;
-    if (dir) view = new Date(nd.getFullYear(), nd.getMonth(), 1);
-    renderGrid(dir);
-    focusDay();
+    if (dir) { view = new Date(nd.getFullYear(), nd.getMonth(), 1); render(dir); }
+    pick(nd, true);
   });
-  sl.addEventListener('click', function (e) {
-    var b = e.target.closest('.u431-slot');
-    if (!b || b.disabled) return;
-    slot = Array.prototype.indexOf.call(sl.children, b);
-    renderSlots();
-  });
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && root.classList.contains('is-open')) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
-  });
-  root.addEventListener('pointerdown', function (e) {
-    if (root.classList.contains('is-open') && !e.target.closest('.u431-pop, .u431-tr')) setOpen(false);
-  });
-  root.addEventListener('focusout', function (e) {
-    if (root.classList.contains('is-open') && e.relatedTarget && !pop.contains(e.relatedTarget) && e.relatedTarget !== tr) setOpen(false);
-  });
-  syncTrigger();
-  renderGrid(0);
-  renderSlots();
+  render(0);
 })();
 </script>

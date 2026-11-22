@@ -1,202 +1,92 @@
 <!-- Lucian UX/UI Prompt #407 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#407 -->
 <!--
-Element: 패스키·매직링크 로그인
-ID: 407 · Category: 로그인·가입 · Tags: passkey, webauthn, magic-link, passwordless, sign-in, face-id
-What it does: 비밀번호 없이 들어오는 로그인 카드입니다. ‘패스키로 로그인’을 누르면 운영체제 확인 창 같은 시트가 올라와 얼굴 인식 표시가 돌다가 체크로 바뀌고 환영 화면으로 넘어갑니다. 이메일을 넣고 ‘로그인 링크 받기’를 누르면 ‘메일함을 확인해 주세요’ 화면과 ‘메일 앱 열기’ 버튼이 나옵니다.
-How to use it: 패스키로 로그인을 눌러 계속을 누르고, 로그아웃한 뒤 이메일로 링크도 받아 보세요
+Element: 패스키 로그인 버튼
+ID: 407 · Category: 로그인·가입 · Tags: passkey, webauthn, fingerprint, biometric, scan, morph
+What it does: ‘패스키로 로그인’ 버튼 하나입니다. 누르면 버튼 속 작은 지문 아이콘이 커지며 버튼이 정사각형 판으로 바뀌고, 지문 무늬가 한 줄씩 그려진 뒤 스캔 빛이 위에서 아래로 훑으며 무늬를 물들입니다. 확인이 끝나면 초록 원 안에 체크가 그려집니다.
+How to use it: 패스키로 로그인 버튼을 눌러 보세요
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#407
 -->
 <style>
-.u407{position:relative;width:340px;height:324px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u407-pane{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;transition:opacity .3s,transform .45s var(--ux-ease),visibility 0s .45s;opacity:0;visibility:hidden;transform:translateY(14px)}
-.u407-pane.is-cur{opacity:1;visibility:visible;transform:none;transition:opacity .3s .1s,transform .45s var(--ux-ease) .1s,visibility 0s}
-.u407-pane.is-up{transform:translateY(-14px)}
-.u407-logo{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:15px;font-weight:800;margin-bottom:14px}
-.u407-hd b{display:block;font-size:18px;font-weight:700;letter-spacing:-.03em}
-.u407-hd span{display:block;margin-top:3px;font-size:12.5px;color:var(--ux-ink-3)}
-.u407-pk{position:relative;height:44px;margin-top:20px;display:flex;align-items:center;justify-content:center;gap:9px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:600;transition:opacity .2s,transform .2s var(--ux-ease)}
-.u407-pk:hover{opacity:.9}
-.u407-pk:active{transform:scale(.985)}
-.u407-pk svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.u407 button:focus-visible{outline-offset:2px}
-.u407-or{display:flex;align-items:center;gap:10px;margin:16px 0 12px;font-size:11.5px;font-weight:500;color:var(--ux-ink-3);white-space:nowrap}
-.u407-or::before,.u407-or::after{content:"";flex:1;height:1px;background:var(--ux-line-2)}
-.u407-ml{display:flex;gap:6px;margin:0}
-.u407-bx{flex:1;min-width:0;height:40px;display:flex;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s}
-.u407-bx:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
-.u407-bx:focus-within,.u407-bx.is-f{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u407-bx.is-err{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
-.u407-in{flex:1;min-width:0;padding:0 12px;border:0;background:none;outline:none;font-size:13px;color:var(--ux-ink)}
-.u407-in::placeholder{color:var(--ux-ink-3)}
-.u407 .u407-in:focus-visible{outline:none}
-.u407-send{position:relative;flex:none;height:40px;padding:0 13px;display:grid;place-items:center;border:0;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;font-weight:600;color:var(--ux-ink);white-space:nowrap;transition:background .2s}
-.u407-send:hover{background:var(--ux-surface-2)}
-.u407-send>span{grid-area:1/1;display:flex;align-items:center;gap:6px;transition:opacity .2s}
-.u407-send .s1{opacity:0}
-.u407-send .s1 i{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u407-spin .75s linear infinite}
-@keyframes u407-spin{to{rotate:360deg}}
-.u407-send.is-busy .s0{opacity:0}
-.u407-send.is-busy .s1{opacity:1}
-.u407-note{margin:auto 0 0;padding-top:12px;font-size:11.5px;line-height:1.5;color:var(--ux-ink-3);transition:color .2s}
-.u407-note.is-msg{color:var(--ux-ink-2)}
-.u407-c{align-items:center;justify-content:center;text-align:center}
-.u407-mi{width:56px;height:56px;display:grid;place-items:center;border-radius:18px;background:var(--ux-accent-soft);color:var(--ux-accent);margin-bottom:16px}
-.u407-mi svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.u407-c b{font-size:18px;font-weight:700;letter-spacing:-.03em}
-.u407-to{margin-top:8px;padding:4px 10px;border-radius:999px;background:var(--ux-surface-2);font-size:12.5px;font-weight:600}
-.u407-c p{margin:8px 0 0;font-size:12px;color:var(--ux-ink-3)}
-.u407-open{margin-top:18px;height:40px;padding:0 20px;display:flex;align-items:center;gap:7px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600}
-.u407-open:hover{opacity:.9}
-.u407-open svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u407-lk{margin-top:8px;height:30px;padding:0 8px;border:0;border-radius:7px;background:none;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
-.u407-lk:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
-.u407-av{position:relative;width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:22px;font-weight:700;margin-bottom:16px}
-.u407-av svg{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px}
-.u407-av svg circle{fill:var(--ux-mint);stroke:var(--ux-surface);stroke-width:2.5}
-.u407-av svg path{fill:none;stroke:var(--ux-surface);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.u407-out{margin-top:18px;height:34px;padding:0 14px;border:0;border-radius:9px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:12.5px;font-weight:600;color:var(--ux-ink)}
-.u407-out:hover{background:var(--ux-surface-3)}
-.u407-scrim{position:absolute;inset:0;background:rgba(10,10,14,.28);background:light-dark(rgba(10,10,14,.28),rgba(0,0,0,.55));opacity:0;visibility:hidden;transition:opacity .3s,visibility 0s .3s}
-.u407.is-sys .u407-scrim{opacity:1;visibility:visible;transition-delay:0s}
-.u407-sys{--sb:#007AFF;--sb:light-dark(#007AFF,#0A84FF);position:absolute;left:10px;right:10px;bottom:10px;padding:16px 16px 14px;border-radius:20px;background:rgba(246,246,248,.97);background:light-dark(rgba(246,246,248,.97),rgba(44,44,50,.97));-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 20px 40px -12px rgba(0,0,0,.35);color:#1C1C1E;color:light-dark(#1C1C1E,#F2F2F7);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,sans-serif;text-align:center;transform:translateY(calc(100% + 20px));visibility:hidden;transition:transform .4s cubic-bezier(.4,0,.6,1),visibility 0s .4s}
-.u407.is-sys .u407-sys{transform:none;visibility:visible;transition:transform .5s cubic-bezier(.2,.9,.25,1.02),visibility 0s}
-.u407-sh{display:flex;align-items:center;justify-content:center;gap:6px;font-size:11.5px;font-weight:600;opacity:.6}
-.u407-sh i{width:16px;height:16px;display:grid;place-items:center;border-radius:5px;background:#16151B;color:#FFFFFF;font-style:normal;font-size:9px;font-weight:800}
-.u407-st{margin:6px 0 0;font-size:15px;font-weight:600;letter-spacing:-.02em}
-.u407-face{position:relative;width:54px;height:54px;margin:14px auto 6px;color:inherit}
-.u407-face svg{position:absolute;inset:0;width:54px;height:54px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
-.u407-face .br{transition:stroke .3s,transform .5s var(--ux-ease);transform-origin:center}
-.u407-face .fc{transition:opacity .25s}
-.u407-face .ck{stroke-dasharray:40;stroke-dashoffset:40;transition:stroke-dashoffset .4s var(--ux-ease) .1s}
-.u407-sys[data-s="scan"] .u407-face{color:var(--sb)}
-.u407-sys[data-s="scan"] .u407-face .br{animation:u407-scan 1s var(--ux-ease) infinite}
-@keyframes u407-scan{50%{transform:scale(.88)}}
-.u407-sys[data-s="ok"] .u407-face{color:#34C759}
-.u407-sys[data-s="ok"] .u407-face .fc{opacity:0}
-.u407-sys[data-s="ok"] .u407-face .ck{stroke-dashoffset:0}
-.u407-sys[data-s="ok"] .u407-face .br{transform:scale(1.06)}
-.u407-acc{display:flex;align-items:center;gap:9px;margin:10px 0 0;padding:8px 10px;border-radius:12px;background:rgba(0,0,0,.05);background:light-dark(rgba(0,0,0,.05),rgba(255,255,255,.07));text-align:left}
-.u407-acc i{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--ux-accent);color:var(--ux-accent-ink);font-style:normal;font-size:11px;font-weight:700}
-.u407-acc span{min-width:0;flex:1}
-.u407-acc b{display:block;font-size:12.5px;font-weight:600}
-.u407-acc small{display:block;font-size:11px;opacity:.55}
-.u407-ss{min-height:18px;margin:8px 0 0;font-size:11.5px;opacity:.65}
-.u407-sb{display:flex;gap:8px;margin-top:10px}
-.u407-sb button{flex:1;height:38px;border:0;border-radius:11px;font:inherit;font-size:13.5px;font-weight:600;transition:opacity .2s,filter .2s}
-.u407-sb button:disabled{opacity:.45;cursor:default}
-.u407-cancel{background:rgba(0,0,0,.07);background:light-dark(rgba(0,0,0,.07),rgba(255,255,255,.12));color:inherit}
-.u407-cont{background:var(--sb);color:#FFFFFF}
-.u407-sb button:hover:not(:disabled){filter:brightness(1.06)}
+.u407{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u407-b{position:relative;display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;overflow:clip;width:260px;height:52px;padding:0;border:0;border-radius:26px;background:var(--ux-ink);color:var(--ux-surface);font-size:14.5px;font-weight:600;transition:width .6s var(--ux-spring),height .6s var(--ux-spring),border-radius .5s var(--ux-ease),background .35s,color .35s,box-shadow .35s,transform .4s var(--ux-spring)}
+.u407:not(.is-scan) .u407-b:hover{transform:translateY(-1px)}
+.u407:not(.is-scan) .u407-b:active{transform:scale(.97,.94);transition-duration:.6s,.6s,.5s,.35s,.35s,.35s,.1s}
+.u407 .u407-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u407-b>*{grid-area:1/1}
+.u407-t{padding-left:34px;white-space:nowrap;transition:opacity .2s,transform .45s var(--ux-spring),filter .2s}
+.u407-fp{width:64px;height:64px;overflow:visible;transform:translate(var(--fx,-60px),1.5px) scale(.38);transition:transform .6s var(--ux-spring),opacity .25s}
+.u407-fp path{fill:none;stroke:currentColor;stroke-width:3.3;stroke-linecap:round;stroke-dasharray:1;transition:stroke-width .5s}
+.u407-fp .ac path{stroke:var(--ux-accent)}
+.u407-fp .cr{transform:translateY(-66px)}
+.u407-fp .sl{opacity:0}
+.u407-fp .sl rect:last-child{fill:var(--ux-accent)}
+.u407-fp stop{stop-color:var(--ux-accent)}
+.u407.is-scan .u407-b{width:120px;height:120px;border-radius:36px;background:var(--ux-surface);color:color-mix(in srgb,var(--ux-ink-3) 55%,transparent);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 18px 40px -22px var(--ux-shadow-strong);cursor:default}
+.u407.is-scan .u407-t{opacity:0;transform:scale(.9);filter:blur(2px)}
+.u407.is-scan .u407-fp{transform:none}
+.u407.is-scan .u407-fp path{stroke-width:2.6;animation:u407-draw .6s var(--ux-ease) backwards;animation-delay:calc(.15s + var(--i) * 70ms)}
+.u407.is-scan .u407-fp .cr{animation:u407-sweep 1.2s cubic-bezier(.45,0,.4,1) .75s forwards}
+.u407.is-scan .u407-fp .sl{animation:u407-line 1.2s cubic-bezier(.45,0,.4,1) .75s forwards}
+@keyframes u407-draw{from{stroke-dashoffset:1}}
+@keyframes u407-sweep{to{transform:translateY(0)}}
+@keyframes u407-line{0%{opacity:0;transform:translateY(2px)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateY(56px)}}
+.u407-ck{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .2s,transform .5s var(--ux-spring)}
+.u407-ck path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ux-ease) .18s}
+.u407.is-scan.is-ok .u407-b{width:72px;height:72px;border-radius:36px;background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);box-shadow:0 14px 30px -18px var(--ux-mint)}
+.u407.is-ok .u407-fp{opacity:0;transform:scale(.5)}
+.u407.is-ok .u407-ck{opacity:1;transform:none}
+.u407.is-ok .u407-ck path{stroke-dashoffset:0}
 .u407-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.u407.is-scan .u407-fp path{animation-duration:.01s;animation-delay:0s}.u407.is-scan .u407-fp .cr,.u407.is-scan .u407-fp .sl{animation-duration:.5s;animation-delay:.1s}}
 </style>
 <div class="ux u407">
-  <div class="u407-pane u407-main is-cur">
-    <span class="u407-logo" aria-hidden="true">L</span>
-    <div class="u407-hd"><b>루시안에 로그인</b><span>비밀번호 없이 안전하게 들어오세요</span></div>
-    <button type="button" class="u407-pk"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="7.5" cy="6.5" r="3"/><path d="M2.5 16.5c.4-2.8 2.4-4.5 5-4.5 1.2 0 2.2.3 3 .9"/><circle cx="14.5" cy="11.5" r="2"/><path d="M14.5 13.5v4M14.5 15.5h1.6"/></svg>패스키로 로그인</button>
-    <div class="u407-or">또는 이메일로 링크 받기</div>
-    <form class="u407-ml" novalidate>
-      <div class="u407-bx"><input class="u407-in" type="email" aria-label="이메일" placeholder="name@example.com" autocomplete="email webauthn" spellcheck="false"></div>
-      <button type="submit" class="u407-send"><span class="s0">로그인 링크 받기</span><span class="s1" aria-hidden="true"><i></i>보내는 중…</span></button>
-    </form>
-    <p class="u407-note" aria-live="polite">패스키는 기기의 얼굴 인식이나 지문으로 로그인해요.</p>
-  </div>
-  <div class="u407-pane u407-c u407-sent">
-    <span class="u407-mi" aria-hidden="true"><svg viewBox="0 0 26 26"><rect x="3" y="5.5" width="20" height="15" rx="3"/><path d="M4 7.5 13 14l9-6.5"/></svg></span>
-    <b>메일함을 확인해 주세요</b>
-    <span class="u407-to"></span>
-    <p>로그인 링크는 15분 동안 쓸 수 있어요.</p>
-    <button type="button" class="u407-open"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 2.5h4v4M13.5 2.5 7.5 8.5M12 9.5v3a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3"/></svg>메일 앱 열기</button>
-    <button type="button" class="u407-lk">다른 이메일 쓰기</button>
-  </div>
-  <div class="u407-pane u407-c u407-hi">
-    <div class="u407-av">서<svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="9.5"/><path d="M7 11.2l2.6 2.5L15 8.3"/></svg></div>
-    <b>환영해요, 서연 님</b>
-    <p>패스키로 로그인했어요</p>
-    <button type="button" class="u407-out">로그아웃</button>
-  </div>
-  <div class="u407-scrim"></div>
-  <div class="u407-sys" role="dialog" aria-modal="true" aria-label="패스키로 로그인" data-s="ask">
-    <div class="u407-sh"><i aria-hidden="true">L</i>lucian.kr</div>
-    <p class="u407-st">저장된 패스키로 로그인할까요?</p>
-    <div class="u407-face" aria-hidden="true"><svg viewBox="0 0 54 54"><path class="br" d="M4 16V9a5 5 0 0 1 5-5h7M38 4h7a5 5 0 0 1 5 5v7M50 38v7a5 5 0 0 1-5 5h-7M16 50H9a5 5 0 0 1-5-5v-7"/><path class="fc" d="M19 20v4M35 20v4M27.5 20v9h-2.5M20 35.5c4.2 3.6 9.8 3.6 14 0"/><path class="ck" d="M17 28l7 7 13-14"/></svg></div>
-    <div class="u407-acc"><i aria-hidden="true">서</i><span><b>seoyeon@lucian.kr</b><small>패스키 · 이 기기</small></span></div>
-    <p class="u407-ss" aria-live="polite"></p>
-    <div class="u407-sb"><button type="button" class="u407-cancel">취소</button><button type="button" class="u407-cont">계속</button></div>
-  </div>
+  <button type="button" class="u407-b">
+    <span class="u407-t">패스키로 로그인</span>
+    <svg class="u407-fp" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><clipPath class="cp"><rect class="cr" x="0" y="0" width="64" height="66"/></clipPath><linearGradient class="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-opacity="0"/><stop offset="1" stop-opacity=".24"/></linearGradient></defs>
+      <g class="bs">
+        <path style="--i:0" pathLength="1" d="M28 37v-6a4 4 0 0 1 8 0v3.5c0 3-.6 5.8-1.8 8.3"/>
+        <path style="--i:1" pathLength="1" d="M22 46V31a10 10 0 0 1 20 0v2.5c0 5.6-1.1 10.6-3.2 15"/>
+        <path style="--i:2" pathLength="1" d="M16 41V31a16 16 0 0 1 32 0v1.5"/>
+        <path style="--i:3" pathLength="1" d="M47.8 38.5c-.4 4.6-1.5 8.8-3.2 12.6"/>
+        <path style="--i:4" pathLength="1" d="M10 36v-5a22 22 0 0 1 36.6-16.4"/>
+        <path style="--i:5" pathLength="1" d="M51.2 20.4A22 22 0 0 1 54 31v5"/>
+      </g>
+      <g class="ac"></g>
+      <g class="sl"><rect x="4" y="-14" width="56" height="14"/><rect x="4" y="-1" width="56" height="2" rx="1"/></g>
+    </svg>
+    <svg class="u407-ck" viewBox="0 0 30 30" aria-hidden="true"><path d="M7.5 15.5l5 5L22.5 10"/></svg>
+  </button>
   <p class="u407-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = {
-    ask: '계속을 누르면 얼굴을 확인해요',
-    scan: '얼굴을 확인하는 중…',
-    ok: '확인했어요',
-    cancel: '패스키 로그인을 취소했어요',
-    mail: '메일 앱에서 ‘루시안 로그인’ 메일을 열어 주세요',
-    bad: '이메일 주소를 확인해 주세요',
-    welcome: '패스키로 로그인했어요',
-    sent: '로그인 링크를 보냈어요'
-  };
-  var panes = [].slice.call(root.querySelectorAll('.u407-pane')), main = panes[0], sentP = panes[1], hiP = panes[2];
-  var sys = root.querySelector('.u407-sys'), ss = sys.querySelector('.u407-ss'), cont = sys.querySelector('.u407-cont'), cancel = sys.querySelector('.u407-cancel');
-  var pk = root.querySelector('.u407-pk'), form = root.querySelector('.u407-ml'), bx = root.querySelector('.u407-bx'), inp = root.querySelector('.u407-in'), send = root.querySelector('.u407-send');
-  var note = root.querySelector('.u407-note'), note0 = note.textContent, to = root.querySelector('.u407-to'), live = root.querySelector('.u407-live');
-  var sp = sentP.querySelector('p'), sp0 = sp.textContent, gen = 0;
+  var T = { busy: '패스키를 확인하는 중이에요', ok: '로그인했어요' };
+  var b = root.querySelector('.u407-b'), t = root.querySelector('.u407-t'), fp = root.querySelector('.u407-fp'), live = root.querySelector('.u407-live');
+  var uid = 'u407' + Math.random().toString(36).slice(2, 7), gen = 0;
+  // 물드는 무늬: 같은 지문을 한 벌 더 두고, 스캔 빛과 함께 내려오는 사각형으로 잘라 보여 줍니다
+  var cp = fp.querySelector('.cp'), lg = fp.querySelector('.lg'), ac = fp.querySelector('.ac');
+  cp.id = uid + 'c'; lg.id = uid + 'g';
+  ac.innerHTML = fp.querySelector('.bs').innerHTML;
+  ac.setAttribute('clip-path', 'url(#' + cp.id + ')');
+  fp.querySelector('.sl rect').setAttribute('fill', 'url(#' + lg.id + ')');
+  // 처음 자리: 글자 왼쪽 아이콘 칸의 가운데
+  function place() { b.style.setProperty('--fx', (12 - t.offsetWidth / 2) + 'px'); }
+  place();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
   function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
-  function show(p, focusSel) {
-    panes.forEach(function (x) { var on = x === p; x.classList.toggle('is-cur', on); x.classList.toggle('is-up', !on && x === main); x.inert = !on; });
-    var f = focusSel && p.querySelector(focusSel);
-    if (f) later(function () { f.focus({ preventScroll: true }); }, rm ? 0 : 350);
-  }
-  function setNote(text) { note.textContent = text || note0; note.classList.toggle('is-msg', !!text); }
-  // 패스키: 시스템 확인 창처럼 올라오는 시트. 계속 → 얼굴 확인 → 체크 → 환영 화면
-  function openSys() {
-    sys.setAttribute('data-s', 'ask'); ss.textContent = T.ask;
-    cont.disabled = false; cancel.disabled = false;
-    root.classList.add('is-sys'); main.inert = true; sys.inert = false;
-    later(function () { cont.focus({ preventScroll: true }); }, rm ? 0 : 300);
-  }
-  function closeSys() { root.classList.remove('is-sys'); sys.inert = true; }
-  pk.addEventListener('click', function () { setNote(''); openSys(); });
-  cancel.addEventListener('click', function () { gen += 1; closeSys(); main.inert = false; setNote(T.cancel); pk.focus({ preventScroll: true }); });
-  cont.addEventListener('click', function () {
-    if (sys.getAttribute('data-s') !== 'ask') return;
-    sys.setAttribute('data-s', 'scan'); ss.textContent = T.scan; cont.disabled = true;
+  b.addEventListener('click', function () {
+    if (root.classList.contains('is-scan')) return;
+    gen += 1;
+    root.classList.add('is-scan'); b.setAttribute('aria-busy', 'true'); live.textContent = T.busy;
     later(function () {
-      sys.setAttribute('data-s', 'ok'); ss.textContent = T.ok; cancel.disabled = true;
-      later(function () { closeSys(); show(hiP, '.u407-out'); live.textContent = T.welcome; }, rm ? 300 : 800);
-    }, rm ? 400 : 1300);
+      root.classList.add('is-ok'); b.removeAttribute('aria-busy'); live.textContent = T.ok;
+      later(function () { root.classList.remove('is-scan', 'is-ok'); }, rm ? 1200 : 1700);
+    }, rm ? 800 : 2150);
   });
-  sys.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !cancel.disabled) { e.preventDefault(); e.stopPropagation(); cancel.click(); }
-    if (e.key === 'Tab') { e.preventDefault(); (document.activeElement === cont ? cancel : cont).focus(); }
-  });
-  // 매직 링크: 이메일 확인 → 보내는 중 → ‘메일함을 확인해 주세요’
-  root.addEventListener('pointerdown', function (e) { bx.classList.toggle('is-f', bx.contains(e.target)); });
-  inp.addEventListener('blur', function () { bx.classList.remove('is-f'); });
-  inp.addEventListener('input', function () { if (bx.classList.contains('is-err')) { bx.classList.remove('is-err'); inp.removeAttribute('aria-invalid'); setNote(''); } });
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var v = inp.value.trim();
-    if (send.classList.contains('is-busy')) return;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { bx.classList.add('is-err'); inp.setAttribute('aria-invalid', 'true'); setNote(T.bad); inp.focus(); return; }
-    send.classList.add('is-busy'); send.setAttribute('aria-busy', 'true'); bx.classList.remove('is-f');
-    later(function () {
-      send.classList.remove('is-busy'); send.removeAttribute('aria-busy');
-      to.textContent = v; sp.textContent = sp0; live.textContent = T.sent;
-      show(sentP, '.u407-open');
-    }, rm ? 300 : 1000);
-  });
-  // 메일 앱 열기: 실제 서비스에서는 사용자의 메일 서비스로 보냅니다. 여기서는 다음 할 일을 안내합니다
-  root.querySelector('.u407-open').addEventListener('click', function () { live.textContent = T.mail; sp.textContent = T.mail; });
-  root.querySelector('.u407-lk').addEventListener('click', function () { show(main, '.u407-in'); });
-  root.querySelector('.u407-out').addEventListener('click', function () { gen += 1; setNote(''); inp.value = ''; show(main, '.u407-pk'); });
-  sys.inert = true;
-  show(main);
 })();
 </script>

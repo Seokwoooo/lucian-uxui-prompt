@@ -1,126 +1,64 @@
-<!-- @meta {"title":"검색되는 담당자 선택","category":"입력·검색","summary":"작업 담당자를 고르는 선택 목록입니다. 팀별로 묶인 목록 위 검색칸에 이름, 역할, 초성(ㅂㅈ)을 치면 바로 걸러지고, 고른 사람에게는 체크 표시가 붙습니다. ↑↓와 Enter로 고르고 Esc로 닫으며, 지우기 버튼으로 선택을 비울 수 있습니다.","hint":"검색칸에 ‘ㅂㅈ’이나 ‘디자이너’를 쳐 보세요. ↑↓로 옮기고 Enter로 고릅니다","shape":"square","hue":"#3D8BFF","hue2":"#22C3A6","tags":["combobox","select","searchable","filter","grouped-options","keyboard","clear","assignee"]} -->
-<!-- @demo [["wait",1000],["type",".u430-q",0,{"ko":"ㅂㅈ","en":"park"},360],["wait",700],["key",".u430-q",0,"Enter",1,200],["wait",1200],["tap",".u430-tr",0,{"after":600}],["key",".u430-q",0,"ArrowDown",2,380],["key",".u430-q",0,"Enter",1,200],["wait",900],["tap",".u430-x",0,{"after":1100}],["tap",".u430-tr",0,{"after":500}],["type",".u430-q",0,{"ko":"디자이너","en":"designer"},120],["wait",1200],["reset"]] -->
-<!-- @en {"title":"Searchable assignee select","summary":"A select for choosing who owns a task. Type a name or role into the search field above the team-grouped list and it filters instantly, with a check mark on the person you picked. Choose with ↑↓ and Enter, close with Esc, and empty the choice with the clear button.","hint":"Type “park” or “designer” into the search field. Move with ↑↓ and choose with Enter","map":[
-  [">작업 배정<", ">Assign task<"],
-  [">로그인 화면 다크 모드 대비 개선 · LUC-128<", ">Improve dark mode contrast on sign-in · LUC-128<"],
-  [">담당자<", ">Assignee<"],
-  ["aria-label=\"담당자 지우기\"", "aria-label=\"Clear assignee\""],
+<!-- @meta {"title":"검색되는 담당자 선택","category":"입력·검색","summary":"담당자 선택 버튼을 누르면 네 사람의 목록이 스프링처럼 펼쳐집니다. 이름을 치면 바로 걸러지고, 고르면 체크 표시가 그 사람 옆으로 톡 튀어 오르며 버튼에도 새 담당자가 들어갑니다.","hint":"목록에서 사람을 고르거나, 검색칸에 이름을 쳐 보세요. ↑↓와 Enter도 됩니다","shape":"square","hue":"#3D8BFF","hue2":"#22C3A6","tags":["select","combobox","searchable","filter","assignee","spring"]} -->
+<!-- @demo [["wait",900],["type",".u430-q",0,{"ko":"박","en":"jih"},260],["wait",650],["key",".u430-q",0,"Enter",1,200],["wait",1100],["tap",".u430-tr",0,{"after":900}],["tap",".u430-o",3,{"after":1300}],["reset"]] -->
+<!-- @en {"title":"Searchable assignee select","summary":"Press the assignee button and a list of four people springs open. Type a name and it filters instantly; pick someone and the check mark pops over to them while the button takes on the new assignee.","hint":"Pick someone from the list, or type a name in the search field. ↑↓ and Enter work too","map":[
   ["aria-label=\"담당자 선택\"", "aria-label=\"Choose assignee\""],
-  ["aria-label=\"담당자 검색\"", "aria-label=\"Search people\""],
-  ["aria-label=\"담당자\"", "aria-label=\"People\""],
-  ["placeholder=\"이름, 역할로 검색\"", "placeholder=\"Search by name or role\""],
-  [">이메일로도 알리기<", ">Also notify by email<"],
-  [">취소<", ">Cancel<"],
-  ["'배정하기'", "'Assign'"],
-  ["'배정했어요'", "'Assigned'"],
-  ["'담당자 선택'", "'Choose assignee'"],
-  ["'담당자를 정하면 바로 알림이 가요.'", "'They get notified right away.'"],
-  ["'{n} 님에게 알림을 보낼게요.'", "'{n} will be notified.'"],
-  ["'“{q}” 검색 결과가 없어요'", "'No one matches “{q}”'"],
-  ["'{n}명'", "'{n} people'"],
-  ["'{n}명 '", "'{n} person'"],
-  ["'선택됨'", "'selected'"],
-  ["'디자인팀'", "'Design'"],
-  ["'개발팀'", "'Engineering'"],
-  ["'마케팅팀'", "'Marketing'"],
+  ["aria-label=\"이름 검색\"", "aria-label=\"Search names\""],
+  ["placeholder=\"이름 검색\"", "placeholder=\"Search names\""],
+  ["aria-label=\"담당자\"", "aria-label=\"Assignee\""],
+  ["'일치하는 사람이 없어요'", "'No one matches'"],
+  ["'담당자: {n}'", "'Assignee: {n}'"],
   ["'한서연'", "'Seoyeon Han'"],
   ["'프로덕트 디자이너'", "'Product designer'"],
-  ["'정우진'", "'Woojin Jung'"],
-  ["'UX 리서처'", "'UX researcher'"],
   ["'박지훈'", "'Jihoon Park'"],
   ["'프론트엔드 개발자'", "'Frontend engineer'"],
   ["'김민재'", "'Minjae Kim'"],
   ["'백엔드 개발자'", "'Backend engineer'"],
-  ["'배수아'", "'Sua Bae'"],
-  ["'iOS 개발자'", "'iOS engineer'"],
   ["'이수민'", "'Sumin Lee'"],
-  ["'그로스 마케터'", "'Growth marketer'"],
-  ["'최예린'", "'Yerin Choi'"],
-  ["'콘텐츠 디자이너'", "'Content designer'"]
+  ["'그로스 마케터'", "'Growth marketer'"]
 ]} -->
 <style>
-.u430{position:relative;width:340px;height:360px;padding:20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u430 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u430-hd b{display:block;font-size:15px;font-weight:700;letter-spacing:-.02em}
-.u430-hd p{margin:3px 0 0;font-size:12px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u430-lbl{display:block;margin:18px 0 7px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
-.u430-cb{position:relative}
-.u430-tr{display:flex;align-items:center;gap:10px;width:100%;height:44px;padding:0 12px 0 10px;border:0;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-line);text-align:left;transition:box-shadow .18s var(--ux-ease)}
-.u430-tr:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent),0 1px 2px var(--ux-line)}
-.u430.is-open .u430-tr{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u430 .u430-tr:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u430-v{flex:none;font-weight:600}
-.u430-r{flex:1;min-width:0;font-size:12px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u430-tr.is-empty .u430-v{font-weight:500;color:var(--ux-ink-3)}
-.u430-tr>svg{flex:none;width:16px;height:16px;color:var(--ux-ink-3);transition:transform .25s var(--ux-ease)}
+.u430{position:relative;width:340px;height:300px}
+.u430-w{position:absolute;left:40px;right:40px;top:14px}
+.u430-tr{display:flex;align-items:center;gap:11px;width:100%;height:52px;padding:0 14px 0 10px;border:0;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 10px 24px -14px var(--ux-shadow-strong);text-align:left;transform:scale(var(--k,1));transition:box-shadow .2s var(--ux-ease),transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u430-tr:active{--k:.96;transition:transform .1s var(--ux-ease)}
+.u430.is-open .u430-tr,.u430 .u430-tr:focus-visible{outline:none;box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 10px 24px -14px var(--ux-shadow-strong)}
+.u430-tr.is-new .u430-who{animation:u430-swap .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes u430-swap{from{opacity:0;transform:translateY(8px)}}
+.u430-who{flex:1;min-width:0;display:flex;align-items:center;gap:11px}
+.u430-tx{min-width:0}
+.u430-tx b{display:block;font-size:14px;font-weight:650;letter-spacing:-.01em}
+.u430-tx small{display:block;font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u430-tr>svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
 .u430.is-open .u430-tr>svg{transform:rotate(180deg)}
-.u430-x{position:absolute;right:36px;top:11px;width:22px;height:22px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s}
-.u430-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
-.u430-x svg{width:12px;height:12px;stroke-width:2.2}
-.u430-x:focus-visible{outline-offset:0}
-.u430-tr:not(.is-empty) .u430-r{margin-right:24px}
-.u430-av{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:0;background:#E8E6FF;background:light-dark(#E8E6FF,rgba(167,150,255,.2));color:#4B3FC4;color:light-dark(#4B3FC4,#CFC5FF)}
-.u430-av.c2{background:#DDF3EA;background:light-dark(#DDF3EA,rgba(110,231,183,.16));color:#0B7A55;color:light-dark(#0B7A55,#9BEBCB)}
-.u430-av.c3{background:#DCEBFF;background:light-dark(#DCEBFF,rgba(125,180,255,.18));color:#1F5FB8;color:light-dark(#1F5FB8,#B5D3FF)}
-.u430-av.c4{background:#FDE9D7;background:light-dark(#FDE9D7,rgba(255,178,107,.16));color:#A4500F;color:light-dark(#A4500F,#FFCB99)}
-.u430-av.c5{background:#FBE1E8;background:light-dark(#FBE1E8,rgba(255,125,140,.16));color:#B02A4A;color:light-dark(#B02A4A,#FFB3BF)}
-.u430-av.is-none{background:none;box-shadow:inset 0 0 0 1.5px var(--ux-line-2);border:0;color:var(--ux-ink-3)}
-.u430-av.is-none svg{width:13px;height:13px}
-.u430-help{margin:8px 0 0;min-height:17px;font-size:12px;color:var(--ux-ink-3)}
-.u430-ft{position:absolute;left:20px;right:20px;bottom:18px;display:flex;align-items:center;gap:8px;padding-top:16px;border-top:1px solid var(--ux-line)}
-.u430-ck{flex:1;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ux-ink-2);cursor:pointer}
-.u430-ck input{width:16px;height:16px;margin:0;accent-color:var(--ux-accent)}
-.u430-ft button{height:34px;padding:0 13px;border:0;border-radius:9px;font-size:12.5px;font-weight:600;transition:background-color .15s,opacity .15s,transform .2s var(--ux-spring)}
-.u430-ft button:active{transform:scale(.97)}
-.u430-no{background:none;color:var(--ux-ink-2)}
-.u430-no:hover{background:var(--ux-surface-2)}
-.u430-go{display:inline-flex;align-items:center;gap:6px;background:var(--ux-ink);color:var(--ux-surface)}
-.u430-go:hover{opacity:.88}
-.u430-go:disabled{opacity:.35;cursor:not-allowed}
-.u430-go svg{width:14px;height:14px;stroke-width:2.4}
-.u430-pop{position:absolute;z-index:3;left:20px;right:20px;top:152px;border-radius:13px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -18px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.985);transform-origin:50% 0;transition:opacity .14s var(--ux-ease),transform .18s var(--ux-ease),visibility 0s linear .18s}
-.u430.is-open .u430-pop{opacity:1;visibility:visible;transform:none;transition:opacity .16s var(--ux-ease),transform .3s var(--ux-spring),visibility 0s}
-.u430-s{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border-bottom:1px solid var(--ux-line)}
-.u430-s>svg{flex:none;width:15px;height:15px;color:var(--ux-ink-3)}
+.u430-av{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;background:var(--c)}
+.u430-pop{margin-top:8px;padding:6px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -18px var(--ux-shadow-strong);transform-origin:50% 0;opacity:0;transform:translateY(-10px) scale(.94);visibility:hidden;transition:opacity .15s var(--ux-ease),transform .2s var(--ux-ease),visibility 0s linear .2s}
+.u430.is-open .u430-pop{opacity:1;transform:none;visibility:visible;transition:opacity .18s var(--ux-ease),transform .55s cubic-bezier(.28,1.45,.5,1),visibility 0s}
+.u430-s{display:flex;align-items:center;gap:8px;height:36px;margin-bottom:4px;padding:0 10px;border-radius:9px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u430-s svg{flex:none;width:14px;height:14px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round}
 .u430-q{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:13px;color:var(--ux-ink)}
 .u430-q::placeholder{color:var(--ux-ink-3);opacity:1}
 .u430 .u430-q:focus-visible{outline:none}
-.u430-s small{flex:none;font-size:11px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u430-lb{position:relative;height:154px;overflow-y:auto;padding:4px 6px 6px;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--ux-line-2) transparent}
-.u430-gh{padding:8px 8px 4px;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
-.u430-opt{display:flex;align-items:center;gap:10px;height:36px;padding:0 8px;border-radius:8px;cursor:pointer}
-.u430-opt.is-act{background:color-mix(in srgb,var(--ux-ink) 6%,transparent)}
-.u430-opt b{flex:none;font-weight:500}
-.u430-opt small{flex:1;min-width:0;font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u430-opt mark{background:none;color:inherit;font-weight:700;text-decoration:underline;text-decoration-color:var(--ux-accent);text-decoration-thickness:1.5px;text-underline-offset:3px}
-.u430-opt small mark{color:var(--ux-ink-2)}
-.u430-opt>svg{flex:none;width:16px;height:16px;color:var(--ux-accent);stroke-width:2.2;opacity:0;transform:scale(.6);transition:opacity .15s,transform .25s var(--ux-spring)}
-.u430-opt[aria-selected="true"]>svg{opacity:1;transform:none}
-.u430-opt[aria-selected="true"] b{font-weight:650}
-.u430-em{margin:0;height:154px;display:grid;place-items:center;padding:0 16px;text-align:center;font-size:12.5px;color:var(--ux-ink-3);overflow-wrap:anywhere}
+.u430-lb{position:relative}
+.u430-o{display:flex;align-items:center;gap:10px;height:40px;padding:0 10px 0 8px;border-radius:9px;cursor:pointer;transition:background-color .12s}
+.u430.is-open .u430-o{animation:u430-row .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(var(--i) * 40ms + 60ms)}
+@keyframes u430-row{from{opacity:0;transform:translateY(-8px)}}
+.u430-o.is-act{background:color-mix(in srgb,var(--ux-ink) 6%,transparent)}
+.u430-o .u430-av{width:26px;height:26px;font-size:11px}
+.u430-o b{flex:1;min-width:0;font-size:13px;font-weight:550}
+.u430-o mark{background:none;color:inherit;font-weight:750}
+.u430-o small{font-size:11.5px;color:var(--ux-ink-3)}
+.u430-ck{flex:none;width:18px;height:18px;fill:none;stroke:var(--ux-accent);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.2) rotate(-30deg);transition:opacity .15s,transform .2s var(--ux-ease)}
+.u430-o[aria-selected="true"] .u430-ck{opacity:1;transform:none;transition:opacity .15s,transform .55s cubic-bezier(.3,1.9,.5,1)}
+.u430-no{padding:12px 10px;font-size:12.5px;color:var(--ux-ink-3)}
 .u430-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
-<div class="ux u430 is-open">
-  <div class="u430-hd"><b>작업 배정</b><p>로그인 화면 다크 모드 대비 개선 · LUC-128</p></div>
-  <span class="u430-lbl">담당자</span>
-  <div class="u430-cb">
-    <button type="button" class="u430-tr" aria-haspopup="dialog" aria-expanded="true"></button>
-    <button type="button" class="u430-x" aria-label="담당자 지우기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-  </div>
-  <p class="u430-help"></p>
-  <div class="u430-ft">
-    <label class="u430-ck"><input type="checkbox" checked>이메일로도 알리기</label>
-    <button type="button" class="u430-no">취소</button>
-    <button type="button" class="u430-go"></button>
-  </div>
-  <div class="u430-pop" role="dialog" aria-label="담당자 선택">
-    <div class="u430-s">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
-      <input class="u430-q" type="text" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-label="담당자 검색" placeholder="이름, 역할로 검색" autocomplete="off" spellcheck="false">
-      <small aria-hidden="true"></small>
+<div class="ux u430">
+  <div class="u430-w">
+    <button type="button" class="u430-tr" aria-haspopup="listbox" aria-expanded="false" aria-label="담당자 선택"><span class="u430-who"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+    <div class="u430-pop">
+      <label class="u430-s"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input class="u430-q" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="이름 검색" placeholder="이름 검색" autocomplete="off" spellcheck="false"></label>
+      <div class="u430-lb" role="listbox" aria-label="담당자"></div>
     </div>
-    <div class="u430-lb" role="listbox" aria-label="담당자"></div>
-    <p class="u430-em" hidden></p>
   </div>
   <p class="u430-live" role="status"></p>
 </div>
@@ -128,150 +66,72 @@
 (function () {
   var root = document.currentScript.previousElementSibling;
   var q = function (s) { return root.querySelector(s); };
-  var tr = q('.u430-tr'), x = q('.u430-x'), help = q('.u430-help'), go = q('.u430-go'), pop = q('.u430-pop'), input = q('.u430-q'), cnt = q('.u430-s small'), lb = q('.u430-lb'), em = q('.u430-em'), live = q('.u430-live');
+  var tr = q('.u430-tr'), who = q('.u430-who'), input = q('.u430-q'), lb = q('.u430-lb'), live = q('.u430-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { none: '일치하는 사람이 없어요', picked: '담당자: {n}' };
+  var PEOPLE = [['한서연', '프로덕트 디자이너', '#7C6CF2'], ['박지훈', '프론트엔드 개발자', '#2F8FE0'], ['김민재', '백엔드 개발자', '#E08A2F'], ['이수민', '그로스 마케터', '#16A37B']];
   var uid = 'u430' + Math.random().toString(36).slice(2, 7);
-  var T = { assign: '배정하기', done: '배정했어요', choose: '담당자 선택', help: '담당자를 정하면 바로 알림이 가요.', notify: '{n} 님에게 알림을 보낼게요.', empty: '“{q}” 검색 결과가 없어요', count: '{n}명', count1: '{n}명 ', sel: '선택됨' };
-  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>';
-  // [팀, [[이름, 역할, 색]]]
-  var TEAMS = [
-    ['디자인팀', [['한서연', '프로덕트 디자이너', 1], ['정우진', 'UX 리서처', 2]]],
-    ['개발팀', [['박지훈', '프론트엔드 개발자', 3], ['김민재', '백엔드 개발자', 4], ['배수아', 'iOS 개발자', 5]]],
-    ['마케팅팀', [['이수민', '그로스 마케터', 2], ['최예린', '콘텐츠 디자이너', 4]]]
-  ];
-  var people = [];
-  TEAMS.forEach(function (t, g) { t[1].forEach(function (p) { people.push({ name: p[0], role: p[1], c: p[2], team: t[0], g: g }); }); });
-  lb.id = uid + 'lb';
-  input.setAttribute('aria-controls', lb.id);
-  var sel = people[0], act = -1, shown = [];
-  // 초성 검색: 가~힣 글자의 첫소리만 뽑아 ㅂㅈ 같은 입력과 견줍니다
-  var CHO = '\u3131\u3132\u3134\u3137\u3138\u3139\u3141\u3142\u3143\u3145\u3146\u3147\u3148\u3149\u314A\u314B\u314C\u314D\u314E';
-  function cho(s) { return s.replace(/[\uAC00-\uD7A3]/g, function (c) { return CHO.charAt(Math.floor((c.charCodeAt(0) - 0xAC00) / 588)); }); }
+  lb.id = uid + 'lb'; input.setAttribute('aria-controls', lb.id);
+  var sel = 0, shown = [], act = -1;
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function mark(s, i, n) { return i < 0 ? esc(s) : esc(s.slice(0, i)) + '<mark>' + esc(s.slice(i, i + n)) + '</mark>' + esc(s.slice(i + n)); }
-  function av(p) { return '<span class="u430-av' + (p.c > 1 ? ' c' + p.c : '') + '" aria-hidden="true">' + esc(p.name.charAt(0)) + '</span>'; }
-
-  function render() {
-    var t = input.value.trim().toLowerCase(), isCho = /^[\u3131-\u314E]+$/.test(t);
+  function av(p) { return '<span class="u430-av" style="--c:' + p[2] + '" aria-hidden="true">' + esc(p[0].charAt(0)) + '</span>'; }
+  function trigger(anim) {
+    var p = PEOPLE[sel];
+    who.innerHTML = av(p) + '<span class="u430-tx"><b>' + esc(p[0]) + '</b><small>' + esc(p[1]) + '</small></span>';
+    tr.setAttribute('aria-label', T.picked.replace('{n}', p[0]));
+    if (anim) { tr.classList.remove('is-new'); void tr.offsetWidth; tr.classList.add('is-new'); }
+  }
+  function render(stagger) {
+    var t = input.value.trim().toLowerCase();
     shown = [];
-    var html = '';
-    TEAMS.forEach(function (team, g) {
-      var rows = '';
-      people.forEach(function (p, k) {
-        if (p.g !== g) return;
-        var ni = -1, ri = -1;
-        if (t) {
-          ni = isCho ? cho(p.name).indexOf(t) : p.name.toLowerCase().indexOf(t);
-          if (ni < 0 && !isCho) ri = p.role.toLowerCase().indexOf(t);
-          if (ni < 0 && ri < 0 && team[0].toLowerCase().indexOf(t) < 0) return;
-        }
-        var on = p === sel;
-        rows += '<div class="u430-opt" role="option" id="' + uid + k + '" data-k="' + k + '" aria-selected="' + on + '">' + av(p) + '<b>' + mark(p.name, ni, t.length) + '</b><small>' + mark(p.role, ri, t.length) + '</small>' + CHECK + '</div>';
-        shown.push(k);
-      });
-      if (rows) html += '<div role="group" aria-labelledby="' + uid + 'g' + g + '"><div class="u430-gh" id="' + uid + 'g' + g + '" role="presentation">' + esc(team[0]) + '</div>' + rows + '</div>';
-    });
-    lb.innerHTML = html;
-    lb.hidden = !shown.length;
-    em.hidden = !!shown.length;
-    if (!shown.length) { var parts = T.empty.split('{q}'); em.textContent = parts[0] + input.value.trim() + (parts[1] || ''); }
-    cnt.textContent = (shown.length === 1 ? T.count1 : T.count).replace('{n}', shown.length).trim();
-    live.textContent = shown.length ? cnt.textContent : em.textContent;
-    var si = sel ? shown.indexOf(people.indexOf(sel)) : -1;
-    act = t ? (shown.length ? 0 : -1) : si;
-    paint(true);
+    lb.innerHTML = PEOPLE.map(function (p, k) {
+      var i = p[0].toLowerCase().indexOf(t), j = p[1].toLowerCase().indexOf(t);
+      if (t && i < 0 && j < 0) return '';
+      var n = shown.push(k) - 1;
+      var name = i >= 0 && t ? esc(p[0].slice(0, i)) + '<mark>' + esc(p[0].slice(i, i + t.length)) + '</mark>' + esc(p[0].slice(i + t.length)) : esc(p[0]);
+      return '<div class="u430-o" role="option" id="' + uid + k + '" data-k="' + k + '" aria-selected="' + (k === sel) + '" style="--i:' + n + (stagger ? '' : ';animation:none') + '">' + av(p) + '<b>' + name + '</b><svg class="u430-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>';
+    }).join('') || '<div class="u430-no">' + T.none + '</div>';
+    act = t ? (shown.length ? 0 : -1) : shown.indexOf(sel);
+    paint();
   }
-  function opts() { return lb.querySelectorAll('.u430-opt'); }
-  // 목록 상자 안에서만 스크롤합니다(페이지는 움직이지 않습니다)
-  function reveal(el, center) {
-    var top = el.offsetTop, bot = top + el.offsetHeight, h = lb.clientHeight;
-    if (center) lb.scrollTop = Math.max(0, top - h / 2 + el.offsetHeight / 2);
-    else if (top - 30 < lb.scrollTop) lb.scrollTop = Math.max(0, top - 30);
-    else if (bot + 6 > lb.scrollTop + h) lb.scrollTop = bot + 6 - h;
-  }
-  function paint(center) {
-    var os = opts();
-    Array.prototype.forEach.call(os, function (o, i) { o.classList.toggle('is-act', i === act); });
-    if (act >= 0 && os[act]) { input.setAttribute('aria-activedescendant', os[act].id); reveal(os[act], center); }
-    else input.removeAttribute('aria-activedescendant');
-  }
-  function syncTrigger() {
-    tr.classList.toggle('is-empty', !sel);
-    tr.innerHTML = (sel ? av(sel) + '<span class="u430-v">' + esc(sel.name) + '</span><span class="u430-r">' + esc(sel.role) + '</span>'
-      : '<span class="u430-av is-none" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0"/></svg></span><span class="u430-v">' + T.choose + '</span><span class="u430-r"></span>') +
-      '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>';
-    tr.setAttribute('aria-label', (sel ? sel.name + ', ' + T.sel : T.choose));
-    x.hidden = !sel;
-    help.textContent = sel ? T.notify.replace('{n}', sel.name) : T.help;
-    go.disabled = !sel;
-    go.textContent = T.assign;
+  function paint() {
+    Array.prototype.forEach.call(lb.querySelectorAll('.u430-o'), function (o, i) { o.classList.toggle('is-act', i === act); });
+    var o = lb.querySelectorAll('.u430-o')[act];
+    if (o) input.setAttribute('aria-activedescendant', o.id); else input.removeAttribute('aria-activedescendant');
   }
   function setOpen(v, focus) {
     root.classList.toggle('is-open', v);
     tr.setAttribute('aria-expanded', v ? 'true' : 'false');
     input.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (v) { input.value = ''; render(); if (focus) input.focus({ preventScroll: true }); }
+    if (v) { input.value = ''; render(true); if (focus) input.focus({ preventScroll: true }); }
     else if (focus) tr.focus({ preventScroll: true });
   }
-  function choose(k) {
-    sel = people[k];
-    syncTrigger();
-    setOpen(false, true);
-    live.textContent = sel.name + ', ' + T.sel;
+  // 고르면 체크가 새 사람에게 톡 튀어 오르고, 잠깐 보여 준 뒤 목록이 접힙니다
+  var closeT = 0;
+  function choose(k, focus) {
+    sel = k;
+    Array.prototype.forEach.call(lb.querySelectorAll('.u430-o'), function (o) { o.setAttribute('aria-selected', +o.dataset.k === k ? 'true' : 'false'); });
+    live.textContent = T.picked.replace('{n}', PEOPLE[k][0]);
+    clearTimeout(closeT);
+    closeT = setTimeout(function () { if (!root.isConnected) return; setOpen(false, focus); trigger(true); }, rm ? 0 : 380);
   }
-  function move(d) {
-    var n = opts().length;
-    if (!n) return;
-    act = act < 0 ? (d > 0 ? 0 : n - 1) : Math.max(0, Math.min(n - 1, act + d));
-    paint();
-  }
-
   tr.addEventListener('click', function () { setOpen(!root.classList.contains('is-open'), true); });
-  tr.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setOpen(true, true); }
-    // 닫힌 채로 글자를 치면 열면서 그 글자로 바로 찾습니다
-    else if (e.key.length === 1 && e.key !== ' ' && !e.metaKey && !e.ctrlKey && !e.altKey && !root.classList.contains('is-open')) {
-      e.preventDefault(); setOpen(true, true); input.value = e.key; render();
-    }
-  });
-  x.addEventListener('click', function () {
-    sel = null; syncTrigger(); setOpen(false, true);
-  });
-  input.addEventListener('input', render);
+  tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true, true); } });
+  input.addEventListener('input', function () { render(false); });
   input.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-    else if (e.key === 'Home' && !input.value) { e.preventDefault(); act = 0; paint(); }
-    else if (e.key === 'End' && !input.value) { e.preventDefault(); act = opts().length - 1; paint(); }
-    else if (e.key === 'Enter') { e.preventDefault(); var o = opts()[act]; if (o) choose(+o.dataset.k); }
+    var n = lb.querySelectorAll('.u430-o').length;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (n) { act = (act + (e.key === 'ArrowDown' ? 1 : -1) + n) % n; paint(); } }
+    else if (e.key === 'Enter') { e.preventDefault(); var o = lb.querySelectorAll('.u430-o')[act]; if (o) choose(+o.dataset.k, true); }
     else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
-    else if (e.key === 'Tab') setOpen(false);
   });
-  pop.addEventListener('mousedown', function (e) { if (e.target !== input) e.preventDefault(); });
-  lb.addEventListener('pointermove', function (e) {
-    var o = e.target.closest('.u430-opt');
-    if (!o) return;
-    var i = Array.prototype.indexOf.call(opts(), o);
-    if (i !== act) { act = i; Array.prototype.forEach.call(opts(), function (el, j) { el.classList.toggle('is-act', j === act); }); input.setAttribute('aria-activedescendant', o.id); }
-  });
-  lb.addEventListener('click', function (e) { var o = e.target.closest('.u430-opt'); if (o) choose(+o.dataset.k); });
-  root.addEventListener('pointerdown', function (e) {
-    if (root.classList.contains('is-open') && !e.target.closest('.u430-pop, .u430-tr')) setOpen(false);
-  });
-  root.addEventListener('focusout', function (e) {
-    if (root.classList.contains('is-open') && e.relatedTarget && !pop.contains(e.relatedTarget) && e.relatedTarget !== tr) setOpen(false);
-  });
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && root.classList.contains('is-open')) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
-  });
-  // 배정하기: 잠깐 체크로 바뀌었다가 돌아옵니다
-  var goT = 0;
-  go.addEventListener('click', function () {
-    if (!sel) return;
-    go.innerHTML = CHECK + T.done;
-    clearTimeout(goT);
-    goT = setTimeout(function () { if (root.isConnected) go.textContent = T.assign; }, 1600);
-  });
-  syncTrigger();
-  render();
+  q('.u430-pop').addEventListener('mousedown', function (e) { if (e.target !== input) e.preventDefault(); });
+  lb.addEventListener('pointermove', function (e) { var o = e.target.closest('.u430-o'); if (!o) return; var i = Array.prototype.indexOf.call(lb.querySelectorAll('.u430-o'), o); if (i !== act) { act = i; paint(); } });
+  lb.addEventListener('click', function (e) { var o = e.target.closest('.u430-o'); if (o) choose(+o.dataset.k, false); });
+  root.addEventListener('pointerdown', function (e) { if (root.classList.contains('is-open') && !e.target.closest('.u430-w')) setOpen(false); });
+  root.addEventListener('focusout', function (e) { if (root.classList.contains('is-open') && e.relatedTarget && !root.contains(e.relatedTarget)) setOpen(false); });
+  trigger(false);
+  render(false);
+  // 처음 그린 뒤 잠깐 있다가 목록이 펼쳐집니다(초점은 옮기지 않습니다)
+  setTimeout(function () { if (root.isConnected && !root.classList.contains('is-open')) setOpen(true, false); }, rm ? 0 : 250);
 })();
 </script>

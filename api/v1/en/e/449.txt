@@ -1,142 +1,95 @@
 <!-- Lucian UX/UI Prompt #449 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#449 -->
 <!--
 Element: Pagination
-ID: 449 · Category: Menus & Tabs · Tags: pagination, table, pager, rows-per-page, keyboard, data
-What it does: Production pagination under an orders table: previous and next, numbers that collapse into ellipses around the current page, a rows-per-page select and a “21–40 of 1,284” summary. Previous and Next switch off on the first and last pages, an ellipsis jumps five pages, and the arrow keys page too.
-How to use it: Press numbers and Next, then change rows per page to 50
+ID: 449 · Category: Menus & Tabs · Tags: pagination, pager, navigation, ellipsis, spring, sliding-pill
+What it does: Just the page-number bar. The pill around the current page springs over to the next number, and when the window shifts, ellipses and numbers roll up or down into each other. There are always seven slots so the bar never changes width, and the previous and next buttons dim at the ends.
+How to use it: Press next and the page numbers
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#449
 -->
 <style>
-.u449{position:relative;width:340px;padding:18px 0 0;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u449-hd{display:flex;align-items:baseline;justify-content:space-between;padding:0 18px 12px}
-.u449-hd b{font-size:15px;font-weight:700;letter-spacing:-.02em}
-.u449-hd span{font-size:11.5px;color:var(--ux-ink-3)}
-.u449-tb{border-top:1px solid var(--ux-line)}
-.u449-row{display:grid;grid-template-columns:88px 1fr 78px 70px;align-items:center;gap:8px;height:36px;padding:0 18px;font-size:12px}
-.u449-th{height:30px;background:var(--ux-surface-2);border-bottom:1px solid var(--ux-line);font-size:11px;font-weight:600;color:var(--ux-ink-3)}
-.u449-th span:nth-child(3),.u449-row .am{text-align:right}
-.u449-body{height:180px;overflow:auto;scrollbar-width:thin;transition:opacity .18s,transform .25s var(--ux-ease)}
-.u449-body.is-swap{opacity:0;transform:translateY(4px)}
-.u449-body .u449-row+.u449-row{border-top:1px solid var(--ux-line)}
-.u449-row .no{font:500 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0;color:var(--ux-ink-2)}
-.u449-row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u449-row .am{font-variant-numeric:tabular-nums;font-weight:500}
-.u449-chip{justify-self:start;height:20px;padding:0 7px;display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-size:10.5px;font-weight:600;white-space:nowrap;background:var(--ux-surface-2);color:var(--ux-ink-2)}
-.u449-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
-.u449-chip.pay{color:var(--ux-accent-2);background:color-mix(in srgb,var(--ux-accent-2) 12%,transparent)}
-.u449-chip.ship{color:var(--ux-warn);background:color-mix(in srgb,var(--ux-warn) 12%,transparent)}
-.u449-chip.done{color:var(--ux-mint);background:color-mix(in srgb,var(--ux-mint) 12%,transparent)}
-.u449-chip.off{color:var(--ux-ink-3)}
-.u449-ft{padding:10px 14px 14px;border-top:1px solid var(--ux-line)}
-.u449-meta{display:flex;align-items:center;justify-content:space-between;padding:0 4px;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u449-meta b{font-weight:600;color:var(--ux-ink)}
-.u449-meta label{display:flex;align-items:center;gap:6px}
-.u449-sel{position:relative}
-.u449-sel select{height:26px;padding:0 22px 0 8px;border:0;border-radius:7px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:600;color:var(--ux-ink);-webkit-appearance:none;appearance:none;cursor:pointer}
-.u449-sel select:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
-.u449 .u449-sel select:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
-.u449-sel svg{position:absolute;right:7px;top:50%;width:10px;height:10px;margin-top:-5px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.u449-nav{display:flex;align-items:center;justify-content:center;gap:3px;margin-top:10px}
-.u449-nav button{min-width:30px;height:30px;padding:0 4px;display:grid;place-items:center;border:0;border-radius:8px;background:none;font-size:12.5px;font-weight:500;color:var(--ux-ink-2);font-variant-numeric:tabular-nums;transition:background .15s,color .15s,transform .2s var(--ux-ease)}
-.u449-nav button:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
-.u449-nav button:active:not(:disabled){transform:scale(.94)}
-.u449 .u449-nav button:focus-visible{outline-offset:1px}
-.u449-nav button:disabled{opacity:.3;cursor:not-allowed}
-.u449-nav button[aria-current="page"]{background:var(--ux-ink);color:var(--ux-surface);font-weight:600}
-.u449-nav svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u449-el{color:var(--ux-ink-3)!important;letter-spacing:.06em}
-.u449-el:hover:not(:disabled){letter-spacing:0}
+.u449{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u449-nav{display:flex;align-items:center;gap:6px;padding:6px;border-radius:16px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 10px 26px -18px var(--ux-shadow-strong)}
+.u449-ar{width:32px;height:36px;display:grid;place-items:center;border:0;border-radius:10px;background:none;color:var(--ux-ink-2);transition:background .2s,color .2s,opacity .25s,transform .35s var(--ux-spring)}
+.u449-ar:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u449-ar:active:not(:disabled){transform:scale(.9)}
+.u449-ar:disabled{opacity:.3;cursor:default}
+.u449-ar svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u449 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u449-sl{position:relative;display:grid;grid-template-columns:repeat(7,32px);gap:2px}
+.u449-pill{position:absolute;left:0;top:0;width:32px;height:36px;border-radius:10px;background:var(--ux-ink);transform:translateX(var(--x,0px));transition:transform .55s var(--ux-spring)}
+.u449-pill.is-sq{animation:u449-sq .55s var(--ux-ease)}
+@keyframes u449-sq{35%{scale:1.22 .9}}
+.u449-n{position:relative;width:32px;height:36px;padding:0;border:0;border-radius:10px;background:none;font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink-2);overflow:hidden;transition:color .3s,background .2s}
+.u449-n:hover:not(.is-dots):not([aria-current]){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u449-n[aria-current]{color:var(--ux-surface)}
+.u449-n.is-dots{cursor:default;color:var(--ux-ink-3)}
+.u449-n span{position:absolute;inset:0;display:grid;place-items:center}
+.u449-n span.is-in{animation:u449-in .4s var(--ux-spring)}
+.u449-n span.is-out{animation:u449-out .3s var(--ux-ease) forwards}
+.u449-n.is-back span.is-in{animation-name:u449-in-b}
+.u449-n.is-back span.is-out{animation-name:u449-out-b}
+@keyframes u449-in{from{transform:translateY(22px);opacity:0}}
+@keyframes u449-out{to{transform:translateY(-22px);opacity:0}}
+@keyframes u449-in-b{from{transform:translateY(-22px);opacity:0}}
+@keyframes u449-out-b{to{transform:translateY(22px);opacity:0}}
 .u449-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 <div class="ux u449">
-  <div class="u449-hd"><b>Orders</b><span>Last 30 days</span></div>
-  <div class="u449-tb" role="table">
-    <div class="u449-row u449-th" role="row"><span role="columnheader">Order</span><span role="columnheader">Customer</span><span role="columnheader">Amount</span><span role="columnheader">Status</span></div>
-    <div class="u449-body" role="rowgroup" tabindex="0"></div>
-  </div>
-  <div class="u449-ft">
-    <div class="u449-meta"><span class="u449-sum"></span><label>Rows<span class="u449-sel"><select aria-label="Rows per page"><option>10</option><option selected>20</option><option>50</option><option>100</option></select><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 4 5 6.5 7.5 4"/></svg></span></label></div>
-    <nav class="u449-nav" aria-label="Pagination"></nav>
-  </div>
+  <nav class="u449-nav" aria-label="Pages">
+    <button type="button" class="u449-ar u449-pv" aria-label="Previous page"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+    <div class="u449-sl"><span class="u449-pill" aria-hidden="true"></span></div>
+    <button type="button" class="u449-ar u449-nx" aria-label="Next page"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+  </nav>
   <p class="u449-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = {
-    sum: function (a, b, t) { return '<b>' + a + '–' + b + '</b> of ' + t; },
-    prev: 'Previous page',
-    next: 'Next page',
-    page: function (n) { return 'Page ' + n; },
-    jumpF: 'Jump forward 5 pages',
-    jumpB: 'Jump back 5 pages',
-    now: function (n, t) { return 'Page ' + n + ' of ' + t; }
-  };
-  var NAMES = ['S. Kim', 'J. Lee', 'J. Park', 'M. Choi', 'H. Jung', 'J. Han', 'Y. Yoon', 'D. Kang', 'S. Oh', 'J. Seo'];
-  var ST = [['Paid', 'pay'], ['Shipping', 'ship'], ['Delivered', 'done'], ['Delivered', 'done'], ['Canceled', 'off']];
-  var TOTAL = 1284, size = 20, page = 1, swapT = 0;
-  var body = root.querySelector('.u449-body'), sum = root.querySelector('.u449-sum'), nav = root.querySelector('.u449-nav'), sel = root.querySelector('select'), live = root.querySelector('.u449-live');
-  var fmt = function (n) { return n.toLocaleString('en-US'); };
-  function pages() { return Math.ceil(TOTAL / size); }
-  function slots(cur, last) {
-    if (last <= 7) return Array.from({ length: last }, function (_, i) { return i + 1; });
-    if (cur <= 4) return [1, 2, 3, 4, 5, 'R', last];
-    if (cur >= last - 3) return [1, 'L', last - 4, last - 3, last - 2, last - 1, last];
-    return [1, 'L', cur - 1, cur, cur + 1, 'R', last];
+  var T = { page: function (n) { return 'Page ' + n; } };
+  var TOTAL = 20, cur = 1;
+  var sl = root.querySelector('.u449-sl'), pill = root.querySelector('.u449-pill'), pv = root.querySelector('.u449-pv'), nx = root.querySelector('.u449-nx'), live = root.querySelector('.u449-live');
+  var slots = [];
+  for (var k = 0; k < 7; k++) { var b = document.createElement('button'); b.type = 'button'; b.className = 'u449-n'; b.innerHTML = '<span></span>'; sl.appendChild(b); slots.push(b); }
+  function win(c) {
+    if (c <= 4) return [1, 2, 3, 4, 5, '', TOTAL];
+    if (c >= TOTAL - 3) return [1, '', TOTAL - 4, TOTAL - 3, TOTAL - 2, TOTAL - 1, TOTAL];
+    return [1, '', c - 1, c, c + 1, '', TOTAL];
   }
-  function rows() {
-    var a = (page - 1) * size, b = Math.min(TOTAL, a + size), h = '';
-    for (var i = a; i < b; i++) {
-      var hsh = Math.imul(i + 17, 2654435761) >>> 0, s = ST[(hsh >>> 9) % ST.length], amt = ((hsh >>> 3) % 2400 + 90) * 100;
-      h += '<div class="u449-row" role="row"><span class="no" role="cell">#' + (20261284 - i) + '</span><span class="nm" role="cell">' + NAMES[(hsh >>> 5) % NAMES.length] + '</span><span class="am" role="cell">₩' + fmt(amt) + '</span><span role="cell"><span class="u449-chip ' + s[1] + '">' + s[0] + '</span></span></div>';
-    }
-    body.innerHTML = h; body.scrollTop = 0;
-    sum.innerHTML = T.sum(fmt(a + 1), fmt(b), fmt(TOTAL));
-  }
-  function btn(cls, label, html, go, dis) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = cls; b.innerHTML = html;
-    if (label) b.setAttribute('aria-label', label);
-    b.disabled = !!dis;
-    b.addEventListener('click', function () { to(go, true); });
-    nav.appendChild(b); return b;
-  }
-  function draw() {
-    var last = pages(), had = nav.contains(document.activeElement);
-    nav.innerHTML = '';
-    btn('u449-prev', T.prev, '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 3 4.5 7l4 4"/></svg>', page - 1, page === 1);
-    slots(page, last).forEach(function (s) {
-      if (s === 'L' || s === 'R') { var j = btn('u449-el', s === 'L' ? T.jumpB : T.jumpF, '…', s === 'L' ? Math.max(1, page - 5) : Math.min(last, page + 5)); j.title = j.getAttribute('aria-label'); return; }
-      var b = btn('u449-n', T.page(s), String(s), s);
-      if (s === page) b.setAttribute('aria-current', 'page');
+  function render(back) {
+    win(cur).forEach(function (v, k) {
+      var b = slots[k], old = b.getAttribute('data-v');
+      b.classList.toggle('is-dots', v === '');
+      if (v === '') { b.setAttribute('aria-hidden', 'true'); b.tabIndex = -1; b.removeAttribute('aria-label'); }
+      else { b.removeAttribute('aria-hidden'); b.tabIndex = 0; b.setAttribute('aria-label', T.page(v)); }
+      if (v === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+      if (old === String(v)) return;
+      b.setAttribute('data-v', v);
+      var txt = v === '' ? '…' : String(v);
+      if (old === null) { b.firstChild.textContent = txt; return; }
+      b.querySelectorAll('.is-out').forEach(function (s) { s.remove(); });
+      var o = b.querySelector('span'), s = document.createElement('span');
+      s.textContent = txt; s.className = 'is-in';
+      b.classList.toggle('is-back', !!back);
+      o.className = 'is-out'; b.appendChild(s);
+      setTimeout(function () { if (o.isConnected) o.remove(); }, 320);
     });
-    btn('u449-next', T.next, '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5.5 3l4 4-4 4"/></svg>', page + 1, page === last);
-    if (had) { var c = nav.querySelector('[aria-current]'); if (c) c.focus({ preventScroll: true }); }
+    var at = win(cur).indexOf(cur);
+    pill.style.setProperty('--x', (at * 34) + 'px');
+    pv.disabled = cur === 1; nx.disabled = cur === TOTAL;
   }
-  function to(n, announce) {
-    var last = pages();
-    n = Math.max(1, Math.min(last, n));
-    if (n === page && body.childElementCount) { draw(); return; }
-    page = n;
-    clearTimeout(swapT);
-    body.classList.add('is-swap');
-    swapT = setTimeout(function () { if (!root.isConnected) return; rows(); body.classList.remove('is-swap'); }, rm ? 0 : 140);
-    draw();
-    if (announce) live.textContent = T.now(page, last);
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    if (n === cur) return;
+    var back = n < cur; cur = n;
+    pill.classList.remove('is-sq'); void pill.offsetWidth; pill.classList.add('is-sq');
+    render(back);
+    live.textContent = T.page(cur);
   }
-  nav.addEventListener('keydown', function (e) {
-    var d = { ArrowLeft: page - 1, ArrowRight: page + 1, Home: 1, End: pages() }[e.key];
-    if (d == null) return;
-    e.preventDefault(); to(d, true);
-  });
-  sel.addEventListener('change', function () {
-    var first = (page - 1) * size;
-    size = +sel.value;
-    page = 0; to(Math.floor(first / size) + 1, true);
-  });
-  rows(); draw();
+  slots.forEach(function (b) { b.addEventListener('click', function () { var v = b.getAttribute('data-v'); if (v) go(+v); }); });
+  pv.addEventListener('click', function () { go(cur - 1); });
+  nx.addEventListener('click', function () { go(cur + 1); });
+  render(false);
 })();
 </script>

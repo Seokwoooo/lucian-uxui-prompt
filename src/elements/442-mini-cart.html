@@ -1,118 +1,42 @@
-<!-- @meta {"title":"미니 장바구니","category":"커머스·가격","summary":"헤더의 장바구니 아이콘에 담은 개수가 붙고, 누르면 작은 장바구니가 내려옵니다. 상품마다 사진, 옵션, 수량 버튼이 있고, 빼면 ‘되돌리기’가 잠깐 남습니다. 맨 위 막대는 무료배송까지 남은 금액을 보여 주다가 기준을 넘기면 초록으로 바뀌고, 합계와 결제하기 금액도 바로 따라 바뀝니다.","hint":"수량을 늘려 무료배송 막대를 채워 보고, 상품을 뺀 뒤 되돌려 보세요. 장바구니 아이콘이나 Esc로 닫힙니다","shape":"square","hue":"#F97316","hue2":"#EAB308","tags":["mini-cart","dropdown","cart-badge","quantity-stepper","undo","free-shipping","checkout"]} -->
-<!-- @demo [["wait",1100],["tap",".u442-plus",1,{"after":1400}],["tap",".u442-rm",2,{"after":1100}],["tap",".u442-undo",0,{"after":1000}],["tap",".u442-minus",1,{"after":1200}],["tap",".u442-cart",0,{"after":900}],["tap",".u442-cart",0,{"after":1000}],["reset"]] -->
-<!-- @en {"title":"Mini cart","summary":"The cart icon in the header carries a count, and pressing it drops down a small cart. Each item has a photo, option and quantity buttons, and removing one leaves an Undo for a moment. The bar at the top shows how much more you need for free shipping and turns green once you pass it, while the subtotal and checkout amount follow instantly.","hint":"Raise a quantity to fill the free-shipping bar, then remove an item and undo it. The cart icon or Esc closes it","map":[
-  ["aria-label=\"검색\"", "aria-label=\"Search\""],
-  [">장바구니<", ">Cart<"],
-  ["aria-label=\"미니 장바구니\"", "aria-label=\"Mini cart\""],
-  ["aria-label=\"무료배송까지 진행률\"", "aria-label=\"Progress to free shipping\""],
-  [">상품 금액 <", ">Subtotal <"],
+<!-- @meta {"title":"장바구니 담기","category":"커머스·가격","summary":"담기를 누르면 상품 사진이 포물선을 그리며 장바구니로 날아가 쏙 들어가고, 장바구니가 몸을 흔들며 숫자 배지가 통 튀어 하나 늘어납니다.","hint":"담기를 여러 번 눌러 보세요","shape":"square","hue":"#F97316","hue2":"#EAB308","tags":["add-to-cart","cart-badge","fly-to-cart","ecommerce","spring","micro-interaction"]} -->
+<!-- @demo [["wait",900],["tap",".u442-add",0,{"after":1500}],["tap",".u442-add",0,{"after":1700}],["reset"]] -->
+<!-- @en {"title":"Add to cart","summary":"Press Add and the product photo arcs through the air into the cart, the cart gives a little wiggle, and its badge bounces up by one.","hint":"Press Add a few times","map":[
+  ["aria-label=\"장바구니\"", "aria-label=\"Cart\""],
+  [">스테인리스 텀블러<", ">Steel tumbler<"],
+  [">세이지 · 500ml<", ">Sage · 500 ml<"],
+  [">담기<", ">Add<"],
   ["'장바구니, 상품 {n}개'", "'Cart, {n} items'"],
-  ["'{n}개'", "'{n} items'"],
-  ["'{p} 더 담으면 무료배송'", "'{p} more for free shipping'"],
-  ["'무료배송이 적용됐어요'", "'Free shipping unlocked'"],
-  ["'배송비 {p}'", "'Shipping {p}'"],
-  ["'배송비 무료'", "'Free shipping'"],
-  ["'{p} 결제하기'", "'Checkout · {p}'"],
-  ["'{n}{j} 뺐어요'", "'Removed {n}'"],
-  ["var JOSA = ['을', '를'];", "var JOSA = ['', ''];"],
-  ["'되돌리기'", "'Undo'"],
-  ["'{n} 삭제'", "'Remove {n}'"],
-  ["'{n} 하나 빼기'", "'One less {n}'"],
-  ["'{n} 하나 더'", "'One more {n}'"],
-  ["'스테인리스 텀블러'", "'Stainless tumbler'"],
-  ["'세이지 · 500ml'", "'Sage · 500 ml'"],
-  ["'세라믹 머그'", "'Ceramic mug'"],
-  ["'아이보리 · 350ml'", "'Ivory · 350 ml'"],
-  ["'리넨 티타월'", "'Linen tea towel'"],
-  ["'오트밀 · 2장'", "'Oatmeal · set of 2'"],
-  ["'아직 담은 상품이 없어요'", "'Nothing here yet'"],
-  ["'수량 {n}'", "'Quantity {n}'"]
+  ["'장바구니에 담았어요'", "'Added to cart'"]
 ]} -->
 <style>
-.u442{position:relative;width:340px;height:410px;border-radius:22px;overflow:hidden;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u442 svg{display:block}
-.u442-top{display:flex;align-items:center;gap:4px;height:48px;padding:0 10px 0 18px;border-bottom:1px solid var(--ux-line)}
-.u442-logo{flex:1;font-size:14px;font-weight:800;letter-spacing:.14em}
-.u442-ib{position:relative;width:36px;height:36px;padding:0;border:0;border-radius:10px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
-.u442-ib:hover,.u442.is-open .u442-cart{background:var(--ux-surface-2);color:var(--ux-ink)}
-.u442-ib svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u442-bd{position:absolute;right:2px;top:2px;min-width:17px;height:17px;padding:0 4px;border-radius:999px;display:grid;place-items:center;background:var(--ux-danger);color:#fff;font-size:10px;font-weight:700;font-variant-numeric:tabular-nums;box-shadow:0 0 0 2px var(--ux-surface)}
-.u442-bd.is-bump{animation:u442-bump .4s var(--ux-spring)}
-@keyframes u442-bump{40%{transform:scale(1.35)}}
-.u442-pg{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px 18px}
-.u442-pg i{display:block;height:120px;border-radius:12px;background:var(--ux-surface-2)}
-.u442-pg i+i{opacity:.7}
-.u442-pg b{display:block;height:9px;width:70%;margin-top:-2px;border-radius:5px;background:var(--ux-surface-2)}
-.u442-pn{position:absolute;z-index:3;left:10px;right:10px;top:54px;padding:13px 14px 12px;border-radius:16px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 24px 48px -18px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);transform-origin:calc(100% - 24px) 0;opacity:0;visibility:hidden;transform:translateY(-6px) scale(.97);transition:opacity .14s var(--ux-ease),transform .18s var(--ux-ease),visibility 0s linear .18s}
-.u442.is-open .u442-pn{opacity:1;visibility:visible;transform:none;transition:opacity .16s var(--ux-ease),transform .32s var(--ux-spring),visibility 0s}
-.u442-pn::before{content:"";position:absolute;right:20px;top:-5px;width:10px;height:10px;transform:rotate(45deg);background:inherit;box-shadow:-1px -1px 0 var(--ux-line-2);border-radius:2px 0 0 0}
-.u442-ph{display:flex;align-items:baseline;gap:6px;margin-bottom:9px}
-.u442-ph b{font-size:14px;font-weight:700;letter-spacing:-.02em}
-.u442-ph small{font-size:12px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u442-fs{padding:8px 10px;border-radius:10px;background:var(--ux-surface-2)}
-.u442-fs p{display:flex;align-items:center;gap:6px;margin:0 0 7px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
-.u442-fs p b{color:var(--ux-ink);font-weight:700}
-.u442-fs p svg{width:14px;height:14px;fill:none;stroke:var(--ux-mint);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;display:none}
-.u442-fs.is-free p{color:var(--ux-mint)}
-.u442-fs.is-free p svg{display:block;animation:u442-pop .4s var(--ux-spring)}
-@keyframes u442-pop{from{transform:scale(.3)}}
-.u442-bar{height:5px;border-radius:3px;background:var(--ux-line);overflow:hidden}
-.u442-bar i{display:block;height:100%;border-radius:inherit;background:var(--ux-accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .55s var(--ux-spring),background-color .3s}
-.u442-fs.is-free .u442-bar i{background:var(--ux-mint)}
-.u442-ls{margin:4px 0 0;padding:0;list-style:none}
-.u442-it{display:flex;align-items:center;gap:10px;height:51px;border-bottom:1px solid var(--ux-line);overflow:hidden}
-.u442-it:last-child{border-bottom:0}
-.u442-th{flex:none;width:40px;height:40px;border-radius:9px;display:grid;place-items:center;background:var(--ux-surface-2)}
-.u442-th.is-tumbler{background:#EDF2EE;background:light-dark(#EDF2EE,#222A25)}
-.u442-th.is-mug{background:#EAE3D6;background:light-dark(#EAE3D6,#2A2823)}
-.u442-th.is-towel{background:#F3EEE6;background:light-dark(#F3EEE6,#2B2722)}
-.u442-th svg{width:28px;height:28px}
+.u442{position:relative;width:340px;height:300px}
+.u442-cart{position:absolute;right:46px;top:44px;width:58px;height:58px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 12px 26px -14px var(--ux-shadow-strong);color:var(--ux-ink)}
+.u442-cart svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u442-cart.is-hit svg{animation:u442-wig .6s cubic-bezier(.3,1.4,.5,1)}
+@keyframes u442-wig{0%{transform:none}20%{transform:translateY(3px) scale(1.08,.9)}40%{transform:rotate(-12deg)}60%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}100%{transform:none}}
+.u442-bd{position:absolute;right:-2px;top:-2px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:var(--ux-danger);color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;box-shadow:0 0 0 3px var(--ux-surface)}
+.u442-cart.is-hit .u442-bd{animation:u442-bump .55s cubic-bezier(.3,1.8,.5,1) .05s}
+@keyframes u442-bump{0%{transform:scale(1)}35%{transform:scale(1.5) translateY(-3px)}100%{transform:none}}
+.u442 .u442-cart:focus-visible,.u442 .u442-add:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u442-pd{position:absolute;left:30px;right:30px;bottom:46px;display:flex;align-items:center;gap:12px;height:80px;padding:0 12px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 16px 36px -20px var(--ux-shadow-strong)}
+.u442-th,.u442-fly{flex:none;width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:#EDF2EE;background:light-dark(#EDF2EE,#243028)}
+.u442-th svg,.u442-fly svg{width:40px;height:40px}
 .u442-tx{flex:1;min-width:0}
-.u442-tx b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u442-tx small{display:block;margin-top:1px;font-size:11px;color:var(--ux-ink-3);white-space:nowrap}
-.u442-rt{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-.u442-pr{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums}
-.u442-ctl{display:flex;align-items:center;gap:4px}
-.u442-st{display:flex;align-items:center;height:24px;border-radius:7px;box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u442-st button,.u442-rm{width:24px;height:24px;padding:0;border:0;border-radius:7px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s,opacity .15s}
-.u442-st button:hover:not(:disabled),.u442-rm:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
-.u442-st button:disabled{opacity:.3;cursor:not-allowed}
-.u442-st button svg,.u442-rm svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.u442-st span{min-width:18px;text-align:center;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
-.u442-rm:hover{color:var(--ux-danger)}
-.u442-ud{display:flex;align-items:center;gap:8px;height:51px;padding:0 4px;font-size:12px;color:var(--ux-ink-3);border-bottom:1px solid var(--ux-line);animation:u442-in .25s var(--ux-ease)}
-.u442-ud span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u442-undo{flex:none;height:26px;padding:0 9px;border:0;border-radius:7px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:650;color:var(--ux-ink)}
-.u442-undo:hover{background:var(--ux-surface-2)}
-@keyframes u442-in{from{opacity:0}}
-.u442-it.is-back{animation:u442-in .3s var(--ux-ease)}
-.u442-em{padding:24px 0;text-align:center;font-size:12.5px;color:var(--ux-ink-3)}
-.u442-ft{margin-top:4px;padding-top:10px;border-top:1px solid var(--ux-line)}
-.u442-sum{display:flex;justify-content:space-between;margin-bottom:9px;font-size:12.5px;color:var(--ux-ink-2)}
-.u442-sum b{font-weight:700;color:var(--ux-ink);font-variant-numeric:tabular-nums}
-.u442-sum small{font-size:11.5px;color:var(--ux-ink-3)}
-.u442-go{width:100%;height:40px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13.5px;font-weight:650;font-variant-numeric:tabular-nums;transition:opacity .15s,transform .2s var(--ux-spring)}
-.u442-go:hover{opacity:.9}
-.u442-go:active{transform:scale(.98)}
-.u442-go:disabled{opacity:.3;cursor:not-allowed}
-.u442 .u442-ib:focus-visible,.u442 .u442-go:focus-visible{outline-offset:2px}
+.u442-tx b{display:block;font-size:14px;font-weight:650;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u442-tx small{display:block;margin-top:2px;font-size:12px;color:var(--ux-ink-3)}
+.u442-tx em{display:block;margin-top:3px;font-style:normal;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.u442-add{flex:none;display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 15px;border:0;border-radius:999px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:13.5px;font-weight:650;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 8px 18px -10px var(--ux-accent);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u442-add:active{--k:.9;transition:transform .1s var(--ux-ease)}
+.u442-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.u442-fly{position:absolute;left:0;top:0;z-index:5;box-shadow:0 10px 20px -8px var(--ux-shadow-strong);pointer-events:none}
 .u442-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
-<div class="ux u442 is-open">
-  <div class="u442-top">
-    <span class="u442-logo">LUCIAN</span>
-    <button type="button" class="u442-ib" aria-label="검색"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg></button>
-    <button type="button" class="u442-ib u442-cart" aria-haspopup="dialog" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg><span class="u442-bd" aria-hidden="true"></span></button>
-  </div>
-  <div class="u442-pg" aria-hidden="true"><div><i></i></div><div><i></i></div></div>
-  <div class="u442-pn" role="dialog" aria-label="미니 장바구니">
-    <div class="u442-ph"><b>장바구니</b><small></small></div>
-    <div class="u442-fs"><p><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span></span></p><div class="u442-bar" role="progressbar" aria-label="무료배송까지 진행률" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>
-    <ul class="u442-ls"></ul>
-    <div class="u442-ft">
-      <div class="u442-sum"><span>상품 금액 <small></small></span><b></b></div>
-      <button type="button" class="u442-go"></button>
-    </div>
+<div class="ux u442">
+  <button type="button" class="u442-cart" aria-label="장바구니"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg><span class="u442-bd" aria-hidden="true"></span></button>
+  <div class="u442-pd">
+    <span class="u442-th" aria-hidden="true"></span>
+    <div class="u442-tx"><b>스테인리스 텀블러</b><small>세이지 · 500ml</small><em>₩26,900</em></div>
+    <button type="button" class="u442-add"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>담기</button>
   </div>
   <p class="u442-live" role="status"></p>
 </div>
@@ -120,118 +44,34 @@
 (function () {
   var root = document.currentScript.previousElementSibling;
   var q = function (s) { return root.querySelector(s); };
-  var cart = q('.u442-cart'), badge = q('.u442-bd'), pn = q('.u442-pn'), cnt = q('.u442-ph small'), fs = q('.u442-fs'), fsT = q('.u442-fs p span'), bar = q('.u442-bar'), ls = q('.u442-ls'), sumB = q('.u442-sum b'), ship = q('.u442-sum small'), go = q('.u442-go'), live = q('.u442-live');
-  var T = { cart: '장바구니, 상품 {n}개', count: '{n}개', more: '{p} 더 담으면 무료배송', free: '무료배송이 적용됐어요', fee: '배송비 {p}', feeFree: '배송비 무료', pay: '{p} 결제하기', removed: '{n}{j} 뺐어요', undo: '되돌리기', rm: '{n} 삭제', minus: '{n} 하나 빼기', plus: '{n} 하나 더', empty: '아직 담은 상품이 없어요', qty: '수량 {n}' };
-  var FREE = 50000, FEE = 3000;
-  // 썸네일: 단순한 도형으로 그린 상품 그림
-  var ART = {
-    tumbler: '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="10" y="3" width="8" height="3.5" rx="1.4" fill="#2A2D33"/><rect x="9.2" y="6" width="9.6" height="2" rx=".8" fill="#C4C8CF"/><path d="M9.4 8h9.2l-.8 15.6a1.4 1.4 0 0 1-1.4 1.3h-4.8a1.4 1.4 0 0 1-1.4-1.3z" fill="#9DB4A0"/><path d="M10.3 8h2l-.5 16.9h-.6a1.4 1.4 0 0 1-1.4-1.3z" fill="#fff" opacity=".3"/></svg>',
-    mug: '<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M19 11h1.6a3.4 3.4 0 0 1 0 6.8H19" fill="none" stroke="#D8D2C4" stroke-width="2"/><path d="M6.5 8.5h13v11a4 4 0 0 1-4 4h-5a4 4 0 0 1-4-4z" fill="#F4F0E6"/><path d="M6.5 8.5h13v2.2h-13z" fill="#E4DCCB"/><path d="M8 11h2.2v10.5A3 3 0 0 1 8 19.6z" fill="#fff" opacity=".7"/></svg>',
-    towel: '<svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 7.5h18v14H5z" fill="#D9CDB8"/><path d="M5 10h18M5 12.2h18" stroke="#B9A98D" stroke-width="1"/><path d="M5 17.5h18v4H5z" fill="#CDBFA6"/><path d="M5 7.5h18v1.4H5z" fill="#fff" opacity=".35"/></svg>'
-  };
-  var items = [
-    { name: '스테인리스 텀블러', opt: '세이지 · 500ml', price: 26900, qty: 1, art: 'tumbler' },
-    { name: '세라믹 머그', opt: '아이보리 · 350ml', price: 12000, qty: 1, art: 'mug' },
-    { name: '리넨 티타월', opt: '오트밀 · 2장', price: 3100, qty: 1, art: 'towel' }
-  ];
-  var undo = null, undoT = 0, lastCount = -1;
-  // 받침이 있으면 ‘을’, 없으면 ‘를’을 붙입니다
-  var JOSA = ['을', '를'];
-  function josa(w) { var c = w.charCodeAt(w.length - 1) - 0xAC00; return c >= 0 && c < 11172 ? JOSA[c % 28 ? 0 : 1] : JOSA[1]; }
-  function removedText(n) { return T.removed.replace('{n}', n).replace('{j}', josa(n)); }
-  function won(n) { return '₩' + n.toLocaleString('ko-KR'); }
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function row(it, i) {
-    return '<li class="u442-it" data-i="' + i + '"><span class="u442-th is-' + it.art + '">' + ART[it.art] + '</span>' +
-      '<span class="u442-tx"><b>' + esc(it.name) + '</b><small>' + esc(it.opt) + '</small></span>' +
-      '<span class="u442-rt"><span class="u442-pr">' + won(it.price * it.qty) + '</span><span class="u442-ctl"><span class="u442-st">' +
-      '<button type="button" class="u442-minus" aria-label="' + esc(T.minus.replace('{n}', it.name)) + '"' + (it.qty <= 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>' +
-      '<span aria-label="' + esc(T.qty.replace('{n}', it.qty)) + '">' + it.qty + '</span>' +
-      '<button type="button" class="u442-plus" aria-label="' + esc(T.plus.replace('{n}', it.name)) + '"' + (it.qty >= 9 ? ' disabled' : '') + '><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></button></span>' +
-      '<button type="button" class="u442-rm" aria-label="' + esc(T.rm.replace('{n}', it.name)) + '"><svg viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l.8 12a2 2 0 0 0 2 1.8h4.4a2 2 0 0 0 2-1.8L17 7"/></svg></button></span></span></li>';
+  var cart = q('.u442-cart'), bd = q('.u442-bd'), pd = q('.u442-pd'), th = q('.u442-th'), add = q('.u442-add'), live = q('.u442-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { cart: '장바구니, 상품 {n}개', added: '장바구니에 담았어요' };
+  var ART = '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="10" y="3" width="8" height="3.5" rx="1.4" fill="#2A2D33"/><rect x="9.2" y="6" width="9.6" height="2" rx=".8" fill="#C4C8CF"/><path d="M9.4 8h9.2l-.8 15.6a1.4 1.4 0 0 1-1.4 1.3h-4.8a1.4 1.4 0 0 1-1.4-1.3z" fill="#9DB4A0"/><path d="M10.3 8h2l-.5 16.9h-.6a1.4 1.4 0 0 1-1.4-1.3z" fill="#fff" opacity=".3"/></svg>';
+  th.innerHTML = ART;
+  var count = 2;
+  function badge() { bd.textContent = count; cart.setAttribute('aria-label', T.cart.replace('{n}', count)); }
+  function pos(el) { var x = 0, y = 0; for (var e = el; e && e !== root; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { x: x, y: y }; }
+  function hit() {
+    count++; badge();
+    cart.classList.remove('is-hit'); void cart.offsetWidth; cart.classList.add('is-hit');
+    live.textContent = T.added;
   }
-  // 목록 전체를 다시 그리지 않고, 바뀐 줄만 고칩니다(누르던 버튼의 초점이 남도록)
-  function patch(i) {
-    var li = ls.querySelector('[data-i="' + i + '"]');
-    if (!li) return;
-    var it = items[i];
-    li.querySelector('.u442-pr').textContent = won(it.price * it.qty);
-    var sp = li.querySelector('.u442-st span');
-    sp.textContent = it.qty; sp.setAttribute('aria-label', T.qty.replace('{n}', it.qty));
-    li.querySelector('.u442-minus').disabled = it.qty <= 1;
-    li.querySelector('.u442-plus').disabled = it.qty >= 9;
-  }
-  function draw() {
-    var html = '';
-    items.forEach(function (it, i) {
-      if (it.gone && undo && undo.i === i) html += '<li class="u442-ud"><span>' + esc(removedText(it.name)) + '</span><button type="button" class="u442-undo">' + T.undo + '</button></li>';
-      else if (!it.gone) html += row(it, i);
-    });
-    ls.innerHTML = html || '<li class="u442-em">' + T.empty + '</li>';
-  }
-  function totals() {
-    var n = 0, sum = 0;
-    items.forEach(function (it) { if (!it.gone) { n += it.qty; sum += it.qty * it.price; } });
-    var free = sum >= FREE, fee = free || !sum ? 0 : FEE;
-    badge.textContent = n;
-    badge.hidden = !n;
-    if (lastCount >= 0 && n !== lastCount) { badge.classList.remove('is-bump'); void badge.offsetWidth; badge.classList.add('is-bump'); }
-    lastCount = n;
-    cart.setAttribute('aria-label', T.cart.replace('{n}', n));
-    cnt.textContent = T.count.replace('{n}', n);
-    fs.classList.toggle('is-free', free);
-    fsT.innerHTML = free ? esc(T.free) : esc(T.more).replace('{p}', '<b>' + won(FREE - sum) + '</b>');
-    var pct = Math.min(1, sum / FREE);
-    bar.style.setProperty('--p', pct.toFixed(3));
-    bar.setAttribute('aria-valuenow', Math.round(pct * 100));
-    sumB.textContent = won(sum);
-    ship.textContent = '· ' + (free ? T.feeFree : T.fee.replace('{p}', won(FEE)));
-    go.textContent = T.pay.replace('{p}', won(sum + fee));
-    go.disabled = !sum;
-  }
-  function finishUndo() {
-    if (undo) { var it = items[undo.i]; it.gone = true; undo = null; draw(); }
-  }
-  ls.addEventListener('click', function (e) {
-    var b = e.target.closest('button');
-    if (!b) return;
-    if (b.classList.contains('u442-undo')) {
-      clearTimeout(undoT);
-      var i0 = undo.i; items[i0].gone = false; undo = null;
-      draw(); totals();
-      var back = ls.querySelector('[data-i="' + i0 + '"]');
-      back.classList.add('is-back');
-      back.querySelector('.u442-rm').focus({ preventScroll: true });
-      return;
+  // 사진 복사본이 포물선(2차 베지어)을 따라 장바구니로 날아갑니다
+  add.addEventListener('click', function () {
+    if (rm || !Element.prototype.animate) { hit(); return; }
+    var a = pos(th), b = pos(cart), fly = document.createElement('span');
+    fly.className = 'u442-fly'; fly.setAttribute('aria-hidden', 'true'); fly.innerHTML = ART;
+    root.appendChild(fly);
+    var sx = a.x, sy = a.y, ex = b.x + 29 - 28, ey = b.y + 29 - 28, cx = (sx + ex) / 2 - 20, cy = Math.min(sy, ey) - 90, frames = [];
+    for (var i = 0; i <= 12; i++) {
+      var t = i / 12, u = 1 - t;
+      var x = u * u * sx + 2 * u * t * cx + t * t * ex, y = u * u * sy + 2 * u * t * cy + t * t * ey;
+      frames.push({ transform: 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (1 - t * 0.66).toFixed(3) + ') rotate(' + (t * 24).toFixed(1) + 'deg)', opacity: t > 0.92 ? 0 : 1, offset: t });
     }
-    var li = b.closest('.u442-it'), i = +li.dataset.i, it = items[i];
-    if (b.classList.contains('u442-plus')) { it.qty++; patch(i); totals(); }
-    else if (b.classList.contains('u442-minus')) { it.qty = Math.max(1, it.qty - 1); patch(i); totals(); if (b.disabled) li.querySelector('.u442-plus').focus({ preventScroll: true }); }
-    else if (b.classList.contains('u442-rm')) {
-      // 뺀 상품은 5초 동안 되돌릴 수 있습니다
-      finishUndo();
-      it.gone = true; undo = { i: i };
-      draw(); totals();
-      live.textContent = removedText(it.name);
-      var ub = ls.querySelector('.u442-undo');
-      if (ub && e.detail === 0) ub.focus({ preventScroll: true });
-      clearTimeout(undoT);
-      undoT = setTimeout(function () { if (root.isConnected) finishUndo(); }, 5000);
-    }
+    var an = fly.animate(frames, { duration: 720, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+    an.onfinish = function () { fly.remove(); if (root.isConnected) hit(); };
   });
-  function setOpen(v, focus) {
-    root.classList.toggle('is-open', v);
-    cart.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (!v && focus) cart.focus({ preventScroll: true });
-  }
-  cart.addEventListener('click', function () { setOpen(!root.classList.contains('is-open')); });
-  root.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && root.classList.contains('is-open')) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
-  });
-  root.addEventListener('pointerdown', function (e) {
-    if (root.classList.contains('is-open') && !e.target.closest('.u442-pn, .u442-cart')) setOpen(false);
-  });
-  draw();
-  totals();
+  badge();
 })();
 </script>

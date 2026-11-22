@@ -1,152 +1,118 @@
-<!-- @meta {"title":"뉴스레터 구독","category":"폼·입력","summary":"이메일 칸과 구독 버튼, 개인정보 안내가 있는 작은 구독 카드입니다. 형식이 틀리면 칸 아래에 바로 알려 주고, 보내는 동안 버튼에 진행 표시가 돈 뒤 원이 그려지며 체크가 나타납니다. 이미 구독 중인 주소를 넣으면 다음 호가 언제 오는지 차분하게 알려 줍니다.","hint":"이메일을 넣고 구독해 본 뒤, 다른 이메일로를 눌러 같은 주소를 다시 넣어 보세요","shape":"square","hue":"#22C55E","hue2":"#6366F1","tags":["newsletter","subscribe","email","form","validation","success-state"]} -->
-<!-- @demo [["wait",800],["type",".u427-in",0,"jiwoo@haru",80],["tap",".u427-go",0,{"after":1300}],["type",".u427-in",0,".app",90],["tap",".u427-go",0,{"after":2300}],["tap",".u427-again",0,{"after":700}],["type",".u427-in",0,"jiwoo@haru.app",55],["tap",".u427-go",0,{"after":2200}],["reset"]] -->
-<!-- @en {"title":"Newsletter subscribe","summary":"A compact subscribe card with an email field, a Subscribe button and a privacy note. A mistyped address is flagged right under the field, the button spins while sending, then a circle draws and a check appears. Enter an address that’s already subscribed and it calmly tells you when the next issue arrives.","hint":"Subscribe with an email, then press Use another email and enter the same address again","map":[
-  [">매주 화요일<", ">Every Tuesday<"],
-  [">Haru 위클리<", ">Haru Weekly<"],
-  [">일 잘하는 팀의 노하우를 5분 분량으로 보내 드려요.<", ">Five-minute reads on how great teams work.<"],
-  [">2만 4천 명이 읽고 있어요<", ">Read by 24,000 people<"],
+<!-- @meta {"title":"뉴스레터 구독","category":"폼·입력","summary":"이메일 칸과 구독 버튼 하나입니다. 형식이 틀리면 칸이 살짝 흔들리며 알려 주고, 구독하면 버튼이 동그랗게 줄어들며 체크로 바뀌고 작은 편지 봉투가 하트 봉인을 달고 날아갑니다.","hint":"이메일을 넣고 구독을 눌러 보세요. 체크를 누르면 처음으로 돌아갑니다","shape":"square","hue":"#22C55E","hue2":"#6366F1","tags":["newsletter","subscribe","email","morph","envelope","illustration"]} -->
+<!-- @demo [["wait",700],["type",".u427-in",0,"minji@haru",75],["tap",".u427-go",0,{"after":1100}],["type",".u427-in",0,".app",90],["tap",".u427-go",0,{"after":2300}],["reset"]] -->
+<!-- @en {"title":"Newsletter subscribe","summary":"An email field with a Subscribe button. A mistyped address makes the field give a little shake, and subscribing shrinks the button into a circle with a check while a tiny envelope with a heart seal flies off.","hint":"Enter an email and press Subscribe. Press the check to start over","map":[
+  [">매주 화요일, 5분 뉴스레터<", ">A five-minute read, every Tuesday<"],
   [">이메일 주소<", ">Email address<"],
+  ["placeholder=\"이메일 주소\"", "placeholder=\"Email address\""],
   [">구독<", ">Subscribe<"],
-  [">언제든 한 번에 구독을 취소할 수 있어요.<", ">Unsubscribe in one click, any time.<"],
-  [">개인정보처리방침<", ">Privacy policy<"],
   ["'이메일 주소를 입력해 주세요'", "'Enter your email address'"],
   ["'이메일 형식을 확인해 주세요'", "'Check the email format'"],
-  ["'이미 구독 중인 이메일이에요'", "'You’re already subscribed'"],
-  ["'다음 호는 화요일 오전 8시에 도착해요'", "'The next issue lands Tuesday at 8 AM'"],
+  ["'구독했어요. 메일함을 확인해 주세요'", "'You’re in. Check your inbox'"],
   ["'구독하는 중…'", "'Subscribing…'"],
-  [">구독했어요<", ">You’re in<"],
-  ["v + '로 확인 메일을 보냈어요'", "'Confirmation sent to ' + v"],
-  [">다른 이메일로<", ">Use another email<"]
+  ["'처음으로'", "'Start over'"]
 ]} -->
 <style>
-.u427{position:relative;width:340px;height:282px;padding:22px 20px 18px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
-.u427::before{content:"";position:absolute;right:-60px;top:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--ux-accent) 16%,transparent),transparent);pointer-events:none}
-.u427-tp{position:relative;display:flex;align-items:center;justify-content:space-between}
-.u427-ic{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 8px 18px -8px rgba(80,70,220,.6)}
-.u427-ic svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.u427-pl{display:flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:99px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:10px;font-weight:700;color:var(--ux-ink-2)}
-.u427-pl i{width:6px;height:6px;border-radius:50%;background:var(--ux-mint)}
-.u427 h3{position:relative;margin:14px 0 0;font-size:17px;font-weight:850;letter-spacing:-.04em}
-.u427-ds{position:relative;margin:4px 0 0;font-size:11.5px;line-height:1.5;color:var(--ux-ink-2)}
-.u427-pr{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:10.5px;font-weight:600;color:var(--ux-ink-3)}
-.u427-av{display:flex}
-.u427-av i{width:20px;height:20px;margin-left:-6px;border-radius:50%;box-shadow:0 0 0 2px var(--ux-surface)}
-.u427-av i:first-child{margin-left:0}
-/* 입력과 완료 화면이 같은 자리에서 바뀝니다 */
-.u427-zn{position:relative;margin-top:auto;height:76px}
-.u427-fz,.u427-ok{position:absolute;inset:0;transition:opacity .25s var(--ux-ease),transform .45s cubic-bezier(.3,1.25,.45,1),visibility 0s}
-.u427-ok{display:flex;align-items:center;gap:12px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .3s,visibility 0s .3s}
-.u427.is-ok .u427-fz{opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .2s,transform .3s,visibility 0s .3s}
-.u427.is-ok .u427-ok{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ux-ease) .1s,transform .45s cubic-bezier(.3,1.25,.45,1) .08s,visibility 0s}
-.u427-fm{display:flex;gap:6px}
-.u427-fm.is-bad{animation:u427-shake .36s cubic-bezier(.36,.07,.19,.97)}
-@keyframes u427-shake{20%,60%{transform:translateX(-3px)}40%,80%{transform:translateX(3px)}}
+.u427{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--ux-ink)}
+.u427 h3{margin:0;font-size:14px;font-weight:750;letter-spacing:-.02em}
+.u427-fm{position:relative;display:flex;align-items:center;width:300px;height:52px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow),0 16px 34px -22px var(--ux-shadow-strong);transition:box-shadow .25s}
+.u427-fm:focus-within{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 16px 34px -22px var(--ux-shadow-strong)}
+.u427-fm.is-bad{box-shadow:0 0 0 1.5px var(--ux-danger),0 0 0 5px color-mix(in srgb,var(--ux-danger) 14%,transparent);animation:u427-shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u427-shake{15%,55%{transform:translateX(-5px)}35%,75%{transform:translateX(5px)}90%{transform:translateX(-1px)}}
 .u427-fm label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
-.u427-in{flex:1;min-width:0;height:38px;padding:0 12px;border:0;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12px;color:var(--ux-ink);outline:none;transition:box-shadow .15s,background-color .15s}
+.u427-in{flex:1;min-width:0;height:40px;padding:0;border:0;background:none;font-size:13.5px;color:var(--ux-ink);outline:none;transition:opacity .25s}
 .u427-in::placeholder{color:var(--ux-ink-3)}
-.u427-in:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent)}
-.u427-in:focus{background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
 .u427 .u427-in:focus-visible{outline:none}
-.u427-in[aria-invalid="true"]{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
-.u427-go{position:relative;flex:none;min-width:64px;height:38px;padding:0 15px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:12px;font-weight:750;transition:opacity .15s,transform .25s var(--ux-spring)}
-.u427-go:hover{opacity:.88}
-.u427-go:active{transform:scale(.96)}
-.u427-go[aria-busy="true"]{color:transparent;pointer-events:none}
-.u427-go[aria-busy="true"]::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--ux-surface);border-right-color:transparent;animation:u427-spin .7s linear infinite}
+.u427-ok{position:absolute;left:16px;right:58px;top:50%;font-size:13px;font-weight:650;color:var(--ux-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-50%) translateY(6px);transition:opacity .3s,transform .45s var(--ux-ease);pointer-events:none}
+.u427.is-done .u427-in{opacity:0}
+.u427.is-done .u427-ok{opacity:1;transform:translateY(-50%);transition-delay:.35s}
+/* 버튼: 구독하면 동그랗게 줄며 초록 체크가 됩니다 */
+.u427-go{position:relative;flex:none;display:grid;place-items:center;width:78px;height:40px;border:0;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:750;transition:width .55s cubic-bezier(.3,1.4,.5,1),border-radius .55s,background-color .35s,transform .35s var(--ux-spring)}
+.u427-go:active{transform:scale(.94)}
+.u427-go span{transition:opacity .2s}
+.u427-go[aria-busy="true"] span{opacity:0}
+.u427-go[aria-busy="true"]::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u427-spin .7s linear infinite}
 @keyframes u427-spin{to{transform:rotate(360deg)}}
-.u427-ms{display:flex;align-items:flex-start;gap:6px;min-height:30px;margin:8px 0 0;font-size:10.5px;line-height:1.45;color:var(--ux-ink-3)}
-.u427-ms svg{width:12px;height:12px;flex:none;margin-top:1px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.u427-ms .u427-i,.u427-ms .u427-e{display:none}
-.u427-ms.is-err{color:var(--ux-danger);font-weight:650}
-.u427-ms.is-err .u427-l,.u427-ms.is-info .u427-l{display:none}
-.u427-ms.is-err .u427-e{display:block}
-.u427-ms.is-info{color:var(--ux-accent);font-weight:650}
-.u427-ms.is-info .u427-i{display:block}
-.u427-ms a{color:var(--ux-ink-2);font-weight:650;text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--ux-line-2);border-radius:3px}
-.u427-ms a:hover{color:var(--ux-ink)}
-.u427-ms small{display:block;font-weight:500;color:var(--ux-ink-3)}
-.u427-ck{position:relative;width:44px;height:44px;flex:none}
-.u427-ck svg{width:44px;height:44px;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.u427-ck circle{stroke:var(--ux-mint);stroke-width:2.5;stroke-dasharray:126;stroke-dashoffset:126;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .6s var(--ux-ease) .15s}
-.u427-ck path{stroke:var(--ux-mint);stroke-width:2.8;stroke-dasharray:26;stroke-dashoffset:26;transition:stroke-dashoffset .35s var(--ux-ease) .65s}
-.u427-ck::before{content:"";position:absolute;inset:4px;border-radius:50%;background:color-mix(in srgb,var(--ux-mint) 14%,transparent);transform:scale(.6);opacity:0;transition:transform .5s var(--ux-spring) .5s,opacity .3s .5s}
-.u427.is-ok .u427-ck circle,.u427.is-ok .u427-ck path{stroke-dashoffset:0}
-.u427.is-ok .u427-ck::before{transform:none;opacity:1}
-.u427-ok div{flex:1;min-width:0}
-.u427-ok b{display:block;font-size:13.5px;font-weight:800}
-.u427-ok small{display:block;margin-top:2px;font-size:10.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u427-again{margin-top:6px;padding:0;border:0;background:none;font-size:10.5px;font-weight:700;color:var(--ux-ink-2);text-decoration:underline;text-underline-offset:2px;text-decoration-color:var(--ux-line-2);border-radius:3px}
-.u427-again:hover{color:var(--ux-ink)}
-.u427 button:focus-visible,.u427 a:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.u427-fz,.u427-ok,.u427-ck circle,.u427-ck path,.u427-ck::before{transition:none!important}.u427-fm.is-bad{animation:none!important}}
+.u427-go svg{position:absolute;width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18;stroke-dashoffset:18;transition:stroke-dashoffset .35s var(--ux-ease) .3s}
+.u427.is-done .u427-go{width:40px;border-radius:20px;background:#22A06B}
+.u427.is-done .u427-go span{opacity:0}
+.u427.is-done .u427-go svg{stroke-dashoffset:0}
+.u427-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u427-ms{min-height:16px;margin:0;font-size:11.5px;font-weight:600;color:var(--ux-danger);opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .35s var(--ux-ease)}
+.u427-ms.is-on{opacity:1;transform:none}
+/* 날아가는 편지 봉투 */
+.u427-env{position:absolute;right:26px;top:50%;width:34px;height:26px;margin-top:-13px;opacity:0;pointer-events:none}
+.u427-env svg{width:34px;height:26px;overflow:visible}
+.u427-env .pp{fill:#FFFFFF;fill:light-dark(#FFFFFF,#F4F0E8);stroke:#B9AEF7;stroke:light-dark(#B9AEF7,#8B7BFF)}
+.u427-env .fl{fill:none;stroke:#B9AEF7;stroke:light-dark(#B9AEF7,#8B7BFF)}
+.u427-env .ht{fill:#FF5C7A}
+.u427.is-fly .u427-env{animation:u427-fly 1.2s cubic-bezier(.35,.1,.3,1) forwards}
+.u427.is-fly .u427-env.t1,.u427.is-fly .u427-env.t2{animation-name:u427-trail}
+.u427.is-fly .u427-env.t1{animation-delay:.07s}
+.u427.is-fly .u427-env.t2{animation-delay:.14s}
+.u427-env.t1 svg,.u427-env.t2 svg{display:none}
+.u427-env.t1::before,.u427-env.t2::before{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--ux-accent)}
+.u427-env.t2::before{width:3px;height:3px;margin:-1.5px}
+@keyframes u427-fly{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}14%{opacity:1;transform:translate(-6px,-10px) scale(1.05) rotate(-6deg)}55%{opacity:1;transform:translate(40px,-74px) scale(1) rotate(-16deg)}100%{opacity:0;transform:translate(96px,-140px) scale(.7) rotate(10deg)}}
+@keyframes u427-trail{0%{opacity:0;transform:translate(0,0)}20%{opacity:.8;transform:translate(-6px,-10px)}60%{opacity:.5;transform:translate(36px,-66px)}100%{opacity:0;transform:translate(84px,-124px)}}
+@media (prefers-reduced-motion:reduce){.u427-fm.is-bad,.u427.is-fly .u427-env{animation:none!important}.u427-go,.u427-go svg,.u427-ok{transition:none!important}}
 </style>
-<section class="ux u427">
-  <div class="u427-tp"><span class="u427-ic" aria-hidden="true"><svg viewBox="0 0 20 20"><rect x="2.5" y="4.5" width="15" height="11" rx="2.2"/><path d="m3.5 6 6.5 5 6.5-5"/></svg></span><span class="u427-pl"><i aria-hidden="true"></i>매주 화요일</span></div>
-  <h3>Haru 위클리</h3>
-  <p class="u427-ds">일 잘하는 팀의 노하우를 5분 분량으로 보내 드려요.</p>
-  <div class="u427-pr"><span class="u427-av" aria-hidden="true"><i style="background:linear-gradient(135deg,#FFB86B,#FF6B8B)"></i><i style="background:linear-gradient(135deg,#7DD3FC,#3D8BFF)"></i><i style="background:linear-gradient(135deg,#A7F3D0,#14B8A6)"></i></span>2만 4천 명이 읽고 있어요</div>
-  <div class="u427-zn">
-    <div class="u427-fz">
-      <form class="u427-fm" novalidate><label>이메일 주소</label><input class="u427-in" type="email" inputmode="email" autocomplete="email" placeholder="name@company.com"><button class="u427-go" type="submit">구독</button></form>
-      <p class="u427-ms" aria-live="polite">
-        <svg class="u427-l" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="5.2" width="7" height="5" rx="1.2"/><path d="M4 5.2V4a2 2 0 0 1 4 0v1.2"/></svg>
-        <svg class="u427-e" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.8"/><path d="M6 3.6v2.8M6 8.3v.1"/></svg>
-        <svg class="u427-i" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.8"/><path d="M6 5.6v2.8M6 3.7v.1"/></svg>
-        <span><span class="u427-tx">언제든 한 번에 구독을 취소할 수 있어요.</span> <a class="u427-lk" href="#">개인정보처리방침</a></span>
-      </p>
-    </div>
-    <div class="u427-ok" role="status"><span class="u427-ck" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/><path d="m14.5 22.5 5 5 10-11"/></svg></span><div><b>구독했어요</b><small></small><button class="u427-again" type="button" tabindex="-1">다른 이메일로</button></div></div>
-  </div>
-</section>
+<div class="ux u427">
+  <h3>매주 화요일, 5분 뉴스레터</h3>
+  <form class="u427-fm" novalidate>
+    <label>이메일 주소</label>
+    <input class="u427-in" type="email" inputmode="email" autocomplete="email" placeholder="이메일 주소">
+    <span class="u427-ok" aria-hidden="true"></span>
+    <button class="u427-go" type="submit"><span>구독</span><svg viewBox="0 0 18 18" aria-hidden="true"><path d="m4.5 9.4 3 3 6-6.6"/></svg></button>
+    <span class="u427-env" aria-hidden="true"><svg viewBox="0 0 34 26"><rect class="pp" x="1" y="1" width="32" height="24" rx="4" stroke-width="1.5"/><path class="fl" d="M2.2 3.6 17 14.4 31.8 3.6" stroke-width="1.6" stroke-linejoin="round"/><path class="fl" d="M2.5 23.5 12.5 13M31.5 23.5 21.5 13" stroke-width="1.2" opacity=".55"/><path class="ht" d="M17 18.6c-2.6-1.6-3.9-2.9-3.9-4.3 0-1 .8-1.8 1.8-1.8.9 0 1.6.5 2.1 1.2.5-.7 1.2-1.2 2.1-1.2 1 0 1.8.8 1.8 1.8 0 1.4-1.3 2.7-3.9 4.3z"/></svg></span>
+    <span class="u427-env t1" aria-hidden="true"></span><span class="u427-env t2" aria-hidden="true"></span>
+  </form>
+  <p class="u427-ms" role="status" aria-live="polite"></p>
+</div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var fm = root.querySelector('.u427-fm'), inp = root.querySelector('.u427-in'), go = root.querySelector('.u427-go');
-  var ms = root.querySelector('.u427-ms'), tx = ms.querySelector('.u427-tx'), lk = ms.querySelector('.u427-lk');
-  var okMsg = root.querySelector('.u427-ok small'), again = root.querySelector('.u427-again');
+  var ok = root.querySelector('.u427-ok'), ms = root.querySelector('.u427-ms');
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var uid = 'u427-' + Math.random().toString(36).slice(2, 7);
-  var note = tx.textContent, subs = ['seoyeon@haru.app'], busy = false;
+  var state = 'idle';
   inp.id = uid + '-e'; fm.querySelector('label').setAttribute('for', inp.id);
   ms.id = uid + '-m'; inp.setAttribute('aria-describedby', ms.id);
-  // 안내 줄 하나가 기본 안내, 오류, 이미 구독 중 안내로 바뀝니다
-  function say(kind, text, sub) {
-    ms.classList.toggle('is-err', kind === 'err');
-    ms.classList.toggle('is-info', kind === 'info');
-    tx.innerHTML = '';
-    tx.textContent = text || note;
-    if (sub) { var s = document.createElement('small'); s.textContent = sub; tx.appendChild(s); }
-    lk.hidden = !!kind;
-    if (kind === 'err') { inp.setAttribute('aria-invalid', 'true'); fm.classList.remove('is-bad'); void fm.offsetWidth; fm.classList.add('is-bad'); inp.focus({ preventScroll: true }); }
-    else inp.removeAttribute('aria-invalid');
+  function say(t, bad) {
+    ms.textContent = t || '';
+    ms.classList.toggle('is-on', !!t);
+    ms.style.color = bad ? '' : 'var(--ux-mint)';
+    if (bad) { inp.setAttribute('aria-invalid', 'true'); fm.classList.remove('is-bad'); void fm.offsetWidth; fm.classList.add('is-bad'); }
+    else { inp.removeAttribute('aria-invalid'); fm.classList.remove('is-bad'); }
   }
+  // 구독하면 버튼이 체크로 바뀌고, 봉투가 날아갑니다. 체크를 다시 누르면 처음으로 돌아갑니다
   fm.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (busy) return;
-    var v = inp.value.trim().toLowerCase();
-    if (!v) return say('err', '이메일 주소를 입력해 주세요');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return say('err', '이메일 형식을 확인해 주세요');
-    if (subs.indexOf(v) >= 0) return say('info', '이미 구독 중인 이메일이에요', '다음 호는 화요일 오전 8시에 도착해요');
-    say(); busy = true;
-    go.setAttribute('aria-busy', 'true'); go.setAttribute('aria-label', '구독하는 중…'); inp.readOnly = true;
+    if (state === 'busy') return;
+    if (state === 'done') { reset(); return; }
+    var v = inp.value.trim();
+    if (!v) return say('이메일 주소를 입력해 주세요', true);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return say('이메일 형식을 확인해 주세요', true);
+    say(''); state = 'busy';
+    go.setAttribute('aria-busy', 'true'); go.setAttribute('aria-label', '구독하는 중…');
     setTimeout(function () {
       if (!root.isConnected) return;
-      busy = false; inp.readOnly = false;
-      go.removeAttribute('aria-busy'); go.removeAttribute('aria-label');
-      subs.push(v);
-      okMsg.textContent = v + '로 확인 메일을 보냈어요';
-      root.classList.add('is-ok');
-      fm.querySelectorAll('input, button').forEach(function (el) { el.tabIndex = -1; });
-      again.tabIndex = 0; again.focus({ preventScroll: true });
-    }, rm ? 200 : 1100);
+      go.removeAttribute('aria-busy');
+      go.setAttribute('aria-label', '처음으로');
+      ok.textContent = '구독했어요. 메일함을 확인해 주세요';
+      root.classList.add('is-done', 'is-fly');
+      inp.readOnly = true; inp.tabIndex = -1;
+      ms.textContent = ok.textContent;
+      state = 'done';
+    }, rm ? 100 : 650);
   });
-  inp.addEventListener('input', function () { if (ms.classList.contains('is-err') || ms.classList.contains('is-info')) say(); });
-  again.addEventListener('click', function () {
-    root.classList.remove('is-ok');
-    inp.value = ''; say();
-    fm.querySelectorAll('input, button').forEach(function (el) { el.tabIndex = 0; });
-    again.tabIndex = -1; inp.focus({ preventScroll: true });
-  });
-  lk.addEventListener('click', function (e) { e.preventDefault(); });
+  function reset() {
+    root.classList.remove('is-done', 'is-fly');
+    go.removeAttribute('aria-label');
+    inp.readOnly = false; inp.tabIndex = 0; inp.value = ''; ms.textContent = '';
+    state = 'idle';
+    inp.focus({ preventScroll: true });
+  }
+  inp.addEventListener('input', function () { if (inp.getAttribute('aria-invalid')) say(''); });
 })();
 </script>

@@ -1,197 +1,116 @@
-<!-- @meta {"title":"맨 위로 + 상담 플로팅 버튼","category":"버튼","summary":"스크롤하는 웹페이지 오른쪽 아래에 떠 있는 버튼 묶음입니다. 조금 내려가면 ‘맨 위로’ 버튼이 나타나고 테두리 링이 읽은 만큼 차오르며, 누르면 부드럽게 맨 위로 올라갑니다. 말풍선 버튼은 운영 시간, 자주 묻는 질문, ‘상담 시작’이 든 작은 상담 창을 엽니다.","hint":"페이지를 아래로 스크롤해 맨 위로 버튼을 띄우고, 말풍선 버튼으로 상담 창을 열어 보세요","shape":"square","hue":"#7B61FF","hue2":"#3D8BFF","tags":["fab","back-to-top","scroll-progress","support","chat","floating"]} -->
-<!-- @demo [["wait",900],["scroll",".u450-sc",0,560,1300],["wait",700],["tap",".u450-fab",0,{"after":1400}],["tap",".u450-start",0,{"after":2000}],["tap",".u450-fab",0,{"after":700}],["tap",".u450-top",0,{"after":1600}],["reset"]] -->
-<!-- @en {"title":"Back to top and support buttons","summary":"A floating button stack in the bottom right of a scrolling web page. Scroll a little and a Back to top button appears with a ring that fills as you read; pressing it glides back to the top. The chat bubble opens a compact support panel with opening hours, FAQ links and Start chat.","hint":"Scroll the page down to bring up Back to top, then open the support panel from the chat bubble","map":[
-  [">가이드<", ">Guide<"],
-  [">처음 쓰는 분을 위한 루시안 사용 가이드<", ">Getting started with Lucian<"],
-  [">2026.11.20 · 6분 읽기<", ">Nov 20, 2026 · 6 min read<"],
-  [">1. 워크스페이스 만들기<", ">1. Create a workspace<"],
-  [">2. 팀원 초대하기<", ">2. Invite your team<"],
-  [">3. 첫 프로젝트 시작하기<", ">3. Start your first project<"],
-  [">4. 알림 맞추기<", ">4. Tune notifications<"],
+<!-- @meta {"title":"맨 위로 + 상담 버튼","category":"버튼","summary":"오른쪽 아래에 떠 있는 두 버튼입니다. 위쪽 ‘맨 위로’ 버튼은 읽은 만큼 링이 차 있고, 누르면 화살표가 위로 튀어 오르며 링이 풀린 뒤 잠시 숨습니다. 아래쪽 말풍선 버튼은 누르면 그 자리에서 작은 상담 창으로 부풀어 오르고, 닫으면 다시 동그란 버튼으로 줄어듭니다.","hint":"맨 위로 버튼과 말풍선 버튼을 눌러 보세요","shape":"square","hue":"#6366F1","hue2":"#22C3A6","tags":["back-to-top","fab","support","chat","morph","progress-ring"]} -->
+<!-- @demo [["wait",700],["tap",".u450-top",0,{"after":2300}],["tap",".u450-open",0,{"after":1100}],["type",".u450-in",0,{"ko":"배송은 언제 오나요?","en":"When will it ship?"},55],["wait",450],["tap",".u450-x",0,{"after":1200}]] -->
+<!-- @en {"title":"Back to top + support buttons","summary":"Two buttons floating in the bottom-right corner. The upper Back to top button carries a ring filled as far as you have read; press it and the arrow shoots up as the ring unwinds, then it tucks away for a moment. The lower chat bubble swells into a compact support panel right where it sits, and shrinks back into a round button when closed.","hint":"Press Back to top, then the chat bubble","map":[
   ["aria-label=\"맨 위로\"", "aria-label=\"Back to top\""],
-  ["aria-label=\"고객센터 상담\"", "aria-label=\"Customer support\""],
-  [">루시안 고객센터<", ">Lucian Support<"],
-  [">지금 상담 가능 · 보통 3분 안에 답해요<", ">Online · usually replies in 3 min<"],
-  [">평일 10:00–19:00 · 점심 12:30–13:30<", ">Weekdays 10:00–19:00 KST<"],
-  [">자주 묻는 질문<", ">Common questions<"],
-  [">주문을 취소하고 싶어요<", ">How do I cancel an order?<"],
-  [">배송은 얼마나 걸리나요?<", ">How long does shipping take?<"],
-  [">환불은 언제 들어오나요?<", ">When will I get my refund?<"],
-  [">상담 시작<", ">Start chat<"],
-  [">연결하는 중…<", ">Connecting…<"],
-  [">하늘<", ">Haneul<"],
-  [">안녕하세요, 루시안 고객센터 김하늘이에요. 무엇을 도와드릴까요?<", ">Hi, this is Haneul from Lucian Support. How can I help?<"],
-  ["placeholder=\"메시지를 입력하세요\"", "placeholder=\"Type a message\""],
+  ["aria-label=\"상담 열기\"", "aria-label=\"Open support chat\""],
+  ["aria-label=\"상담\"", "aria-label=\"Support\""],
+  ["aria-label=\"상담 닫기\"", "aria-label=\"Close support chat\""],
+  ["aria-label=\"보내기\"", "aria-label=\"Send\""],
   ["aria-label=\"메시지\"", "aria-label=\"Message\""],
-  ["openL: '상담 창 열기'", "openL: 'Open support chat'"],
-  ["closeL: '상담 창 닫기'", "closeL: 'Close support chat'"],
-  ["joined: '상담원이 연결됐어요'", "joined: 'An agent has joined'"]
+  [">무엇을 도와드릴까요?<", ">How can we help?<"],
+  [">보통 5분 안에 답해요<", ">Usually replies in 5 min<"],
+  [">안녕하세요! 궁금한 점을 남겨 주시면 바로 도와드릴게요.<", ">Hi there! Leave your question and we’ll help right away.<"],
+  ["placeholder=\"메시지를 입력하세요\"", "placeholder=\"Type a message\""]
 ]} -->
 <style>
-.u450{position:relative;width:340px;height:350px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u450-sc{position:absolute;inset:0;overflow:auto;scrollbar-width:none;overscroll-behavior:contain}
-.u450-sc::-webkit-scrollbar{display:none}
-.u450-bar{position:sticky;top:0;z-index:1;height:44px;display:flex;align-items:center;gap:14px;padding:0 16px;background:color-mix(in srgb,var(--ux-surface) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--ux-line)}
-.u450-logo{display:flex;align-items:center;gap:6px;margin-right:auto;font-size:13px;font-weight:700;letter-spacing:-.02em}
-.u450-logo i{width:16px;height:16px;border-radius:5px;background:var(--ux-ink);position:relative}
-.u450-logo i::after{content:"";position:absolute;left:5px;top:4px;width:3px;height:8px;border-left:2px solid var(--ux-surface);border-bottom:2px solid var(--ux-surface)}
-.u450-bar>span:not(.u450-logo){width:34px;height:7px;border-radius:4px;background:var(--ux-surface-3)}
-.u450-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--ux-accent);transform:scaleX(var(--p,0));transform-origin:left}
-.u450-art{padding:20px 18px 90px}
-.u450-tag{display:inline-flex;height:22px;padding:0 8px;align-items:center;border-radius:6px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:11px;font-weight:700}
-.u450-art h3{margin:10px 0 0;font-size:19px;font-weight:700;letter-spacing:-.035em;line-height:1.3}
-.u450-art small{display:block;margin-top:6px;font-size:11.5px;color:var(--ux-ink-3)}
-.u450-hero{height:120px;margin-top:16px;border-radius:12px;background:linear-gradient(135deg,var(--ux-surface-2),var(--ux-surface-3));box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u450-art h4{margin:22px 0 10px;font-size:14px;font-weight:700;letter-spacing:-.02em}
-.u450-ln{display:grid;gap:8px}
-.u450-ln i{display:block;height:8px;border-radius:4px;background:var(--ux-surface-2)}
-.u450-stack{position:absolute;z-index:2;right:14px;bottom:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
-.u450-top{position:relative;width:40px;height:40px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line),0 8px 20px -8px var(--ux-shadow-strong);color:var(--ux-ink);opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);transition:opacity .25s,transform .4s var(--ux-spring),visibility 0s .4s,background .2s}
-.u450-top.is-show{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .4s var(--ux-spring),visibility 0s,background .2s}
-.u450-top:hover{background:var(--ux-surface-2)}
+.u450{position:relative;width:340px;height:300px}
+.u450-top{position:absolute;right:46px;bottom:102px;width:44px;height:44px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--ux-surface);color:var(--ux-ink);box-shadow:0 0 0 1px var(--ux-line),0 10px 22px -12px var(--ux-shadow-strong);overflow:hidden;transition:transform .5s var(--ux-spring),opacity .25s,visibility 0s}
+.u450-top:hover{transform:translateY(-2px)}
 .u450-top:active{transform:scale(.92)}
-.u450-top>svg.ar{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
-.u450-top:hover>svg.ar{transform:translateY(-2px)}
-.u450-ring{position:absolute;inset:-1px;width:42px;height:42px;transform:rotate(-90deg)}
-.u450-ring circle{fill:none;stroke-width:2}
-.u450-ring .tr{stroke:var(--ux-line)}
-.u450-ring .pr{stroke:var(--ux-accent);stroke-linecap:round;stroke-dasharray:125.7;stroke-dashoffset:calc(125.7 * (1 - var(--p,0)))}
-.u450.is-open .u450-top{opacity:0;visibility:hidden;transform:translateY(10px) scale(.85)}
-.u450-fab{position:relative;width:50px;height:50px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--ux-ink);color:var(--ux-surface);box-shadow:0 10px 24px -8px var(--ux-shadow-strong);transition:transform .3s var(--ux-spring),background .2s}
-.u450-fab:hover{transform:translateY(-1px) scale(1.03)}
-.u450-fab:active{transform:scale(.94)}
-.u450 button:focus-visible{outline-offset:3px}
-.u450-fab svg{position:absolute;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s,transform .35s var(--ux-spring)}
-.u450-fab .x{opacity:0;transform:rotate(-90deg) scale(.6)}
-.u450.is-open .u450-fab .ch{opacity:0;transform:rotate(90deg) scale(.6)}
-.u450.is-open .u450-fab .x{opacity:1;transform:none}
-.u450-fab i{position:absolute;right:2px;top:2px;width:11px;height:11px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 2px var(--ux-surface);transition:transform .3s var(--ux-spring)}
-.u450.is-open .u450-fab i{transform:scale(0)}
-.u450-pn{position:absolute;z-index:2;right:14px;bottom:72px;width:268px;padding:12px;border-radius:16px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 20px 44px -16px var(--ux-shadow-strong);transform-origin:bottom right;opacity:0;visibility:hidden;transform:translateY(8px) scale(.96);transition:opacity .18s,transform .3s var(--ux-ease),visibility 0s .3s}
-.u450.is-open .u450-pn{opacity:1;visibility:visible;transform:none;transition:opacity .18s,transform .35s var(--ux-spring),visibility 0s}
-.u450-pn:focus{outline:none}
-.u450-ph{display:flex;align-items:center;gap:10px}
-.u450-ph>i{position:relative;width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-style:normal;font-size:13px;font-weight:800}
-.u450-ph b{display:block;font-size:13.5px;font-weight:700}
-.u450-ph small{display:flex;align-items:center;gap:5px;margin-top:1px;font-size:11px;color:var(--ux-ink-3)}
-.u450-ph small::before{content:"";width:6px;height:6px;border-radius:50%;background:#22C55E}
-.u450-hr{display:flex;align-items:center;gap:7px;margin-top:8px;padding:7px 10px;border-radius:10px;background:var(--ux-surface-2);font-size:11.5px;color:var(--ux-ink-2)}
-.u450-hr svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round}
-.u450-fq{margin:8px 0 0;padding:0;list-style:none}
-.u450-fq p{margin:0 0 2px;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
-.u450-fq a{display:flex;align-items:center;justify-content:space-between;gap:8px;height:30px;padding:0 6px;margin:0 -6px;border-radius:8px;font-size:12.5px;color:var(--ux-ink);text-decoration:none;transition:background .15s}
-.u450-fq a:hover{background:var(--ux-surface-3)}
-.u450-fq a svg{width:13px;height:13px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.u450-cta{position:relative;margin-top:8px;height:36px}
-.u450-start{position:absolute;inset:0;display:grid;place-items:center;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600;transition:opacity .25s,transform .3s var(--ux-ease)}
-.u450-start:hover{opacity:.9}
-.u450-start>span{grid-area:1/1;display:flex;align-items:center;gap:7px;transition:opacity .2s}
-.u450-start .s1{opacity:0}
-.u450-start .s1 i{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u450-spin .75s linear infinite}
-@keyframes u450-spin{to{rotate:360deg}}
-.u450-start.is-busy .s0{opacity:0}
-.u450-start.is-busy .s1{opacity:1}
-.u450-chat{display:none;margin-top:10px}
-.u450-pn.is-chat .u450-fq,.u450-pn.is-chat .u450-hr,.u450-pn.is-chat .u450-cta{display:none}
-.u450-pn.is-chat .u450-chat{display:block;animation:u450-in .4s var(--ux-ease)}
-@keyframes u450-in{from{opacity:0;transform:translateY(6px)}}
-.u450-msg{display:flex;gap:8px;align-items:flex-end}
-.u450-msg>i{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--ux-accent-soft);color:var(--ux-accent);font-style:normal;font-size:9.5px;font-weight:700}
-.u450-msg p{margin:0;padding:9px 11px;border-radius:12px 12px 12px 4px;background:var(--ux-surface-2);font-size:12px;line-height:1.5}
-.u450-in{display:flex;align-items:center;height:36px;margin-top:12px;padding:0 4px 0 12px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u450-in input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:12.5px;color:var(--ux-ink)}
-.u450-in input::placeholder{color:var(--ux-ink-3)}
-.u450 .u450-in input:focus-visible{outline:none}
-.u450-in:focus-within{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u450-in b{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface)}
-.u450-in b svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.u450-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.u450-top>*{grid-area:1/1}
+.u450-top svg.rg{position:absolute;inset:0;width:44px;height:44px;transform:rotate(-90deg)}
+.u450-top .rg circle{fill:none;stroke-width:2.5}
+.u450-top .rg .tr{stroke:var(--ux-line)}
+.u450-top .rg .pr{stroke:var(--ux-accent);stroke-linecap:round;stroke-dasharray:122.5;stroke-dashoffset:calc(122.5 * (1 - var(--p,0)));transition:stroke-dashoffset var(--pd,.8s) cubic-bezier(.4,0,.2,1)}
+.u450-top svg.ar{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u450-top.is-fly svg.ar{animation:u450-fly .7s cubic-bezier(.5,0,.3,1)}
+@keyframes u450-fly{45%{transform:translateY(-30px);opacity:0}46%{transform:translateY(26px);opacity:0}}
+.u450-top.is-hide,.u450.is-open .u450-top{transform:translateY(10px) scale(.6);opacity:0;visibility:hidden;transition:transform .35s var(--ux-ease),opacity .25s,visibility 0s .35s}
+.u450-fab{position:absolute;right:40px;bottom:34px;width:56px;height:56px;border-radius:28px;background:var(--ux-accent);box-shadow:0 14px 28px -14px var(--ux-accent),0 0 0 0 var(--ux-line);overflow:hidden;transition:width .6s var(--ux-spring),height .6s var(--ux-spring),border-radius .45s var(--ux-ease),background .18s,box-shadow .35s}
+.u450.is-open .u450-fab{width:260px;height:232px;border-radius:20px;background:var(--ux-surface);box-shadow:0 26px 50px -22px var(--ux-shadow-strong),0 0 0 1px var(--ux-line)}
+.u450-open{position:absolute;right:0;bottom:0;width:56px;height:56px;display:grid;place-items:center;padding:0;border:0;border-radius:28px;background:none;color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);transition:opacity .2s,transform .45s var(--ux-spring),visibility 0s}
+.u450-open:hover svg{transform:rotate(-8deg) scale(1.08)}
+.u450-open:active{transform:scale(.9)}
+.u450-open svg{width:26px;height:26px;transition:transform .4s var(--ux-spring)}
+.u450-open svg path{fill:currentColor}
+.u450-open svg circle{fill:var(--ux-accent)}
+.u450.is-open .u450-open{opacity:0;transform:scale(.4) rotate(-30deg);visibility:hidden;transition:opacity .15s,transform .3s var(--ux-ease),visibility 0s .3s}
+.u450 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u450 .u450-in:focus-visible{outline:none;box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u450-p{position:absolute;right:0;bottom:0;width:260px;height:232px;display:flex;flex-direction:column;padding:14px;opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s .15s}
+.u450.is-open .u450-p{opacity:1;visibility:visible;transition:opacity .25s .12s,visibility 0s}
+.u450-p>*{opacity:0;transform:translateY(8px);transition:opacity .2s,transform .4s var(--ux-spring)}
+.u450.is-open .u450-p>*{opacity:1;transform:none;transition-delay:calc(.16s + var(--i) * 50ms)}
+.u450-hd{display:flex;align-items:center;gap:10px}
+.u450-av{position:relative;width:34px;height:34px;flex:none;border-radius:50%;background:#E0E7FF;background:light-dark(#E0E7FF,#2A2E5C);display:grid;place-items:center}
+.u450-av svg{width:20px;height:20px;fill:none;stroke:var(--ux-accent);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.u450-av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:var(--ux-mint);box-shadow:0 0 0 2px var(--ux-surface)}
+.u450-hd div{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.u450-hd b{font-size:14px;font-weight:650;letter-spacing:-.01em}
+.u450-hd span{font-size:11.5px;color:var(--ux-ink-3)}
+.u450-x{width:30px;height:30px;flex:none;display:grid;place-items:center;align-self:flex-start;margin:-4px -4px 0 0;padding:0;border:0;border-radius:9px;background:none;color:var(--ux-ink-3);transition:background .2s,color .2s}
+.u450-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u450-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.u450-msgs{flex:1;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;margin-top:12px;overflow:hidden}
+.u450-bb{max-width:88%;margin:0;padding:9px 11px;border-radius:4px 14px 14px 14px;background:var(--ux-surface-2);font-size:12.5px;line-height:1.45;color:var(--ux-ink)}
+.u450-bb.is-me{align-self:flex-end;border-radius:14px 4px 14px 14px;background:var(--ux-accent);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);animation:u450-pop .4s var(--ux-spring)}
+@keyframes u450-pop{from{opacity:0;transform:translateY(8px) scale(.9)}}
+.u450-f{display:flex;gap:8px;margin:0}
+.u450-in{flex:1;min-width:0;height:40px;padding:0 12px;border:0;border-radius:12px;background:var(--ux-surface-2);font-size:13px;color:var(--ux-ink);outline:none;box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u450-in::placeholder{color:var(--ux-ink-3)}
+.u450-sd{width:40px;height:40px;flex:none;display:grid;place-items:center;padding:0;border:0;border-radius:12px;background:var(--ux-accent);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);transition:transform .35s var(--ux-spring),opacity .2s}
+.u450-sd:active{transform:scale(.9)}
+.u450-sd svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <div class="ux u450">
-  <div class="u450-sc" tabindex="0">
-    <div class="u450-bar" aria-hidden="true"><span class="u450-logo"><i></i>lucian</span><span></span><span></span><i class="u450-prog"></i></div>
-    <article class="u450-art">
-      <span class="u450-tag">가이드</span>
-      <h3>처음 쓰는 분을 위한 루시안 사용 가이드</h3>
-      <small>2026.11.20 · 6분 읽기</small>
-      <div class="u450-hero" aria-hidden="true"></div>
-      <h4>1. 워크스페이스 만들기</h4>
-      <div class="u450-ln" aria-hidden="true"><i></i><i style="width:92%"></i><i style="width:84%"></i><i style="width:60%"></i></div>
-      <h4>2. 팀원 초대하기</h4>
-      <div class="u450-ln" aria-hidden="true"><i style="width:96%"></i><i></i><i style="width:72%"></i></div>
-      <div class="u450-hero" aria-hidden="true" style="height:100px"></div>
-      <h4>3. 첫 프로젝트 시작하기</h4>
-      <div class="u450-ln" aria-hidden="true"><i></i><i style="width:88%"></i><i style="width:94%"></i><i style="width:52%"></i></div>
-      <h4>4. 알림 맞추기</h4>
-      <div class="u450-ln" aria-hidden="true"><i style="width:90%"></i><i></i><i style="width:66%"></i></div>
-    </article>
-  </div>
-  <div class="u450-pn" role="dialog" aria-label="고객센터 상담" tabindex="-1">
-    <div class="u450-ph"><i aria-hidden="true">L</i><span><b>루시안 고객센터</b><small>지금 상담 가능 · 보통 3분 안에 답해요</small></span></div>
-    <div class="u450-hr"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.2l2 1.3"/></svg>평일 10:00–19:00 · 점심 12:30–13:30</div>
-    <div class="u450-fq"><p>자주 묻는 질문</p>
-      <a href="#">주문을 취소하고 싶어요<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
-      <a href="#">배송은 얼마나 걸리나요?<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
-      <a href="#">환불은 언제 들어오나요?<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
-    </div>
-    <div class="u450-cta"><button type="button" class="u450-start"><span class="s0">상담 시작</span><span class="s1" aria-hidden="true"><i></i>연결하는 중…</span></button></div>
-    <div class="u450-chat">
-      <div class="u450-msg"><i aria-hidden="true">하늘</i><p>안녕하세요, 루시안 고객센터 김하늘이에요. 무엇을 도와드릴까요?</p></div>
-      <label class="u450-in"><input type="text" placeholder="메시지를 입력하세요" aria-label="메시지"><b aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 11.5V2.5M3 6.5l4-4 4 4"/></svg></b></label>
+  <button type="button" class="u450-top" aria-label="맨 위로"><svg class="rg" viewBox="0 0 44 44" aria-hidden="true"><circle class="tr" cx="22" cy="22" r="19.5"/><circle class="pr" cx="22" cy="22" r="19.5"/></svg><svg class="ar" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 14.5V4M4.5 8 9 3.5 13.5 8"/></svg></button>
+  <div class="u450-fab">
+    <button type="button" class="u450-open" aria-label="상담 열기" aria-expanded="false"><svg viewBox="0 0 26 26" aria-hidden="true"><path d="M13 3.5c5.8 0 10.5 3.9 10.5 8.8s-4.7 8.8-10.5 8.8c-1.2 0-2.4-.2-3.5-.5L4.6 22.4l1.3-4.3C4 16.5 2.5 14.5 2.5 12.3 2.5 7.4 7.2 3.5 13 3.5z"/><circle cx="8.6" cy="12.4" r="1.4"/><circle cx="13" cy="12.4" r="1.4"/><circle cx="17.4" cy="12.4" r="1.4"/></svg></button>
+    <div class="u450-p" role="dialog" aria-label="상담">
+      <div class="u450-hd" style="--i:0"><span class="u450-av" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M4 11V9.5a6 6 0 0 1 12 0V11"/><rect x="2.6" y="10.2" width="3.4" height="5" rx="1.4"/><rect x="14" y="10.2" width="3.4" height="5" rx="1.4"/><path d="M15.7 15.2c0 1.6-1.6 2.6-4.2 2.6"/></svg></span><div><b>무엇을 도와드릴까요?</b><span>보통 5분 안에 답해요</span></div><button type="button" class="u450-x" aria-label="상담 닫기"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button></div>
+      <div class="u450-msgs" style="--i:1"><p class="u450-bb">안녕하세요! 궁금한 점을 남겨 주시면 바로 도와드릴게요.</p></div>
+      <form class="u450-f" style="--i:2"><input class="u450-in" type="text" aria-label="메시지" placeholder="메시지를 입력하세요" autocomplete="off"><button type="submit" class="u450-sd" aria-label="보내기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3.5M3.8 7.4 8 3.2l4.2 4.2"/></svg></button></form>
     </div>
   </div>
-  <div class="u450-stack">
-    <button type="button" class="u450-top" aria-label="맨 위로" tabindex="-1"><svg class="u450-ring" viewBox="0 0 42 42" aria-hidden="true"><circle class="tr" cx="21" cy="21" r="20"/><circle class="pr" cx="21" cy="21" r="20"/></svg><svg class="ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></button>
-    <button type="button" class="u450-fab" aria-expanded="false"><svg class="ch" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 10.5c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5S14.9 17 11 17c-.9 0-1.7-.1-2.5-.4L4.5 18l1-3.3C4.5 13.6 4 12.1 4 10.5z"/><path d="M8 10.5h.01M11 10.5h.01M14 10.5h.01"/></svg><svg class="x" viewBox="0 0 22 22" aria-hidden="true"><path d="M6.5 6.5l9 9M15.5 6.5l-9 9"/></svg><i aria-hidden="true"></i></button>
-  </div>
-  <p class="u450-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { openL: '상담 창 열기', closeL: '상담 창 닫기', joined: '상담원이 연결됐어요' };
-  var sc = root.querySelector('.u450-sc'), top = root.querySelector('.u450-top'), fab = root.querySelector('.u450-fab'), pn = root.querySelector('.u450-pn');
-  var start = root.querySelector('.u450-start'), live = root.querySelector('.u450-live'), raf = 0, gen = 0;
-  var uid = 'u450' + Math.random().toString(36).slice(2, 8);
-  pn.id = uid + 'p'; fab.setAttribute('aria-controls', pn.id); fab.setAttribute('aria-label', T.openL);
+  var top = root.querySelector('.u450-top'), fab = root.querySelector('.u450-fab'), ob = root.querySelector('.u450-open'), p = root.querySelector('.u450-p');
+  var x = root.querySelector('.u450-x'), form = root.querySelector('.u450-f'), inp = root.querySelector('.u450-in'), msgs = root.querySelector('.u450-msgs');
+  var uid = 'u450' + Math.random().toString(36).slice(2, 7), gen = 0, READ = .68;
+  p.id = uid; ob.setAttribute('aria-controls', uid); p.inert = true;
+  // 읽은 만큼의 링: 실제 페이지에서는 scroll 이벤트에서 setP(scrollY / (scrollHeight - innerHeight))를 부르면 됩니다
+  function setP(v, ms) { top.style.setProperty('--pd', (ms || 800) + 'ms'); top.style.setProperty('--p', v.toFixed(3)); }
+  setP(READ);
   function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
-  // 스크롤: 맨 위로 버튼은 120px 넘게 내려가면 나타나고, 링과 위쪽 막대가 읽은 비율만큼 찹니다
-  function onScroll() {
-    raf = 0;
-    var max = sc.scrollHeight - sc.clientHeight, p = max > 0 ? Math.min(1, sc.scrollTop / max) : 0;
-    root.style.setProperty('--p', p.toFixed(4));
-    var show = sc.scrollTop > 120;
-    if (show !== top.classList.contains('is-show')) { top.classList.toggle('is-show', show); top.tabIndex = show ? 0 : -1; }
-  }
-  sc.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(onScroll); }, { passive: true });
+  // 맨 위로: 화살표가 위로 튀어 오르고 링이 풀린 뒤, 맨 위에서는 버튼이 숨습니다. 잠시 뒤 다시 읽어 내려간 것처럼 돌아옵니다
   top.addEventListener('click', function () {
-    sc.scrollTo({ top: 0, behavior: rm ? 'auto' : 'smooth' });
-    later(function () { sc.focus({ preventScroll: true }); }, rm ? 0 : 500);
+    gen += 1;
+    top.classList.remove('is-fly'); void top.offsetWidth; top.classList.add('is-fly');
+    setP(0, rm ? 1 : 700);
+    later(function () { top.classList.add('is-hide'); }, rm ? 300 : 850);
+    later(function () { top.classList.remove('is-hide', 'is-fly'); setP(READ, rm ? 1 : 1000); }, rm ? 1400 : 1950);
   });
-  function setOpen(on, refocus) {
-    root.classList.toggle('is-open', on);
-    fab.setAttribute('aria-expanded', String(on));
-    fab.setAttribute('aria-label', on ? T.closeL : T.openL);
-    pn.inert = !on;
-    if (on) later(function () { pn.focus({ preventScroll: true }); }, rm ? 0 : 120);
-    else if (refocus) fab.focus({ preventScroll: true });
+  function open() {
+    root.classList.add('is-open'); ob.setAttribute('aria-expanded', 'true'); p.inert = false;
+    setTimeout(function () { if (root.classList.contains('is-open')) inp.focus({ preventScroll: true }); }, rm ? 0 : 320);
   }
-  fab.addEventListener('click', function () { setOpen(!root.classList.contains('is-open')); });
-  pn.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false, true); } });
-  [].slice.call(pn.querySelectorAll('.u450-fq a')).forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
-  // 상담 시작: 연결 중 표시 뒤 상담원 첫 메시지와 입력칸으로 바뀝니다
-  start.addEventListener('click', function () {
-    if (start.classList.contains('is-busy')) return;
-    start.classList.add('is-busy'); start.setAttribute('aria-busy', 'true');
-    later(function () {
-      start.classList.remove('is-busy'); start.removeAttribute('aria-busy');
-      pn.classList.add('is-chat'); live.textContent = T.joined;
-      // 시작 버튼이 사라지므로 초점을 메시지 입력칸으로 옮겨 상담 창 안에 둡니다
-      pn.querySelector('.u450-in input').focus({ preventScroll: true });
-    }, rm ? 300 : 1100);
+  function close() {
+    root.classList.remove('is-open'); ob.setAttribute('aria-expanded', 'false'); p.inert = true;
+    ob.focus({ preventScroll: true });
+    later(function () { msgs.querySelectorAll('.is-me').forEach(function (m) { m.remove(); }); inp.value = ''; }, 500);
+  }
+  ob.addEventListener('click', open);
+  x.addEventListener('click', close);
+  p.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(); } });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = inp.value.trim(); if (!v) return;
+    msgs.querySelectorAll('.is-me').forEach(function (m) { m.remove(); });
+    var m = document.createElement('p'); m.className = 'u450-bb is-me'; m.textContent = v; msgs.appendChild(m);
+    inp.value = '';
   });
-  pn.inert = true;
-  onScroll();
 })();
 </script>

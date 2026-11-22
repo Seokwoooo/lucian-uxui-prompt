@@ -1,157 +1,103 @@
-<!-- @meta {"title":"상단 공지 바","category":"내비게이션","summary":"헤더 위에 얇은 공지 바가 있고, 공지 세 개가 몇 초마다 위로 넘어갑니다. 아래 막대가 다음 공지까지 남은 시간을 보여 주고, 포인터를 올리거나 초점을 두면 멈춥니다. 닫기를 누르면 바가 부드럽게 접히며 헤더가 올라오고, 잠시 뜨는 알림에서 되돌릴 수 있습니다.","hint":"공지에 포인터를 올려 멈춰 보고, 막대를 눌러 다른 공지로 넘긴 뒤 닫기를 눌러 보세요","shape":"square","hue":"#6366F1","hue2":"#0EA5E9","tags":["announcement","banner","top-bar","dismiss","rotating","marquee"]} -->
-<!-- @demo [["wait",4800],["hover",".u414-msgs",0,{"after":1300}],["tap",".u414-dot",2,{"after":1500}],["tap",".u414-x",0,{"after":1500}],["tap",".u414-undo",0,{"after":1600}],["reset"]] -->
-<!-- @en {"title":"Announcement bar","summary":"A slim announcement bar sits above the header, and three notices roll upward every few seconds. A little bar shows the time until the next one, and it pauses while hovered or focused. Press close and the bar folds away smoothly as the header slides up, with a brief notice that lets you undo.","hint":"Hover the notice to pause it, press a bar to jump to another notice, then press close","map":[
+<!-- @meta {"title":"공지 알약","category":"내비게이션","summary":"‘새 기능 출시 · 자세히 보기 →’ 공지 한 줄이 든 알약입니다. 공지 세 개가 몇 초마다 위로 굴러 바뀌고, 포인터를 올리면 멈춥니다. ×를 누르면 알약이 반짝이 버튼 하나로 부드럽게 접히고, 그 버튼을 누르면 다시 펼쳐집니다.","hint":"공지가 바뀌는 걸 보고, ×를 눌러 접은 뒤 남은 반짝이 버튼으로 다시 펼쳐 보세요","shape":"square","hue":"#6366F1","hue2":"#0EA5E9","tags":["announcement","banner","pill","rotating","dismiss","spring"]} -->
+<!-- @demo [["wait",3500],["hover",".u414-msgs",0,{"after":900}],["tap",".u414-x",0,{"after":1300}],["tap",".u414-sp",0,{"after":1500}],["reset"]] -->
+<!-- @en {"title":"Announcement pill","summary":"A pill with one announcement — “New feature · Learn more →”. Three notices roll upward every few seconds and pause under the pointer. Press × and the pill folds smoothly into a single sparkle button; press that button to open it again.","hint":"Watch the notices roll, press × to fold it, then press the sparkle to open it again","map":[
   ["aria-label=\"공지\"", "aria-label=\"Announcements\""],
-  ["새 기능 출시 · AI 회의록", "New: AI meeting notes"],
-  ["자세히 보기", "Learn more"],
-  ["연간 결제 30% 할인 중", "30% off yearly plans"],
-  ["요금제 보기", "See pricing"],
-  ["12월 4일 온라인 웨비나", "Live webinar on Dec 4"],
-  ["신청하기", "Register"],
-  ["aria-label=\"공지 고르기\"", "aria-label=\"Choose a notice\""],
-  ["'공지 ' + (i + 1) + ' / ' + n", "'Notice ' + (i + 1) + ' of ' + n"],
-  ["aria-label=\"공지 닫기\"", "aria-label=\"Dismiss announcement\""],
-  ["aria-label=\"Haru 홈\"", "aria-label=\"Haru home\""],
-  ["aria-label=\"주요 메뉴\"", "aria-label=\"Main\""],
-  [">제품<", ">Product<"],
-  [">가격<", ">Pricing<"],
-  [">블로그<", ">Blog<"],
-  [">시작하기<", ">Sign up<"],
-  [">공지를 닫았어요<", ">Announcement hidden<"],
-  [">되돌리기<", ">Undo<"],
-  [">흩어진 일을<br>한 화면에<", ">All your work,<br>on one screen<"]
+  [">새 기능 출시 · AI 회의록<", ">New: AI meeting notes<"],
+  [">요금제 2개월 무료<", ">2 months free on yearly<"],
+  [">12월 4일 웨비나<", ">Webinar on Dec 4<"],
+  [">자세히 보기<", ">Learn more<"],
+  [">요금제 보기<", ">See pricing<"],
+  [">신청하기<", ">Register<"],
+  ["aria-label=\"공지 닫기\"", "aria-label=\"Dismiss\""],
+  ["'공지 열기'", "'Show announcement'"],
+  ["aria-label=\"공지 열기\"", "aria-label=\"Show announcement\""],
+  ["'공지 접기'", "'Collapse announcement'"]
 ]} -->
 <style>
-.u414{position:relative;width:340px;height:340px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
-/* 공지 바: 닫으면 grid 행 높이가 0으로 접힙니다 */
-.u414-bar{display:grid;grid-template-rows:1fr;flex:none;transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1)}
-.u414.is-gone .u414-bar{grid-template-rows:0fr}
-.u414-bar>div{min-height:0;overflow:hidden}
-.u414-in{position:relative;display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;background:#16151B;background:light-dark(#16151B,#211F33);color:#fff;color:light-dark(#FFFFFF,#F1EEFF);transition:opacity .3s}
-.u414-in::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,123,255,.7),rgba(61,139,255,.7),transparent);opacity:.9}
-.u414.is-gone .u414-in{opacity:0}
-.u414-new{flex:none;display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
-.u414-new svg{width:11px;height:11px;fill:#fff}
-.u414-msgs{position:relative;flex:1;min-width:0;height:36px;overflow:hidden}
-.u414-m{position:absolute;inset:0;display:flex;align-items:center;gap:6px;color:inherit;text-decoration:none;font-size:11px;font-weight:600;white-space:nowrap;letter-spacing:-.01em;transform:translateY(100%);opacity:0;transition:transform .55s cubic-bezier(.3,1.1,.4,1),opacity .35s}
+.u414{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+/* 알약: 접히면 폭이 반짝이 버튼 크기까지 줄어듭니다 */
+.u414-pl{position:relative;display:flex;align-items:center;width:316px;height:44px;padding:0 6px 0 7px;border-radius:99px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow),0 14px 30px -18px var(--ux-shadow-strong);overflow:hidden;transition:width .6s cubic-bezier(.3,1.25,.45,1),padding .6s cubic-bezier(.3,1.25,.45,1),box-shadow .3s}
+.u414.is-min .u414-pl{width:44px;padding:0 6px;transition:width .5s cubic-bezier(.5,0,.2,1.15),padding .5s}
+.u414-sp{position:relative;display:grid;place-items:center;width:30px;height:30px;flex:none;border:0;border-radius:50%;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 4px 10px -4px rgba(80,70,220,.6);cursor:default;transition:transform .5s var(--ux-spring)}
+.u414.is-min .u414-sp{cursor:pointer}
+.u414.is-min .u414-sp:hover{transform:scale(1.08) rotate(12deg)}
+.u414-sp svg{width:15px;height:15px;fill:#fff;animation:u414-tw 3.2s ease-in-out infinite}
+@keyframes u414-tw{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(.86) rotate(20deg)}}
+.u414-bd{display:flex;align-items:center;flex:1;min-width:0;opacity:1;transition:opacity .3s var(--ux-ease) .18s}
+.u414.is-min .u414-bd{opacity:0;transition:opacity .15s}
+.u414-msgs{position:relative;flex:1;min-width:0;height:44px;margin-left:10px;overflow:hidden}
+.u414-m{position:absolute;inset:0;display:flex;align-items:center;gap:7px;color:inherit;text-decoration:none;font-size:12px;font-weight:650;white-space:nowrap;transform:translateY(100%);opacity:0;transition:transform .6s cubic-bezier(.3,1.3,.45,1),opacity .35s}
 .u414-m.is-on{transform:none;opacity:1}
 .u414-m.is-out{transform:translateY(-100%);opacity:0}
-.u414-m b{display:inline-flex;align-items:center;gap:3px;font-weight:700;color:#C9BFFF}
-.u414-m b i{font-style:normal;transition:transform .3s var(--ux-spring)}
-.u414-m:hover b{text-decoration:underline;text-underline-offset:2px}
-.u414-m:hover b i{transform:translateX(2px)}
 .u414-m span{overflow:hidden;text-overflow:ellipsis}
-.u414-dots{flex:none;display:flex;gap:3px}
-.u414-dot{position:relative;width:10px;height:16px;padding:0;border:0;background:none}
-.u414-dot::before{content:"";position:absolute;left:0;right:0;top:7px;height:2px;border-radius:2px;background:rgba(255,255,255,.22);transition:background-color .2s}
-.u414-dot:hover::before{background:rgba(255,255,255,.4)}
-.u414-dot i{position:absolute;left:0;top:7px;height:2px;width:0;border-radius:2px;background:#fff}
-.u414-dot.is-done i{width:100%;opacity:.55}
-.u414-dot.is-on i{animation:u414-fill 4.2s linear forwards}
-.u414-bar:hover .u414-dot.is-on i,.u414-bar:focus-within .u414-dot.is-on i,.u414.is-hold .u414-dot.is-on i{animation-play-state:paused}
-@keyframes u414-fill{from{width:0}to{width:100%}}
-.u414-x{flex:none;display:grid;place-items:center;width:26px;height:26px;border:0;border-radius:7px;background:none;color:rgba(255,255,255,.7);transition:background-color .15s,color .15s}
-.u414-x:hover{background:rgba(255,255,255,.12);color:#fff}
-.u414-x:active{transform:scale(.92)}
+.u414-m b{display:inline-flex;align-items:center;gap:3px;flex:none;font-weight:750;color:var(--ux-accent)}
+.u414-m b i{font-style:normal;transition:transform .35s var(--ux-spring)}
+.u414-m:hover b i{transform:translateX(3px)}
+.u414-m:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-3px;border-radius:8px}
+.u414-x{display:grid;place-items:center;width:30px;height:30px;flex:none;margin-left:4px;border:0;border-radius:50%;background:none;color:var(--ux-ink-3);transition:background-color .2s,color .2s,transform .3s var(--ux-spring)}
+.u414-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u414-x:active{transform:scale(.88)}
 .u414-x svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-.u414-in :focus-visible{outline:2px solid #B7A4FF;outline-offset:-1px;border-radius:5px}
-/* 헤더 */
-.u414-hd{display:flex;align-items:center;gap:6px;flex:none;height:46px;padding:0 12px 0 16px;box-shadow:0 1px 0 var(--ux-line)}
-.u414-logo{display:flex;align-items:center;gap:6px;margin-right:8px;color:var(--ux-ink);text-decoration:none;font-size:13.5px;font-weight:800;letter-spacing:-.03em;border-radius:6px}
-.u414-mk{display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
-.u414-mk svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
-.u414-nav{display:flex;margin:0;padding:0;list-style:none}
-.u414-nav a{display:block;padding:5px 7px;border-radius:7px;font-size:11.5px;font-weight:580;color:var(--ux-ink-2);text-decoration:none;white-space:nowrap;transition:color .15s,background-color .15s}
-.u414-nav a:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
-.u414-cta{display:flex;align-items:center;height:28px;margin-left:auto;padding:0 11px;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s,transform .25s var(--ux-spring)}
-.u414-cta:hover{opacity:.88}
-.u414-cta:active{transform:scale(.96)}
-.u414-hd a:focus-visible,.u414-undo:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
-/* 모의 페이지 */
-.u414-pg{flex:1;padding:22px 18px 0;overflow:hidden}
-.u414-pg h2{margin:0;font-size:21px;line-height:1.24;font-weight:800;letter-spacing:-.045em}
-.u414-pg i{display:block;height:8px;margin-top:10px;border-radius:4px;background:var(--ux-surface-2)}
-.u414-pg .im{height:120px;margin-top:18px;border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,#7B61FF 22%,var(--ux-surface-2)),color-mix(in srgb,#3D8BFF 18%,var(--ux-surface-2)));box-shadow:inset 0 0 0 1px var(--ux-line)}
-/* 되돌리기 알림 */
-.u414-toast{position:absolute;left:50%;bottom:14px;display:flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 14px;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:600;white-space:nowrap;box-shadow:0 12px 28px -10px var(--ux-shadow-strong);transform:translate(-50%,calc(100% + 20px));opacity:0;visibility:hidden;transition:transform .45s cubic-bezier(.3,1.3,.5,1),opacity .25s,visibility 0s .45s}
-.u414.is-toast .u414-toast{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .5s cubic-bezier(.3,1.3,.5,1),opacity .25s,visibility 0s}
-.u414-undo{height:26px;padding:0 10px;border:0;border-radius:7px;background:color-mix(in srgb,var(--ux-surface) 16%,transparent);color:inherit;font-size:11px;font-weight:750;transition:background-color .15s}
-.u414-undo:hover{background:color-mix(in srgb,var(--ux-surface) 26%,transparent)}
-@media (prefers-reduced-motion:reduce){.u414-bar,.u414-m,.u414-toast{transition:none!important}}
+.u414 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u414-pl,.u414-m,.u414-bd{transition:none!important}.u414-sp svg{animation:none!important}}
 </style>
 <div class="ux u414">
-  <div class="u414-bar" role="region" aria-label="공지"><div><div class="u414-in">
-    <span class="u414-new" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 .8c.3 2.6 1.6 3.9 4.2 4.2v.1C7.6 5.4 6.3 6.7 6 9.3h-.1C5.6 6.7 4.3 5.4 1.7 5.1V5C4.3 4.7 5.6 3.4 5.9.8zM10 8.2c.1.9.6 1.4 1.5 1.5-.9.1-1.4.6-1.5 1.5-.1-.9-.6-1.4-1.5-1.5.9-.1 1.4-.6 1.5-1.5z"/></svg></span>
-    <div class="u414-msgs">
-      <a class="u414-m is-on" href="#"><span>새 기능 출시 · AI 회의록</span><b>자세히 보기<i aria-hidden="true">→</i></b></a>
-      <a class="u414-m" href="#"><span>연간 결제 30% 할인 중</span><b>요금제 보기<i aria-hidden="true">→</i></b></a>
-      <a class="u414-m" href="#"><span>12월 4일 온라인 웨비나</span><b>신청하기<i aria-hidden="true">→</i></b></a>
+  <div class="u414-pl" role="region" aria-label="공지">
+    <button class="u414-sp" type="button" tabindex="-1" aria-label="공지 열기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2c.4 3.4 2 5 5.4 5.4v.2c-3.4.4-5 2-5.4 5.4h-.2c-.4-3.4-2-5-5.4-5.4v-.2C5.8 6.2 7.4 4.6 7.8 1.2z"/><path d="M13 10.6c.15 1.2.75 1.8 1.95 1.95-1.2.15-1.8.75-1.95 1.95-.15-1.2-.75-1.8-1.95-1.95 1.2-.15 1.8-.75 1.95-1.95z"/></svg></button>
+    <div class="u414-bd">
+      <div class="u414-msgs">
+        <a class="u414-m is-on" href="#"><span>새 기능 출시 · AI 회의록</span><b>자세히 보기<i aria-hidden="true">→</i></b></a>
+        <a class="u414-m" href="#"><span>요금제 2개월 무료</span><b>요금제 보기<i aria-hidden="true">→</i></b></a>
+        <a class="u414-m" href="#"><span>12월 4일 웨비나</span><b>신청하기<i aria-hidden="true">→</i></b></a>
+      </div>
+      <button class="u414-x" type="button" aria-label="공지 닫기"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3 3 9"/></svg></button>
     </div>
-    <div class="u414-dots" role="group" aria-label="공지 고르기"></div>
-    <button class="u414-x" type="button" aria-label="공지 닫기"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3 3 9"/></svg></button>
-  </div></div></div>
-  <header class="u414-hd">
-    <a class="u414-logo" href="#" aria-label="Haru 홈"><span class="u414-mk" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.6 7.6a3.4 3.4 0 0 1 6.8 0"/><path d="M1.6 9.8h8.8"/></svg></span>Haru</a>
-    <nav aria-label="주요 메뉴"><ul class="u414-nav"><li><a href="#">제품</a></li><li><a href="#">가격</a></li><li><a href="#">블로그</a></li></ul></nav>
-    <a class="u414-cta" href="#">시작하기</a>
-  </header>
-  <main class="u414-pg" aria-hidden="true">
-    <h2>흩어진 일을<br>한 화면에</h2>
-    <i style="width:80%;margin-top:14px"></i><i style="width:58%"></i>
-    <div class="im"></div>
-  </main>
-  <div class="u414-toast" role="status"><span>공지를 닫았어요</span><button class="u414-undo" type="button" tabindex="-1">되돌리기</button></div>
+  </div>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var ms = Array.prototype.slice.call(root.querySelectorAll('.u414-m'));
-  var dotsBox = root.querySelector('.u414-dots'), x = root.querySelector('.u414-x'), undo = root.querySelector('.u414-undo');
-  var bar = root.querySelector('.u414-bar');
+  var box = root.querySelector('.u414-msgs'), x = root.querySelector('.u414-x'), sp = root.querySelector('.u414-sp'), bd = root.querySelector('.u414-bd');
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var n = ms.length, cur = 0, tToast = 0;
-  // 막대 하나가 다 차면(animationend) 다음 공지로 넘어갑니다. 멈춤은 CSS animation-play-state가 맡습니다
-  var dots = ms.map(function (m, i) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'u414-dot'; b.innerHTML = '<i></i>';
-    b.setAttribute('aria-label', '공지 ' + (i + 1) + ' / ' + n);
-    b.addEventListener('click', function () { show(i); });
-    b.querySelector('i').addEventListener('animationend', function () { if (!rm && root.isConnected && i === cur) show((cur + 1) % n); });
-    dotsBox.appendChild(b);
-    return b;
-  });
+  var cur = 0, t = 0, hover = false, min = false;
   function show(i) {
+    var prev = cur;
     ms.forEach(function (m, k) {
-      m.classList.toggle('is-out', k === cur && k !== i);
+      m.classList.toggle('is-out', k === prev && k !== i);
       m.classList.toggle('is-on', k === i);
       m.tabIndex = k === i ? 0 : -1;
       m.setAttribute('aria-hidden', String(k !== i));
     });
-    var prev = cur;
     cur = i;
-    setTimeout(function () { if (ms[prev] && prev !== cur) ms[prev].classList.remove('is-out'); }, 600);
-    dots.forEach(function (d, k) {
-      d.classList.remove('is-on');
-      d.classList.toggle('is-done', k < i);
-      d.setAttribute('aria-current', k === i ? 'true' : 'false');
-    });
-    void dots[i].offsetWidth;
-    if (!rm) dots[i].classList.add('is-on'); else dots[i].classList.add('is-done');
+    setTimeout(function () { if (ms[prev] && prev !== cur) ms[prev].classList.remove('is-out'); }, 650);
   }
-  function gone(v) {
-    root.classList.toggle('is-gone', v);
-    bar.inert = v;
-    clearTimeout(tToast);
-    root.classList.toggle('is-toast', v);
-    undo.tabIndex = v ? 0 : -1;
-    if (v) {
-      undo.focus({ preventScroll: true });
-      tToast = setTimeout(function () { if (root.isConnected) { root.classList.remove('is-toast'); undo.tabIndex = -1; } }, 5000);
-    }
+  // 포인터나 초점이 있거나 접혀 있으면 넘기지 않습니다
+  function tick() {
+    clearTimeout(t);
+    if (rm) return;
+    t = setTimeout(function () {
+      if (!root.isConnected) return;
+      if (!hover && !min && !root.contains(document.activeElement)) show((cur + 1) % ms.length);
+      tick();
+    }, 3000);
   }
-  x.addEventListener('click', function () { gone(true); });
-  undo.addEventListener('click', function () { gone(false); show(0); x.focus({ preventScroll: true }); });
-  root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
-  show(0);
+  box.addEventListener('pointerenter', function () { hover = true; });
+  box.addEventListener('pointerleave', function () { hover = false; });
+  function fold(v) {
+    min = v;
+    root.classList.toggle('is-min', v);
+    bd.inert = v;
+    sp.tabIndex = v ? 0 : -1;
+    sp.setAttribute('aria-label', v ? '공지 열기' : '공지 접기');
+    sp.setAttribute('aria-expanded', String(!v));
+    (v ? sp : x).focus({ preventScroll: true });
+  }
+  x.addEventListener('click', function () { fold(true); });
+  sp.addEventListener('click', function () { if (min) fold(false); });
+  ms.forEach(function (m) { m.addEventListener('click', function (e) { e.preventDefault(); }); });
+  ms.forEach(function (m, k) { m.tabIndex = k === 0 ? 0 : -1; m.setAttribute('aria-hidden', String(k !== 0)); });
+  sp.removeAttribute('aria-expanded');
+  tick();
 })();
 </script>

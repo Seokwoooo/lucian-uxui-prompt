@@ -27,12 +27,12 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#423
 .u423-bd{display:flex;align-items:center;height:22px;padding:0 9px;border-radius:99px;background:color-mix(in srgb,var(--ux-mint) 15%,transparent);color:var(--ux-mint);font-size:10.5px;font-weight:800;white-space:nowrap;opacity:0;transform:scale(.4) translateY(4px);transition:opacity .15s,transform .25s var(--ux-ease)}
 .u423.is-y .u423-bd{opacity:1;transform:none;transition:opacity .2s .12s,transform .55s cubic-bezier(.3,1.8,.5,1) .12s}
 /* 가격: 자리마다 0~9가 세로로 쌓여 있고, 바뀐 자리만 굴러갑니다 */
-.u423-pr{display:flex;align-items:flex-end;gap:4px;margin-top:6px}
-.u423-num{display:flex;font-size:32px;line-height:38px;height:38px;font-weight:850;letter-spacing:-.03em;font-variant-numeric:tabular-nums;overflow:hidden}
+.u423-pr{display:flex;align-items:flex-end;gap:7px;margin-top:6px}
+.u423-num{display:flex;font-size:32px;line-height:38px;height:38px;font-weight:850;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow:hidden}
 .u423-num i{font-style:normal}
 .u423-col{display:block;height:38px;overflow:hidden}
 .u423-col span{display:flex;flex-direction:column;transform:translateY(calc(var(--d,0) * -38px));transition:transform .7s cubic-bezier(.3,1.25,.45,1);transition-delay:calc(var(--k,0) * 45ms)}
-.u423-col span b{display:block;height:38px;font-weight:inherit;text-align:center}
+.u423-col span b{display:block;height:38px;padding:0 .5px;font-weight:inherit;letter-spacing:0;text-align:center}
 .u423-per{margin-bottom:6px;font-size:12px;font-weight:650;color:var(--ux-ink-3)}
 .u423-sub{position:relative;height:16px;margin-top:2px;font-size:11px;color:var(--ux-ink-3)}
 .u423-sub span{position:absolute;left:0;top:0;white-space:nowrap;transition:opacity .3s var(--ux-ease),transform .45s var(--ux-ease),filter .3s}

@@ -1,91 +1,87 @@
 <!-- Lucian UX/UI Prompt #439 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#439 -->
 <!--
 Element: 스켈레톤 카드
-ID: 439 · Category: 로딩·진행 · Tags: skeleton, loading, shimmer, placeholder, feed, crossfade, reduced-motion
-What it does: 글 목록을 불러오는 동안 실제 카드와 같은 자리, 같은 크기의 회색 뼈대가 반짝이며 기다리게 하고, 다 오면 카드마다 차례로 부드럽게 내용이 겹쳐 나타납니다. 새로고침을 누르면 다시 뼈대부터 보여 주고, 동작 줄이기를 켜면 반짝임 없이 바로 바뀝니다.
-How to use it: 오른쪽 위 새로고침을 눌러 다시 불러와 보세요
+ID: 439 · Category: 로딩·진행 · Tags: skeleton, loading, shimmer, placeholder, crossfade, card
+What it does: 글 카드 하나가 불러오는 동안 실제와 같은 자리, 같은 크기의 뼈대가 반짝이며 기다리고, 다 오면 그림과 제목, 글쓴이가 차례로 부드럽게 겹쳐 나타납니다. 아래 버튼으로 다시 불러올 수 있습니다.
+How to use it: 아래 새로고침 버튼을 눌러 다시 불러와 보세요
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#439
 -->
 <style>
-.u439{position:relative;width:340px;height:374px;padding:18px 16px 16px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u439 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.u439-hd{display:flex;align-items:center;gap:8px;padding:0 4px 12px}
-.u439-hd div{flex:1;min-width:0}
-.u439-hd b{display:block;font-size:15px;font-weight:700;letter-spacing:-.02em}
-.u439-hd small{display:block;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3)}
-.u439-rl{width:32px;height:32px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink-2);transition:background-color .15s,color .15s,transform .2s var(--ux-spring)}
-.u439-rl:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
-.u439-rl:active{transform:scale(.92)}
-.u439-rl svg{width:15px;height:15px}
-.u439.is-loading .u439-rl svg{animation:u439-rot .9s linear infinite}
+.u439{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.u439-c{display:grid;width:248px;padding:10px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 40px -22px var(--ux-shadow-strong)}
+.u439-c>*{grid-area:1/1;min-width:0}
+.u439-im{height:104px;border-radius:13px;overflow:hidden}
+.u439-tx{padding:12px 6px 4px}
+.u439-tg{font-size:11.5px;font-weight:650;color:var(--ux-accent)}
+.u439-tt{margin-top:3px;font-size:15px;font-weight:700;line-height:1.35;letter-spacing:-.02em}
+.u439-mt{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:var(--ux-ink-3)}
+.u439-av{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#F7B267,#F25C78)}
+.u439-art{position:relative;width:100%;height:100%;background:linear-gradient(140deg,#1E2A4A,#3A3F8F 45%,#7C6CF2)}
+.u439-art i{position:absolute;border-radius:50%}
+.u439-art i:nth-child(1){width:96px;height:96px;left:-18px;bottom:-34px;background:radial-gradient(circle at 35% 35%,#F8F7FF,#C9C3FF 40%,rgba(201,195,255,0) 72%);opacity:.55}
+.u439-art i:nth-child(2){width:64px;height:64px;right:28px;top:18px;background:radial-gradient(circle at 40% 35%,#FFD9A8,#F4845F 60%,rgba(244,132,95,0) 74%)}
+.u439-art i:nth-child(3){width:150px;height:150px;right:-60px;bottom:-90px;border:1px solid rgba(255,255,255,.25)}
+.u439-art i:nth-child(4){width:110px;height:110px;right:-40px;bottom:-70px;border:1px solid rgba(255,255,255,.18)}
+.u439-real>*{opacity:1;transform:none;transition:opacity .5s var(--ux-ease),transform .6s cubic-bezier(.3,1.3,.5,1);transition-delay:var(--d,0s)}
+.u439.is-loading .u439-real>*{opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;transition-delay:0s}
+.u439-sk{pointer-events:none}
+.u439-sk>*{opacity:0;transition:opacity .4s var(--ux-ease);transition-delay:var(--d,0s)}
+.u439.is-loading .u439-sk>*{opacity:1;transition:opacity .15s;transition-delay:0s}
+.u439-sk i{display:block;border-radius:7px;background:var(--ux-surface-3);background-image:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);background-image:linear-gradient(100deg,transparent 30%,light-dark(rgba(255,255,255,.75),rgba(255,255,255,.07)) 50%,transparent 70%);background-size:220% 100%;background-repeat:no-repeat;animation:u439-sh 1.25s ease-in-out infinite}
+@keyframes u439-sh{from{background-position:130% 0}to{background-position:-30% 0}}
+.u439-sk .u439-im{display:block;border-radius:13px}
+.u439-sk .a{width:52px;height:11px}
+.u439-sk .b{width:92%;height:15px;margin-top:8px}
+.u439-sk .c{width:58%;height:15px;margin-top:6px}
+.u439-sk .u439-mt i:first-child{width:20px;height:20px;border-radius:50%}
+.u439-sk .u439-mt i:last-child{width:86px;height:11px}
+.u439-rl{width:36px;height:36px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 6px 14px -8px var(--ux-shadow-strong);color:var(--ux-ink-2);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),color .15s}
+.u439-rl:hover{color:var(--ux-ink)}
+.u439-rl:active{--k:.88;transition:transform .1s var(--ux-ease)}
+.u439-rl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u439.is-loading .u439-rl svg{animation:u439-rot .8s linear infinite}
 @keyframes u439-rot{to{transform:rotate(360deg)}}
-.u439-ls{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
-.u439-c{display:grid;padding:12px;border-radius:14px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u439-c>*{grid-area:1/1;display:flex;gap:12px;min-width:0}
-.u439-th{flex:none;width:64px;height:64px;border-radius:10px}
-.u439-tx{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;padding:1px 0}
-.u439-tg{font-size:11px;font-weight:650;color:var(--ux-accent)}
-.u439-tt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px;font-size:13.5px;font-weight:650;line-height:1.38;letter-spacing:-.015em}
-.u439-mt{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ux-ink-3)}
-.u439-av{width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:var(--ux-accent-soft);font-size:8.5px;font-weight:700;color:var(--ux-accent)}
-.u439-real{opacity:1;transition:opacity .45s var(--ux-ease) var(--d,0s)}
-.u439-sk{opacity:0;pointer-events:none;transition:opacity .35s var(--ux-ease) var(--d,0s)}
-.u439.is-loading .u439-real{opacity:0;transition:opacity .15s}
-.u439.is-loading .u439-sk{opacity:1;transition:opacity .15s}
-.u439-sk i{display:block;border-radius:6px;background:var(--ux-surface-3);background-image:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.7) 50%,transparent 70%);background-image:linear-gradient(100deg,transparent 30%,light-dark(rgba(255,255,255,.72),rgba(255,255,255,.07)) 50%,transparent 70%);background-size:220% 100%;background-repeat:no-repeat;animation:u439-sh 1.3s ease-in-out infinite}
-.u439-sk .u439-th{border-radius:10px}
-.u439-sk .u439-tx>i:nth-child(1){width:46px;height:10px}
-.u439-sk .u439-tx>i:nth-child(2){width:96%;height:13px;margin-top:6px}
-.u439-sk .u439-tx>i:nth-child(3){width:64%;height:13px;margin-top:6px}
-.u439-sk .u439-tx>span{display:flex;gap:6px;align-items:center;margin-top:auto}
-.u439-sk .u439-tx>span i:first-child{width:16px;height:16px;border-radius:50%}
-.u439-sk .u439-tx>span i:last-child{width:72px;height:10px}
-@keyframes u439-sh{from{background-position:120% 0}to{background-position:-20% 0}}
+.u439 .u439-rl:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
 .u439-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.u439-sk i{animation:none;background-image:none}.u439.is-loading .u439-rl svg{animation:none}}
 </style>
 <div class="ux u439 is-loading">
-  <div class="u439-hd"><div><b>추천 아티클</b><small></small></div><button type="button" class="u439-rl" aria-label="새로고침"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3L19.5 9"/><path d="M19.5 4.5V9H15"/></svg></button></div>
-  <ul class="u439-ls" aria-label="추천 아티클 목록" aria-busy="true"></ul>
+  <article class="u439-c" aria-busy="true">
+    <div class="u439-real">
+      <div class="u439-im" style="--d:0s"><div class="u439-art" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u439-tx" style="--d:.12s"><div class="u439-tg">디자인</div><div class="u439-tt">다크 모드 색은 대비부터 맞추세요</div></div>
+      <div class="u439-mt" style="--d:.22s;padding:0 6px 4px;margin-top:0"><span class="u439-av" aria-hidden="true"></span>한서연 · 4분</div>
+    </div>
+    <div class="u439-sk" aria-hidden="true">
+      <i class="u439-im" style="--d:0s"></i>
+      <div class="u439-tx" style="--d:.12s"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+      <div class="u439-mt" style="--d:.22s;padding:0 6px 4px;margin-top:0"><i></i><i></i></div>
+    </div>
+  </article>
+  <button type="button" class="u439-rl" aria-label="다시 불러오기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3L19.5 9"/><path d="M19.5 4.5V9H15"/></svg></button>
   <p class="u439-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var q = function (s) { return root.querySelector(s); };
-  var ls = q('.u439-ls'), rl = q('.u439-rl'), sub = q('.u439-hd small'), live = q('.u439-live');
+  var card = root.querySelector('.u439-c'), rl = root.querySelector('.u439-rl'), live = root.querySelector('.u439-live');
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { loading: '불러오는 중…', updated: '방금 업데이트', done: '새 글 3개를 불러왔어요' };
-  // [분류, 제목, 글쓴이, 읽는 시간, 썸네일 배경]
-  var POSTS = [
-    ['디자인', '디자인 시스템을 처음 만들 때 정해야 할 다섯 가지', '한서연', '5분', 'linear-gradient(135deg,#8B7CF6,#5B8DEF 60%,#4CC9B0)'],
-    ['제품', '작은 팀이 릴리스 노트를 잘 쓰는 법', '박지훈', '7분', 'linear-gradient(135deg,#F7B267,#F4845F 55%,#F25C78)'],
-    ['접근성', '다크 모드 색은 대비부터 맞추세요', '이수민', '4분', 'linear-gradient(135deg,#1F2937,#3B4A6B 50%,#8EA4D2)']
-  ];
-  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  ls.innerHTML = POSTS.map(function (p, i) {
-    return '<li class="u439-c" style="--d:' + (i * 0.12) + 's">' +
-      '<div class="u439-real"><span class="u439-th" style="background:' + p[4] + '" aria-hidden="true"></span><span class="u439-tx"><span><span class="u439-tg">' + esc(p[0]) + '</span><span class="u439-tt">' + esc(p[1]) + '</span></span>' +
-      '<span class="u439-mt"><span class="u439-av" aria-hidden="true">' + esc(p[2].charAt(0)) + '</span>' + esc(p[2]) + ' · ' + esc(p[3]) + '</span></span></div>' +
-      '<div class="u439-sk" aria-hidden="true"><i class="u439-th"></i><span class="u439-tx"><i></i><i></i><i></i><span><i></i><i></i></span></span></div></li>';
-  }).join('');
+  var T = { loading: '불러오는 중', done: '불러왔어요' };
   var timer = 0;
-  // 뼈대를 보여 주고, 데이터가 오면 카드마다 0.12초씩 늦게 내용을 겹쳐 보입니다
+  // 뼈대를 보여 주다가, 내용이 오면 그림 → 제목 → 글쓴이 순서로 겹쳐 나타납니다
   function load() {
     clearTimeout(timer);
     root.classList.add('is-loading');
-    ls.setAttribute('aria-busy', 'true');
-    sub.textContent = T.loading;
+    card.setAttribute('aria-busy', 'true');
     live.textContent = T.loading;
     timer = setTimeout(function () {
       if (!root.isConnected) return;
       root.classList.remove('is-loading');
-      ls.setAttribute('aria-busy', 'false');
-      sub.textContent = T.updated;
+      card.setAttribute('aria-busy', 'false');
       live.textContent = T.done;
-    }, rm ? 600 : 1500);
+    }, rm ? 500 : 1500);
   }
   rl.addEventListener('click', load);
   load();

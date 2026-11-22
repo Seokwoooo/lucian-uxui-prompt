@@ -1,181 +1,90 @@
-<!-- @meta {"title":"첫 사용 빈 화면","category":"빈·오류 상태","summary":"새 워크스페이스에 아무것도 없을 때 보이는 첫 화면입니다. 차분한 그림과 한 줄 안내 아래 ‘첫 프로젝트 만들기’와 ‘템플릿 둘러보기’가 있고, 시작하기 체크리스트 세 단계가 행동할 때마다 체크되며 진행 막대가 찹니다. 주 버튼은 늘 다음에 할 일로 바뀌고, 그림도 단계에 따라 조금씩 채워집니다.","hint":"‘첫 프로젝트 만들기’를 누르면 다음 단계로 버튼이 바뀝니다. 체크리스트 줄을 눌러도 됩니다","shape":"square","hue":"#10B981","hue2":"#3D8BFF","tags":["empty-state","onboarding","getting-started","checklist","first-run","cta","illustration"]} -->
-<!-- @demo [["wait",1200],["hover",".u440-go",0,{"after":300}],["tap",".u440-go",0,{"after":1500}],["tap",".u440-tp",0,{"after":1300}],["tap",".u440-go",0,{"after":2200}],["reset"]] -->
-<!-- @en {"title":"First-run empty state","summary":"The first screen of a brand-new workspace with nothing in it yet. Under a calm illustration and a one-line explanation sit “Create first project” and “Browse templates”, and a three-step getting-started checklist ticks off as you act while its progress bar fills. The primary button always turns into the next thing to do, and the illustration fills in a little with each step.","hint":"Press “Create first project” and the button moves on to the next step. The checklist rows work too","map":[
-  [">템플릿 둘러보기<", ">Browse templates<"],
-  [">시작하기<", ">Getting started<"],
-  ["aria-label=\"시작하기 진행률\"", "aria-label=\"Getting started progress\""],
+<!-- @meta {"title":"첫 사용 빈 화면","category":"빈·오류 상태","summary":"빈 워크스페이스의 첫 화면입니다. 빈 폴더 그림이 둥실둥실 떠 있고, ‘첫 프로젝트 만들기’를 누르면 문서 한 장이 폴더 속으로 쏙 떨어지며 폴더가 통 튀고 반짝임이 터집니다.","hint":"‘첫 프로젝트 만들기’를 눌러 보세요","shape":"square","hue":"#10B981","hue2":"#3D8BFF","tags":["empty-state","onboarding","illustration","first-run","cta","spring"]} -->
+<!-- @demo [["wait",1100],["hover",".u440-go",0,{"after":400}],["tap",".u440-go",0,{"after":2800}],["leave",300],["reset"]] -->
+<!-- @en {"title":"First-run empty state","summary":"The first screen of an empty workspace. An empty folder bobs gently in the air; press “Create first project” and a document drops into the folder, the folder bounces and sparkles burst.","hint":"Press “Create first project”","map":[
   ["'아직 프로젝트가 없어요'", "'No projects yet'"],
-  ["'첫 프로젝트를 만들면 파일과 할 일, 팀원을 한곳에서 관리할 수 있어요.'", "'Create your first project to keep files, tasks and teammates in one place.'"],
-  ["'첫 프로젝트가 생겼어요'", "'Your first project is ready'"],
-  ["'이제 팀원을 초대해서 함께 써 보세요.'", "'Now invite your teammates to work on it together.'"],
-  ["'팀이 모였어요'", "'Your team is here'"],
-  ["'템플릿으로 첫 문서를 빠르게 채워 보세요.'", "'Fill your first doc fast with a template.'"],
-  ["'준비가 끝났어요'", "'You’re all set'"],
-  ["'이제 워크스페이스를 마음껏 써 보세요.'", "'Your workspace is ready to go.'"],
+  ["'첫 프로젝트가 생겼어요'", "'Your first project is here'"],
   ["'첫 프로젝트 만들기'", "'Create first project'"],
-  ["'팀원 초대하기'", "'Invite teammates'"],
-  ["'템플릿 둘러보기'", "'Browse templates'"],
-  ["'워크스페이스로 가기'", "'Go to workspace'"],
-  ["'만드는 중…'", "'Creating…'"],
-  ["'보내는 중…'", "'Sending…'"],
-  ["'{a}/{b} 완료'", "'{a} of {b} done'"],
-  ["'1분이면 돼요'", "'Takes a minute'"],
-  ["'링크나 이메일로'", "'By link or email'"],
-  ["'회의록, 기획서, 회고'", "'Notes, specs, retros'"],
-  ["'완료'", "'Done'"]
+  ["'하나 더 만들기'", "'Create another'"]
 ]} -->
 <style>
-.u440{position:relative;width:340px;height:404px;padding:22px 22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px;text-align:center}
-.u440 svg{display:block}
-.u440-il{width:132px;height:74px;margin:0 auto 12px;overflow:visible}
-.u440-il .bk{fill:var(--ux-surface-2);stroke:var(--ux-line-2);stroke-width:1.2}
-.u440-il .fr{fill:var(--ux-surface);stroke:var(--ux-line-2);stroke-width:1.2}
-.u440-il .ln{fill:var(--ux-surface-3)}
-.u440-il .tab{fill:var(--ux-accent);opacity:.9}
-.u440-il .pl{fill:var(--ux-accent);transition:fill .3s}
-.u440-il .pl path{stroke:var(--ux-accent-ink);stroke-width:2.2;stroke-linecap:round;fill:none}
-.u440-il .ok{opacity:0;transform:scale(.5);transform-box:fill-box;transform-origin:center;transition:opacity .25s,transform .45s var(--ux-spring)}
-.u440-il .ok circle{fill:var(--ux-mint)}
-.u440-il .ok path{stroke:var(--ux-surface);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.u440.s1 .u440-il .ok{opacity:1;transform:none}
-.u440.s1 .u440-il .pl{opacity:0}
-.u440-il .av{opacity:0;transform:translateY(6px);transition:opacity .3s,transform .45s var(--ux-spring)}
-.u440-il .av circle{stroke:var(--ux-surface);stroke-width:2}
-.u440.s2 .u440-il .av{opacity:1;transform:none}
-.u440.s2 .u440-il .av:nth-of-type(2){transition-delay:.08s}
-.u440-il .sp{fill:var(--ux-warn);opacity:0;transform:scale(0);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s var(--ux-spring)}
-.u440.s3 .u440-il .sp{opacity:1;transform:none}
-.u440.s3 .u440-il .sp:nth-of-type(2){transition-delay:.1s}
-.u440.s3 .u440-il .sp:nth-of-type(3){transition-delay:.2s}
-.u440-h{margin:0;font-size:16.5px;font-weight:700;letter-spacing:-.025em}
-.u440-p{min-height:36px;margin:5px 8px 14px;font-size:12.5px;line-height:1.45;color:var(--ux-ink-3)}
-.u440-h.is-new,.u440-p.is-new{animation:u440-in .4s var(--ux-ease)}
-@keyframes u440-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.u440-bs{display:flex;gap:8px}
-.u440-bs button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:38px;padding:0 10px;border:0;border-radius:10px;font-size:12.5px;font-weight:650;white-space:nowrap;transition:background-color .15s,opacity .15s,transform .2s var(--ux-spring),box-shadow .2s}
-.u440-bs button:active{transform:scale(.97)}
-.u440-go{background:var(--ux-accent);color:var(--ux-accent-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1px 2px var(--ux-shadow)}
-.u440-go:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 18px -10px var(--ux-accent)}
-.u440-go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
-.u440-go i{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u440-spin .7s linear infinite}
-@keyframes u440-spin{to{transform:rotate(360deg)}}
-.u440-tp{background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink)}
-.u440-tp:hover{background:var(--ux-surface-2)}
-.u440 .u440-bs button:focus-visible,.u440 .u440-row:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
-.u440-ck{margin-top:16px;padding:12px 12px 6px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);text-align:left}
-.u440-ch{display:flex;align-items:center;justify-content:space-between;padding:0 2px 8px;font-size:12px;font-weight:650}
-.u440-ch small{font-size:11.5px;font-weight:600;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u440-bar{height:4px;margin:0 2px 6px;border-radius:2px;background:var(--ux-line);overflow:hidden}
-.u440-bar i{display:block;height:100%;border-radius:inherit;background:var(--ux-mint);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .5s var(--ux-spring)}
-.u440-row{display:flex;align-items:center;gap:10px;width:100%;height:34px;padding:0 6px;border:0;border-radius:9px;background:none;text-align:left;transition:background-color .15s}
-.u440-row:hover:not([aria-disabled="true"]){background:color-mix(in srgb,var(--ux-ink) 5%,transparent)}
-.u440-row[aria-disabled="true"]{cursor:default}
-.u440-cc{position:relative;flex:none;width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--ux-line-2);display:grid;place-items:center;transition:background-color .25s,box-shadow .25s}
-.u440-cc svg{width:11px;height:11px;fill:none;stroke:var(--ux-surface);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.u440-cc path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s var(--ux-ease) .1s}
-.u440-row.is-done .u440-cc{background:var(--ux-mint);box-shadow:inset 0 0 0 1.5px var(--ux-mint);animation:u440-pop .45s var(--ux-spring)}
-.u440-row.is-done .u440-cc path{stroke-dashoffset:0}
-@keyframes u440-pop{40%{transform:scale(1.25)}}
-.u440-rt{flex:1;min-width:0}
-.u440-rt b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .2s}
-.u440-row.is-done .u440-rt b{color:var(--ux-ink-3);text-decoration:line-through;text-decoration-color:var(--ux-line-2)}
-.u440-rs{flex:none;font-size:11px;color:var(--ux-ink-3)}
-.u440-row.is-done .u440-rs{color:var(--ux-mint);font-weight:600}
-.u440-row.is-next .u440-rt b{color:var(--ux-ink)}
-.u440-row.is-next .u440-cc{box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u440{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.u440-il{width:176px;height:132px;overflow:visible;animation:u440-float 3.2s ease-in-out infinite}
+@keyframes u440-float{50%{transform:translateY(-6px)}}
+.u440-il .sh{fill:var(--ux-ink);opacity:.08;transform-box:fill-box;transform-origin:center;animation:u440-sh 3.2s ease-in-out infinite}
+@keyframes u440-sh{50%{transform:scaleX(.86);opacity:.05}}
+.u440-il .bk{fill:color-mix(in srgb,var(--ux-accent) 38%,var(--ux-surface))}
+.u440-il .fr{fill:var(--ux-accent)}
+.u440-il .fh{fill:#fff;opacity:.16}
+.u440-il .doc rect.p{fill:var(--ux-surface);stroke:var(--ux-line-2);stroke-width:1.2}
+.u440-il .doc .ln{fill:var(--ux-line-2)}
+.u440-il .doc .hd{fill:var(--ux-mint)}
+.u440-il .doc{opacity:0;transform:translateY(-110px) rotate(-10deg);transform-box:view-box;transform-origin:80px 50px}
+.u440-il .fol{transform-box:view-box;transform-origin:80px 112px}
+.u440-il .sp{fill:var(--ux-warn);transform-box:fill-box;transform-origin:center;animation:u440-tw 2.4s ease-in-out infinite}
+.u440-il .sp:nth-of-type(2){animation-delay:-.8s;fill:var(--ux-mint)}
+.u440-il .sp:nth-of-type(3){animation-delay:-1.6s;fill:var(--ux-accent-2)}
+@keyframes u440-tw{0%,100%{transform:scale(.6);opacity:.35}50%{transform:scale(1);opacity:1}}
+.u440.is-done .u440-il .doc{animation:u440-drop .8s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes u440-drop{0%{opacity:0;transform:translateY(-110px) rotate(-10deg)}20%{opacity:1}62%{transform:translateY(6px) rotate(2deg)}80%{transform:translateY(-3px) rotate(-1deg)}100%{opacity:1;transform:none}}
+.u440.is-done .u440-il .fol{animation:u440-bump .9s cubic-bezier(.3,1.4,.5,1) .38s}
+@keyframes u440-bump{0%{transform:none}25%{transform:scale(1.06,.9)}55%{transform:scale(.97,1.04)}100%{transform:none}}
+.u440-burst{position:absolute;left:50%;top:50%;width:0;height:0}
+.u440-burst i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--c);opacity:0}
+.u440.is-done .u440-burst i{animation:u440-pop .7s cubic-bezier(.2,.8,.3,1) .42s forwards}
+@keyframes u440-pop{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-58px) scale(.4)}}
+.u440-ill{position:relative}
+.u440-h{display:grid;margin:14px 0 16px}
+.u440-h b{grid-area:1/1;font-size:18px;font-weight:700;letter-spacing:-.025em;transition:opacity .25s var(--ux-ease),transform .45s cubic-bezier(.3,1.4,.5,1),filter .25s}
+.u440-h b+b{opacity:0;transform:translateY(8px);filter:blur(3px)}
+.u440.is-done .u440-h b:first-child{opacity:0;transform:translateY(-8px);filter:blur(3px)}
+.u440.is-done .u440-h b+b{opacity:1;transform:none;filter:none;transition-delay:.45s}
+.u440-go{position:relative;display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 20px;border:0;border-radius:999px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:14px;font-weight:650;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 22px -12px var(--ux-accent);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),box-shadow .2s}
+.u440-go:hover{--k:1.03}
+.u440-go:active{--k:.94;transition:transform .1s var(--ux-ease)}
+.u440-go svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u440 .u440-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
 .u440-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
 <div class="ux u440">
-  <svg class="u440-il" viewBox="0 0 132 74" aria-hidden="true">
-    <rect class="bk" x="22" y="12" width="70" height="50" rx="9" transform="rotate(-8 57 37)"/>
-    <rect class="bk" x="40" y="8" width="70" height="50" rx="9" transform="rotate(6 75 33)"/>
-    <rect class="fr" x="31" y="16" width="70" height="52" rx="9"/>
-    <rect class="tab" x="41" y="26" width="18" height="5" rx="2.5"/>
-    <rect class="ln" x="41" y="37" width="48" height="4" rx="2"/>
-    <rect class="ln" x="41" y="46" width="36" height="4" rx="2"/>
-    <g class="pl"><circle cx="99" cy="60" r="11"/><path d="M99 55v10M94 60h10"/></g>
-    <g class="ok"><circle cx="99" cy="60" r="11"/><path d="m94.5 60.5 3 3 6-6.5"/></g>
-    <g class="av"><circle cx="24" cy="58" r="8" fill="#F4A261"/></g>
-    <g class="av"><circle cx="35" cy="62" r="8" fill="#6C9CF0"/></g>
-    <path class="sp" d="M112 14l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
-    <path class="sp" d="M18 22l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z"/>
-    <path class="sp" d="M120 40l.9 2.2 2.2.9-2.2.9-.9 2.2-.9-2.2-2.2-.9 2.2-.9z"/>
-  </svg>
-  <h3 class="u440-h"></h3>
-  <p class="u440-p"></p>
-  <div class="u440-bs"><button type="button" class="u440-go"></button><button type="button" class="u440-tp">템플릿 둘러보기</button></div>
-  <div class="u440-ck">
-    <div class="u440-ch"><span>시작하기</span><small></small></div>
-    <div class="u440-bar" role="progressbar" aria-label="시작하기 진행률" aria-valuemin="0" aria-valuemax="3"><i></i></div>
-    <div class="u440-rows"></div>
+  <div class="u440-ill" aria-hidden="true">
+    <svg class="u440-il" viewBox="0 0 160 120">
+      <ellipse class="sh" cx="80" cy="116" rx="50" ry="5"/>
+      <path class="sp" d="M138 22l1.8 4.4 4.4 1.8-4.4 1.8-1.8 4.4-1.8-4.4-4.4-1.8 4.4-1.8z"/>
+      <path class="sp" d="M20 40l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z"/>
+      <path class="sp" d="M128 70l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/>
+      <g class="fol">
+        <path class="bk" d="M28 34a8 8 0 0 1 8-8h22a6 6 0 0 1 4.6 2.2l4.6 5.8H124a8 8 0 0 1 8 8v58a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8z"/>
+        <g class="doc"><rect class="p" x="50" y="24" width="60" height="58" rx="6"/><rect class="hd" x="57" y="31" width="20" height="5" rx="2.5"/><rect class="ln" x="57" y="42" width="44" height="3.5" rx="1.75"/><rect class="ln" x="57" y="50" width="36" height="3.5" rx="1.75"/></g>
+        <path class="fr" d="M22 56a8 8 0 0 1 8-8h100a8 8 0 0 1 8 8.6l-4.4 44a8 8 0 0 1-8 7.4H34.4a8 8 0 0 1-8-7.4z"/>
+        <path class="fh" d="M30 48h100a8 8 0 0 1 8 8.6l-.3 3H22.1l-.1-3.6A8 8 0 0 1 30 48z"/>
+      </g>
+    </svg>
+    <span class="u440-burst"><i style="--a:-60deg;--c:var(--ux-warn)"></i><i style="--a:-25deg;--c:var(--ux-mint)"></i><i style="--a:10deg;--c:var(--ux-accent-2)"></i><i style="--a:45deg;--c:var(--ux-warn)"></i><i style="--a:-95deg;--c:var(--ux-accent)"></i><i style="--a:80deg;--c:var(--ux-mint)"></i></span>
   </div>
+  <div class="u440-h"><b></b><b aria-hidden="true"></b></div>
+  <button type="button" class="u440-go"></button>
   <p class="u440-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var q = function (s) { return root.querySelector(s); };
-  var h = q('.u440-h'), p = q('.u440-p'), go = q('.u440-go'), tp = q('.u440-tp'), cnt = q('.u440-ch small'), bar = q('.u440-bar'), rows = q('.u440-rows'), live = q('.u440-live');
-  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = {
-    h0: '아직 프로젝트가 없어요', p0: '첫 프로젝트를 만들면 파일과 할 일, 팀원을 한곳에서 관리할 수 있어요.',
-    h1: '첫 프로젝트가 생겼어요', p1: '이제 팀원을 초대해서 함께 써 보세요.',
-    h2: '팀이 모였어요', p2: '템플릿으로 첫 문서를 빠르게 채워 보세요.',
-    h3: '준비가 끝났어요', p3: '이제 워크스페이스를 마음껏 써 보세요.',
-    done: '완료', count: '{a}/{b} 완료', open: '워크스페이스로 가기', busy0: '만드는 중…', busy1: '보내는 중…'
-  };
-  // [이름, 보조 설명]
-  var STEPS = [['첫 프로젝트 만들기', '1분이면 돼요'], ['팀원 초대하기', '링크나 이메일로'], ['템플릿 둘러보기', '회의록, 기획서, 회고']];
-  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9.5"/></svg>';
+  var hs = root.querySelectorAll('.u440-h b'), go = root.querySelector('.u440-go'), live = root.querySelector('.u440-live');
+  var T = { empty: '아직 프로젝트가 없어요', done: '첫 프로젝트가 생겼어요', create: '첫 프로젝트 만들기', open: '하나 더 만들기' };
   var PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
-  var done = [false, false, false], busy = false;
-  rows.innerHTML = STEPS.map(function (s) { return '<button type="button" class="u440-row"><span class="u440-cc" aria-hidden="true">' + CHECK + '</span><span class="u440-rt"><b></b></span><span class="u440-rs"></span></button>'; }).join('');
-  var R = rows.querySelectorAll('.u440-row');
-  R.forEach(function (r, i) { r.querySelector('b').textContent = STEPS[i][0]; });
-
-  function next() { for (var i = 0; i < 2; i++) if (!done[i]) return i; return done[2] ? -1 : 2; }
-  function render(animate) {
-    var n = done.filter(Boolean).length, nx = next();
-    // 머리말은 앞 단계부터 차례로 채워진 만큼을 따릅니다
-    var lvl = done[0] ? (done[1] ? (done[2] ? 3 : 2) : 1) : 0;
-    var nh = T['h' + lvl], np = T['p' + lvl];
-    if (h.textContent !== nh) { h.textContent = nh; p.textContent = np; if (animate) [h, p].forEach(function (el) { el.classList.remove('is-new'); void el.offsetWidth; el.classList.add('is-new'); }); }
-    root.classList.toggle('s1', done[0]);
-    root.classList.toggle('s2', done[1]);
-    root.classList.toggle('s3', n === 3);
-    if (!busy) go.innerHTML = (nx < 0 ? '' : PLUS) + '<span>' + (nx < 0 ? T.open : STEPS[nx][0]) + '</span>';
-    // 다음 할 일이 템플릿이거나 모두 끝나면 보조 버튼을 숨기고 주 버튼이 폭을 다 씁니다
-    tp.hidden = nx === 2 || nx < 0;
-    cnt.textContent = T.count.replace('{a}', n).replace('{b}', 3);
-    bar.style.setProperty('--p', n / 3);
-    bar.setAttribute('aria-valuenow', n);
-    R.forEach(function (r, i) {
-      r.classList.toggle('is-done', done[i]);
-      r.classList.toggle('is-next', i === nx);
-      r.setAttribute('aria-disabled', done[i] ? 'true' : 'false');
-      r.setAttribute('aria-label', STEPS[i][0] + (done[i] ? ', ' + T.done : ''));
-      r.querySelector('.u440-rs').textContent = done[i] ? T.done : STEPS[i][1];
-    });
+  hs[0].textContent = T.empty; hs[1].textContent = T.done;
+  var done = false;
+  function sync() {
+    root.classList.toggle('is-done', done);
+    hs[0].setAttribute('aria-hidden', done ? 'true' : 'false'); hs[1].setAttribute('aria-hidden', done ? 'false' : 'true');
+    go.innerHTML = PLUS + '<span>' + (done ? T.open : T.create) + '</span>';
   }
-  // 만들기와 초대는 잠깐 진행 표시를 보인 뒤 체크하고, 템플릿은 바로 체크합니다
-  function act(i) {
-    if (busy || i < 0 || done[i]) return;
-    if (i === 2) { done[2] = true; render(true); live.textContent = STEPS[2][0] + ', ' + T.done; return; }
-    busy = true;
-    go.innerHTML = '<i aria-hidden="true"></i><span>' + (i === 0 ? T.busy0 : T.busy1) + '</span>';
-    go.setAttribute('aria-busy', 'true');
-    setTimeout(function () {
-      if (!root.isConnected) return;
-      busy = false;
-      go.removeAttribute('aria-busy');
-      done[i] = true;
-      render(true);
-      live.textContent = STEPS[i][0] + ', ' + T.done;
-    }, rm ? 150 : 650);
-  }
-  go.addEventListener('click', function () { var nx = next(); if (nx >= 0) act(nx); });
-  tp.addEventListener('click', function () { act(2); });
-  R.forEach(function (r, i) { r.addEventListener('click', function () { act(i); }); });
-  render(false);
+  // 만들 때마다 문서가 폴더에 떨어집니다(다시 누르면 한 장 더)
+  go.addEventListener('click', function () {
+    if (done) { root.classList.remove('is-done'); void root.offsetWidth; }
+    done = true;
+    sync();
+    live.textContent = T.done;
+  });
+  sync();
 })();
 </script>

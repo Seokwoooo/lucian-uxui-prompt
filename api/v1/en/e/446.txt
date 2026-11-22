@@ -1,155 +1,99 @@
 <!-- Lucian UX/UI Prompt #446 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#446 -->
 <!--
-Element: Review summary
-ID: 446 · Category: Social Proof · Tags: reviews, rating, stars, distribution, filter, social-proof, commerce
-What it does: A product review summary: the average rating in half-star steps, the total count and 5-to-1 distribution bars. Press a bar to keep only that score, or turn on “With photos” to see reviews that include pictures. Every review has a Helpful button.
-How to use it: Press the 5-star bar to filter, then turn on With photos. Press the same bar again to clear it
-Footprint: fixed size, tall
+Element: Rating summary
+ID: 446 · Category: Social Proof · Tags: rating, reviews, stars, histogram, social-proof, count-up
+What it does: A summary with just the average and the distribution. As it comes into view, 4.6 counts up from zero, the stars fill from the left in half-star steps and five bars fill in one after another. Hover a bar and only that row lights up while its percentage turns into a review count.
+How to use it: Hover over the bars
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#446
 -->
 <style>
-.u446{--gold:#F5A524;--gold:light-dark(#F5A524,#FFC247);position:relative;width:340px;height:620px;display:flex;flex-direction:column;padding:22px 20px 0;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u446-hd b{display:block;font-size:17px;font-weight:700;letter-spacing:-.03em}
-.u446-hd span{display:block;margin-top:2px;font-size:12px;color:var(--ux-ink-3)}
-.u446-sum{display:flex;gap:18px;margin-top:16px;padding:16px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u446-avg{width:96px;flex:none;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
-.u446-avg b{font-size:38px;font-weight:700;line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
-.u446-avg small{margin-top:6px;font-size:11.5px;color:var(--ux-ink-3)}
-.u446-stars{display:flex;gap:2px;margin-top:8px}
-.u446-st{position:relative;width:15px;height:15px;flex:none}
-.u446-st svg{position:absolute;inset:0;width:100%;height:100%}
-.u446-st .bg{fill:var(--ux-surface-3)}
-.u446-st .fg{fill:var(--gold);clip-path:inset(0 var(--cut,0%) 0 0)}
-.u446-bars{flex:1;min-width:0;display:grid;gap:2px}
-.u446-bar{display:grid;grid-template-columns:24px 1fr 34px;align-items:center;gap:8px;height:22px;padding:0 4px;margin:0 -4px;border:0;border-radius:6px;background:none;font-size:11.5px;color:var(--ux-ink-2);font-variant-numeric:tabular-nums;transition:opacity .25s,background .2s}
-.u446-bar:hover{background:var(--ux-surface-3)}
-.u446 .u446-bar:focus-visible{outline-offset:0}
-.u446-bar>span:first-child{text-align:left;font-weight:600}
-.u446-bar i{position:relative;height:6px;border-radius:3px;background:var(--ux-surface-3);overflow:hidden}
-.u446-bar i::after{content:"";position:absolute;inset:0;border-radius:3px;background:var(--gold);transform:scaleX(var(--p,0));transform-origin:left;transition:transform .7s var(--ux-ease)}
-.u446-bar>span:last-child{text-align:right;color:var(--ux-ink-3)}
-.u446-bars.is-f .u446-bar:not([aria-pressed="true"]){opacity:.4}
-.u446-bar[aria-pressed="true"]{background:var(--ux-surface)}
-.u446-bar[aria-pressed="true"]>span:first-child{color:var(--ux-ink)}
-.u446-fl{display:flex;align-items:center;gap:8px;margin-top:14px}
-.u446-fl b{flex:1;min-width:0;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u446-ph{display:flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 8px;border:0;border-radius:999px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:600;color:var(--ux-ink-2);white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s}
-.u446-ph:hover{background:var(--ux-surface-2)}
-.u446-ph svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.u446-ph[aria-pressed="true"]{background:var(--ux-ink);color:var(--ux-surface);box-shadow:none}
-.u446-sort{font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap}
-.u446-ls{flex:1;min-height:0;overflow:auto;margin:10px -20px 0;padding:0 20px 16px;list-style:none;scrollbar-width:thin}
-.u446-rv{padding:14px 0;border-top:1px solid var(--ux-line);animation:u446-in .4s var(--ux-ease) both;animation-delay:calc(var(--i,0) * 50ms)}
-@keyframes u446-in{from{opacity:0;transform:translateY(8px)}}
-.u446-rt{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ux-ink-3)}
-.u446-rt .u446-stars{margin:0}
-.u446-rt .u446-st{width:12px;height:12px}
-.u446-rt b{font-weight:600;color:var(--ux-ink-2)}
-.u446-dt{margin-left:auto;font-variant-numeric:tabular-nums}
-.u446-rv p{margin:7px 0 0;font-size:12.5px;line-height:1.55;color:var(--ux-ink)}
-.u446-pics{display:flex;gap:6px;margin-top:9px}
-.u446-pics i{width:52px;height:52px;border-radius:9px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);background:var(--g)}
-.u446-help{display:inline-flex;align-items:center;gap:5px;height:26px;margin-top:9px;padding:0 9px;border:0;border-radius:7px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:500;color:var(--ux-ink-2);font-variant-numeric:tabular-nums;transition:background .2s,color .2s,box-shadow .2s}
-.u446-help:hover{background:var(--ux-surface-2)}
-.u446-help svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
-.u446-help[aria-pressed="true"]{color:var(--ux-accent);box-shadow:inset 0 0 0 1px var(--ux-accent);background:var(--ux-accent-soft)}
-.u446-help[aria-pressed="true"] svg{transform:rotate(-12deg) scale(1.15);fill:var(--ux-accent-soft)}
-.u446-empty{padding:40px 0 0;text-align:center;font-size:12.5px;color:var(--ux-ink-3)}
-.u446-empty button{display:block;margin:10px auto 0;height:30px;padding:0 12px;border:0;border-radius:8px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:12px;font-weight:600;color:var(--ux-ink)}
+.u446{position:relative;width:340px;height:300px;display:grid;place-items:center;--am:#F5A524;--am:light-dark(#F5A524,#FFBE3D)}
+.u446-w{display:flex;align-items:center;gap:22px;width:300px}
+.u446-avg{flex:none;width:104px}
+.u446-n{display:block;font-size:52px;font-weight:700;line-height:1;letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ux-ink)}
+.u446-st{position:relative;display:block;width:101px;height:18px;margin-top:10px}
+.u446-st svg{position:absolute;left:0;top:0;width:101px;height:18px}
+.u446-st .bs path{fill:var(--ux-surface-3)}
+.u446-st .fl{clip-path:inset(0 100% 0 0);transition:clip-path 1s cubic-bezier(.3,.7,.2,1) .15s}
+.u446-st .fl path{fill:var(--am)}
+.u446.is-in .u446-st .fl{clip-path:inset(0 var(--cut) 0 0)}
+.u446-dt{display:block;margin-top:8px;font-size:12px;color:var(--ux-ink-3)}
+.u446-ls{flex:1;margin:0;padding:0;list-style:none;display:grid;gap:4px}
+.u446-row{display:grid;grid-template-columns:22px 1fr 44px;align-items:center;gap:8px;height:24px;padding:0 4px;border-radius:7px;font-size:12px;font-variant-numeric:tabular-nums;color:var(--ux-ink-2);outline:none;transition:opacity .25s,background .2s}
+.u446-row>span:first-child{display:flex;align-items:center;gap:2px;font-weight:600}
+.u446-row>span:first-child svg{width:9px;height:9px;fill:var(--ux-ink-3);transition:fill .2s}
+.u446-bar{position:relative;height:8px;border-radius:4px;background:var(--ux-surface-3);overflow:hidden}
+.u446-bar i{position:absolute;inset:0;border-radius:inherit;background:var(--am);transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ux-spring);transition-delay:calc(.25s + var(--k) * 90ms)}
+.u446.is-in .u446-bar i{transform:scaleX(var(--p))}
+.u446-v{position:relative;display:grid;justify-items:end;height:16px;overflow:hidden}
+.u446-v b,.u446-v em{grid-area:1/1;font-style:normal;font-weight:500;line-height:16px;transition:opacity .2s,transform .35s var(--ux-spring)}
+.u446-v em{opacity:0;transform:translateY(12px);font-weight:650;color:var(--ux-ink)}
+.u446-ls.is-hov .u446-row{opacity:.38}
+.u446-ls.is-hov .u446-row.is-on{opacity:1;background:var(--ux-surface-2)}
+.u446-row.is-on>span:first-child svg{fill:var(--am)}
+.u446-row.is-on .u446-v b{opacity:0;transform:translateY(-12px)}
+.u446-row.is-on .u446-v em{opacity:1;transform:none}
+.u446-row:focus-visible{box-shadow:0 0 0 2px var(--ux-accent)}
 </style>
 <div class="ux u446">
-  <div class="u446-hd"><b>Customer reviews</b><span>Lucian Buds Pro 2</span></div>
-  <div class="u446-sum">
-    <div class="u446-avg"><b>4.6</b><span class="u446-stars" role="img"></span><small></small></div>
-    <div class="u446-bars" role="group" aria-label="Rating breakdown"></div>
+  <div class="u446-w">
+    <div class="u446-avg">
+      <span class="u446-n" aria-hidden="true">0.0</span>
+      <span class="u446-st" role="img">
+        <svg class="bs" viewBox="0 0 101 18" aria-hidden="true"></svg>
+        <svg class="fl" viewBox="0 0 101 18" aria-hidden="true"></svg>
+      </span>
+      <span class="u446-dt">1,284 reviews</span>
+    </div>
+    <ul class="u446-ls" aria-label="Rating distribution"></ul>
   </div>
-  <div class="u446-fl"><b aria-live="polite"></b><button type="button" class="u446-ph" aria-pressed="false"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="3" width="11" height="8.5" rx="1.8"/><circle cx="7" cy="7.2" r="2"/><path d="M5 3l.8-1.3h2.4L9 3"/></svg>With photos</button><span class="u446-sort">Newest</span></div>
-  <ul class="u446-ls"></ul>
-  <div class="u446-empty" hidden>No reviews match these filters<button type="button">Clear filters</button></div>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var T = {
-    total: function (n) { return n + ' reviews'; },
-    star: function (s) { return s + '★'; },
-    barLabel: function (s, n) { return 'Show only ' + s + '-star reviews (' + n + ')'; },
-    head: function (s, p, n) { return n + ' ' + (s ? s + '-star ' : '') + (p ? 'photo ' : '') + (n === 1 ? 'review' : 'reviews'); },
-    help: 'Helpful',
-    rated: function (r) { return r + ' out of 5 stars'; },
-    photo: 'Photo'
-  };
-  var DIST = [912, 248, 78, 26, 20];
-  var REV = [
-    ['Seoyeon K.', 'Nov 18, 2026', 5, 1, 24, 'Noise canceling is far better than I expected. I can focus on music even on the subway.'],
-    ['Junho L.', 'Nov 15, 2026', 4, 0, 9, 'Happy with the sound, but the case is a little slippery.'],
-    ['Jieun P.', 'Nov 12, 2026', 5, 1, 17, 'My ears don’t hurt even after a full day, and the battery lasts two days.'],
-    ['Minho C.', 'Nov 9, 2026', 3, 0, 6, 'Call quality is average. On windy days people can’t hear me well.'],
-    ['Yuseo Y.', 'Nov 5, 2026', 4, 1, 11, 'The color is nicer than in the photos, and it’s light enough to wear for hours.'],
-    ['Hana J.', 'Nov 3, 2026', 1, 1, 3, 'One side kept cutting out, so I asked for an exchange.'],
-    ['Jiwoo H.', 'Oct 29, 2026', 2, 0, 4, 'The app keeps disconnecting. Waiting for an update.']
-  ];
-  var PICS = [['#E8E2D6', '#C9BBA4'], ['#2B2D36', '#6B6F80'], ['#DCE7F2', '#9FB7D2'], ['#F1DCD6', '#D7A99B']];
-  var total = DIST.reduce(function (a, b) { return a + b; }, 0);
-  var avg = DIST.reduce(function (a, n, k) { return a + n * (5 - k); }, 0) / total;
-  var fmt = function (n) { return n.toLocaleString('en-US'); };
-  var STAR = '<path d="M8 1.2l2.1 4.3 4.7.7-3.4 3.3.8 4.7L8 12l-4.2 2.2.8-4.7L1.2 6.2l4.7-.7z"/>';
-  function stars(r) {
-    var half = Math.round(r * 2) / 2, h = '';
-    for (var i = 1; i <= 5; i++) {
-      var f = Math.max(0, Math.min(1, half - (i - 1)));
-      h += '<span class="u446-st" style="--cut:' + (100 - f * 100) + '%"><svg class="bg" viewBox="0 0 16 16" aria-hidden="true">' + STAR + '</svg><svg class="fg" viewBox="0 0 16 16" aria-hidden="true">' + STAR + '</svg></span>';
-    }
-    return h;
-  }
-  var bigStars = root.querySelector('.u446-avg .u446-stars');
-  root.querySelector('.u446-avg b').textContent = avg.toFixed(1);
-  bigStars.innerHTML = stars(avg); bigStars.setAttribute('aria-label', T.rated(avg.toFixed(1)));
-  root.querySelector('.u446-avg small').textContent = T.total(fmt(total));
-  var barsBox = root.querySelector('.u446-bars'), list = root.querySelector('.u446-ls'), head = root.querySelector('.u446-fl b');
-  var ph = root.querySelector('.u446-ph'), empty = root.querySelector('.u446-empty');
-  var star = 0, photo = false, helped = {};
-  var bars = DIST.map(function (n, k) {
-    var s = 5 - k, b = document.createElement('button');
-    b.type = 'button'; b.className = 'u446-bar'; b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', T.barLabel(s, fmt(n)));
-    b.innerHTML = '<span aria-hidden="true"></span><i aria-hidden="true"></i><span aria-hidden="true"></span>';
-    b.firstChild.textContent = T.star(s); b.lastChild.textContent = fmt(n);
-    b.querySelector('i').style.setProperty('--p', 0);
-    b.addEventListener('click', function () { star = star === s ? 0 : s; draw(); });
-    barsBox.appendChild(b);
-    return b;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { avg: 'Rated 4.6 out of 5', row: function (s, n, p) { return s + ' stars: ' + n + ' reviews, ' + p + '%'; }, cnt: function (n) { return n.toLocaleString('en-US'); } };
+  var AVG = 4.6, DIST = [980, 190, 62, 28, 24];
+  var total = DIST.reduce(function (a, b) { return a + b; }, 0), max = Math.max.apply(null, DIST);
+  var num = root.querySelector('.u446-n'), st = root.querySelector('.u446-st'), ls = root.querySelector('.u446-ls');
+  var STAR = 'M9 1.3l2.3 4.8 5.2.7-3.8 3.6.9 5.2L9 13.1l-4.6 2.5.9-5.2L1.5 6.8l5.2-.7z';
+  var stars = [0, 1, 2, 3, 4].map(function (k) { return '<path transform="translate(' + k * 20.75 + ' 0)" d="' + STAR + '"/>'; }).join('');
+  st.querySelector('.bs').innerHTML = stars; st.querySelector('.fl').innerHTML = stars;
+  var half = Math.round(AVG * 2) / 2, whole = Math.floor(half);
+  var w = whole * 20.75 + (half - whole) * 18;
+  st.style.setProperty('--cut', (101 - w).toFixed(2) + 'px');
+  st.setAttribute('aria-label', T.avg);
+  var STAR_S = '<svg viewBox="0 0 18 18" aria-hidden="true"><path d="' + STAR + '"/></svg>';
+  ls.innerHTML = DIST.map(function (n, k) {
+    var p = Math.round(n / total * 100);
+    return '<li class="u446-row" tabindex="0" aria-label="' + T.row(5 - k, n, p) + '"><span aria-hidden="true">' + (5 - k) + STAR_S + '</span>' +
+      '<span class="u446-bar" aria-hidden="true"><i style="--k:' + k + ';--p:' + (n / max).toFixed(3) + '"></i></span>' +
+      '<span class="u446-v" aria-hidden="true"><b>' + p + '%</b><em>' + T.cnt(n) + '</em></span></li>';
+  }).join('');
+  var rows = [].slice.call(ls.children);
+  function on(r) { rows.forEach(function (x) { x.classList.toggle('is-on', x === r); }); ls.classList.toggle('is-hov', !!r); }
+  rows.forEach(function (r) {
+    r.addEventListener('pointerenter', function () { on(r); });
+    r.addEventListener('focus', function () { on(r); });
+    r.addEventListener('blur', function () { on(null); });
   });
-  requestAnimationFrame(function () { requestAnimationFrame(function () { bars.forEach(function (b, k) { b.querySelector('i').style.setProperty('--p', (DIST[k] / DIST[0]).toFixed(3)); }); }); });
-  function draw() {
-    bars.forEach(function (b, k) { b.setAttribute('aria-pressed', String(5 - k === star)); });
-    barsBox.classList.toggle('is-f', !!star);
-    ph.setAttribute('aria-pressed', String(photo));
-    var rows = REV.map(function (r, i) { return { r: r, i: i }; }).filter(function (o) { return (!star || o.r[2] === star) && (!photo || o.r[3]); });
-    head.textContent = T.head(star, photo, rows.length);
-    list.innerHTML = '';
-    rows.forEach(function (o, n) {
-      var r = o.r, li = document.createElement('li');
-      li.className = 'u446-rv'; li.style.setProperty('--i', n);
-      li.innerHTML = '<div class="u446-rt"><span class="u446-stars" role="img"></span><b></b><span class="u446-dt"></span></div><p></p>' +
-        (r[3] ? '<div class="u446-pics">' + [0, 1].map(function (j) { var c = PICS[(o.i + j) % PICS.length]; return '<i role="img" style="--g:linear-gradient(140deg,' + c[0] + ',' + c[1] + ')"></i>'; }).join('') + '</div>' : '') +
-        '<button type="button" class="u446-help"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M4.5 6.2 6.6 2c.9 0 1.5.7 1.4 1.6l-.3 2h3.1c.8 0 1.4.8 1.2 1.6l-.9 3.6a1.3 1.3 0 0 1-1.3 1H4.5zM4.5 6.2H2.3v5.6h2.2"/></svg><span></span></button>';
-      var st = li.querySelector('.u446-stars'); st.innerHTML = stars(r[2]); st.setAttribute('aria-label', T.rated(r[2]));
-      li.querySelector('.u446-rt b').textContent = r[0];
-      li.querySelector('.u446-dt').textContent = r[1];
-      li.querySelector('p').textContent = r[5];
-      [].slice.call(li.querySelectorAll('.u446-pics i')).forEach(function (pic) { pic.setAttribute('aria-label', T.photo); });
-      var hb = li.querySelector('.u446-help'), hs = hb.querySelector('span');
-      function syncHelp() { var on = !!helped[o.i]; hb.setAttribute('aria-pressed', String(on)); hs.textContent = T.help + ' ' + (r[4] + (on ? 1 : 0)); }
-      hb.addEventListener('click', function () { helped[o.i] = !helped[o.i]; syncHelp(); });
-      syncHelp();
-      list.appendChild(li);
-    });
-    empty.hidden = rows.length > 0; list.hidden = !rows.length;
-    list.scrollTop = 0;
+  ls.addEventListener('pointerleave', function () { on(null); });
+  function play() {
+    root.classList.add('is-in');
+    if (rm) { num.textContent = AVG.toFixed(1); return; }
+    var t0 = performance.now(), dur = 1000;
+    (function step(t) {
+      if (!root.isConnected) return;
+      var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+      num.textContent = (AVG * e).toFixed(1);
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
   }
-  ph.addEventListener('click', function () { photo = !photo; draw(); });
-  empty.querySelector('button').addEventListener('click', function () { star = 0; photo = false; draw(); });
-  draw();
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); play(); } }, { threshold: .4 });
+    io.observe(root);
+  } else play();
 })();
 </script>

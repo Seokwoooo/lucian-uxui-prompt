@@ -1,172 +1,123 @@
 <!-- Lucian UX/UI Prompt #448 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#448 -->
 <!--
 Element: 언어 선택
-ID: 448 · Category: 내비게이션 · Tags: language, locale, i18n, dropdown, search, combobox, header
-What it does: 헤더의 지구본 버튼을 누르면 검색할 수 있는 언어 목록이 열립니다. 언어마다 자기 언어로 쓴 이름과 지역이 함께 보이고, 지금 언어에는 체크가 붙습니다. 한국어·영어 이름으로도 찾을 수 있고, 고르면 헤더 메뉴와 인사말이 그 언어로 바뀝니다.
-How to use it: 지구본 버튼을 눌러 ‘스페인’이나 ‘esp’를 검색하고 Enter로 골라 보세요
+ID: 448 · Category: 내비게이션 · Tags: language, locale, i18n, globe, popover, listbox
+What it does: 지구본 버튼과 다섯 언어 목록입니다. 누르면 목록이 버튼에서 스프링처럼 튀어나오고, 언어는 그 나라 말로 적혀 있습니다. 하나를 고르면 지구본이 한 바퀴 돌며 경선이 흘러가고, 버튼의 글자가 새 언어 이름으로 바뀌며 폭도 부드럽게 맞춰집니다.
+How to use it: 지구본 버튼을 눌러 언어를 골라 보세요
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#448
 -->
 <style>
-.u448{position:relative;width:340px;height:340px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u448-bar{height:52px;display:flex;align-items:center;gap:14px;padding:0 10px 0 16px;border-bottom:1px solid var(--ux-line)}
-.u448-logo{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:-.02em}
-.u448-logo i{width:16px;height:16px;border-radius:5px;background:var(--ux-ink);position:relative}
-.u448-logo i::after{content:"";position:absolute;left:5px;top:4px;width:3px;height:8px;border-left:2px solid var(--ux-surface);border-bottom:2px solid var(--ux-surface)}
-.u448-nav{display:flex;gap:12px;margin-right:auto;min-width:0;overflow:hidden;font-size:11.5px;color:var(--ux-ink-2);white-space:nowrap}
-.u448-btn{display:flex;align-items:center;gap:6px;height:32px;padding:0 9px 0 8px;border:0;border-radius:8px;background:none;box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12px;font-weight:600;color:var(--ux-ink);white-space:nowrap;transition:background .2s,box-shadow .2s}
-.u448-btn:hover,.u448-btn[aria-expanded="true"]{background:var(--ux-surface-2)}
-.u448 .u448-btn:focus-visible{outline-offset:2px}
-.u448-btn svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.u448-btn .cv{width:11px;height:11px;color:var(--ux-ink-3);transition:transform .25s var(--ux-ease)}
-.u448-btn[aria-expanded="true"] .cv{transform:rotate(180deg)}
-.u448-pg{padding:28px 16px 0}
-.u448-hi{display:block;font-size:24px;font-weight:700;letter-spacing:-.03em;animation:u448-in .45s var(--ux-ease)}
-@keyframes u448-in{from{opacity:0;transform:translateY(6px)}}
-.u448-sk{display:grid;gap:8px;margin-top:14px}
-.u448-sk i{display:block;height:8px;border-radius:4px;background:var(--ux-surface-2)}
-.u448-cta{display:flex;gap:8px;margin-top:18px}
-.u448-cta i{width:96px;height:30px;border-radius:8px;background:var(--ux-ink);opacity:.9}
-.u448-cta i+i{width:80px;background:none;box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u448-img{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:20px}
-.u448-img i{height:118px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u448-pop{position:absolute;top:50px;right:10px;width:244px;padding:6px;border-radius:14px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 40px -14px var(--ux-shadow-strong);transform-origin:top right;opacity:0;visibility:hidden;transform:translateY(-4px) scale(.97);transition:opacity .15s,transform .2s var(--ux-ease),visibility 0s .2s}
-.u448.is-open .u448-pop{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .25s var(--ux-ease),visibility 0s}
-.u448-sb{display:flex;align-items:center;gap:7px;height:34px;padding:0 10px;border-radius:9px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u448-sb:focus-within,.u448-sb.is-f{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u448-sb svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.7;stroke-linecap:round}
-.u448-q{flex:1;min-width:0;height:100%;border:0;background:none;outline:none;font-size:12.5px;color:var(--ux-ink)}
-.u448-q::placeholder{color:var(--ux-ink-3)}
-.u448 .u448-q:focus-visible{outline:none}
-.u448-sb small{font-size:10.5px;color:var(--ux-ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
-.u448-ls{max-height:214px;overflow:auto;margin:6px 0 0;padding:0;list-style:none;scrollbar-width:thin}
-.u448-op{display:flex;align-items:center;gap:10px;height:40px;padding:0 10px;border-radius:8px;cursor:pointer;transition:background .12s}
-.u448-op span{flex:1;min-width:0}
-.u448-op b{display:block;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u448-op small{display:block;font-size:10.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u448-op svg{width:15px;height:15px;flex:none;fill:none;stroke:var(--ux-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
-.u448-op[aria-selected="true"] b{font-weight:600}
-.u448-op[aria-selected="true"] svg{opacity:1}
-.u448-op.is-act,.u448-op:hover{background:var(--ux-surface-3)}
-.u448-op mark{background:none;color:var(--ux-accent);font-weight:700}
-.u448-empty{padding:22px 0 18px;text-align:center;font-size:12px;color:var(--ux-ink-3)}
+.u448{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u448-w{position:relative;width:212px;height:262px}
+.u448-b{position:absolute;left:50%;top:0;display:flex;align-items:center;gap:8px;height:44px;padding:0 12px 0 10px;border:0;border-radius:22px;background:var(--ux-surface);color:var(--ux-ink);font-size:14px;font-weight:600;white-space:nowrap;box-shadow:inset 0 0 0 1px var(--ux-line-2),0 6px 16px -10px var(--ux-shadow-strong);transform:translateX(-50%);transition:box-shadow .2s,transform .4s var(--ux-spring)}
+.u448-b:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3),0 8px 18px -10px var(--ux-shadow-strong)}
+.u448-b:active{transform:translateX(-50%) scale(.96)}
+.u448 .u448-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u448-g{width:22px;height:22px;flex:none;color:var(--ux-accent)}
+.u448-g svg{width:22px;height:22px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.u448-g .mer{transform:translateX(0)}
+.u448-g.is-spin .mer{animation:u448-roll .9s cubic-bezier(.3,.7,.2,1)}
+.u448-g.is-spin svg{animation:u448-tilt .9s var(--ux-spring)}
+@keyframes u448-roll{from{transform:translateX(-16px)}}
+@keyframes u448-tilt{30%{transform:rotate(-24deg) scale(1.12)}}
+.u448-lb{display:grid;grid-template-columns:minmax(0,1fr);overflow-x:clip;transition:width .45s var(--ux-spring)}
+.u448-lb span{grid-area:1/1;justify-self:start;width:max-content;white-space:nowrap;transition:opacity .2s,transform .4s var(--ux-spring),filter .2s}
+.u448-lb span.is-out{opacity:0;transform:translateY(-10px);filter:blur(2px)}
+.u448-lb span.is-in{animation:u448-in .45s var(--ux-spring)}
+@keyframes u448-in{from{opacity:0;transform:translateY(10px);filter:blur(2px)}}
+.u448-cv{width:12px;height:12px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ux-spring)}
+.u448-b[aria-expanded="true"] .u448-cv{transform:rotate(180deg)}
+.u448-p{position:absolute;left:0;right:0;top:54px;margin:0;padding:6px;list-style:none;border-radius:16px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 22px 44px -18px var(--ux-shadow-strong),0 4px 12px -6px var(--ux-shadow);transform-origin:50% -32px;transform:scale(.3) translateY(-8px);opacity:0;visibility:hidden;outline:none;transition:transform .25s var(--ux-ease),opacity .18s,visibility 0s .25s}
+.u448.is-open .u448-p{transform:none;opacity:1;visibility:visible;transition:transform .55s var(--ux-spring),opacity .15s,visibility 0s}
+.u448-o{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px;border-radius:10px;font-size:14px;color:var(--ux-ink);cursor:pointer;opacity:0;transform:translateY(-6px);transition:background .15s,opacity .15s,transform .35s var(--ux-spring)}
+.u448.is-open .u448-o{opacity:1;transform:none;transition-delay:0s,calc(60ms + var(--i) * 30ms),calc(60ms + var(--i) * 30ms)}
+.u448-o:hover,.u448-o.is-act{background:var(--ux-surface-2)}
+.u448-o span{flex:1}
+.u448-o em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ux-ink-3)}
+.u448-o svg{width:16px;height:16px;fill:none;stroke:var(--ux-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .2s,transform .35s var(--ux-spring)}
+.u448-o[aria-selected="true"]{font-weight:600}
+.u448-o[aria-selected="true"] svg{opacity:1;transform:none}
 .u448-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 <div class="ux u448">
-  <div class="u448-bar">
-    <span class="u448-logo" aria-hidden="true"><i></i>lucian</span>
-    <span class="u448-nav" aria-hidden="true"></span>
-    <button type="button" class="u448-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="언어 선택"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.2"/><path d="M1.8 8h12.4M8 1.8c1.7 1.8 2.6 3.9 2.6 6.2S9.7 12.4 8 14.2C6.3 12.4 5.4 10.3 5.4 8S6.3 3.6 8 1.8z"/></svg><span class="u448-cur"></span><svg class="cv" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5l3-3"/></svg></button>
-  </div>
-  <div class="u448-pg" aria-hidden="true"><b class="u448-hi"></b><div class="u448-sk"><i style="width:86%"></i><i style="width:64%"></i></div><div class="u448-cta"><i></i><i></i></div><div class="u448-img"><i></i><i></i></div></div>
-  <div class="u448-pop">
-    <div class="u448-sb"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="6" cy="6" r="4.2"/><path d="M9.2 9.2 12.5 12.5"/></svg><input class="u448-q" type="text" role="combobox" aria-autocomplete="list" aria-expanded="true" placeholder="언어 검색" aria-label="언어 검색" autocomplete="off" spellcheck="false"><small aria-hidden="true"></small></div>
-    <ul class="u448-ls" role="listbox" aria-label="언어"></ul>
-    <p class="u448-empty" hidden>찾는 언어가 없어요</p>
+  <div class="u448-w">
+    <button type="button" class="u448-b" aria-haspopup="listbox" aria-expanded="false">
+      <span class="u448-g" aria-hidden="true"><svg viewBox="0 0 22 22"><defs><clipPath class="cp"><circle cx="11" cy="11" r="8.6"/></clipPath></defs><circle cx="11" cy="11" r="8.6"/><g class="clip"><g class="mer"><path d="M-13 2.4c-4.2 2.6-4.2 14.6 0 17.2M-13 2.4c4.2 2.6 4.2 14.6 0 17.2M-5 2.4c-4.2 2.6-4.2 14.6 0 17.2M-5 2.4c4.2 2.6 4.2 14.6 0 17.2M3 2.4c-4.2 2.6-4.2 14.6 0 17.2M3 2.4c4.2 2.6 4.2 14.6 0 17.2M11 2.4c-4.2 2.6-4.2 14.6 0 17.2M11 2.4c4.2 2.6 4.2 14.6 0 17.2M19 2.4c-4.2 2.6-4.2 14.6 0 17.2M19 2.4c4.2 2.6 4.2 14.6 0 17.2M27 2.4c-4.2 2.6-4.2 14.6 0 17.2M27 2.4c4.2 2.6 4.2 14.6 0 17.2"/></g><path d="M2.6 8.2h16.8M2.6 13.8h16.8"/></g></svg></span>
+      <span class="u448-lb"><span lang="ko">한국어</span></span>
+      <svg class="u448-cv" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.6 6 7.6l3-3"/></svg>
+    </button>
+    <ul class="u448-p" role="listbox" aria-label="언어" tabindex="-1">
+      <li class="u448-o" role="option" lang="ko" data-code="KO" style="--i:0"><span>한국어</span><em>KO</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="en" data-code="EN" style="--i:1"><span>English</span><em>EN</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="ja" data-code="JA" style="--i:2"><span>日本語</span><em>JA</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="zh-Hans" data-code="ZH" style="--i:3"><span>简体中文</span><em>ZH</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="es" data-code="ES" style="--i:4"><span>Español</span><em>ES</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+    </ul>
   </div>
   <p class="u448-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var T = {
-    changed: function (n) { return '언어를 바꿨어요: ' + n; },
-    count: function (n) { return n + '개 언어'; }
-  };
-  // [코드, 자기 언어 이름, 지역(자기 언어), 영어 이름, 헤더 메뉴, 인사말]
-  var L = [
-    ['ko', '한국어', '대한민국', 'Korean', ['제품', '요금', '블로그'], '안녕하세요'],
-    ['en', 'English', 'United States', 'English US', ['Product', 'Pricing', 'Blog'], 'Hello'],
-    ['en-GB', 'English', 'United Kingdom', 'English UK British', ['Product', 'Pricing', 'Blog'], 'Hello'],
-    ['ja', '日本語', '日本', 'Japanese', ['製品', '料金', 'ブログ'], 'こんにちは'],
-    ['zh', '简体中文', '中国大陆', 'Chinese Simplified', ['产品', '价格', '博客'], '你好'],
-    ['zh-TW', '繁體中文', '台灣', 'Chinese Traditional Taiwan', ['產品', '價格', '部落格'], '你好'],
-    ['es', 'Español', 'España', 'Spanish', ['Producto', 'Precios', 'Blog'], 'Hola'],
-    ['fr', 'Français', 'France', 'French', ['Produit', 'Tarifs', 'Blog'], 'Bonjour'],
-    ['de', 'Deutsch', 'Deutschland', 'German', ['Produkt', 'Preise', 'Blog'], 'Hallo'],
-    ['pt', 'Português', 'Brasil', 'Portuguese Brazil', ['Produto', 'Preços', 'Blog'], 'Olá'],
-    ['vi', 'Tiếng Việt', 'Việt Nam', 'Vietnamese', ['Sản phẩm', 'Bảng giá', 'Blog'], 'Xin chào'],
-    ['th', 'ไทย', 'ประเทศไทย', 'Thai', ['ผลิตภัณฑ์', 'ราคา', 'บล็อก'], 'สวัสดี'],
-    ['id', 'Bahasa Indonesia', 'Indonesia', 'Indonesian', ['Produk', 'Harga', 'Blog'], 'Halo']
-  ];
-  // 한국어 이름으로도 찾을 수 있게 하는 별칭(같은 순서)
-  var KO = ['한국 한국어 코리아', '영어 미국', '영어 영국', '일본어 일본', '중국어 간체 중국', '중국어 번체 대만', '스페인어 스페인', '프랑스어 프랑스', '독일어 독일', '포르투갈어 브라질', '베트남어 베트남', '태국어 태국', '인도네시아어 인도네시아'];
-  var CUR = 'ko';
-  var btn = root.querySelector('.u448-btn'), curEl = root.querySelector('.u448-cur'), pop = root.querySelector('.u448-pop');
-  var q = root.querySelector('.u448-q'), sb = root.querySelector('.u448-sb'), cnt = sb.querySelector('small'), ls = root.querySelector('.u448-ls'), empty = root.querySelector('.u448-empty');
-  var nav = root.querySelector('.u448-nav'), hi = root.querySelector('.u448-hi'), live = root.querySelector('.u448-live');
-  var uid = 'u448' + Math.random().toString(36).slice(2, 8), shown = [], act = 0;
-  ls.id = uid + 'l'; q.setAttribute('aria-controls', ls.id);
-  var norm = function (s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
-  function langOf(code) { for (var i = 0; i < L.length; i++) if (L[i][0] === code) return L[i]; return L[0]; }
-  function page() {
-    var l = langOf(CUR);
-    curEl.textContent = l[1] + (l[0] === 'en-GB' ? ' (UK)' : '');
-    nav.innerHTML = ''; l[4].slice(0, 2).forEach(function (t) { var s = document.createElement('span'); s.textContent = t; nav.appendChild(s); });
-    hi.textContent = l[5]; hi.style.animation = 'none'; void hi.offsetWidth; hi.style.animation = '';
-    root.setAttribute('lang', CUR);
+  var T = { changed: function (n) { return '언어: ' + n; } };
+  var b = root.querySelector('.u448-b'), p = root.querySelector('.u448-p'), lb = root.querySelector('.u448-lb'), g = root.querySelector('.u448-g'), w = root.querySelector('.u448-w'), live = root.querySelector('.u448-live');
+  var os = [].slice.call(root.querySelectorAll('.u448-o')), cur = 0, act = 0;
+  var uid = 'u448' + Math.random().toString(36).slice(2, 7);
+  // 지구본: 경선 무리를 원 모양으로 잘라 두고, 언어가 바뀌면 옆으로 흘려 보냅니다
+  var cp = g.querySelector('.cp'); cp.id = uid + 'c'; g.querySelector('.clip').setAttribute('clip-path', 'url(#' + cp.id + ')');
+  p.id = uid + 'p'; b.setAttribute('aria-controls', p.id);
+  os.forEach(function (o, k) { o.id = uid + 'o' + k; o.setAttribute('aria-selected', String(k === cur)); });
+  // 버튼 글자 칸의 폭을 실제 글자 폭에 맞춰 부드럽게 늘이고 줄입니다
+  function fit() { var s = lb.querySelector('span:not(.is-out)'); if (s) lb.style.width = s.offsetWidth + 'px'; }
+  fit();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  function setAct(k) {
+    act = (k + os.length) % os.length;
+    os.forEach(function (o, n) { o.classList.toggle('is-act', n === act); });
+    p.setAttribute('aria-activedescendant', os[act].id);
   }
-  // 목록: 자기 언어 이름·지역·영어 이름·한국어 별칭으로 찾습니다(악센트 무시). 맞는 부분을 강조합니다
-  function draw() {
-    var k = norm(q.value.trim());
-    shown = L.filter(function (l, i) { return !k || norm([l[1], l[2], l[3], KO[i] || ''].join(' ')).indexOf(k) >= 0; });
-    ls.innerHTML = '';
-    shown.forEach(function (l, i) {
-      var li = document.createElement('li');
-      li.className = 'u448-op'; li.id = uid + 'o' + i; li.setAttribute('role', 'option'); li.setAttribute('lang', l[0]);
-      li.setAttribute('aria-selected', String(l[0] === CUR));
-      li.innerHTML = '<span><b></b><small></small></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg>';
-      var b = li.querySelector('b'), n = norm(l[1]), at = k ? n.indexOf(k) : -1;
-      if (at >= 0 && n.length === l[1].length) { b.appendChild(document.createTextNode(l[1].slice(0, at))); var m = document.createElement('mark'); m.textContent = l[1].slice(at, at + k.length); b.appendChild(m); b.appendChild(document.createTextNode(l[1].slice(at + k.length))); }
-      else b.textContent = l[1];
-      li.querySelector('small').textContent = l[2];
-      li.addEventListener('click', function () { choose(l[0]); });
-      li.addEventListener('pointermove', function () { if (act !== i) setAct(i, false); });
-      ls.appendChild(li);
-    });
-    empty.hidden = shown.length > 0;
-    cnt.textContent = k ? T.count(shown.length) : '';
-    var sel = shown.findIndex(function (l) { return l[0] === CUR; });
-    setAct(k ? 0 : Math.max(0, sel), true);
+  function open() { root.classList.add('is-open'); b.setAttribute('aria-expanded', 'true'); setAct(cur); p.focus({ preventScroll: true }); }
+  function close(back) {
+    root.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false');
+    os.forEach(function (o) { o.classList.remove('is-act'); });
+    if (back) b.focus({ preventScroll: true });
   }
-  function setAct(i, scroll) {
-    act = i;
-    var items = [].slice.call(ls.children);
-    items.forEach(function (x, j) { x.classList.toggle('is-act', j === i); });
-    if (items[i]) { q.setAttribute('aria-activedescendant', items[i].id); if (scroll) { var r = items[i]; if (r.offsetTop < ls.scrollTop || r.offsetTop + r.offsetHeight > ls.scrollTop + ls.clientHeight) ls.scrollTop = r.offsetTop - 4; } }
-    else q.removeAttribute('aria-activedescendant');
+  function pick(k) {
+    close(true);
+    if (k === cur) return;
+    cur = k;
+    os.forEach(function (o, n) { o.setAttribute('aria-selected', String(n === k)); });
+    var name = os[k].querySelector('span').textContent;
+    lb.querySelectorAll('.is-out').forEach(function (s) { s.remove(); });
+    var old = lb.querySelector('span'), s = document.createElement('span');
+    s.textContent = name; s.lang = os[k].lang; s.className = 'is-in';
+    old.classList.add('is-out'); lb.appendChild(s);
+    setTimeout(function () { if (old.isConnected) old.remove(); }, 420);
+    fit();
+    g.classList.remove('is-spin'); void g.offsetWidth; g.classList.add('is-spin');
+    live.textContent = T.changed(name);
   }
-  function open() {
-    q.value = ''; draw();
-    root.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); pop.inert = false;
-    setTimeout(function () { if (root.isConnected) q.focus({ preventScroll: true }); }, 30);
-  }
-  function close(refocus) {
-    root.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); pop.inert = true; sb.classList.remove('is-f');
-    if (refocus) btn.focus({ preventScroll: true });
-  }
-  function choose(code) {
-    var changed = code !== CUR;
-    CUR = code; page(); close(true);
-    if (changed) live.textContent = T.changed(langOf(code)[1]);
-  }
-  btn.addEventListener('click', function () { if (root.classList.contains('is-open')) close(true); else open(); });
-  btn.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); open(); } });
-  q.addEventListener('input', draw);
-  q.addEventListener('keydown', function (e) {
-    var n = shown.length;
-    if (e.key === 'ArrowDown') { e.preventDefault(); if (n) setAct((act + 1) % n, true); }
-    else if (e.key === 'ArrowUp') { e.preventDefault(); if (n) setAct((act - 1 + n) % n, true); }
-    else if (e.key === 'Enter') { e.preventDefault(); if (shown[act]) choose(shown[act][0]); }
+  b.addEventListener('click', function () { if (root.classList.contains('is-open')) close(); else open(); });
+  b.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); } });
+  os.forEach(function (o, k) {
+    o.addEventListener('click', function () { pick(k); });
+    o.addEventListener('pointerenter', function () { if (root.classList.contains('is-open')) setAct(k); });
+  });
+  p.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setAct(act + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setAct(act - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); setAct(0); }
+    else if (e.key === 'End') { e.preventDefault(); setAct(os.length - 1); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(act); }
     else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); }
-    else if (e.key === 'Tab') close(false);
+    else if (e.key === 'Tab') close();
   });
-  root.addEventListener('pointerdown', function (e) {
-    sb.classList.toggle('is-f', sb.contains(e.target));
-    if (root.classList.contains('is-open') && !pop.contains(e.target) && !btn.contains(e.target)) close(false);
-  });
-  pop.inert = true;
-  page();
+  function outside(e) {
+    if (!root.isConnected) { document.removeEventListener('pointerdown', outside, true); return; }
+    if (root.classList.contains('is-open') && !w.contains(e.target)) close();
+  }
+  document.addEventListener('pointerdown', outside, true);
 })();
 </script>

@@ -1,175 +1,111 @@
 <!-- Lucian UX/UI Prompt #410 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#410 -->
 <!--
 Element: Cookie preferences
-ID: 410 · Category: Forms & Input · Tags: cookie, consent, preferences, modal, bottom-sheet, gdpr, privacy
-What it does: A cookie preferences sheet that rises over a web page. Essential (always on), Analytics, Marketing and Functional each have a switch and a one-line description, and tapping a category unfolds its provider, cookie names and retention. Save choices or Accept all lowers the sheet and tells you what you allowed.
-How to use it: Turn on Analytics, tap it to see the details, then press Save choices
-Footprint: fixed size, tall
+ID: 410 · Category: Forms & Input · Tags: cookie, consent, preferences, switch, illustration, gdpr
+What it does: A compact cookie settings sheet. Essential stays on with a little lock, while the Analytics, Marketing and Functional switches stretch their squishy thumbs as you press. Each switch you turn on presses a chocolate chip into the cookie up top, and turning it off pops it back out. Saving makes the cookie hop.
+How to use it: Flip the switches and watch the cookie’s chocolate chips
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#410
 -->
 <style>
-.u410{position:relative;width:340px;height:580px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
-.u410-pg{position:absolute;inset:0;display:flex;flex-direction:column}
-.u410-nav{height:44px;flex:none;display:flex;align-items:center;gap:14px;padding:0 16px;border-bottom:1px solid var(--ux-line)}
-.u410-logo{display:flex;align-items:center;gap:6px;margin-right:auto;font-size:13px;font-weight:700;letter-spacing:-.02em}
-.u410-logo i{width:16px;height:16px;border-radius:5px;background:var(--ux-ink);position:relative}
-.u410-logo i::after{content:"";position:absolute;left:5px;top:4px;width:3px;height:8px;border-left:2px solid var(--ux-surface);border-bottom:2px solid var(--ux-surface)}
-.u410-nav span{font-size:11.5px;color:var(--ux-ink-2)}
-.u410-nav em{height:24px;padding:0 10px;display:flex;align-items:center;border-radius:999px;background:var(--ux-ink);color:var(--ux-surface);font-style:normal;font-size:11px;font-weight:600}
-.u410-hero{padding:26px 16px 0}
-.u410-hero b{display:block;font-size:21px;font-weight:700;letter-spacing:-.035em;line-height:1.25}
-.u410-hero p{margin:6px 0 0;font-size:12px;color:var(--ux-ink-3)}
-.u410-cards{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:20px 16px 16px;align-content:start}
-.u410-cards div{height:120px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);padding:12px;display:grid;gap:7px;align-content:end}
-.u410-cards div.w{grid-column:1/-1;height:150px}
-.u410-cards i{display:block;height:7px;border-radius:4px;background:var(--ux-surface-3)}
-.u410-ft{height:40px;flex:none;display:flex;align-items:center;gap:8px;padding:0 16px;border-top:1px solid var(--ux-line);font-size:10.5px;color:var(--ux-ink-3);white-space:nowrap}
-.u410-ft span:first-child{margin-right:auto}
-.u410-reopen{display:flex;align-items:center;gap:5px;height:26px;margin-right:-8px;padding:0 8px;border:0;border-radius:7px;background:none;font-size:11px;font-weight:600;color:var(--ux-ink-2);transition:background .2s,color .2s}
-.u410-reopen:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
-.u410-reopen svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.u410-scrim{position:absolute;inset:0;background:rgba(15,15,20,.32);background:light-dark(rgba(15,15,20,.32),rgba(0,0,0,.58));opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s}
-.u410.is-open .u410-scrim{opacity:1;visibility:visible;transition-delay:0s}
-.u410-dlg{position:absolute;left:0;right:0;bottom:0;max-height:calc(100% - 40px);display:flex;flex-direction:column;border-radius:20px 20px 0 0;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 -1px 0 var(--ux-line-2),0 -18px 40px -20px var(--ux-shadow-strong);transform:translateY(105%);visibility:hidden;transition:transform .45s cubic-bezier(.4,0,.6,1),visibility 0s .45s}
-.u410.is-open .u410-dlg{transform:none;visibility:visible;transition:transform .55s cubic-bezier(.2,.9,.25,1),visibility 0s}
-.u410-grab{width:36px;height:4px;margin:8px auto 0;border-radius:2px;background:var(--ux-line-2)}
-.u410-hd{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 0 18px}
-.u410-hd b{font-size:16px;font-weight:700;letter-spacing:-.025em}
-.u410-x{width:32px;height:32px;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--ux-ink-3);transition:background .2s,color .2s}
-.u410-x:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
-.u410-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
-.u410-intro{margin:2px 18px 10px;font-size:11.5px;line-height:1.5;color:var(--ux-ink-3)}
-.u410-ls{flex:1;min-height:0;overflow:auto;margin:0;padding:0 18px;list-style:none;scrollbar-width:none}
-.u410-ls::-webkit-scrollbar{display:none}
-.u410-ls li{border-top:1px solid var(--ux-line)}
-.u410-row{display:flex;align-items:center;gap:8px;padding:6px 0}
-.u410-tg{flex:1;min-width:0;display:flex;align-items:flex-start;gap:8px;padding:6px 6px 6px 2px;margin-left:-2px;border:0;border-radius:8px;background:none;text-align:left;color:var(--ux-ink);transition:background .2s}
-.u410-tg:hover{background:var(--ux-surface-3)}
-.u410 .u410-tg:focus-visible{outline-offset:0}
-.u410-tg>svg{flex:none;width:12px;height:12px;margin-top:3px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-ease)}
-.u410-tg[aria-expanded="true"]>svg{transform:rotate(90deg)}
-.u410-tg span{min-width:0}
-.u410-tg b{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
-.u410-tg b em{height:17px;padding:0 6px;display:inline-flex;align-items:center;border-radius:5px;background:var(--ux-surface-3);font-style:normal;font-size:10px;font-weight:600;color:var(--ux-ink-2)}
-.u410-tg small{display:block;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3)}
-.u410-sw{position:relative;flex:none;width:34px;height:20px;border:0;border-radius:10px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:background .2s,box-shadow .2s}
-.u410-sw::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#FFFFFF;box-shadow:0 1px 2px rgba(0,0,0,.28);transition:transform .3s var(--ux-spring)}
-.u410-sw[aria-checked="true"]{background:var(--ux-accent);box-shadow:none}
-.u410-sw[aria-checked="true"]::after{transform:translateX(14px)}
-.u410-sw:disabled{opacity:.45;cursor:not-allowed}
-.u410 .u410-sw:focus-visible{outline-offset:2px}
-.u410-det{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ux-ease)}
-.u410-det>div{min-height:0;overflow:hidden}
-.u410-det.is-on{grid-template-rows:1fr}
-.u410-det dl{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;margin:0 0 12px 20px;padding:10px 12px;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:11px}
-.u410-det dt{color:var(--ux-ink-3)}
-.u410-det dd{margin:0;color:var(--ux-ink);font-weight:500}
-.u410-det dd code{font:500 10.5px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0}
-.u410-acts{display:flex;gap:8px;padding:12px 18px 18px;border-top:1px solid var(--ux-line)}
-.u410-acts button{flex:1;height:40px;border:0;border-radius:10px;font-size:13px;font-weight:600;transition:background .2s,opacity .2s,transform .2s var(--ux-ease)}
-.u410-acts button:active{transform:scale(.98)}
-.u410 .u410-acts button:focus-visible{outline-offset:2px}
-.u410-save{background:transparent;color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
-.u410-save:hover{background:var(--ux-surface-3)}
-.u410-all{background:var(--ux-ink);color:var(--ux-surface)}
-.u410-all:hover{opacity:.88}
-.u410-toast{position:absolute;left:50%;bottom:54px;display:flex;align-items:center;gap:9px;max-width:300px;padding:9px 14px 9px 10px;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);box-shadow:0 12px 28px -12px var(--ux-shadow-strong);white-space:nowrap;opacity:0;transform:translate(-50%,12px) scale(.96);pointer-events:none;transition:opacity .25s,transform .45s var(--ux-spring)}
-.u410-toast.is-on{opacity:1;transform:translate(-50%,0)}
-.u410-toast svg{flex:none;width:18px;height:18px}
-.u410-toast svg circle{fill:var(--ux-mint)}
-.u410-toast svg path{fill:none;stroke:var(--ux-ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.u410-toast span{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.u410-toast b{display:block;font-size:12px;font-weight:600}
-.u410-toast small{display:block;margin-top:1px;font-size:11px;opacity:.7}
+.u410{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u410-s{width:280px;padding:14px;border-radius:22px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 46px -26px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow)}
+.u410-hd{display:flex;align-items:center;gap:10px;height:52px;padding:0 4px 4px}
+.u410-hd b{font-size:15px;font-weight:650;letter-spacing:-.02em}
+.u410-ck{width:52px;height:52px;flex:none;overflow:visible;--cs:rgba(150,80,20,.28);--cs:light-dark(rgba(150,80,20,.28),rgba(0,0,0,.55));filter:drop-shadow(0 4px 5px var(--cs))}
+.u410-ck.is-hop{animation:u410-hop .6s var(--ux-spring)}
+.u410-ck.is-tap{animation:u410-tap .45s var(--ux-spring)}
+@keyframes u410-hop{30%{transform:translateY(-9px) rotate(-12deg) scale(1.06)}60%{transform:translateY(1px) scale(1.04,.94)}}
+@keyframes u410-tap{40%{transform:scale(1.08) rotate(6deg)}}
+.u410-ck .cp{transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-40deg);transition:transform .45s var(--ux-spring)}
+.u410-ck .cg.is-on .cp{transform:none}
+.u410-ck .cg.is-on .cp:nth-child(2){transition-delay:.07s}
+.u410-r{position:relative;display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 6px 0 8px;border-radius:11px;font-size:13.5px;font-weight:500;cursor:pointer;transition:background .2s}
+.u410-r:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u410-r.is-lock{cursor:default}
+.u410-r.is-lock:hover{background:none}
+.u410-r input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.u410-tr{position:relative;width:40px;height:24px;flex:none;border-radius:12px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background .3s,box-shadow .3s}
+.u410-tr b{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:9px;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25);display:grid;place-items:center;transition:transform .45s var(--ux-spring),width .45s var(--ux-spring)}
+.u410-r input:checked+.u410-tr{background:var(--ux-accent);box-shadow:none}
+.u410-r input:checked+.u410-tr b{transform:translateX(16px)}
+.u410-r:active input:not(:disabled)+.u410-tr b{width:24px}
+.u410-r:active input:not(:disabled):checked+.u410-tr b{transform:translateX(10px)}
+.u410-r input:focus-visible+.u410-tr{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u410-r.is-lock .u410-tr{background:color-mix(in srgb,var(--ux-accent) 45%,var(--ux-surface-3))}
+.u410-tr svg{width:10px;height:10px;fill:none;stroke:#6B6880;stroke-width:1.6;stroke-linecap:round}
+.u410-r.is-nope .u410-tr b{animation:u410-nope .4s var(--ux-ease)}
+@keyframes u410-nope{25%{transform:translateX(13px) rotate(-14deg)}55%{transform:translateX(18px) rotate(10deg)}80%{transform:translateX(15px)}}
+.u410-go{position:relative;display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;width:100%;height:42px;margin-top:10px;border:0;border-radius:13px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:600;overflow:clip;transition:background .35s,color .35s,transform .4s var(--ux-spring)}
+.u410-go:hover{transform:translateY(-1px)}
+.u410-go:active{transform:scale(.97,.93);transition-duration:.35s,.35s,.1s}
+.u410 .u410-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u410-go>span{grid-area:1/1;display:flex;align-items:center;gap:6px;transition:opacity .2s,transform .4s var(--ux-spring),filter .2s}
+.u410-go>span:last-child{opacity:0;transform:translateY(9px);filter:blur(2px)}
+.u410-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u410-go.is-ok{background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12)}
+.u410-go.is-ok>span:first-child{opacity:0;transform:translateY(-9px);filter:blur(2px)}
+.u410-go.is-ok>span:last-child{opacity:1;transform:none;filter:none}
+.u410-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 </style>
 <div class="ux u410">
-  <div class="u410-pg">
-    <div class="u410-nav" aria-hidden="true"><span class="u410-logo"><i></i>lucian</span><span>Product</span><span>Pricing</span><em>Get started</em></div>
-    <div class="u410-hero" aria-hidden="true"><b>All your team’s work in one place</b><p>Docs, schedules and chat, finally together.</p></div>
-    <div class="u410-cards" aria-hidden="true"><div class="w"><i style="width:40%;height:9px"></i><i style="width:76%"></i></div><div><i style="width:60%"></i><i></i></div><div><i style="width:50%"></i><i></i></div></div>
-    <div class="u410-ft"><span>© 2026 Lucian</span><span>Privacy</span><button type="button" class="u410-reopen" aria-haspopup="dialog"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M12.2 7.4A5.3 5.3 0 1 1 6.6 1.8a2 2 0 0 0 2.5 2.5 2 2 0 0 0 3.1 3.1z"/><circle cx="5" cy="6" r=".6"/><circle cx="8.2" cy="9.2" r=".6"/><circle cx="4.8" cy="9.4" r=".6"/></svg>Cookie settings</button></div>
+  <div class="u410-s">
+    <div class="u410-hd"><svg class="u410-ck" viewBox="0 0 64 64" aria-hidden="true"></svg><b>Cookie settings</b></div>
+    <label class="u410-r is-lock" data-k="0"><span>Essential</span><input type="checkbox" role="switch" checked disabled aria-label="Essential cookies, always on"><i class="u410-tr" aria-hidden="true"><b style="transform:translateX(16px)"><svg viewBox="0 0 10 10"><rect x="2" y="4.4" width="6" height="4.4" rx="1" fill="#6B6880" stroke="none"/><path d="M3.4 4.6V3.4a1.6 1.6 0 0 1 3.2 0v1.2"/></svg></b></i></label>
+    <label class="u410-r" data-k="1"><span>Analytics</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <label class="u410-r" data-k="2"><span>Marketing</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <label class="u410-r" data-k="3"><span>Functional</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <button type="button" class="u410-go"><span>Save</span><span aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg>Saved</span></button>
   </div>
-  <div class="u410-scrim"></div>
-  <div class="u410-dlg" role="dialog" aria-modal="true">
-    <div class="u410-grab" aria-hidden="true"></div>
-    <div class="u410-hd"><b>Cookie settings</b><button type="button" class="u410-x" aria-label="Close"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8"/></svg></button></div>
-    <p class="u410-intro">Turn cookies on or off by purpose. Essential cookies keep the site working, so they stay on.</p>
-    <ul class="u410-ls">
-      <li><div class="u410-row"><button type="button" class="u410-tg" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg><span><b data-n="Essential">Essential<em>Always on</em></b><small>Sign-in, security and core features</small></span></button><button type="button" class="u410-sw" role="switch" aria-checked="true" aria-label="Essential cookies" disabled></button></div>
-        <div class="u410-det"><div><dl><dt>Provider</dt><dd>This site</dd><dt>Cookies</dt><dd><code>session_id, csrf_token</code></dd><dt>Kept</dt><dd>Until you close the browser</dd></dl></div></div></li>
-      <li><div class="u410-row"><button type="button" class="u410-tg" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg><span><b data-n="Analytics">Analytics</b><small>Anonymous page statistics</small></span></button><button type="button" class="u410-sw" role="switch" aria-checked="false" aria-label="Analytics cookies"></button></div>
-        <div class="u410-det"><div><dl><dt>Provider</dt><dd>Google Analytics</dd><dt>Cookies</dt><dd><code>_ga, _gid</code></dd><dt>Kept</dt><dd>Up to 2 years</dd></dl></div></div></li>
-      <li><div class="u410-row"><button type="button" class="u410-tg" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg><span><b data-n="Marketing">Marketing</b><small>Relevant ads and measurement</small></span></button><button type="button" class="u410-sw" role="switch" aria-checked="false" aria-label="Marketing cookies"></button></div>
-        <div class="u410-det"><div><dl><dt>Provider</dt><dd>Meta, Google Ads</dd><dt>Cookies</dt><dd><code>_fbp, _gcl_au</code></dd><dt>Kept</dt><dd>90 days</dd></dl></div></div></li>
-      <li><div class="u410-row"><button type="button" class="u410-tg" aria-expanded="false"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M4.5 2.5 8 6l-3.5 3.5"/></svg><span><b data-n="Functional">Functional</b><small>Remembers language and region</small></span></button><button type="button" class="u410-sw" role="switch" aria-checked="false" aria-label="Functional cookies"></button></div>
-        <div class="u410-det"><div><dl><dt>Provider</dt><dd>This site</dd><dt>Cookies</dt><dd><code>lang, region</code></dd><dt>Kept</dt><dd>1 year</dd></dl></div></div></li>
-    </ul>
-    <div class="u410-acts"><button type="button" class="u410-save">Save choices</button><button type="button" class="u410-all">Accept all</button></div>
-  </div>
-  <div class="u410-toast" role="status"><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.3l2.5 2.4 5-5.2"/></svg><span><b></b><small></small></span></div>
+  <p class="u410-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { saved: 'Cookie settings saved', only: 'Essential cookies only', allow: ' allowed' };
-  var dlg = root.querySelector('.u410-dlg'), pg = root.querySelector('.u410-pg'), reopen = root.querySelector('.u410-reopen');
-  var toast = root.querySelector('.u410-toast'), tb = toast.querySelector('b'), ts = toast.querySelector('small');
-  var sws = [].slice.call(root.querySelectorAll('.u410-sw')), tgs = [].slice.call(root.querySelectorAll('.u410-tg')), dets = root.querySelectorAll('.u410-det');
-  var names = [].slice.call(root.querySelectorAll('.u410-tg b')).map(function (b) { return b.getAttribute('data-n'); });
-  var uid = 'u410' + Math.random().toString(36).slice(2, 8), saved = sws.map(function (s) { return s.getAttribute('aria-checked') === 'true'; }), gen = 0;
-  dlg.setAttribute('aria-labelledby', uid + 't');
-  root.querySelector('.u410-hd b').id = uid + 't';
-  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
-  tgs.forEach(function (t, k) {
-    dets[k].id = uid + 'd' + k; t.setAttribute('aria-controls', dets[k].id);
-    t.addEventListener('click', function () {
-      var on = t.getAttribute('aria-expanded') !== 'true';
-      t.setAttribute('aria-expanded', String(on));
-      dets[k].classList.toggle('is-on', on);
+  var T = { saved: 'Cookie settings saved' };
+  var ck = root.querySelector('.u410-ck'), go = root.querySelector('.u410-go'), live = root.querySelector('.u410-live');
+  var rows = [].slice.call(root.querySelectorAll('.u410-r')), uid = 'u410' + Math.random().toString(36).slice(2, 7), gen = 0;
+  var DOUGH = 'M32 5C40 4.6 47.5 8 52.6 13.6C57.8 19.3 60 26 59.4 33.2C58.8 41 55.6 47.6 49.6 52.8C44 57.6 37.6 59.6 30.6 59.2C23 58.8 16.4 55.6 11.6 49.8C6.8 44 4.8 37.4 5.2 30.4C5.6 23.4 8.6 16.8 13.8 11.8C19 6.9 25.2 5.3 32 5Z';
+  var CHIPS = [
+    ['M19.5 19.8c1.6-1.4 4.4-1.2 5.6.5 1.1 1.6.6 4-1 5.1-1.7 1.1-4.3.8-5.3-.9-.9-1.5-.6-3.4.7-4.7z', 'M24.2 37.9c1.4-1.5 4-1.6 5.3-.2 1.3 1.4 1 3.8-.6 4.8-1.6 1-4 .6-4.9-.9-.7-1.2-.6-2.7.2-3.7z'],
+    ['M37.6 15.4c1.2-.9 3.2-.8 4.1.4 1 1.3.5 3.2-.9 3.9-1.3.7-3.1.4-3.8-.8-.6-1.1-.4-2.6.6-3.5z', 'M48.6 23.6c1-.8 2.6-.7 3.3.4.7 1 .2 2.5-.9 3-1 .5-2.4.1-2.9-.9-.4-.8-.2-1.9.5-2.5z'],
+    ['M41.4 33.6c1.9-1.3 4.7-.7 5.5 1.3.8 1.9-.3 4.1-2.3 4.6-1.8.5-3.9-.4-4.4-2.1-.4-1.4.1-2.9 1.2-3.8z', 'M33 48.4c1.2-.9 3.1-.7 3.9.5.7 1.2-.1 2.9-1.4 3.3-1.3.4-2.9-.2-3.2-1.4-.2-.9.1-1.8.7-2.4z'],
+    ['M11.8 29.6c1.1-1 3-1 3.9.1.9 1.1.6 3-.7 3.7-1.2.7-3 .3-3.6-.8-.5-.9-.3-2.2.4-3z', 'M30.6 26c1-.8 2.6-.7 3.3.3.7 1 .2 2.5-.9 3-1 .5-2.5.1-3-.9-.3-.8-.1-1.8.6-2.4z']
+  ];
+  var specks = [[16, 18], [27, 13], [46, 22], [21, 47], [44, 46], [37, 39], [14, 40], [50, 40], [28, 32], [39, 9]].map(function (p, k) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (k % 3 ? .55 : .8) + '" fill="#A8642C" opacity=".45"/>'; }).join('');
+  var chips = CHIPS.map(function (g, k) {
+    return '<g class="cg' + (k ? '' : ' is-on') + '">' + g.map(function (d) {
+      var m = d.match(/^M([\d.]+) ([\d.]+)/);
+      return '<g class="cp"><path d="' + d + '" fill="#4A2817"/><ellipse cx="' + (+m[1] + 1.6) + '" cy="' + (+m[2] - .1) + '" rx="1.2" ry=".7" fill="#8A5634" opacity=".75"/></g>';
+    }).join('') + '</g>';
+  }).join('');
+  ck.innerHTML = '<defs><radialGradient id="' + uid + 'd" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#F5CF8E"/><stop offset=".55" stop-color="#E2A95E"/><stop offset="1" stop-color="#BC7A3A"/></radialGradient>' +
+    '<radialGradient id="' + uid + 'h" cx="34%" cy="28%" r="40%"><stop offset="0" stop-color="#FFF6E0" stop-opacity=".55"/><stop offset="1" stop-color="#FFF6E0" stop-opacity="0"/></radialGradient>' +
+    '<clipPath id="' + uid + 'c"><path d="' + DOUGH + '"/></clipPath></defs>' +
+    '<path d="' + DOUGH + '" fill="url(#' + uid + 'd)"/><g clip-path="url(#' + uid + 'c)"><path d="' + DOUGH + '" fill="none" stroke="#9E5E26" stroke-opacity=".35" stroke-width="3"/>' +
+    '<path d="M16.5 27.6l2-.9 1.6.5 1.9-.8M35.6 21.4l1.5 1.2.4 1.7M28.4 46.4l1.8-.5 1.3.8 1.7-.4M47.6 30.4l-.5 1.8.6 1.6" fill="none" stroke="#A9682F" stroke-opacity=".45" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>' +
+    specks + '<ellipse cx="25" cy="20" rx="17" ry="13" fill="url(#' + uid + 'h)"/>' + chips + '</g>';
+  var groups = [].slice.call(ck.querySelectorAll('.cg'));
+  function bump(cls) { ck.classList.remove('is-hop', 'is-tap'); void ck.getBoundingClientRect(); ck.classList.add(cls); }
+  rows.forEach(function (r, k) {
+    var inp = r.querySelector('input');
+    if (inp.disabled) {
+      r.addEventListener('click', function () { r.classList.remove('is-nope'); void r.offsetWidth; r.classList.add('is-nope'); });
+      return;
+    }
+    inp.addEventListener('change', function () {
+      groups[k].classList.toggle('is-on', inp.checked);
+      if (inp.checked) bump('is-tap');
     });
   });
-  sws.forEach(function (s) { s.addEventListener('click', function () { s.setAttribute('aria-checked', String(s.getAttribute('aria-checked') !== 'true')); }); });
-  function open(first) {
-    gen += 1;
-    sws.forEach(function (s, k) { s.setAttribute('aria-checked', String(saved[k])); });
-    tgs.forEach(function (t, k) { t.setAttribute('aria-expanded', 'false'); dets[k].classList.remove('is-on'); });
-    root.querySelector('.u410-ls').scrollTop = 0;
-    toast.classList.remove('is-on');
-    root.classList.add('is-open');
-    dlg.inert = false; pg.inert = true;
-    if (!first) later(function () { sws[1].focus({ preventScroll: true }); }, rm ? 0 : 350);
-  }
-  function close(save) {
-    if (save) {
-      saved = sws.map(function (s) { return s.getAttribute('aria-checked') === 'true'; });
-      var on = names.filter(function (n, k) { return k > 0 && saved[k]; });
-      tb.textContent = T.saved;
-      ts.textContent = on.length ? on.join(' · ') + T.allow : T.only;
-    }
-    root.classList.remove('is-open');
-    dlg.inert = true; pg.inert = false;
-    reopen.focus({ preventScroll: true });
-    if (save) {
-      later(function () { toast.classList.add('is-on'); }, rm ? 0 : 300);
-      later(function () { toast.classList.remove('is-on'); }, rm ? 2400 : 3200);
-    }
-  }
-  root.querySelector('.u410-save').addEventListener('click', function () { close(true); });
-  root.querySelector('.u410-all').addEventListener('click', function () { sws.forEach(function (s) { s.setAttribute('aria-checked', 'true'); }); close(true); });
-  root.querySelector('.u410-x').addEventListener('click', function () { close(false); });
-  root.querySelector('.u410-scrim').addEventListener('click', function () { close(false); });
-  reopen.addEventListener('click', function () { open(false); });
-  dlg.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(false); return; }
-    if (e.key !== 'Tab') return;
-    var f = [].slice.call(dlg.querySelectorAll('button:not(:disabled)'));
-    var first = f[0], last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  ck.addEventListener('animationend', function () { ck.classList.remove('is-hop', 'is-tap'); });
+  go.addEventListener('click', function () {
+    if (go.classList.contains('is-ok')) return;
+    gen += 1; var g = gen;
+    go.classList.add('is-ok'); bump('is-hop'); live.textContent = T.saved;
+    setTimeout(function () { if (root.isConnected && g === gen) go.classList.remove('is-ok'); }, rm ? 1000 : 1700);
   });
-  dlg.inert = true;
-  later(function () { open(true); }, rm ? 0 : 350);
 })();
 </script>

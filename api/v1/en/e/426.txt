@@ -1,133 +1,86 @@
 <!-- Lucian UX/UI Prompt #426 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#426 -->
 <!--
-Element: Stats section
-ID: 426 · Category: Sections & Content · Tags: stats, numbers, count-up, sparkline, metrics, social-proof
-What it does: Four big numbers — teams, uptime, rating and meeting notes — split by hairlines. When the section comes into view the numbers count up from zero while small trend lines draw in. Switch between All time and This year and the numbers count on to their new values as the trend lines reshape smoothly.
-How to use it: Switch between All time and This year at the top right to watch the numbers count again
+Element: Stats
+ID: 426 · Category: Sections & Content · Tags: stats, odometer, count-up, numbers, social-proof
+What it does: A stats card with three big numbers split by hairlines. When it comes into view each digit rolls like an odometer and settles on its number; hover a number and it rolls around once more.
+How to use it: Hover a number to roll it again
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#426
 -->
 <style>
-.u426{position:relative;width:340px;height:340px;padding:20px 16px 14px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
-.u426-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:0 2px}
-.u426-hd p{margin:0;font-size:10.5px;font-weight:750;color:var(--ux-accent)}
-.u426-hd h2{margin:4px 0 0;font-size:18px;font-weight:850;letter-spacing:-.04em}
-.u426-seg{position:relative;display:flex;flex:none;padding:2px;border-radius:9px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u426-th{position:absolute;left:2px;top:2px;bottom:2px;width:var(--tw,40px);border-radius:7px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 3px var(--ux-shadow);transform:translateX(var(--tx,0));transition:transform .4s cubic-bezier(.3,1.3,.5,1),width .4s cubic-bezier(.3,1.3,.5,1)}
-.u426-seg button{position:relative;z-index:1;height:24px;padding:0 10px;border:0;border-radius:7px;background:none;font-size:10.5px;font-weight:650;color:var(--ux-ink-3);white-space:nowrap;transition:color .2s}
-.u426-seg button[aria-checked="true"]{color:var(--ux-ink)}
-.u426-seg button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u426{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u426-cd{display:grid;grid-template-columns:repeat(3,1fr);width:324px;margin:0;padding:22px 6px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong);list-style:none}
+.u426-c{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;cursor:default}
+.u426-c+.u426-c::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:var(--ux-line-2)}
+.u426-n{display:flex;align-items:center;height:30px;font-size:24px;line-height:30px;font-weight:850;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.u426-n i{font-style:normal}
+.u426-n i.st{margin-left:2px;font-size:18px;color:#F5B83D}
 
-.u426-gr{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:16px 0 0;padding:0;list-style:none}
-.u426-c{position:relative;display:flex;flex-direction:column;padding:14px 12px 10px;border-radius:12px;transition:background-color .25s}
-.u426-c:nth-child(odd)::after{content:"";position:absolute;right:0;top:14px;bottom:14px;width:1px;background:var(--ux-line-2)}
-.u426-c:nth-child(-n+2)::before{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--ux-line-2)}
-.u426-c:hover{background:var(--ux-surface-2)}
-.u426-n{display:flex;align-items:baseline;gap:1px;font-size:27px;line-height:1;font-weight:850;letter-spacing:-.045em;font-variant-numeric:tabular-nums;white-space:nowrap}
-.u426-n small{white-space:pre;font-size:14px;font-weight:800;letter-spacing:-.02em;color:var(--ux-ink-2)}
-.u426-n small.st{color:#F5B83D}
-.u426-c p{margin:6px 0 0;font-size:10.5px;line-height:1.35;color:var(--ux-ink-3)}
-.u426-sk{width:100%;height:22px;margin-top:auto;overflow:visible}
-.u426-sk path{fill:none;stroke:var(--ux-accent);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:d .7s var(--ux-ease)}
-.u426-sk path.ar{stroke:none;fill:var(--ux-accent);opacity:0;transition:d .7s var(--ux-ease),opacity .6s}
-.u426.is-in .u426-sk path{stroke-dashoffset:0;transition:stroke-dashoffset 1.3s var(--ux-ease) .2s,d .7s var(--ux-ease)}
-.u426.is-in .u426-sk path.ar{opacity:.1;transition:d .7s var(--ux-ease),opacity .8s .8s}
-.u426-sk circle{fill:var(--ux-surface);stroke:var(--ux-accent);stroke-width:1.6;opacity:0;transition:opacity .3s 1.3s,cx .7s var(--ux-ease),cy .7s var(--ux-ease)}
-.u426.is-in .u426-sk circle{opacity:1}
-.u426-c:hover .u426-sk circle{animation:u426-ping 1s var(--ux-ease) infinite}
-@keyframes u426-ping{0%,100%{stroke-width:1.6}50%{stroke-width:4}}
-.u426-nt{margin:6px 2px 0;font-size:9.5px;color:var(--ux-ink-3);text-align:right}
-@media (prefers-reduced-motion:reduce){.u426-sk path,.u426-sk circle,.u426-th{transition:none!important;animation:none!important}}
+.u426-col{display:block;height:30px;overflow:hidden}
+.u426-col span{display:flex;flex-direction:column;transform:translateY(calc(var(--d,0) * -30px));transition:transform 1.3s cubic-bezier(.25,1.12,.4,1);transition-delay:calc(var(--k,0) * 70ms)}
+.u426-col span b{display:block;height:30px;padding:0 .5px;font-weight:inherit;text-align:center}
+.u426-c small{font-size:11.5px;color:var(--ux-ink-3)}
+@media (prefers-reduced-motion:reduce){.u426-col span{transition:none!important}}
 </style>
-<section class="ux u426">
-  <div class="u426-hd">
-    <div><p>Haru in numbers</p><h2>By the numbers</h2></div>
-    <div class="u426-seg" role="radiogroup" aria-label="Period"><span class="u426-th" aria-hidden="true"></span><button type="button" role="radio" aria-checked="true">All time</button><button type="button" role="radio" aria-checked="false" tabindex="-1">This year</button></div>
-  </div>
-  <ul class="u426-gr"></ul>
-  <p class="u426-nt">As of November 2026</p>
-</section>
+<div class="ux u426">
+  <ul class="u426-cd">
+    <li class="u426-c" data-v="3,200+"><span class="u426-n"></span><small>teams</small></li>
+    <li class="u426-c" data-v="99.99%"><span class="u426-n"></span><small>uptime</small></li>
+    <li class="u426-c" data-v="4.9★"><span class="u426-n"></span><small>avg. rating</small></li>
+  </ul>
+</div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
-  var gr = root.querySelector('.u426-gr'), th = root.querySelector('.u426-th');
-  var seg = Array.prototype.slice.call(root.querySelectorAll('.u426-seg button'));
+  var cells = Array.prototype.slice.call(root.querySelectorAll('.u426-c'));
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var S = [
-    [3200, 1150, 0, 0, '+', '+', ' teams'],
-    [99.99, 99.98, 2, 2, '%', '%', ''],
-    [4.9, 4.8, 1, 1, '', '', '★'],
-    [1.2, 480, 1, 0, 'M', 'K', ' notes']
-  ];
-  var LB = [['Teams using Haru', 'Teams that joined this year'], ['Uptime, last 12 months', 'Uptime this year'], ['Average app rating', 'Rating this year'], ['Meetings summarized by AI', 'Summarized this year']];
-  var SP = [
-    [[.1, .16, .22, .3, .42, .55, .7, .88], [.2, .3, .26, .42, .5, .62, .74, .9]],
-    [[.86, .9, .84, .92, .88, .94, .9, .93], [.9, .86, .92, .88, .93, .9, .94, .92]],
-    [[.6, .66, .7, .68, .76, .8, .84, .88], [.7, .74, .68, .78, .76, .82, .8, .84]],
-    [[.05, .1, .18, .28, .4, .56, .72, .92], [.3, .36, .44, .4, .55, .62, .7, .86]]
-  ];
-  var per = 0, shown = S.map(function () { return 0; }), raf = 0;
-  function fmt(v, d) { var s = v.toFixed(d).split('.'); s[0] = s[0].replace(/\B(?=(\d{3})+(?!\d))/g, ','); return s.join('.'); }
-  function pts(a) { return a.map(function (y, i) { return [2 + i * 128 / (a.length - 1), 22 - y * 20]; }); }
-  function line(a) { return pts(a).map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' '); }
-  var cells = S.map(function (s, i) {
-    var li = document.createElement('li');
-    li.className = 'u426-c';
-    li.innerHTML = '<span class="u426-n"><span class="v">0</span><small></small></span><p></p><svg class="u426-sk" viewBox="0 0 132 24" aria-hidden="true"><path class="ar"/><path pathLength="1"/><circle r="2.2"/></svg>';
-    gr.appendChild(li);
-    return li;
-  });
-  function label() {
-    cells.forEach(function (li, i) {
-      var s = S[i];
-      li.querySelector('small').textContent = s[4 + per] + s[6];
-      li.querySelector('small').classList.toggle('st', s[6] === '★');
-      li.querySelector('p').textContent = LB[i][per];
-      var a = SP[i][per], d = line(a), last = pts(a)[a.length - 1];
-      var paths = li.querySelectorAll('path');
-      paths[1].style.d = 'path("' + d + '")';
-      paths[0].style.d = 'path("' + d + ' L130 24 L2 24 Z")';
-      li.querySelector('circle').style.cx = last[0] + 'px';
-      li.querySelector('circle').style.cy = last[1] + 'px';
-      li.querySelector('.v').setAttribute('aria-hidden', 'true');
-      li.setAttribute('aria-label', fmt(s[per], s[2 + per]) + s[4 + per] + s[6] + ' ' + LB[i][per]);
+  var DIG = '01234567890123456789'.split('').map(function (d) { return '<b>' + d + '</b>'; }).join('');
+  var stats = cells.map(function (li) {
+    var v = li.getAttribute('data-v'), n = li.querySelector('.u426-n'), cols = [], k = 0;
+    li.setAttribute('aria-label', v + ' ' + li.querySelector('small').textContent);
+    n.setAttribute('aria-hidden', 'true');
+    v.split('').forEach(function (ch) {
+      if (/\d/.test(ch)) {
+        var c = document.createElement('span');
+        c.className = 'u426-col';
+        c.innerHTML = '<span>' + DIG + '</span>';
+        c.firstChild.style.setProperty('--k', k++);
+        c.firstChild.setAttribute('data-d', ch);
+        n.appendChild(c); cols.push(c.firstChild);
+      } else {
+        var i = document.createElement('i');
+        i.textContent = ch;
+        if (ch === '★') i.className = 'st';
+        n.appendChild(i);
+      }
     });
+    return cols;
+  });
+  function roll(cols, from) {
+    cols.forEach(function (c) {
+      var d = +c.getAttribute('data-d');
+      c.style.transition = 'none';
+      c.style.setProperty('--d', from === null ? d : from);
+    });
+    void root.offsetWidth;
+    cols.forEach(function (c) { c.style.transition = ''; c.style.setProperty('--d', +c.getAttribute('data-d') + 10); });
   }
-  function count(ms) {
-    cancelAnimationFrame(raf);
-    var from = shown.slice(), to = S.map(function (s) { return s[per]; }), t0 = performance.now();
-    var tick = function (now) {
-      if (!root.isConnected) return;
-      var k = rm ? 1 : Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
-      cells.forEach(function (li, i) {
-        shown[i] = from[i] + (to[i] - from[i]) * e;
-        li.querySelector('.v').textContent = fmt(shown[i], S[i][2 + per]);
-      });
-      if (k < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+  var shown = false;
+  function reveal() {
+    if (shown) return; shown = true;
+    if (rm) { stats.forEach(function (cols) { cols.forEach(function (c) { c.style.setProperty('--d', +c.getAttribute('data-d') + 10); }); }); return; }
+    stats.forEach(function (cols) { roll(cols, 0); });
   }
-  function thumb() { var b = seg[per]; th.style.setProperty('--tw', b.offsetWidth + 'px'); th.style.setProperty('--tx', (b.offsetLeft - 2) + 'px'); }
-  function set(p, focus) {
-    if (p === per) return;
-    per = p;
-    seg.forEach(function (b, i) { b.setAttribute('aria-checked', String(i === p)); b.tabIndex = i === p ? 0 : -1; });
-    thumb(); label(); count(900);
-    if (focus) seg[p].focus({ preventScroll: true });
-  }
-  seg.forEach(function (b, i) {
-    b.addEventListener('click', function () { set(i); });
-    b.addEventListener('keydown', function (e) {
-      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].indexOf(e.key) < 0) return;
-      e.preventDefault(); set(1 - per, true);
+  cells.forEach(function (li, i) {
+    var busy = 0;
+    li.addEventListener('pointerenter', function () {
+      if (!shown || rm || Date.now() - busy < 900) return;
+      busy = Date.now(); roll(stats[i], null);
     });
   });
-  label();
-  th.style.transition = 'none'; thumb(); void th.offsetWidth; th.style.transition = '';
-  function reveal() { if (root.classList.contains('is-in')) return; root.classList.add('is-in'); count(1500); }
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { reveal(); io.disconnect(); } }, { threshold: 0.4 });
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { reveal(); io.disconnect(); } }, { threshold: 0.5 });
     io.observe(root);
   } else reveal();
 })();

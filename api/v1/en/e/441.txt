@@ -1,105 +1,88 @@
 <!-- Lucian UX/UI Prompt #441 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#441 -->
 <!--
 Element: Product card
-ID: 441 · Category: Commerce & Pricing · Tags: product-card, ecommerce, wishlist, swatches, quick-add, stepper, discount, low-stock
-What it does: A shop product card. Pick a color chip and the tumbler in the photo changes color; the heart pops as it joins your wishlist. Rating and review count, discount and original price, and a low-stock badge read at a glance, and Quick add turns into a quantity stepper right where it is.
-How to use it: Try the color chips and the heart, then quick-add and change the quantity
+ID: 441 · Category: Commerce & Pricing · Tags: product-card, ecommerce, wishlist, swatches, add-to-cart, spring
+What it does: A shop product card. Pick a color chip and the tumbler in the photo shifts color with a little bounce; the heart pops as it fills. Press Add and the button turns into a check before coming back.
+How to use it: Try the color chips, the heart and Add
 Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#441
 -->
 <style>
-.u441{position:relative;width:340px;height:360px;border-radius:22px;overflow:hidden;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u441 svg{display:block}
-.u441-img{position:relative;height:178px;margin:10px 10px 0;border-radius:16px;overflow:hidden;background:radial-gradient(120% 90% at 50% 30%,var(--ux-surface),var(--ux-surface-2) 55%,var(--ux-surface-3));display:grid;place-items:center}
-.u441-pr{position:relative;width:96px;height:150px;margin-top:12px;transition:transform .45s var(--ux-spring)}
-.u441-pr.is-bump{transform:scale(.95) translateY(2px)}
-.u441-pr svg{width:96px;height:140px;position:relative;z-index:1}
-.u441-pr .bd{fill:var(--pc,#9DB4A0);transition:fill .4s var(--ux-ease)}
-.u441-pr .bn{fill:var(--pc,#9DB4A0);transition:fill .4s var(--ux-ease)}
-.u441-pr::after{content:"";position:absolute;left:50%;bottom:4px;width:84px;height:14px;margin-left:-42px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.28),transparent);background:radial-gradient(closest-side,light-dark(rgba(0,0,0,.22),rgba(0,0,0,.6)),transparent)}
-.u441-lo{position:absolute;left:10px;top:10px;display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:999px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 2px 6px -2px var(--ux-shadow);font-size:11px;font-weight:650;color:var(--ux-warn)}
-.u441-lo i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:u441-pulse 1.6s ease-in-out infinite}
-@keyframes u441-pulse{50%{opacity:.35}}
-.u441-wl{position:absolute;right:10px;top:10px;width:34px;height:34px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 2px 8px -2px var(--ux-shadow);color:var(--ux-ink-2);transition:transform .2s var(--ux-spring),color .2s}
-.u441-wl:hover{color:var(--ux-ink)}
-.u441-wl:active{transform:scale(.9)}
-.u441-wl svg{width:17px;height:17px;fill:transparent;stroke:currentColor;stroke-width:2;stroke-linejoin:round;transition:fill .2s,stroke .2s}
+.u441{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u441-c{width:260px;padding:8px 8px 12px;border-radius:22px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -24px var(--ux-shadow-strong)}
+.u441-img{position:relative;height:150px;border-radius:16px;overflow:hidden;display:grid;place-items:center;background:radial-gradient(120% 90% at 50% 25%,var(--ux-surface),var(--ux-surface-2) 55%,var(--ux-surface-3));background:radial-gradient(120% 90% at 50% 25%,light-dark(#FFFFFF,#2A2C38),light-dark(#F3F1EC,#20212B) 55%,light-dark(#E7E3DB,#191A22))}
+.u441-pr{position:relative;width:76px;height:124px;margin-top:10px}
+.u441-pr.is-bump{animation:u441-bump .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes u441-bump{30%{transform:scale(.94,1.04) translateY(-3px)}60%{transform:scale(1.03,.97)}}
+.u441-pr svg{position:relative;z-index:1;width:76px;height:112px}
+.u441-pr .bd,.u441-pr .bn{fill:var(--pc,#9DB4A0);transition:fill .45s var(--ux-ease)}
+.u441-pr::after{content:"";position:absolute;left:50%;bottom:6px;width:70px;height:12px;margin-left:-35px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.25),transparent);background:radial-gradient(closest-side,light-dark(rgba(0,0,0,.2),rgba(0,0,0,.6)),transparent)}
+.u441-wl{position:absolute;right:8px;top:8px;width:34px;height:34px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-3));box-shadow:0 2px 8px -2px var(--ux-shadow);color:var(--ux-ink-2);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),color .2s}
+.u441-wl:active{--k:.86;transition:transform .1s var(--ux-ease)}
+.u441-wl svg{width:17px;height:17px;fill:transparent;stroke:currentColor;stroke-width:2;stroke-linejoin:round;transition:fill .2s}
 .u441-wl[aria-pressed="true"]{color:var(--ux-danger)}
-.u441-wl[aria-pressed="true"] svg{fill:currentColor;animation:u441-pop .45s var(--ux-spring)}
-@keyframes u441-pop{0%{transform:scale(.6)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
-.u441-wl b{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--ux-danger);opacity:0;pointer-events:none}
-.u441-wl.is-burst b{animation:u441-burst .55s var(--ux-ease) forwards}
-@keyframes u441-burst{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-22px) scale(.3)}}
-.u441-bd{padding:12px 16px 14px}
-.u441-br{font-size:10.5px;font-weight:700;letter-spacing:.08em;color:var(--ux-ink-3)}
-.u441-nm{margin:3px 0 0;font-size:14.5px;font-weight:650;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u441-wl[aria-pressed="true"] svg{fill:currentColor;animation:u441-heart .55s cubic-bezier(.3,1.8,.5,1)}
+@keyframes u441-heart{0%{transform:scale(.4)}60%{transform:scale(1.3)}100%{transform:none}}
+.u441-wl b{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--c,var(--ux-danger));opacity:0;pointer-events:none}
+.u441-wl.is-burst b{animation:u441-burst .6s cubic-bezier(.2,.8,.3,1) forwards}
+@keyframes u441-burst{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-24px) scale(.3)}}
+.u441-wl i{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px var(--ux-danger);opacity:0;pointer-events:none}
+.u441-wl.is-burst i{animation:u441-ring .5s var(--ux-ease)}
+@keyframes u441-ring{0%{opacity:.8;transform:scale(.6)}100%{opacity:0;transform:scale(1.5)}}
+.u441-bd{padding:12px 6px 0}
+.u441-nm{margin:0;font-size:15px;font-weight:650;letter-spacing:-.02em}
 .u441-nm span{font-weight:500;color:var(--ux-ink-3)}
-.u441-rt{display:flex;align-items:center;gap:4px;margin-top:5px;font-size:12px;color:var(--ux-ink-3)}
-.u441-rt svg{width:13px;height:13px;fill:#F5A524;fill:light-dark(#F5A524,#FFC24B)}
-.u441-rt b{font-weight:650;color:var(--ux-ink)}
-.u441-rt em{font-style:normal;font-weight:600;color:var(--ux-mint)}
-.u441-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.u441-pc{display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
-.u441-pc b{font-size:17px;font-weight:750;letter-spacing:-.02em}
-.u441-pc b.dc{color:var(--ux-danger)}
+.u441-pc{display:flex;align-items:baseline;gap:6px;margin-top:3px;font-variant-numeric:tabular-nums}
+.u441-pc b{font-size:16px;font-weight:750;letter-spacing:-.02em}
+.u441-pc .dc{color:var(--ux-danger)}
 .u441-pc s{font-size:12px;color:var(--ux-ink-3)}
-.u441-sws{display:flex;gap:6px}
-.u441-sw{position:relative;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);transition:transform .2s var(--ux-spring)}
-.u441-sw::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1.5px transparent;transition:box-shadow .2s}
-.u441-sw:hover{transform:scale(1.1)}
-.u441-sw[aria-checked="true"]::after{box-shadow:0 0 0 1.5px var(--ux-ink)}
-.u441 .u441-sw:focus-visible{outline:2px solid var(--ux-accent);outline-offset:4px}
-.u441-act{position:relative;height:40px;margin-top:12px}
-.u441-add,.u441-stp{position:absolute;inset:0;transition:opacity .2s var(--ux-ease),transform .3s var(--ux-spring)}
-.u441-add{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:650}
-.u441-add:hover{opacity:.9}
-.u441-add:active{transform:scale(.98)}
-.u441-add svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.u441-stp{display:flex;align-items:center;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1.5px var(--ux-ink);opacity:0;transform:scale(.96);pointer-events:none}
-.u441.is-in .u441-add{opacity:0;transform:scale(.96);pointer-events:none}
-.u441.is-in .u441-stp{opacity:1;transform:none;pointer-events:auto}
-.u441-stp button{width:44px;height:100%;padding:0;border:0;background:none;display:grid;place-items:center;color:var(--ux-ink);border-radius:11px;transition:background-color .15s,opacity .15s}
-.u441-stp button:hover:not(:disabled){background:var(--ux-surface-2)}
-.u441-stp button:disabled{opacity:.3;cursor:not-allowed}
-.u441-stp button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
-.u441-ct{flex:1;text-align:center;font-size:13px;font-weight:650;font-variant-numeric:tabular-nums}
-.u441-ct.is-bump{animation:u441-bump .3s var(--ux-spring)}
-@keyframes u441-bump{40%{transform:translateY(-3px)}}
-.u441-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.u441-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.u441-sws{display:flex;gap:7px}
+.u441-sw{position:relative;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(0,0,0,.14);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u441-sw::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1.75px var(--ux-ink);opacity:0;transform:scale(.7);transition:opacity .15s,transform .45s cubic-bezier(.3,1.7,.5,1)}
+.u441-sw:hover{--k:1.12}
+.u441-sw[aria-checked="true"]::after{opacity:1;transform:none}
+.u441 .u441-sw:focus-visible{outline:2px solid var(--ux-accent);outline-offset:5px}
+.u441-add{position:relative;display:grid;height:36px;min-width:84px;padding:0 16px;border:0;border-radius:999px;background:var(--ux-ink);color:var(--ux-surface);font-size:13.5px;font-weight:650;transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),background-color .3s var(--ux-ease)}
+.u441-add:active{--k:.92;transition:transform .1s var(--ux-ease)}
+.u441-add>span{grid-area:1/1;display:inline-flex;align-items:center;justify-content:center;gap:5px;transition:opacity .2s var(--ux-ease),transform .45s cubic-bezier(.3,1.6,.5,1)}
+.u441-add>span+span{opacity:0;transform:translateY(10px)}
+.u441-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.u441-add.is-ok{background:var(--ux-mint)}
+.u441-add.is-ok>span:first-child{opacity:0;transform:translateY(-10px)}
+.u441-add.is-ok>span+span{opacity:1;transform:none}
+.u441 .u441-add:focus-visible,.u441 .u441-wl:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u441-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 </style>
 <div class="ux u441">
-  <div class="u441-img">
-    <div class="u441-pr" aria-hidden="true"></div>
-    <span class="u441-lo"><i></i>Only 3 left</span>
-    <button type="button" class="u441-wl" aria-pressed="false" aria-label="Add to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/></svg><b style="--a:0deg"></b><b style="--a:60deg"></b><b style="--a:120deg"></b><b style="--a:180deg"></b><b style="--a:240deg"></b><b style="--a:300deg"></b></button>
-  </div>
-  <div class="u441-bd">
-    <div class="u441-br">LUCIAN HOME</div>
-    <p class="u441-nm">Stainless tumbler 500 ml <span></span></p>
-    <div class="u441-rt" role="img" aria-label="Rated 4.8 out of 5, 1,284 reviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><b>4.8</b>(1,284) · <em>Free shipping</em></div>
-    <div class="u441-row">
-      <div class="u441-pc"><span class="u441-live">Sale price 26,900 won, regular 37,900 won</span><b class="dc" aria-hidden="true">29%</b><b aria-hidden="true">₩26,900</b><s aria-hidden="true">₩37,900</s></div>
-      <div class="u441-sws" role="radiogroup" aria-label="Color"></div>
+  <article class="u441-c">
+    <div class="u441-img">
+      <div class="u441-pr" aria-hidden="true"></div>
+      <button type="button" class="u441-wl" aria-pressed="false" aria-label="Add to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.6-7.5 10-7.5 10z"/></svg><i></i><b style="--a:0deg"></b><b style="--a:60deg;--c:var(--ux-warn)"></b><b style="--a:120deg"></b><b style="--a:180deg;--c:var(--ux-warn)"></b><b style="--a:240deg"></b><b style="--a:300deg;--c:var(--ux-warn)"></b></button>
     </div>
-    <div class="u441-act">
-      <button type="button" class="u441-add"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg>Quick add</button>
-      <div class="u441-stp"><button type="button" class="u441-minus" aria-label="Remove one"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg></button><span class="u441-ct" aria-live="polite"></span><button type="button" class="u441-plus" aria-label="Add one more"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg></button></div>
+    <div class="u441-bd">
+      <p class="u441-nm">Stainless tumbler <span></span></p>
+      <div class="u441-pc"><span class="u441-sr">Sale price 26,900 won, regular 37,900 won</span><b class="dc" aria-hidden="true">29%</b><b aria-hidden="true">₩26,900</b><s aria-hidden="true">₩37,900</s></div>
+      <div class="u441-row">
+        <div class="u441-sws" role="radiogroup" aria-label="Color"></div>
+        <button type="button" class="u441-add"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>Add</span><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Added</span></button>
+      </div>
     </div>
-  </div>
-  <p class="u441-live" role="status"></p>
+  </article>
+  <p class="u441-sr u441-live" role="status"></p>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var q = function (s) { return root.querySelector(s); };
-  var pr = q('.u441-pr'), wl = q('.u441-wl'), nmC = q('.u441-nm span'), sws = q('.u441-sws'), add = q('.u441-add'), minus = q('.u441-minus'), plus = q('.u441-plus'), ct = q('.u441-ct'), live = q('p.u441-live');
-  var T = { count: '{n} in cart', countMax: '{n} in cart · all left', added: 'Added to cart', removed: 'Removed from cart', wOn: 'Saved to wishlist', wOff: 'Removed from wishlist' };
+  var pr = q('.u441-pr'), wl = q('.u441-wl'), nmC = q('.u441-nm span'), sws = q('.u441-sws'), add = q('.u441-add'), live = q('.u441-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { added: 'Added to cart', wOn: 'Saved to wishlist', wOff: 'Removed from wishlist' };
   var COLORS = [['Sage', '#9DB4A0'], ['Sand', '#D9C4A3'], ['Midnight', '#34405F'], ['Coral', '#E8806B']];
-  var STOCK = 3;
   var uid = 'u441' + Math.random().toString(36).slice(2, 7);
   pr.innerHTML = '<svg viewBox="0 0 100 146"><defs>' +
-    '<linearGradient id="' + uid + 'g" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".22" stop-color="#fff" stop-opacity=".34"/><stop offset=".42" stop-color="#fff" stop-opacity=".06"/><stop offset=".8" stop-color="#000" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>' +
+    '<linearGradient id="' + uid + 'g" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".18"/><stop offset=".22" stop-color="#fff" stop-opacity=".36"/><stop offset=".42" stop-color="#fff" stop-opacity=".06"/><stop offset=".8" stop-color="#000" stop-opacity=".1"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></linearGradient>' +
     '<linearGradient id="' + uid + 's" x1="0" x2="1"><stop offset="0" stop-color="#7C8189"/><stop offset=".25" stop-color="#F3F4F6"/><stop offset=".55" stop-color="#B9BEC6"/><stop offset="1" stop-color="#6B7079"/></linearGradient>' +
     '<linearGradient id="' + uid + 'l" x1="0" x2="1"><stop offset="0" stop-color="#1D1F24"/><stop offset=".3" stop-color="#4A4E57"/><stop offset="1" stop-color="#16181C"/></linearGradient></defs>' +
     '<rect x="30" y="6" width="40" height="15" rx="6" fill="url(#' + uid + 'l)"/><rect x="40" y="9" width="20" height="3" rx="1.5" fill="#fff" opacity=".18"/>' +
@@ -108,15 +91,15 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#441
     '<path class="bn" d="M30.9 112h38.2l-.7 20a6 6 0 0 1-6 5.8H37.6a6 6 0 0 1-6-5.8z"/><path d="M30.9 112h38.2l-.7 20a6 6 0 0 1-6 5.8H37.6a6 6 0 0 1-6-5.8z" fill="#000" opacity=".12"/>' +
     '<path d="M28 28h44l-3.6 104a6 6 0 0 1-6 5.8H37.6a6 6 0 0 1-6-5.8z" fill="url(#' + uid + 'g)"/>' +
     '<rect x="44.5" y="58" width="11" height="11" rx="3" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><path d="M48 61.5v4.5h4" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round"/></svg>';
-  var color = 0, qty = 0;
-  sws.innerHTML = COLORS.map(function (c, i) { return '<button type="button" class="u441-sw" role="radio" style="--c:' + c[1] + '" aria-label="' + c[0] + '"></button>'; }).join('');
+  var color = 0, okT = 0;
+  sws.innerHTML = COLORS.map(function (c) { return '<button type="button" class="u441-sw" role="radio" style="--c:' + c[1] + '" aria-label="' + c[0] + '"></button>'; }).join('');
   var SW = sws.querySelectorAll('.u441-sw');
   function setColor(i, bump) {
     color = i;
     pr.style.setProperty('--pc', COLORS[i][1]);
     nmC.textContent = '· ' + COLORS[i][0];
     SW.forEach(function (b, k) { b.setAttribute('aria-checked', k === i ? 'true' : 'false'); b.tabIndex = k === i ? 0 : -1; });
-    if (bump) { pr.classList.add('is-bump'); setTimeout(function () { pr.classList.remove('is-bump'); }, 160); }
+    if (bump && !rm) { pr.classList.remove('is-bump'); void pr.offsetWidth; pr.classList.add('is-bump'); }
   }
   SW.forEach(function (b, i) {
     b.addEventListener('click', function () { if (i !== color) setColor(i, true); });
@@ -135,21 +118,12 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#441
     if (on) { void wl.offsetWidth; wl.classList.add('is-burst'); }
     live.textContent = on ? T.wOn : T.wOff;
   });
-  function setQty(n, focusTo) {
-    var was = qty;
-    qty = Math.max(0, Math.min(STOCK, n));
-    root.classList.toggle('is-in', qty > 0);
-    ct.textContent = qty ? (qty >= STOCK ? T.countMax : T.count).replace('{n}', qty) : '';
-    if (qty && was && qty !== was) { ct.classList.remove('is-bump'); void ct.offsetWidth; ct.classList.add('is-bump'); }
-    plus.disabled = qty >= STOCK;
-    if (!was && qty) live.textContent = T.added;
-    else if (was && !qty) live.textContent = T.removed;
-    if (focusTo) focusTo.focus({ preventScroll: true });
-  }
-  add.addEventListener('click', function (e) { setQty(1, e.detail === 0 ? plus : null); });
-  plus.addEventListener('click', function () { setQty(qty + 1, plus.disabled || qty + 1 >= STOCK ? minus : null); });
-  minus.addEventListener('click', function (e) { var keyb = e.detail === 0; setQty(qty - 1, keyb && qty <= 1 ? add : null); });
+  add.addEventListener('click', function () {
+    add.classList.add('is-ok');
+    live.textContent = T.added;
+    clearTimeout(okT);
+    okT = setTimeout(function () { if (root.isConnected) add.classList.remove('is-ok'); }, rm ? 900 : 1400);
+  });
   setColor(0, false);
-  setQty(0);
 })();
 </script>

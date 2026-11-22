@@ -1,149 +1,81 @@
 <!-- Lucian UX/UI Prompt #434 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#434 -->
 <!--
-Element: Input field states
-ID: 434 · Category: Forms & Input · Tags: input, form-field, states, validation, error, success, disabled, character-counter, helper-text
-What it does: A system sheet showing one input field in six states side by side: default, focus, filled, error, success and disabled. The username field on top is live: characters are counted as you type, a rule break shows an error at once, and an available name passes a quick check to success, with the state tag on the right following along.
-How to use it: Try capitals or a space in the top field, then type admin, and then seoyeon_han
-Footprint: fixed size, tall
+Element: Input states
+ID: 434 · Category: Forms & Input · Tags: input, validation, error, success, shake, form-field
+What it does: A single email field walks through its states. Tap it and the border glows softly; pause with a malformed address and it shakes its head as a red hint slides down; fix it and a green check pops out.
+How to use it: Type part of an email and pause, then finish it
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#434
 -->
 <style>
-.u434{position:relative;width:340px;height:680px;padding:22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
-.u434 svg{display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.u434-hd h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.02em}
-.u434-hd p{margin:4px 0 0;font-size:12px;line-height:1.45;color:var(--ux-ink-3)}
-.u434-f{margin-top:13px}
-.u434-f.is-live{margin-top:16px;padding:12px 12px 10px;margin-left:-12px;margin-right:-12px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
-.u434-ex{margin-top:6px}
-.u434-lr{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
-.u434-lr label,.u434-lr b{font-size:12.5px;font-weight:600;color:var(--ux-ink-2)}
-.u434-tag{display:inline-flex;align-items:center;gap:5px;height:19px;padding:0 7px;border-radius:6px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:10.5px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap}
-.u434-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--d,var(--ux-ink-3));transition:background-color .2s}
-.u434-tag[data-s="focus"]{--d:var(--ux-accent)}
-.u434-tag[data-s="filled"]{--d:var(--ux-ink)}
-.u434-tag[data-s="check"]{--d:var(--ux-warn)}
-.u434-tag[data-s="error"]{--d:var(--ux-danger)}
-.u434-tag[data-s="success"]{--d:var(--ux-mint)}
-.u434-tag[data-s="disabled"]{--d:var(--ux-line-2)}
-.u434-box{position:relative;display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13.5px;transition:box-shadow .18s var(--ux-ease),background-color .18s}
-.u434-box>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden}
-.u434-box svg{flex:none;width:16px;height:16px}
-.u434-box.is-focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u434-caret{display:inline-block;width:1.5px;height:16px;margin-left:1px;vertical-align:-3px;background:var(--ux-accent);animation:u434-blink 1.1s steps(1) infinite}
-@keyframes u434-blink{50%{opacity:0}}
-.u434-box.is-error{box-shadow:inset 0 0 0 1px var(--ux-danger)}
-.u434-box.is-error svg{color:var(--ux-danger)}
-.u434-box.is-success{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 70%,transparent)}
-.u434-box.is-success svg{color:var(--ux-mint)}
-.u434-box.is-disabled{background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-3);cursor:not-allowed}
-.u434-pw{letter-spacing:.18em}
-.u434-help{display:flex;align-items:flex-start;gap:8px;margin:6px 0 0;min-height:16px;font-size:12px;line-height:1.35;color:var(--ux-ink-3)}
-.u434-help>span:first-child{flex:1;min-width:0}
-.u434-help.is-error{color:var(--ux-danger)}
-.u434-help.is-success{color:var(--ux-mint)}
-.u434-help.is-disabled{color:color-mix(in srgb,var(--ux-ink-3) 75%,transparent)}
-.u434-ct{flex:none;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
-.u434-ct.is-max{color:var(--ux-warn)}
-.u434-lbox{cursor:text}
-.u434-lbox:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent)}
-.u434-lbox:focus-within,.u434-lbox.is-act{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
-.u434-lbox.is-error,.u434-lbox.is-error:hover{box-shadow:inset 0 0 0 1px var(--ux-danger)}
-.u434-lbox.is-error:focus-within,.u434-lbox.is-error.is-act{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
-.u434-lbox.is-success,.u434-lbox.is-success:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 70%,transparent)}
-.u434-lbox.is-success:focus-within,.u434-lbox.is-success.is-act{box-shadow:inset 0 0 0 1px var(--ux-mint),0 0 0 3px color-mix(in srgb,var(--ux-mint) 16%,transparent)}
-.u434-live{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:13.5px;color:var(--ux-ink)}
-.u434-live::placeholder{color:var(--ux-ink-3);opacity:1}
-.u434 .u434-live:focus-visible{outline:none}
-.u434-box>.u434-st{flex:0 0 16px;width:16px;height:16px;display:grid;place-items:center;overflow:visible}
-.u434-st svg{animation:u434-pop .3s var(--ux-spring)}
-.u434-st .ok{color:var(--ux-mint)}
-.u434-st .no{color:var(--ux-danger)}
-.u434-spin{width:14px;height:14px;border-radius:50%;border:1.75px solid var(--ux-line-2);border-top-color:var(--ux-ink-2);animation:u434-spin .7s linear infinite}
-@keyframes u434-spin{to{transform:rotate(360deg)}}
-@keyframes u434-pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
-.u434-help.is-error>span,.u434-help.is-success>span{animation:u434-msg .25s var(--ux-ease)}
-@keyframes u434-msg{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+.u434{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u434-w{width:284px}
+.u434-w label{display:block;margin:0 0 8px 2px;font-size:13px;font-weight:600;color:var(--ux-ink-2)}
+.u434-f{position:relative;display:flex;align-items:center;height:52px;padding:0 12px 0 16px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 8px 20px -14px var(--ux-shadow-strong);transition:box-shadow .3s var(--ux-ease)}
+.u434-f.is-focus{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 6px var(--ux-accent-soft),0 8px 20px -14px var(--ux-shadow-strong)}
+.u434-f.is-err{box-shadow:0 0 0 1.5px var(--ux-danger),0 0 0 6px color-mix(in srgb,var(--ux-danger) 14%,transparent);animation:u434-shake .45s cubic-bezier(.36,.07,.19,.97)}
+.u434-f.is-ok{box-shadow:0 0 0 1.5px var(--ux-mint),0 0 0 6px color-mix(in srgb,var(--ux-mint) 14%,transparent)}
+@keyframes u434-shake{15%,85%{transform:translateX(-2px)}30%,70%{transform:translateX(5px)}45%,55%{transform:translateX(-7px)}}
+.u434-in{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:15.5px;font-weight:500;color:var(--ux-ink)}
+.u434 .u434-in:focus-visible{outline:none}
+.u434-ic{position:relative;flex:none;width:26px;height:26px}
+.u434-ic span{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.2) rotate(-40deg);transition:opacity .15s,transform .25s var(--ux-ease)}
+.u434-ic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u434-ic .ok{background:var(--ux-mint);color:var(--ux-surface)}
+.u434-ic .no{background:var(--ux-danger);color:var(--ux-surface)}
+.u434-f.is-ok .u434-ic .ok,.u434-f.is-err .u434-ic .no{opacity:1;transform:none;transition:opacity .15s,transform .6s cubic-bezier(.3,1.9,.5,1)}
+.u434-ok path{stroke-dasharray:20;stroke-dashoffset:20}
+.u434-f.is-ok .u434-ic .ok path{stroke-dashoffset:0;transition:stroke-dashoffset .35s var(--ux-ease) .12s}
+.u434-ok path{transition:none}
+.u434-msg{display:grid;margin:9px 0 0 2px;min-height:20px;font-size:13px;line-height:1.4}
+.u434-msg span{grid-area:1/1;opacity:0;transform:translateY(-6px);transition:opacity .2s var(--ux-ease),transform .45s cubic-bezier(.3,1.5,.5,1)}
+.u434-msg .h{color:var(--ux-ink-3)}
+.u434-msg .e{color:var(--ux-danger)}
+.u434-msg .s{color:var(--ux-mint)}
+.u434-w[data-s="idle"] .u434-msg .h,.u434-w[data-s="err"] .u434-msg .e,.u434-w[data-s="ok"] .u434-msg .s{opacity:1;transform:none}
 </style>
 <div class="ux u434">
-  <div class="u434-hd"><h3>Field states</h3><p>The top field is live — try typing.</p></div>
-  <div class="u434-f is-live">
-    <div class="u434-lr"><label class="u434-ll">Username</label><span class="u434-tag u434-ltag" data-s="default" aria-hidden="true">Default</span></div>
-    <div class="u434-box u434-lbox"><input class="u434-live" type="text" maxlength="16" placeholder="seoyeon_han" autocomplete="off" spellcheck="false" autocapitalize="off"><span class="u434-st" aria-hidden="true"></span></div>
-    <p class="u434-help u434-lhelp"><span aria-live="polite"></span><span class="u434-ct" aria-hidden="true">0/16</span></p>
-  </div>
-  <div class="u434-ex" role="group" aria-label="State examples">
-    <div class="u434-f" aria-hidden="true">
-      <div class="u434-lr"><b>Email</b><span class="u434-tag" data-s="focus">Focus</span></div>
-      <div class="u434-box is-focus"><span>seoyeon@lucian<i class="u434-caret"></i></span></div>
-      <p class="u434-help"><span>Work email joins your team right away</span></p>
-    </div>
-    <div class="u434-f" aria-hidden="true">
-      <div class="u434-lr"><b>Company</b><span class="u434-tag" data-s="filled">Filled</span></div>
-      <div class="u434-box"><span>Lucian Labs</span></div>
-    </div>
-    <div class="u434-f" aria-hidden="true">
-      <div class="u434-lr"><b>Password</b><span class="u434-tag" data-s="error">Error</span></div>
-      <div class="u434-box is-error"><span class="u434-pw">••••••</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg></div>
-      <p class="u434-help is-error"><span>Use 8+ characters with a number</span></p>
-    </div>
-    <div class="u434-f" aria-hidden="true">
-      <div class="u434-lr"><b>Phone</b><span class="u434-tag" data-s="success">Success</span></div>
-      <div class="u434-box is-success"><span>010-2481-3579</span><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
-      <p class="u434-help is-success"><span>Verified</span></p>
-    </div>
-    <div class="u434-f" aria-hidden="true">
-      <div class="u434-lr"><b>Signed up via</b><span class="u434-tag" data-s="disabled">Disabled</span></div>
-      <div class="u434-box is-disabled"><span>Team invite link</span><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg></div>
-      <p class="u434-help is-disabled"><span>Invited accounts can’t change this</span></p>
-    </div>
+  <div class="u434-w" data-s="idle">
+    <label class="u434-lb">Email</label>
+    <div class="u434-f"><input class="u434-in" type="email" autocomplete="off" spellcheck="false" placeholder="name@company.com"><span class="u434-ic" aria-hidden="true"><span class="ok u434-ok"><svg viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9.5"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"/></svg></span></span></div>
+    <p class="u434-msg" aria-live="polite"><span class="h"></span><span class="e"></span><span class="s"></span></p>
   </div>
 </div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
   var q = function (s) { return root.querySelector(s); };
-  var input = q('.u434-live'), box = q('.u434-lbox'), tag = q('.u434-ltag'), help = q('.u434-lhelp'), msg = q('.u434-lhelp span'), ct = q('.u434-ct'), st = q('.u434-st'), lbl = q('.u434-ll');
+  var w = q('.u434-w'), f = q('.u434-f'), input = q('.u434-in'), lb = q('.u434-lb'), h = q('.u434-msg .h'), e = q('.u434-msg .e'), s = q('.u434-msg .s');
   var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var T = { s: { default: 'Default', focus: 'Focus', filled: 'Filled', check: 'Checking', error: 'Error', success: 'Success' }, help: '3–16 lowercase letters, numbers or _', bad: 'Only lowercase letters, numbers and _', short: 'Use at least 3 characters', checking: 'Checking availability…', taken: 'That name is taken', ok: 'That name is available' };
-  var TAKEN = ['admin', 'root', 'lucian', 'test', 'support'];
-  var ICON = { ok: '<svg class="ok" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>', no: '<svg class="no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg>' };
+  var T = { bad: 'That doesn’t look like an email', ok: 'Looks good, you can use this one', help: 'A work email joins your team right away' };
   var uid = 'u434' + Math.random().toString(36).slice(2, 7);
-  input.id = uid + 'in'; lbl.htmlFor = input.id;
-  msg.id = uid + 'h'; input.setAttribute('aria-describedby', msg.id);
-  var focused = false, timer = 0, state = '';
-
-  function set(s, text, icon) {
-    state = s;
-    tag.dataset.s = s;
-    tag.textContent = T.s[s];
-    box.classList.toggle('is-error', s === 'error');
-    box.classList.toggle('is-success', s === 'success');
-    help.classList.toggle('is-error', s === 'error');
-    help.classList.toggle('is-success', s === 'success');
-    if (msg.textContent !== text) msg.textContent = text;
-    st.innerHTML = icon === 'spin' ? '<i class="u434-spin"></i>' : icon ? ICON[icon] : '';
-    input.setAttribute('aria-invalid', s === 'error' ? 'true' : 'false');
+  input.id = uid; lb.htmlFor = uid;
+  h.textContent = T.help; e.textContent = T.bad; s.textContent = T.ok;
+  var msg = q('.u434-msg'); msg.id = uid + 'm'; input.setAttribute('aria-describedby', msg.id);
+  var timer = 0;
+  function set(st) {
+    w.dataset.s = st;
+    f.classList.toggle('is-ok', st === 'ok');
+    if (st === 'err') { f.classList.remove('is-err'); void f.offsetWidth; f.classList.add('is-err'); } else f.classList.remove('is-err');
+    input.setAttribute('aria-invalid', st === 'err' ? 'true' : 'false');
+    [h, e, s].forEach(function (x) { x.setAttribute('aria-hidden', 'true'); });
+    ({ idle: h, err: e, ok: s })[st].removeAttribute('aria-hidden');
   }
   function check() {
-    var v = input.value;
-    clearTimeout(timer);
-    ct.textContent = v.length + '/16';
-    ct.classList.toggle('is-max', v.length >= 16);
-    if (!v) { set(focused ? 'focus' : 'default', T.help); return; }
-    if (!/^[a-z0-9_]*$/.test(v)) { set('error', T.bad, 'no'); return; }
-    if (v.length < 3) { set('filled', T.short); return; }
-    set('check', T.checking, 'spin');
-    timer = setTimeout(function () {
-      if (!root.isConnected || input.value !== v) return;
-      if (TAKEN.indexOf(v) >= 0) set('error', T.taken, 'no');
-      else set('success', T.ok, 'ok');
-    }, rm ? 150 : 650);
+    var v = input.value.trim();
+    if (!v) { set('idle'); return; }
+    set(/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v) ? 'ok' : 'err');
   }
-  input.addEventListener('input', function () { box.classList.add('is-act'); check(); });
-  input.addEventListener('focus', function () { focused = true; if (!input.value) set('focus', T.help); });
-  input.addEventListener('blur', function () { focused = false; box.classList.remove('is-act'); if (!input.value) set('default', T.help); });
-  box.addEventListener('click', function () { box.classList.add('is-act'); if (!input.value) set('focus', T.help); input.focus({ preventScroll: true }); });
-  set('default', T.help);
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    f.classList.add('is-focus');
+    if (w.dataset.s !== 'idle') set('idle');
+    timer = setTimeout(function () { if (root.isConnected) check(); }, rm ? 300 : 800);
+  });
+  input.addEventListener('focus', function () { f.classList.add('is-focus'); });
+  input.addEventListener('blur', function () { f.classList.remove('is-focus'); clearTimeout(timer); check(); });
+  f.addEventListener('click', function () { f.classList.add('is-focus'); input.focus({ preventScroll: true }); });
+  set('idle');
 })();
 </script>

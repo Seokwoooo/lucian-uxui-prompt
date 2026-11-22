@@ -1,67 +1,56 @@
 <!-- Lucian UX/UI Prompt #420 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#420 -->
 <!--
-Element: Feature grid
-ID: 420 · Category: Sections & Content · Tags: features, grid, section, landing, hover, icons
-What it does: A features section with a label, a headline and six features in a two-by-three grid. Hover or focus a tile and it lifts slightly while its icon plays its own small motion. A New tag marks the latest feature, and a See all features link closes the section.
+Element: Feature tiles
+ID: 420 · Category: Sections & Content · Tags: features, tiles, icons, micro-animation, hover, spring
+What it does: Four feature tiles with an icon, a name and one line each. Hover or focus a tile and it lifts slightly while its icon plays its own little motion: two cursors meet, a sparkle spins, a bolt zaps and a lock clicks open and shut.
 How to use it: Move the pointer across the tiles to see each icon move
-Footprint: fixed size, tall
+Footprint: fixed size, square
 Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
 Live demo: https://lucianlabs.dev/uxui-prompt/#420
 -->
 <style>
-.u420{position:relative;width:340px;height:560px;padding:24px 16px 18px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
-.u420-lb{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;height:22px;margin:0 4px;padding:0 9px 0 7px;border-radius:99px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:10.5px;font-weight:750}
-.u420-lb svg{width:11px;height:11px;fill:currentColor}
-.u420 h2{margin:12px 4px 0;font-size:22px;line-height:1.24;font-weight:850;letter-spacing:-.045em}
-.u420-sub{margin:8px 4px 0;font-size:11.5px;line-height:1.55;color:var(--ux-ink-3)}
-.u420-gr{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:8px;margin:16px 0 0;padding:0;list-style:none}
-.u420-t{position:relative;display:flex;flex-direction:column;height:100%;padding:12px 12px 11px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink);text-decoration:none;transition:transform .4s var(--ux-spring),box-shadow .3s var(--ux-ease),background-color .3s}
-.u420-t:hover,.u420-t:focus-visible{transform:translateY(-3px);background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 14px 28px -16px var(--ux-shadow-strong)}
+.u420{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u420-gr{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:304px;margin:0;padding:0;list-style:none}
+.u420-t{display:flex;flex-direction:column;height:122px;padding:14px;border-radius:18px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow);color:var(--ux-ink);text-decoration:none;transition:transform .5s cubic-bezier(.3,1.5,.5,1),box-shadow .35s var(--ux-ease)}
+.u420-t:hover,.u420-t:focus-visible{transform:translateY(-4px);box-shadow:0 0 0 1px var(--ux-line-2),0 18px 32px -18px var(--ux-shadow-strong)}
 .u420-t:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
-.u420-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow);color:var(--ux-accent);transition:background-color .3s,box-shadow .3s}
-.u420-t:hover .u420-ic,.u420-t:focus-visible .u420-ic{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 30%,transparent)}
-.u420-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.u420-ic{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:var(--c1);color:var(--c2)}
+.u420-ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
 .u420-ic svg *{transform-box:fill-box;transform-origin:center}
-.u420-t b{display:flex;align-items:center;flex-wrap:wrap;gap:3px 6px;margin-top:11px;font-size:12.5px;font-weight:750;letter-spacing:-.02em}
-.u420-t em{font-style:normal;height:17px;padding:0 6px;border-radius:99px;background:linear-gradient(135deg,#7B61FF,#3D8BFF);color:#fff;font-size:9px;font-weight:800;line-height:17px;white-space:nowrap}
-.u420-t small{display:block;margin-top:4px;font-size:10.5px;line-height:1.45;color:var(--ux-ink-3)}
+.u420-t b{margin-top:auto;font-size:13.5px;font-weight:750;letter-spacing:-.02em}
+.u420-t small{margin-top:3px;font-size:11.5px;color:var(--ux-ink-3)}
+.u420-c1{--c1:#EEEBFF;--c2:#6A57F2;--c1:light-dark(#EEEBFF,rgba(139,123,255,.16));--c2:light-dark(#6A57F2,#B7A4FF)}
+.u420-c2{--c1:#FFF1DE;--c2:#D6731E;--c1:light-dark(#FFF1DE,rgba(255,170,80,.15));--c2:light-dark(#D6731E,#FFB26B)}
+.u420-c3{--c1:#E3F1FF;--c2:#2F7FD8;--c1:light-dark(#E3F1FF,rgba(61,139,255,.16));--c2:light-dark(#2F7FD8,#7DB4FF)}
+.u420-c4{--c1:#DFF7EE;--c2:#119C72;--c1:light-dark(#DFF7EE,rgba(126,232,192,.14));--c2:light-dark(#119C72,#7EE8C0)}
 
-.u420-t .p1,.u420-t .p2{transition:transform .45s var(--ux-spring)}
-.u420-t:hover .k1 .p1,.u420-t:focus-visible .k1 .p1{transform:translate(-2px,1px)}
-.u420-t:hover .k1 .p2,.u420-t:focus-visible .k1 .p2{transform:translate(2px,-1px)}
-.u420-t:hover .k2 .p1,.u420-t:focus-visible .k2 .p1{transform:rotate(90deg) scale(1.15)}
-.u420-t:hover .k2 .p2,.u420-t:focus-visible .k2 .p2{transform:scale(1.5);opacity:.6}
-.u420-t:hover .k3 .p1,.u420-t:focus-visible .k3 .p1{animation:u420-zap .5s var(--ux-ease)}
-@keyframes u420-zap{0%,100%{transform:none}30%{transform:translateY(-2px) scale(1.08)}55%{transform:translateY(1px)}}
-.u420-t:hover .k4 .p1,.u420-t:focus-visible .k4 .p1{transform:translateX(5px)}
-.u420-t .k5 .p1,.u420-t .k5 .p2,.u420-t .k5 .p3{transform-origin:50% 100%;transition:transform .45s var(--ux-spring)}
-.u420-t:hover .k5 .p1,.u420-t:focus-visible .k5 .p1{animation:u420-bar .6s var(--ux-ease)}
-.u420-t:hover .k5 .p2,.u420-t:focus-visible .k5 .p2{animation:u420-bar .6s var(--ux-ease) .08s}
-.u420-t:hover .k5 .p3,.u420-t:focus-visible .k5 .p3{animation:u420-bar .6s var(--ux-ease) .16s}
-@keyframes u420-bar{0%{transform:scaleY(1)}35%{transform:scaleY(.35)}100%{transform:scaleY(1)}}
-.u420-t:hover .k6 .p1,.u420-t:focus-visible .k6 .p1{animation:u420-lock .6s var(--ux-ease)}
-@keyframes u420-lock{0%,100%{transform:none}40%{transform:translateY(-2.5px)}70%{transform:translateY(.5px)}}
-.u420-all{display:inline-flex;align-items:center;gap:4px;align-self:center;height:32px;margin-top:10px;padding:0 12px;border-radius:9px;font-size:12px;font-weight:700;color:var(--ux-ink);text-decoration:none;transition:background-color .15s}
-.u420-all:hover{background:var(--ux-surface-2)}
-.u420-all i{font-style:normal;transition:transform .3s var(--ux-spring)}
-.u420-all:hover i{transform:translateX(3px)}
-.u420-all:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u420-t .ca,.u420-t .cb{transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.u420-t:hover .ca,.u420-t:focus-visible .ca{transform:translate(3px,3px)}
+.u420-t:hover .cb,.u420-t:focus-visible .cb{transform:translate(-3px,-3px)}
+
+.u420-t .sa{transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+.u420-t:hover .sa,.u420-t:focus-visible .sa{transform:rotate(90deg) scale(1.12)}
+.u420-t .sb{opacity:.5;transition:transform .5s cubic-bezier(.3,1.8,.5,1),opacity .3s}
+.u420-t:hover .sb,.u420-t:focus-visible .sb{transform:scale(1.6);opacity:1}
+
+.u420-t:hover .za,.u420-t:focus-visible .za{animation:u420-zap .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes u420-zap{0%{transform:none}30%{transform:translateY(-2px) scale(1.15) rotate(-6deg)}60%{transform:translateY(1px) scale(.96)}100%{transform:none}}
+.u420-t .zs{opacity:0;stroke-dasharray:4;stroke-dashoffset:4}
+.u420-t:hover .zs,.u420-t:focus-visible .zs{animation:u420-sp .6s var(--ux-ease) .1s both}
+@keyframes u420-sp{0%{opacity:0;stroke-dashoffset:4}40%{opacity:1;stroke-dashoffset:0}100%{opacity:0;stroke-dashoffset:-4}}
+
+.u420-t:hover .la,.u420-t:focus-visible .la{animation:u420-lock .8s cubic-bezier(.3,1.6,.5,1)}
+@keyframes u420-lock{0%{transform:none}35%{transform:translateY(-3px)}100%{transform:none}}
+.u420-t:hover .lb,.u420-t:focus-visible .lb{animation:u420-key .8s var(--ux-ease)}
+@keyframes u420-key{0%,100%{transform:none}50%{transform:scaleY(.4)}}
 @media (prefers-reduced-motion:reduce){.u420-t,.u420-t *{animation:none!important;transition:none!important}}
 </style>
-<section class="ux u420">
-  <span class="u420-lb"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 .8c.3 2.6 1.6 3.9 4.2 4.2v.1C7.6 5.4 6.3 6.7 6 9.3h-.1C5.6 6.7 4.3 5.4 1.7 5.1V5C4.3 4.7 5.6 3.4 5.9.8z"/></svg>Features</span>
-  <h2>Everything your<br>team needs</h2>
-  <p class="u420-sub">Docs, meetings and schedules — no more tool hopping.</p>
-  <ul class="u420-gr">
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k1" viewBox="0 0 18 18"><g class="p1"><path d="M3 3.5 7.6 14l1.3-4.4 4.4-1.3z"/></g><g class="p2"><circle cx="13.5" cy="13.5" r="2.2"/></g></svg></span><b>Live co-editing</b><small>Edit the same doc together, at once</small></a></li>
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k2" viewBox="0 0 18 18"><path class="p1" d="M8 2.5c.4 3.4 2.1 5.1 5.5 5.5-3.4.4-5.1 2.1-5.5 5.5-.4-3.4-2.1-5.1-5.5-5.5 3.4-.4 5.1-2.1 5.5-5.5z"/><circle class="p2" cx="14" cy="13.5" r="1.4"/></svg></span><b>AI notes<em>New</em></b><small>Summary and tasks, ready after the call</small></a></li>
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k3" viewBox="0 0 18 18"><path class="p1" d="M10 2 4.5 10h4L7.8 16l5.7-8h-4z"/></svg></span><b>Automations</b><small>One rule replaces the busywork</small></a></li>
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k4" viewBox="0 0 18 18"><rect x="2.5" y="3.5" width="13" height="12" rx="2.2"/><path d="M2.5 7.5h13M6 2v3M12 2v3"/><circle class="p1" cx="6" cy="11.5" r="1.3" fill="currentColor" stroke="none"/></svg></span><b>Team calendar</b><small>Plans and deadlines on one screen</small></a></li>
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k5" viewBox="0 0 18 18"><path d="M2.5 15.5h13"/><path class="p1" d="M5 13V9"/><path class="p2" d="M9 13V4.5"/><path class="p3" d="M13 13V7"/></svg></span><b>Insights</b><small>See your team’s pace and bottlenecks</small></a></li>
-    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k6" viewBox="0 0 18 18"><rect x="3.5" y="8" width="11" height="7.5" rx="2"/><path class="p1" d="M6 8V6a3 3 0 0 1 6 0v2"/><path d="M9 11v1.5"/></svg></span><b>Enterprise security</b><small>SSO, audit logs and encryption</small></a></li>
-  </ul>
-  <a class="u420-all" href="#">See all features<i aria-hidden="true">→</i></a>
-</section>
+<div class="ux u420"><ul class="u420-gr">
+  <li><a class="u420-t" href="#"><span class="u420-ic u420-c1" aria-hidden="true"><svg viewBox="0 0 22 22"><g class="ca"><path d="M3.5 3.5 8 13.5l1.4-4.1 4.1-1.4z"/></g><g class="cb"><path d="M18.5 18.5 14 8.5l-1.4 4.1-4.1 1.4z" opacity=".55"/></g></svg></span><b>Live collaboration</b><small>Edit together, at once</small></a></li>
+  <li><a class="u420-t" href="#"><span class="u420-ic u420-c2" aria-hidden="true"><svg viewBox="0 0 22 22"><path class="sa" d="M10 3c.5 4 2.5 6 6.5 6.5-4 .5-6 2.5-6.5 6.5-.5-4-2.5-6-6.5-6.5C7.5 9 9.5 7 10 3z"/><circle class="sb" cx="17" cy="16.5" r="1.3" fill="currentColor" stroke="none"/></svg></span><b>AI summaries</b><small>Meetings in three lines</small></a></li>
+  <li><a class="u420-t" href="#"><span class="u420-ic u420-c3" aria-hidden="true"><svg viewBox="0 0 22 22"><path class="za" d="M12.5 2.5 5.5 12h5l-1 7.5L16.5 10h-5z"/><path class="zs" d="M18 4.5l1.5-1.5M19 8h2M3 16.5 1.5 18"/></svg></span><b>Automations</b><small>Rules do the busywork</small></a></li>
+  <li><a class="u420-t" href="#"><span class="u420-ic u420-c4" aria-hidden="true"><svg viewBox="0 0 22 22"><rect x="4.5" y="9.5" width="13" height="9" rx="2.4"/><path class="la" d="M7.5 9.5V7a3.5 3.5 0 0 1 7 0v2.5"/><path class="lb" d="M11 13v2"/></svg></span><b>Security</b><small>SSO and encryption</small></a></li>
+</ul></div>
 <script>
 (function () {
   var root = document.currentScript.previousElementSibling;
