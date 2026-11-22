@@ -162,10 +162,6 @@ svg{display:block}
 .g-tile.is-tall{grid-row:span 2}
 .js .g-tile.is-new{animation:g-card-in .6s var(--g-out) both;animation-delay:var(--d,0ms)}
 @keyframes g-card-in{from{opacity:0;transform:translateY(14px)}}
-/* 스크롤로 들어오는 카드는 화면에 들어오는 만큼 떠오릅니다 */
-@supports (animation-timeline:view()){
-  .js .g-tile.is-reveal{animation:g-card-in linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
-}
 .g-stage{position:relative;flex:1 1 auto;min-height:0;border-radius:12px;overflow:hidden;pointer-events:none;overflow-anchor:none;transition:background-color .25s ease}
 .g-stage[data-theme]{background:var(--ux-page)}
 .g-fit{position:absolute;left:50%;top:50%;width:max-content;transform:translate(-50%,-50%);transform-origin:50% 50%;pointer-events:none}
@@ -461,7 +457,7 @@ body[data-view="reel"] .g-hud{opacity:1;transform:none;visibility:visible;transi
 ::view-transition-new(root){z-index:2}
 
 @media (prefers-reduced-motion:reduce){
-  .js .g-tile.is-new,.js .g-tile.is-reveal{animation:none}
+  .js .g-tile.is-new{animation:none}
   *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}
 }
 
