@@ -1,0 +1,96 @@
+<!-- Lucian UX/UI Prompt #416 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#416 -->
+<!--
+Element: Tabs
+ID: 416 · Category: Menus & Tabs · Tags: tabs, segmented-control, indicator, spring, keyboard
+What it does: A three-part segmented tab with a small panel underneath. Pick a tab and the thumb stretches from its leading edge, then its trailing edge catches up like jelly, while the panel content glides in from the direction you moved.
+How to use it: Press the tabs. With a keyboard, use the left and right arrows, Home and End
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#416
+-->
+<style>
+.u416{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--ux-ink)}
+
+.u416-tl{position:relative;display:flex;padding:4px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u416-th{position:absolute;top:4px;bottom:4px;left:var(--l,4px);right:var(--r,4px);border-radius:10px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 6px 14px -8px var(--ux-shadow-strong);transition:left var(--tl,.5s) cubic-bezier(.3,1.25,.45,1),right var(--tr,.5s) cubic-bezier(.3,1.25,.45,1)}
+.u416-tab{position:relative;z-index:1;width:88px;height:34px;border:0;border-radius:10px;background:none;font-size:13px;font-weight:650;color:var(--ux-ink-3);transition:color .25s}
+.u416-tab:hover{color:var(--ux-ink-2)}
+.u416-tab[aria-selected="true"]{color:var(--ux-ink)}
+.u416-tab:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u416-pv{position:relative;width:280px;height:132px;border-radius:18px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 18px 36px -24px var(--ux-shadow-strong);overflow:hidden}
+.u416-pn{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:16px 18px;opacity:0;visibility:hidden;transform:translateX(calc(var(--d,1) * 22px));filter:blur(3px);transition:opacity .25s,transform .35s var(--ux-ease),filter .25s,visibility 0s .35s}
+.u416-pn.is-on{opacity:1;visibility:visible;transform:none;filter:none;transition:opacity .35s var(--ux-ease) .06s,transform .6s cubic-bezier(.3,1.3,.45,1) .04s,filter .35s .06s,visibility 0s}
+.u416-pn:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-3px;border-radius:18px}
+.u416-big{display:flex;align-items:baseline;gap:8px}
+.u416-big b{font-size:34px;line-height:1;font-weight:850;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.u416-big span{font-size:12px;color:var(--ux-ink-3)}
+.u416-bar{height:6px;margin-top:14px;border-radius:99px;background:var(--ux-surface-3);overflow:hidden}
+.u416-bar i{display:block;height:100%;width:68%;border-radius:inherit;background:linear-gradient(90deg,var(--ux-accent),var(--ux-accent-2));transform-origin:0 50%;transform:scaleX(0);transition:transform .9s cubic-bezier(.3,1.2,.4,1) .15s}
+.u416-pn.is-on .u416-bar i{transform:none}
+.u416-pn small{display:block;margin-top:8px;font-size:11px;color:var(--ux-ink-3)}
+.u416-row{display:flex;align-items:center;gap:10px;padding:7px 0}
+.u416-row+.u416-row{border-top:1px solid var(--ux-line)}
+.u416-av{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;color:#fff;font-size:11px;font-weight:800}
+.u416-row div{flex:1;min-width:0}
+.u416-row b{display:block;font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u416-row small{margin-top:1px}
+.u416-st{display:flex;align-items:center;justify-content:space-between}
+.u416-stk{display:flex}
+.u416-stk i{display:grid;place-items:center;width:34px;height:34px;margin-left:-9px;border-radius:50%;box-shadow:0 0 0 2.5px var(--ux-surface);color:#fff;font-style:normal;font-size:11px;font-weight:800;transform:translateX(-6px);opacity:0;transition:transform .5s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+.u416-stk i:first-child{margin-left:0}
+.u416-pn.is-on .u416-stk i{transform:none;opacity:1;transition-delay:calc(.08s + var(--i) * 50ms)}
+.u416-inv{height:30px;padding:0 13px;border:0;border-radius:9px;background:var(--ux-ink);color:var(--ux-surface);font-size:11.5px;font-weight:700;transition:transform .3s var(--ux-spring)}
+.u416-inv:active{transform:scale(.94)}
+.u416-inv:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u416-pn .u416-mb{margin-top:12px;font-size:12.5px;font-weight:700;color:var(--ux-ink)}
+@media (prefers-reduced-motion:reduce){.u416-th,.u416-pn,.u416-bar i,.u416-stk i{transition:none!important}}
+</style>
+<div class="ux u416">
+  <div class="u416-tl" role="tablist" aria-label="View">
+    <span class="u416-th" aria-hidden="true"></span>
+    <button class="u416-tab" type="button" role="tab" aria-selected="true">Overview</button>
+    <button class="u416-tab" type="button" role="tab" aria-selected="false" tabindex="-1">Activity</button>
+    <button class="u416-tab" type="button" role="tab" aria-selected="false" tabindex="-1">Members</button>
+  </div>
+  <div class="u416-pv">
+    <div class="u416-pn is-on" role="tabpanel" tabindex="0"><div class="u416-big"><b>24</b><span>Tasks in progress</span></div><div class="u416-bar"><i></i></div><small>68% of this week’s goal</small></div>
+    <div class="u416-pn" role="tabpanel" tabindex="0"><div class="u416-row"><span class="u416-av" style="background:#7B61FF" aria-hidden="true">S</span><div><b>Seoyeon uploaded a draft</b><small>2m ago</small></div></div><div class="u416-row"><span class="u416-av" style="background:#F97316" aria-hidden="true">M</span><div><b>Minjun finished a task</b><small>15m ago</small></div></div></div>
+    <div class="u416-pn" role="tabpanel" tabindex="0"><div class="u416-st"><span class="u416-stk" aria-hidden="true"><i style="--i:0;background:#7B61FF">S</i><i style="--i:1;background:#F97316">M</i><i style="--i:2;background:#0EA5E9">J</i><i style="--i:3;background:#14B8A6">H</i></span><button class="u416-inv" type="button">Invite</button></div><p class="u416-mb">12 members</p></div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var tl = root.querySelector('.u416-tl'), th = root.querySelector('.u416-th');
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('.u416-tab'));
+  var pns = Array.prototype.slice.call(root.querySelectorAll('.u416-pn'));
+  var uid = 'u416-' + Math.random().toString(36).slice(2, 7);
+  var cur = 0;
+  tabs.forEach(function (t, i) { t.id = uid + '-t' + i; pns[i].id = uid + '-p' + i; t.setAttribute('aria-controls', pns[i].id); pns[i].setAttribute('aria-labelledby', t.id); });
+  function thumb(i, dir) {
+    var t = tabs[i], W = tl.clientWidth;
+    th.style.setProperty('--tl', dir > 0 ? '.62s' : '.38s');
+    th.style.setProperty('--tr', dir > 0 ? '.38s' : '.62s');
+    th.style.setProperty('--l', t.offsetLeft + 'px');
+    th.style.setProperty('--r', (W - t.offsetLeft - t.offsetWidth) + 'px');
+  }
+  function select(i, focus) {
+    if (i === cur) { if (focus) tabs[i].focus({ preventScroll: true }); return; }
+    var d = i > cur ? 1 : -1, old = pns[cur], nw = pns[i];
+    old.style.setProperty('--d', -d); old.classList.remove('is-on');
+    nw.style.transition = 'none'; nw.style.setProperty('--d', d); void nw.offsetWidth; nw.style.transition = '';
+    nw.classList.add('is-on');
+    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    thumb(i, d);
+    cur = i;
+    if (focus) tabs[i].focus({ preventScroll: true });
+  }
+  tabs.forEach(function (t, i) { t.addEventListener('click', function () { select(i); }); });
+  tl.addEventListener('keydown', function (e) {
+    var n = tabs.length, to = e.key === 'ArrowRight' ? cur + 1 : e.key === 'ArrowLeft' ? cur - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+    if (to === null) return;
+    e.preventDefault(); select((to + n) % n, true);
+  });
+  th.style.transition = 'none'; thumb(0, 1); void th.offsetWidth; th.style.transition = '';
+})();
+</script>

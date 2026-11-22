@@ -9,19 +9,19 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#296
 -->
 <style>
-.u296{position:relative;width:300px;height:480px;border-radius:32px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1F2330}
-.u296-hd{position:absolute;left:0;right:0;top:0;height:56px;padding:22px 20px 0;font-size:20px;font-weight:850;letter-spacing:-.02em;background:#fff;z-index:3}
+.u296{position:relative;width:300px;height:480px;border-radius:32px;overflow:hidden;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1F2330;color:light-dark(#1F2330,#ECEEF5)}
+.u296-hd{position:absolute;left:0;right:0;top:0;height:56px;padding:22px 20px 0;font-size:20px;font-weight:850;letter-spacing:-.02em;background:var(--ux-surface);z-index:3}
 .u296-vp{position:absolute;left:0;right:30px;top:56px;bottom:0;overflow:hidden}
 .u296-ls{position:absolute;left:0;right:0;top:0;transition:transform .28s cubic-bezier(.3,.9,.3,1)}
 .u296-ls.is-fast{transition:transform .12s ease-out}
-.u296-gh{height:26px;padding:6px 20px 0;font-size:11px;font-weight:850;color:#5C7CFA;background:#F4F6FB}
-.u296-p{height:46px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid #F1F3F5;font-size:14px;font-weight:650}
+.u296-gh{height:26px;padding:6px 20px 0;font-size:11px;font-weight:850;color:#5C7CFA;color:light-dark(#5C7CFA,#93A8FF);background:#F4F6FB;background:light-dark(#F4F6FB,#1B1E2C)}
+.u296-p{height:46px;display:flex;align-items:center;gap:12px;padding:0 20px;border-bottom:1px solid #F1F3F5;border-bottom:1px solid light-dark(#F1F3F5,rgba(255,255,255,.06));font-size:14px;font-weight:650}
 .u296-p i{width:30px;height:30px;border-radius:50%;flex:none;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;color:#fff}
-.u296-pin{position:absolute;left:0;right:30px;top:56px;height:26px;padding:6px 20px 0;font-size:11px;font-weight:850;color:#5C7CFA;background:rgba(244,246,251,.96);z-index:2;box-shadow:0 4px 8px -6px rgba(31,35,48,.3)}
+.u296-pin{position:absolute;left:0;right:30px;top:56px;height:26px;padding:6px 20px 0;font-size:11px;font-weight:850;color:#5C7CFA;color:light-dark(#5C7CFA,#93A8FF);background:rgba(244,246,251,.96);background:light-dark(rgba(244,246,251,.96),rgba(27,30,44,.96));z-index:2;box-shadow:0 4px 8px -6px rgba(31,35,48,.3);box-shadow:0 4px 8px -6px light-dark(rgba(31,35,48,.3),rgba(0,0,0,.7))}
 .u296-ix{position:absolute;right:4px;top:64px;bottom:14px;width:26px;display:flex;flex-direction:column;justify-content:space-between;align-items:center;touch-action:none;cursor:ns-resize;z-index:4}
-.u296-k{display:block;width:22px;height:22px;padding:0;border:0;background:none;font:inherit;font-size:10.5px;font-weight:800;color:#5C7CFA;line-height:22px;text-align:center;transform:translateX(var(--dx,0)) scale(var(--sc,1));cursor:inherit;border-radius:50%}
+.u296-k{display:block;width:22px;height:22px;padding:0;border:0;background:none;font:inherit;font-size:10.5px;font-weight:800;color:#5C7CFA;color:light-dark(#5C7CFA,#93A8FF);line-height:22px;text-align:center;transform:translateX(var(--dx,0)) scale(var(--sc,1));cursor:inherit;border-radius:50%}
 .u296-k.is-on{background:#5C7CFA;color:#fff}
-.u296-k:focus-visible{outline:2px solid #1F2330}
+.u296-k:focus-visible{outline:2px solid #1F2330;outline:2px solid light-dark(#1F2330,#ECEEF5)}
 .u296-bub{position:absolute;right:66px;top:0;width:62px;height:62px;margin-top:-31px;border-radius:50% 50% 8px 50%;transform:rotate(-45deg) scale(.4);background:#5C7CFA;color:#fff;display:grid;place-items:center;opacity:0;transition:opacity .2s,transform .3s cubic-bezier(.3,1.6,.5,1);pointer-events:none;z-index:5;box-shadow:0 10px 24px -8px rgba(92,124,250,.6)}
 .u296-bub b{transform:rotate(45deg);font-size:28px;font-weight:900}
 .u296-bub.is-on{opacity:1;transform:rotate(-45deg) scale(1)}

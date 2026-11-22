@@ -1,0 +1,76 @@
+<!-- Lucian UX/UI Prompt #442 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#442 -->
+<!--
+Element: Add to cart
+ID: 442 · Category: Commerce & Pricing · Tags: add-to-cart, cart-badge, fly-to-cart, ecommerce, spring, micro-interaction
+What it does: Press Add and the product photo arcs through the air into the cart, the cart gives a little wiggle, and its badge bounces up by one.
+How to use it: Press Add a few times
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#442
+-->
+<style>
+.u442{position:relative;width:340px;height:300px}
+.u442-cart{position:absolute;right:46px;top:44px;width:58px;height:58px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 12px 26px -14px var(--ux-shadow-strong);color:var(--ux-ink)}
+.u442-cart svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u442-cart.is-hit svg{animation:u442-wig .6s cubic-bezier(.3,1.4,.5,1)}
+@keyframes u442-wig{0%{transform:none}20%{transform:translateY(3px) scale(1.08,.9)}40%{transform:rotate(-12deg)}60%{transform:rotate(9deg)}80%{transform:rotate(-4deg)}100%{transform:none}}
+.u442-bd{position:absolute;right:-2px;top:-2px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:grid;place-items:center;background:var(--ux-danger);color:#fff;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;box-shadow:0 0 0 3px var(--ux-surface)}
+.u442-cart.is-hit .u442-bd{animation:u442-bump .55s cubic-bezier(.3,1.8,.5,1) .05s}
+@keyframes u442-bump{0%{transform:scale(1)}35%{transform:scale(1.5) translateY(-3px)}100%{transform:none}}
+.u442 .u442-cart:focus-visible,.u442 .u442-add:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u442-pd{position:absolute;left:30px;right:30px;bottom:46px;display:flex;align-items:center;gap:12px;height:80px;padding:0 12px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 16px 36px -20px var(--ux-shadow-strong)}
+.u442-th,.u442-fly{flex:none;width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:#EDF2EE;background:light-dark(#EDF2EE,#243028)}
+.u442-th svg,.u442-fly svg{width:40px;height:40px}
+.u442-tx{flex:1;min-width:0}
+.u442-tx b{display:block;font-size:14px;font-weight:650;letter-spacing:-.015em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u442-tx small{display:block;margin-top:2px;font-size:12px;color:var(--ux-ink-3)}
+.u442-tx em{display:block;margin-top:3px;font-style:normal;font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums}
+.u442-add{flex:none;display:inline-flex;align-items:center;gap:5px;height:38px;padding:0 15px;border:0;border-radius:999px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:13.5px;font-weight:650;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 8px 18px -10px var(--ux-accent);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u442-add:active{--k:.9;transition:transform .1s var(--ux-ease)}
+.u442-add svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.u442-fly{position:absolute;left:0;top:0;z-index:5;box-shadow:0 10px 20px -8px var(--ux-shadow-strong);pointer-events:none}
+.u442-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u442">
+  <button type="button" class="u442-cart" aria-label="Cart"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 11a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V6a3 3 0 0 1 6 0v1"/></svg><span class="u442-bd" aria-hidden="true"></span></button>
+  <div class="u442-pd">
+    <span class="u442-th" aria-hidden="true"></span>
+    <div class="u442-tx"><b>Steel tumbler</b><small>Sage · 500 ml</small><em>₩26,900</em></div>
+    <button type="button" class="u442-add"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6v12M6 12h12"/></svg>Add</button>
+  </div>
+  <p class="u442-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var cart = q('.u442-cart'), bd = q('.u442-bd'), pd = q('.u442-pd'), th = q('.u442-th'), add = q('.u442-add'), live = q('.u442-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { cart: 'Cart, {n} items', added: 'Added to cart' };
+  var ART = '<svg viewBox="0 0 28 28" aria-hidden="true"><rect x="10" y="3" width="8" height="3.5" rx="1.4" fill="#2A2D33"/><rect x="9.2" y="6" width="9.6" height="2" rx=".8" fill="#C4C8CF"/><path d="M9.4 8h9.2l-.8 15.6a1.4 1.4 0 0 1-1.4 1.3h-4.8a1.4 1.4 0 0 1-1.4-1.3z" fill="#9DB4A0"/><path d="M10.3 8h2l-.5 16.9h-.6a1.4 1.4 0 0 1-1.4-1.3z" fill="#fff" opacity=".3"/></svg>';
+  th.innerHTML = ART;
+  var count = 2;
+  function badge() { bd.textContent = count; cart.setAttribute('aria-label', T.cart.replace('{n}', count)); }
+  function pos(el) { var x = 0, y = 0; for (var e = el; e && e !== root; e = e.offsetParent) { x += e.offsetLeft; y += e.offsetTop; } return { x: x, y: y }; }
+  function hit() {
+    count++; badge();
+    cart.classList.remove('is-hit'); void cart.offsetWidth; cart.classList.add('is-hit');
+    live.textContent = T.added;
+  }
+  add.addEventListener('click', function () {
+    if (rm || !Element.prototype.animate) { hit(); return; }
+    var a = pos(th), b = pos(cart), fly = document.createElement('span');
+    fly.className = 'u442-fly'; fly.setAttribute('aria-hidden', 'true'); fly.innerHTML = ART;
+    root.appendChild(fly);
+    var sx = a.x, sy = a.y, ex = b.x + 29 - 28, ey = b.y + 29 - 28, cx = (sx + ex) / 2 - 20, cy = Math.min(sy, ey) - 90, frames = [];
+    for (var i = 0; i <= 12; i++) {
+      var t = i / 12, u = 1 - t;
+      var x = u * u * sx + 2 * u * t * cx + t * t * ex, y = u * u * sy + 2 * u * t * cy + t * t * ey;
+      frames.push({ transform: 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + (1 - t * 0.66).toFixed(3) + ') rotate(' + (t * 24).toFixed(1) + 'deg)', opacity: t > 0.92 ? 0 : 1, offset: t });
+    }
+    var an = fly.animate(frames, { duration: 720, easing: 'cubic-bezier(.45,0,.55,1)', fill: 'forwards' });
+    an.onfinish = function () { fly.remove(); if (root.isConnected) hit(); };
+  });
+  badge();
+})();
+</script>

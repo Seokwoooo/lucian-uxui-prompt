@@ -1,0 +1,130 @@
+<!-- Lucian UX/UI Prompt #431 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#431 -->
+<!--
+Element: 날짜 선택
+ID: 431 · Category: 입력·검색 · Tags: date-picker, calendar, spring, month-slide, keyboard
+What it does: 한 달짜리 달력입니다. 날짜를 누르면 선택 동그라미가 스프링처럼 그 날로 튀어 가고, 달을 넘기면 달력이 옆으로 밀려 바뀝니다. 오늘에는 점이 찍히고 지난 날짜는 고를 수 없습니다.
+How to use it: 날짜를 여러 번 눌러 보고, 화살표로 다음 달로 넘겨 보세요. 방향키도 됩니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#431
+-->
+<style>
+.u431{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u431-c{width:292px;padding:12px 12px 10px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 20px 44px -22px var(--ux-shadow-strong)}
+.u431-hd{display:flex;align-items:center;height:32px;padding:0 2px 0 8px}
+.u431-hd b{flex:1;font-size:15px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.u431-nav{width:30px;height:30px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transform:scale(var(--k,1));transition:background-color .15s,color .15s,opacity .15s,transform .4s cubic-bezier(.34,1.7,.5,1)}
+.u431-nav:hover:not(:disabled){background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u431-nav:active:not(:disabled){--k:.86;transition:transform .1s var(--ux-ease)}
+.u431-nav:disabled{opacity:.25;cursor:default}
+.u431-nav svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.u431-wk,.u431-g{display:grid;grid-template-columns:repeat(7,1fr)}
+.u431-wk{margin-top:4px}
+.u431-wk span{height:24px;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u431-gw{position:relative;overflow:hidden}
+.u431-g{position:relative;grid-template-rows:repeat(6,32px)}
+.u431-g.is-l{animation:u431-l .42s cubic-bezier(.25,1,.4,1)}
+.u431-g.is-r{animation:u431-r .42s cubic-bezier(.25,1,.4,1)}
+@keyframes u431-l{from{opacity:0;transform:translateX(44px)}}
+@keyframes u431-r{from{opacity:0;transform:translateX(-44px)}}
+.u431-sel{position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--ux-accent);box-shadow:0 6px 14px -6px var(--ux-accent);transform:translate(var(--sx,0px),var(--sy,0px)) scale(var(--ss,0));transition:transform .5s cubic-bezier(.3,1.45,.5,1);pointer-events:none}
+.u431-sel.is-jump{transition:none}
+.u431-d{position:relative;z-index:1;justify-self:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:none;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:color .2s var(--ux-ease),background-color .15s}
+.u431-d:hover:not(:disabled):not([aria-selected="true"]){background:color-mix(in srgb,var(--ux-ink) 7%,transparent)}
+.u431-d:disabled{color:var(--ux-ink-3);opacity:.5;cursor:default}
+.u431-d[aria-selected="true"]{color:var(--ux-accent-ink);font-weight:700;transition:color .2s var(--ux-ease) .12s}
+.u431-d[aria-current="date"]{font-weight:700;color:var(--ux-accent)}
+.u431-d[aria-current="date"]::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:currentColor}
+.u431-d[aria-current="date"][aria-selected="true"]{color:var(--ux-accent-ink)}
+.u431 .u431-d:focus-visible,.u431 .u431-nav:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u431-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u431">
+  <div class="u431-c">
+    <div class="u431-hd"><b aria-live="polite"></b><button type="button" class="u431-nav" aria-label="이전 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button><button type="button" class="u431-nav" aria-label="다음 달"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button></div>
+    <div class="u431-wk" aria-hidden="true"></div>
+    <div class="u431-gw"><i class="u431-sel" aria-hidden="true"></i><div class="u431-g" role="grid" aria-label="날짜"></div></div>
+  </div>
+  <p class="u431-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var hdT = q('.u431-hd b'), navs = root.querySelectorAll('.u431-nav'), wk = q('.u431-wk'), grid = q('.u431-g'), selEl = q('.u431-sel'), live = q('.u431-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { head: '{y}년 {M}', aria: '{y}년 {M} {d}일 {W}', today: ', 오늘' };
+  var MON = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
+  var WD = ['일', '월', '화', '수', '목', '금', '토'];
+  var WDF = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+  var now = new Date(), today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var first = new Date(today.getFullYear(), today.getMonth(), 1), last = new Date(today.getFullYear(), today.getMonth() + 4, 0);
+  // 처음에는 모레를 골라 둡니다
+  var sel = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2), view = new Date(sel.getFullYear(), sel.getMonth(), 1);
+  wk.innerHTML = WD.map(function (w) { return '<span>' + w + '</span>'; }).join('');
+  function key(d) { return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate(); }
+  function fill(t, d) { return t.replace('{y}', d.getFullYear()).replace('{M}', MON[d.getMonth()]).replace('{d}', d.getDate()).replace('{W}', WDF[d.getDay()]); }
+  function btn(day) { return grid.querySelector('[data-day="' + day + '"]'); }
+  function inView(d) { return !!d && d.getFullYear() === view.getFullYear() && d.getMonth() === view.getMonth(); }
+  // 선택 동그라미는 한 장뿐이고, 고른 날 자리로 스프링처럼 옮겨 갑니다
+  function moveSel(jump) {
+    var b = inView(sel) ? btn(sel.getDate()) : null;
+    selEl.classList.toggle('is-jump', !!jump);
+    if (b) { selEl.style.setProperty('--sx', b.offsetLeft + 'px'); selEl.style.setProperty('--sy', b.offsetTop + 'px'); }
+    selEl.style.setProperty('--ss', b ? 1 : 0);
+    if (jump) { void selEl.offsetWidth; selEl.classList.remove('is-jump'); }
+  }
+  function render(dir) {
+    var y = view.getFullYear(), m = view.getMonth(), off = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate(), html = '';
+    for (var i = 0; i < 42; i++) {
+      var day = i - off + 1;
+      if (day < 1 || day > n) { html += '<span role="gridcell"></span>'; continue; }
+      var d = new Date(y, m, day), isT = key(d) === key(today), ok = key(d) >= key(today) && key(d) <= key(last), isS = !!sel && key(d) === key(sel);
+      html += '<button type="button" role="gridcell" class="u431-d" data-day="' + day + '" tabindex="-1" aria-selected="' + isS + '"' + (isT ? ' aria-current="date"' : '') + ' aria-label="' + fill(T.aria, d) + (isT ? T.today : '') + '"' + (ok ? '' : ' disabled') + '>' + day + '</button>';
+    }
+    grid.innerHTML = html;
+    var focusDay = inView(sel) ? sel.getDate() : (inView(today) ? today.getDate() : 1), fb = btn(focusDay);
+    if (fb && !fb.disabled) fb.tabIndex = 0; else { var en = grid.querySelector('.u431-d:not(:disabled)'); if (en) en.tabIndex = 0; }
+    hdT.textContent = fill(T.head, view);
+    navs[0].disabled = key(view) <= key(first);
+    navs[1].disabled = view.getFullYear() * 12 + m >= last.getFullYear() * 12 + last.getMonth();
+    grid.classList.remove('is-l', 'is-r');
+    if (dir && !rm) { void grid.offsetWidth; grid.classList.add(dir > 0 ? 'is-l' : 'is-r'); }
+    moveSel(true);
+  }
+  function pick(d, focus) {
+    var prev = sel;
+    sel = d;
+    Array.prototype.forEach.call(grid.querySelectorAll('.u431-d'), function (b) { var on = +b.dataset.day === d.getDate(); b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
+    moveSel(!inView(prev));
+    if (!rm) { selEl.animate([{ borderRadius: '50%', filter: 'brightness(1.15)' }, { borderRadius: '50%', filter: 'none' }], { duration: 400 }); }
+    live.textContent = fill(T.aria, d);
+    if (focus) btn(d.getDate()).focus({ preventScroll: true });
+  }
+  function shift(n) {
+    var nv = new Date(view.getFullYear(), view.getMonth() + n, 1);
+    if (key(nv) < key(first) || key(nv) > key(last)) return false;
+    view = nv; render(n); return true;
+  }
+  navs[0].addEventListener('click', function () { shift(-1); });
+  navs[1].addEventListener('click', function () { shift(1); });
+  grid.addEventListener('click', function (e) { var b = e.target.closest('.u431-d'); if (b && !b.disabled) pick(new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), false); });
+  // 방향키로 하루·한 주씩, PageUp/PageDown으로 한 달씩 옮기며 바로 고릅니다
+  grid.addEventListener('keydown', function (e) {
+    var b = e.target.closest('.u431-d');
+    if (!b) return;
+    var cur = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), nd = null;
+    var mv = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 7, ArrowUp: -7 }[e.key];
+    if (mv) nd = new Date(cur.getFullYear(), cur.getMonth(), cur.getDate() + mv);
+    else if (e.key === 'PageDown' || e.key === 'PageUp') nd = new Date(cur.getFullYear(), cur.getMonth() + (e.key === 'PageDown' ? 1 : -1), Math.min(cur.getDate(), 28));
+    else return;
+    e.preventDefault(); e.stopPropagation();
+    if (key(nd) < key(today)) nd = new Date(today);
+    if (key(nd) > key(last)) nd = new Date(last);
+    var dir = (nd.getFullYear() * 12 + nd.getMonth()) - (view.getFullYear() * 12 + view.getMonth());
+    if (dir) { view = new Date(nd.getFullYear(), nd.getMonth(), 1); render(dir); }
+    pick(nd, true);
+  });
+  render(0);
+})();
+</script>

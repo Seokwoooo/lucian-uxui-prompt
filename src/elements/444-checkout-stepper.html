@@ -1,0 +1,90 @@
+<!-- @meta {"title":"결제 단계 표시","category":"커머스·가격","summary":"장바구니 → 배송 정보 → 결제 → 완료로 이어지는 단계 표시입니다. 다음 단계로 가면 사이 선이 차오르고, 지나온 단계에는 체크가 톡 튀어 오르며, 지금 단계는 은은한 고리로 숨을 쉽니다.","hint":"단계를 눌러 앞뒤로 옮겨 보세요. 방향키도 됩니다","shape":"square","hue":"#F97316","hue2":"#EAB308","tags":["stepper","checkout","progress","wizard","spring","order-flow"]} -->
+<!-- @demo [["wait",900],["tap",".u444-dot",2,{"after":1000}],["tap",".u444-dot",3,{"after":1500}],["tap",".u444-dot",0,{"after":1200}],["tap",".u444-dot",1,{"after":1000}],["reset"]] -->
+<!-- @en {"title":"Checkout steps","summary":"Steps running Cart → Shipping → Payment → Done. Moving on fills the line between steps, a check pops onto each finished step, and the current step breathes with a soft ring.","hint":"Tap the steps to move back and forth. Arrow keys work too","map":[
+  ["aria-label=\"주문 단계\"", "aria-label=\"Checkout steps\""],
+  ["['장바구니', '배송 정보', '결제', '완료']", "['Cart', 'Shipping', 'Payment', 'Done']"],
+  ["'완료한 단계'", "'completed'"],
+  ["'현재 단계'", "'current step'"]
+]} -->
+<style>
+.u444{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u444-st{position:relative;display:flex;width:316px;margin:0;padding:0;list-style:none}
+.u444-ln{position:absolute;top:17px;height:3px;border-radius:2px;background:var(--ux-line-2);overflow:hidden}
+.u444-ln i{display:block;height:100%;border-radius:inherit;background:var(--ux-accent);transform-origin:0 50%;transform:scaleX(0);transition:transform .32s cubic-bezier(.5,0,.4,1);transition-delay:var(--d,0s)}
+.u444-ln.is-on i{transform:none}
+.u444-s{flex:1;display:flex;flex-direction:column;align-items:center;gap:10px}
+.u444-dot{position:relative;z-index:1;width:36px;height:36px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:inset 0 0 0 2px var(--ux-line-2);font-size:14px;font-weight:700;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;transform:scale(var(--k,1));transition:background-color .25s var(--ux-ease),box-shadow .25s var(--ux-ease),color .25s,transform .45s cubic-bezier(.34,1.7,.5,1);transition-delay:var(--d,0s)}
+.u444-dot:hover{--k:1.07}
+.u444-dot:active{--k:.9;transition-delay:0s}
+.u444-dot b,.u444-dot svg{grid-area:1/1;transition:opacity .2s,transform .5s cubic-bezier(.3,1.8,.5,1);transition-delay:var(--d,0s)}
+.u444-dot svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.2) rotate(-30deg)}
+.u444-s.is-done .u444-dot{background:var(--ux-accent);box-shadow:inset 0 0 0 2px var(--ux-accent);color:var(--ux-accent-ink)}
+.u444-s.is-done .u444-dot b{opacity:0;transform:scale(.4)}
+.u444-s.is-done .u444-dot svg{opacity:1;transform:none}
+.u444-s.is-cur .u444-dot{box-shadow:inset 0 0 0 2px var(--ux-accent);color:var(--ux-accent)}
+.u444-s.is-cur .u444-dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;box-shadow:0 0 0 2px var(--ux-accent-soft);animation:u444-breathe 2s ease-in-out infinite}
+@keyframes u444-breathe{50%{transform:scale(1.12);opacity:.5}}
+.u444 .u444-dot:focus-visible{outline:2px solid var(--ux-accent);outline-offset:6px}
+.u444-s span{font-size:12.5px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap;transition:color .25s;transition-delay:var(--d,0s)}
+.u444-s.is-done span{color:var(--ux-ink-2)}
+.u444-s.is-cur span{color:var(--ux-ink);font-weight:700}
+.u444-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u444">
+  <ol class="u444-st" aria-label="주문 단계"></ol>
+  <p class="u444-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var st = root.querySelector('.u444-st'), live = root.querySelector('.u444-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var STEPS = ['장바구니', '배송 정보', '결제', '완료'];
+  var T = { done: '완료한 단계', cur: '현재 단계' };
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9.5"/></svg>';
+  var W = 316 / 4;
+  STEPS.forEach(function (s, i) {
+    if (i) { var ln = document.createElement('li'); ln.className = 'u444-ln'; ln.setAttribute('aria-hidden', 'true'); ln.style.left = (W * (i - 1) + W / 2 + 22) + 'px'; ln.style.width = (W - 44) + 'px'; ln.innerHTML = '<i></i>'; st.appendChild(ln); }
+    var li = document.createElement('li');
+    li.className = 'u444-s';
+    li.innerHTML = '<button type="button" class="u444-dot"><b>' + (i + 1) + '</b>' + CHECK + '</button><span aria-hidden="true"></span>';
+    li.querySelector('span').textContent = s;
+    st.appendChild(li);
+  });
+  var S = st.querySelectorAll('.u444-s'), L = st.querySelectorAll('.u444-ln'), D = st.querySelectorAll('.u444-dot');
+  var cur = 0;
+  // 앞으로 가면 선이 하나씩 차오르고 체크가 차례로 튀어 오릅니다. 뒤로 가면 거꾸로 걷힙니다
+  function go(n, focus) {
+    var from = cur, step = rm ? 0 : 0.26;
+    cur = n;
+    L.forEach(function (ln, k) {
+      var on = k < cur;
+      var d = on && k >= from ? (k - from) * step : !on && k < from ? (from - 1 - k) * step * 0.6 : 0;
+      ln.style.setProperty('--d', d + 's');
+      ln.classList.toggle('is-on', on);
+    });
+    S.forEach(function (li, k) {
+      var done = k < cur, isCur = k === cur;
+      var d = done && k >= from ? (k - from) * step + step : 0;
+      li.style.setProperty('--d', d + 's');
+      D[k].style.setProperty('--d', d + 's');
+      li.classList.toggle('is-done', done);
+      li.classList.toggle('is-cur', isCur);
+      D[k].setAttribute('aria-label', STEPS[k] + (done ? ', ' + T.done : isCur ? ', ' + T.cur : ''));
+      D[k].tabIndex = isCur ? 0 : -1;
+      if (isCur) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    live.textContent = STEPS[cur];
+    if (focus) D[cur].focus({ preventScroll: true });
+  }
+  D.forEach(function (b, i) { b.addEventListener('click', function () { if (i !== cur) go(i, false); }); });
+  st.addEventListener('keydown', function (e) {
+    var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault(); e.stopPropagation();
+    var n = Math.max(0, Math.min(3, cur + d));
+    if (n !== cur) go(n, true);
+  });
+  go(1, false);
+})();
+</script>

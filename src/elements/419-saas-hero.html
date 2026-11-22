@@ -1,0 +1,76 @@
+<!-- @meta {"title":"SaaS 히어로","category":"히어로·배경","summary":"새 버전 배지, 두 줄 헤드라인, 한 줄 설명, 두 버튼으로 된 히어로 문구입니다. 헤드라인이 단어마다 아래에서 솟아오르며 자리 잡고, 마지막 단어는 그라디언트로 빛납니다. 버튼에 포인터를 올리면 화살표가 앞으로 밀려 나갑니다.","hint":"처음 등장하는 움직임을 보고, 버튼들 위로 포인터를 옮겨 보세요","shape":"square","hue":"#6366F1","hue2":"#14B8A6","tags":["hero","headline","word-reveal","cta","landing","spring"]} -->
+<!-- @demo [["wait",2300],["hover",".u419-pill",0,{"after":700}],["hover",".u419-p",0,{"after":800}],["hover",".u419-s",0,{"after":700}],["leave",300],["reset"]] -->
+<!-- @en {"title":"SaaS hero","summary":"A hero text block: a new-release badge, a two-line headline, one subline and two buttons. The headline rises word by word from below and settles, with the last word glowing in a gradient. Hover the buttons and their arrows push forward.","hint":"Watch the entrance, then move the pointer over the buttons","map":[
+  [">새 버전 출시<", ">New<"],
+  [">Haru 3.0 살펴보기<", ">Meet Haru 3.0<"],
+  ["data-l1=\"회의는 짧게,\"", "data-l1=\"Shorter meetings,\""],
+  ["data-l2=\"실행은 빠르게\"", "data-l2=\"faster results\""],
+  [">회의록과 할 일이 저절로 이어져요.<", ">Notes and tasks connect on their own.<"],
+  [">무료로 시작하기<", ">Start for free<"],
+  [">데모 보기<", ">Watch demo<"]
+]} -->
+<style>
+.u419{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--ux-ink)}
+.u419 .rv{animation:u419-up .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s)}
+@keyframes u419-up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.u419-pill{display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 10px 0 3px;border-radius:99px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow);font-size:11.5px;font-weight:600;color:var(--ux-ink-2);text-decoration:none;transition:box-shadow .25s,color .2s,transform .4s var(--ux-spring)}
+.u419-pill:hover{color:var(--ux-ink);transform:translateY(-1px);box-shadow:0 0 0 1px color-mix(in srgb,var(--ux-accent) 45%,transparent),0 6px 16px -6px color-mix(in srgb,var(--ux-accent) 45%,transparent)}
+.u419-pill b{display:flex;align-items:center;height:22px;padding:0 8px;border-radius:99px;background:linear-gradient(135deg,#7B61FF,#3D8BFF);color:#fff;font-size:10.5px;font-weight:750}
+.u419-pill svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ux-spring)}
+.u419-pill:hover svg{transform:translateX(3px)}
+/* 헤드라인: 단어마다 가림막 아래에서 솟아오릅니다 */
+.u419 h1{margin:16px 0 0;font-size:33px;line-height:1.16;font-weight:850;letter-spacing:-.05em}
+.u419 h1 .ln{display:block}
+.u419-w{display:inline-block;overflow:hidden;padding:0 .02em .08em;margin-bottom:-.08em;vertical-align:top}
+.u419-w>span{display:inline-block;transform:translateY(105%) rotate(4deg);transform-origin:0 100%;animation:u419-word .9s cubic-bezier(.25,1.35,.45,1) forwards;animation-delay:calc(.15s + var(--i) * 80ms)}
+@keyframes u419-word{to{transform:none}}
+.u419-w.gr>span{background:linear-gradient(100deg,var(--ux-accent),var(--ux-accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.u419-sub{margin:12px 0 0;font-size:13px;color:var(--ux-ink-2)}
+.u419-ctas{display:flex;gap:8px;margin-top:20px}
+.u419-p,.u419-s{display:flex;align-items:center;gap:6px;height:42px;padding:0 17px;border:0;border-radius:12px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;transition:transform .45s var(--ux-spring),box-shadow .25s,background-color .2s}
+.u419-p{background:var(--ux-ink);color:var(--ux-surface);box-shadow:0 1px 2px var(--ux-shadow),0 10px 22px -12px var(--ux-shadow-strong)}
+.u419-p:hover{transform:translateY(-2px);box-shadow:0 2px 4px var(--ux-shadow),0 16px 28px -14px var(--ux-shadow-strong)}
+.u419-p svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.3,1.8,.5,1)}
+.u419-p:hover svg{transform:translateX(4px)}
+.u419-s{background:var(--ux-surface);color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow)}
+.u419-s:hover{background:var(--ux-surface-2);transform:translateY(-2px)}
+.u419-s i{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ux-surface-3);transition:transform .45s cubic-bezier(.3,1.8,.5,1)}
+.u419-s:hover i{transform:scale(1.15)}
+.u419-s i svg{width:8px;height:8px;fill:currentColor}
+.u419-p:active,.u419-s:active{transform:scale(.96)}
+.u419 a:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u419 .rv,.u419-w>span{animation:none!important;transform:none!important;opacity:1!important}}
+</style>
+<section class="ux u419">
+  <a class="u419-pill rv" href="#" style="--d:.05s"><b>새 버전 출시</b><span>Haru 3.0 살펴보기</span><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M3.5 2 6.5 5l-3 3"/></svg></a>
+  <h1 data-l1="회의는 짧게," data-l2="실행은 빠르게"></h1>
+  <p class="u419-sub rv" style="--d:.55s">회의록과 할 일이 저절로 이어져요.</p>
+  <div class="u419-ctas rv" style="--d:.66s">
+    <a class="u419-p" href="#">무료로 시작하기<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7M6.5 3l3 3-3 3"/></svg></a>
+    <a class="u419-s" href="#"><i aria-hidden="true"><svg viewBox="0 0 8 8"><path d="M2 1.2v5.6L6.8 4z"/></svg></i>데모 보기</a>
+  </div>
+</section>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var h1 = root.querySelector('h1');
+  // 두 줄을 단어로 나눠, 단어마다 가림막 안에서 솟아오르게 합니다
+  var lines = [h1.getAttribute('data-l1'), h1.getAttribute('data-l2')], k = 0;
+  h1.setAttribute('aria-label', lines.join(' '));
+  lines.forEach(function (line, li) {
+    var ln = document.createElement('span');
+    ln.className = 'ln'; ln.setAttribute('aria-hidden', 'true');
+    var words = line.split(' ');
+    words.forEach(function (w, wi) {
+      var o = document.createElement('span');
+      o.className = 'u419-w' + (li === 1 && wi === words.length - 1 ? ' gr' : '');
+      var s = document.createElement('span');
+      s.textContent = w; s.style.setProperty('--i', k++);
+      o.appendChild(s); ln.appendChild(o);
+      if (wi < words.length - 1) ln.appendChild(document.createTextNode(' '));
+    });
+    h1.appendChild(ln);
+  });
+  root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
+})();
+</script>

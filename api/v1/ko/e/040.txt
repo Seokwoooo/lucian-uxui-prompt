@@ -11,19 +11,19 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#040
 <style>
 .u040{--rw:76px;position:relative;display:flex;gap:10px;width:350px;height:520px}
 .u040.is-wide{--rw:200px}
-.u040-rail{position:relative;flex:none;width:var(--rw);padding:12px 10px;border-radius:24px;background:var(--ux-ink);color:var(--ux-page);overflow:hidden;transition:width .6s var(--ux-spring)}
+.u040-rail{position:relative;flex:none;width:var(--rw);padding:12px 10px;border-radius:24px;background:var(--ux-ink);background:light-dark(var(--ux-ink),var(--ux-surface-2));color:var(--ux-page);color:light-dark(var(--ux-page),var(--ux-ink));box-shadow:0 0 0 1px light-dark(transparent,var(--ux-line));overflow:hidden;transition:width .6s var(--ux-spring)}
 .u040-top{display:flex;align-items:center;gap:10px;height:44px;margin-bottom:14px}
 .u040-logo{width:36px;height:36px;flex:none;margin-left:10px;border-radius:12px;background:var(--ux-grad)}
 .u040-name{font-size:15.5px;font-weight:780;letter-spacing:-.03em;white-space:nowrap;opacity:0;transition:opacity .25s}
 .u040.is-wide .u040-name{opacity:1;transition:opacity .3s .15s}
-.u040-tog{position:absolute;right:-1px;top:16px;width:30px;height:36px;border:0;padding:0;border-radius:10px 0 0 10px;background:color-mix(in srgb,var(--ux-page) 14%,transparent);color:inherit;display:grid;place-items:center;opacity:0;transition:opacity .2s}
+.u040-tog{position:absolute;right:-1px;top:16px;width:30px;height:36px;border:0;padding:0;border-radius:10px 0 0 10px;background:color-mix(in srgb,currentColor 14%,transparent);color:inherit;display:grid;place-items:center;opacity:0;transition:opacity .2s}
 .u040-rail:hover .u040-tog,.u040-tog:focus-visible,.u040.is-wide .u040-tog{opacity:1}
 @media (hover:none){.u040-tog{opacity:1}}
 .u040-tog:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
 .u040-tog svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .5s var(--ux-spring)}
 .u040.is-wide .u040-tog svg{transform:rotate(180deg)}
 .u040-nav{position:relative;margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px}
-.u040-hl{position:absolute;left:0;right:0;top:0;height:48px;border-radius:15px;background:color-mix(in srgb,var(--ux-page) 15%,transparent);transform:translateY(var(--y,0));transition:transform .5s var(--ux-spring);pointer-events:none}
+.u040-hl{position:absolute;left:0;right:0;top:0;height:48px;border-radius:15px;background:color-mix(in srgb,currentColor 15%,transparent);transform:translateY(var(--y,0));transition:transform .5s var(--ux-spring);pointer-events:none}
 .u040-hl::before{content:"";position:absolute;left:-10px;top:12px;bottom:12px;width:4px;border-radius:0 4px 4px 0;background:var(--ux-grad)}
 .u040-it{position:relative;display:flex;align-items:center;gap:14px;width:100%;height:48px;padding:0 0 0 16px;border:0;border-radius:15px;background:none;color:inherit;opacity:.62;text-align:left;transition:opacity .25s}
 .u040-it:hover,.u040-it[aria-current="page"]{opacity:1}
@@ -31,9 +31,9 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#040
 .u040-it svg{width:22px;height:22px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .u040-it span{font-size:14.5px;font-weight:650;white-space:nowrap;opacity:0;transform:translateX(-8px);transition:opacity .2s,transform .35s var(--ux-ease)}
 .u040.is-wide .u040-it span{opacity:1;transform:none;transition:opacity .3s var(--ux-ease),transform .5s var(--ux-spring);transition-delay:calc(.12s + var(--i) * 35ms)}
-.u040-bd{position:absolute;left:34px;top:9px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#FF5A6E;color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;font-style:normal;box-shadow:0 0 0 2.5px var(--ux-ink);transition:left .5s var(--ux-spring)}
+.u040-bd{position:absolute;left:34px;top:9px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#FF5A6E;color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;font-style:normal;box-shadow:0 0 0 2.5px var(--ux-ink);box-shadow:0 0 0 2.5px light-dark(var(--ux-ink),var(--ux-surface-2));transition:left .5s var(--ux-spring)}
 .u040.is-wide .u040-bd{left:170px}
-.u040-me{position:absolute;left:10px;right:10px;bottom:12px;display:flex;align-items:center;gap:10px;height:52px;padding:0 0 0 10px;border-radius:16px;background:color-mix(in srgb,var(--ux-page) 8%,transparent)}
+.u040-me{position:absolute;left:10px;right:10px;bottom:12px;display:flex;align-items:center;gap:10px;height:52px;padding:0 0 0 10px;border-radius:16px;background:color-mix(in srgb,currentColor 8%,transparent)}
 .u040-me i{width:34px;height:34px;flex:none;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFD3A8,#FF7A93 60%,#8B6CFF)}
 .u040-me span{font-size:13px;font-weight:650;white-space:nowrap;opacity:0;transition:opacity .25s}
 .u040-me small{display:block;font-size:11.5px;opacity:.6}

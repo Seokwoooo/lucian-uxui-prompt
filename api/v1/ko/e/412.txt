@@ -1,0 +1,81 @@
+<!-- Lucian UX/UI Prompt #412 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#412 -->
+<!--
+Element: 모바일 헤더 메뉴
+ID: 412 · Category: 내비게이션 · Tags: header, hamburger, mobile-menu, navbar, spring
+What it does: 휴대폰 폭의 헤더 막대입니다. 햄버거 버튼을 누르면 두 줄이 X로 바뀌고, 막대가 아래로 늘어나며 메뉴 링크가 차례로 떨어지고 마지막에 시작하기 버튼이 나타납니다.
+How to use it: 오른쪽 햄버거 버튼을 눌러 메뉴를 열고 닫아 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#412
+-->
+<style>
+.u412{position:relative;width:340px;height:300px;display:flex;align-items:center;justify-content:center;color:var(--ux-ink)}
+/* 막대와 메뉴가 한 장의 카드입니다. 메뉴가 열리면 카드가 아래로 늘어나고, 루트가 가운데 정렬이라 막대는 위로 올라갑니다 */
+.u412-cd{width:292px;border-radius:18px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 18px 40px -22px var(--ux-shadow-strong);overflow:hidden}
+.u412-br{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 8px 0 16px}
+.u412-logo{display:flex;align-items:center;gap:7px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:800;letter-spacing:-.03em;border-radius:7px}
+.u412-mk{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u412-mk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.u412-bg{position:relative;display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:11px;background:none;color:var(--ux-ink);transition:background-color .2s,transform .3s var(--ux-spring)}
+.u412-bg:hover{background:var(--ux-surface-2)}
+.u412-bg:active{transform:scale(.9)}
+.u412-bg i{position:absolute;left:11px;width:16px;height:1.75px;border-radius:2px;background:currentColor;transition:transform .55s cubic-bezier(.3,1.6,.5,1)}
+.u412-bg i:first-child{transform:translateY(-3.5px)}
+.u412-bg i:last-child{transform:translateY(3.5px)}
+.u412.is-open .u412-bg i:first-child{transform:rotate(45deg)}
+.u412.is-open .u412-bg i:last-child{transform:rotate(-45deg)}
+.u412-sh{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.25,1,.35,1)}
+.u412.is-open .u412-sh{grid-template-rows:1fr}
+.u412-sh>div{min-height:0;overflow:hidden}
+.u412-ln{margin:0;padding:2px 8px 0;list-style:none;border-top:1px solid var(--ux-line)}
+.u412-ln li,.u412-go{opacity:0;transform:translateY(-10px);transition:opacity .15s,transform .2s}
+.u412.is-open .u412-ln li,.u412.is-open .u412-go{opacity:1;transform:none;transition:opacity .35s var(--ux-ease) calc(90ms + var(--i) * 55ms),transform .6s cubic-bezier(.3,1.5,.5,1) calc(90ms + var(--i) * 55ms)}
+.u412-ln a{display:flex;align-items:center;justify-content:space-between;height:40px;padding:0 10px;border-radius:11px;color:var(--ux-ink);text-decoration:none;font-size:15px;font-weight:700;letter-spacing:-.02em;transition:background-color .2s}
+.u412-ln a:hover{background:var(--ux-surface-2)}
+.u412-ln svg{width:14px;height:14px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ux-spring),stroke .2s}
+.u412-ln a:hover svg{transform:translateX(3px);stroke:var(--ux-ink)}
+.u412-go{display:flex;align-items:center;justify-content:center;height:40px;margin:6px 14px 14px;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);text-decoration:none;font-size:13px;font-weight:750}
+.u412-go:active{transform:scale(.97)!important}
+.u412 a:focus-visible,.u412 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u412-sh,.u412-ln li,.u412-go,.u412-bg i{transition:none!important}}
+</style>
+<div class="ux u412">
+  <header class="u412-cd">
+    <div class="u412-br">
+      <a class="u412-logo" href="#" aria-label="Haru 홈"><span class="u412-mk" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 8.9a4 4 0 0 1 8 0"/><path d="M1.8 11.4h10.4"/></svg></span>Haru</a>
+      <button class="u412-bg" type="button" aria-expanded="false" aria-label="메뉴 열기"><i></i><i></i></button>
+    </div>
+    <nav class="u412-sh" aria-label="주요 메뉴"><div>
+      <ul class="u412-ln">
+        <li style="--i:0"><a href="#">제품<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:1"><a href="#">가격<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:2"><a href="#">고객 사례<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+        <li style="--i:3"><a href="#">블로그<svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5.5 3 4 4-4 4"/></svg></a></li>
+      </ul>
+      <a class="u412-go" href="#" style="--i:4">무료로 시작하기</a>
+    </div></nav>
+  </header>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var bg = root.querySelector('.u412-bg'), sh = root.querySelector('.u412-sh');
+  var uid = 'u412-' + Math.random().toString(36).slice(2, 7);
+  var open = false;
+  sh.id = uid + '-m'; bg.setAttribute('aria-controls', sh.id);
+  sh.inert = true;
+  function set(v, back) {
+    open = v;
+    root.classList.toggle('is-open', v);
+    bg.setAttribute('aria-expanded', String(v));
+    bg.setAttribute('aria-label', v ? '메뉴 닫기' : '메뉴 열기');
+    sh.inert = !v;
+    if (back) bg.focus({ preventScroll: true });
+  }
+  bg.addEventListener('click', function () { set(!open); });
+  root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && open) { e.preventDefault(); e.stopPropagation(); set(false, true); } });
+  root.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); if (sh.contains(a)) set(false, true); });
+  });
+})();
+</script>

@@ -1,0 +1,95 @@
+<!-- Lucian UX/UI Prompt #449 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#449 -->
+<!--
+Element: Pagination
+ID: 449 · Category: Menus & Tabs · Tags: pagination, pager, navigation, ellipsis, spring, sliding-pill
+What it does: Just the page-number bar. The pill around the current page springs over to the next number, and when the window shifts, ellipses and numbers roll up or down into each other. There are always seven slots so the bar never changes width, and the previous and next buttons dim at the ends.
+How to use it: Press next and the page numbers
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#449
+-->
+<style>
+.u449{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u449-nav{display:flex;align-items:center;gap:6px;padding:6px;border-radius:16px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 10px 26px -18px var(--ux-shadow-strong)}
+.u449-ar{width:32px;height:36px;display:grid;place-items:center;border:0;border-radius:10px;background:none;color:var(--ux-ink-2);transition:background .2s,color .2s,opacity .25s,transform .35s var(--ux-spring)}
+.u449-ar:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u449-ar:active:not(:disabled){transform:scale(.9)}
+.u449-ar:disabled{opacity:.3;cursor:default}
+.u449-ar svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u449 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u449-sl{position:relative;display:grid;grid-template-columns:repeat(7,32px);gap:2px}
+.u449-pill{position:absolute;left:0;top:0;width:32px;height:36px;border-radius:10px;background:var(--ux-ink);transform:translateX(var(--x,0px));transition:transform .55s var(--ux-spring)}
+.u449-pill.is-sq{animation:u449-sq .55s var(--ux-ease)}
+@keyframes u449-sq{35%{scale:1.22 .9}}
+.u449-n{position:relative;width:32px;height:36px;padding:0;border:0;border-radius:10px;background:none;font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink-2);overflow:hidden;transition:color .3s,background .2s}
+.u449-n:hover:not(.is-dots):not([aria-current]){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u449-n[aria-current]{color:var(--ux-surface)}
+.u449-n.is-dots{cursor:default;color:var(--ux-ink-3)}
+.u449-n span{position:absolute;inset:0;display:grid;place-items:center}
+.u449-n span.is-in{animation:u449-in .4s var(--ux-spring)}
+.u449-n span.is-out{animation:u449-out .3s var(--ux-ease) forwards}
+.u449-n.is-back span.is-in{animation-name:u449-in-b}
+.u449-n.is-back span.is-out{animation-name:u449-out-b}
+@keyframes u449-in{from{transform:translateY(22px);opacity:0}}
+@keyframes u449-out{to{transform:translateY(-22px);opacity:0}}
+@keyframes u449-in-b{from{transform:translateY(-22px);opacity:0}}
+@keyframes u449-out-b{to{transform:translateY(22px);opacity:0}}
+.u449-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u449">
+  <nav class="u449-nav" aria-label="Pages">
+    <button type="button" class="u449-ar u449-pv" aria-label="Previous page"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5"/></svg></button>
+    <div class="u449-sl"><span class="u449-pill" aria-hidden="true"></span></div>
+    <button type="button" class="u449-ar u449-nx" aria-label="Next page"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5"/></svg></button>
+  </nav>
+  <p class="u449-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var T = { page: function (n) { return 'Page ' + n; } };
+  var TOTAL = 20, cur = 1;
+  var sl = root.querySelector('.u449-sl'), pill = root.querySelector('.u449-pill'), pv = root.querySelector('.u449-pv'), nx = root.querySelector('.u449-nx'), live = root.querySelector('.u449-live');
+  var slots = [];
+  for (var k = 0; k < 7; k++) { var b = document.createElement('button'); b.type = 'button'; b.className = 'u449-n'; b.innerHTML = '<span></span>'; sl.appendChild(b); slots.push(b); }
+  function win(c) {
+    if (c <= 4) return [1, 2, 3, 4, 5, '', TOTAL];
+    if (c >= TOTAL - 3) return [1, '', TOTAL - 4, TOTAL - 3, TOTAL - 2, TOTAL - 1, TOTAL];
+    return [1, '', c - 1, c, c + 1, '', TOTAL];
+  }
+  function render(back) {
+    win(cur).forEach(function (v, k) {
+      var b = slots[k], old = b.getAttribute('data-v');
+      b.classList.toggle('is-dots', v === '');
+      if (v === '') { b.setAttribute('aria-hidden', 'true'); b.tabIndex = -1; b.removeAttribute('aria-label'); }
+      else { b.removeAttribute('aria-hidden'); b.tabIndex = 0; b.setAttribute('aria-label', T.page(v)); }
+      if (v === cur) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+      if (old === String(v)) return;
+      b.setAttribute('data-v', v);
+      var txt = v === '' ? '…' : String(v);
+      if (old === null) { b.firstChild.textContent = txt; return; }
+      b.querySelectorAll('.is-out').forEach(function (s) { s.remove(); });
+      var o = b.querySelector('span'), s = document.createElement('span');
+      s.textContent = txt; s.className = 'is-in';
+      b.classList.toggle('is-back', !!back);
+      o.className = 'is-out'; b.appendChild(s);
+      setTimeout(function () { if (o.isConnected) o.remove(); }, 320);
+    });
+    var at = win(cur).indexOf(cur);
+    pill.style.setProperty('--x', (at * 34) + 'px');
+    pv.disabled = cur === 1; nx.disabled = cur === TOTAL;
+  }
+  function go(n) {
+    n = Math.max(1, Math.min(TOTAL, n));
+    if (n === cur) return;
+    var back = n < cur; cur = n;
+    pill.classList.remove('is-sq'); void pill.offsetWidth; pill.classList.add('is-sq');
+    render(back);
+    live.textContent = T.page(cur);
+  }
+  slots.forEach(function (b) { b.addEventListener('click', function () { var v = b.getAttribute('data-v'); if (v) go(+v); }); });
+  pv.addEventListener('click', function () { go(cur - 1); });
+  nx.addEventListener('click', function () { go(cur + 1); });
+  render(false);
+})();
+</script>

@@ -1,0 +1,134 @@
+<!-- Lucian UX/UI Prompt #428 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#428 -->
+<!--
+Element: Contact form
+ID: 428 · Category: Forms & Input · Tags: contact, form, envelope, illustration, morph, success-state
+What it does: A contact form with name, email and message fields and a Send button. Send it and the form folds down to envelope size, the flap closes, a heart seal stamps on and the envelope flies away, leaving “Sent” in its place.
+How to use it: Fill in the fields and press Send. Sending with empty fields makes them shake
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#428
+-->
+<style>
+.u428{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u428-cd{position:relative;width:284px;border-radius:20px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong);overflow:hidden;transition:width .55s cubic-bezier(.3,1.25,.45,1),height .55s cubic-bezier(.3,1.25,.45,1),border-radius .45s,background-color .35s,box-shadow .35s}
+.u428-cd.is-bad{animation:u428-shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u428-shake{15%,55%{transform:translateX(-5px)}35%,75%{transform:translateX(5px)}}
+.u428-fm{display:flex;flex-direction:column;gap:10px;padding:16px;transition:opacity .2s}
+.u428-r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.u428-f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.u428-f label{font-size:11px;font-weight:700;color:var(--ux-ink-2)}
+.u428-in{width:100%;height:36px;padding:0 11px;border:0;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;color:var(--ux-ink);outline:none;transition:box-shadow .2s,background-color .2s}
+.u428-in::placeholder{color:var(--ux-ink-3)}
+.u428-in:focus{background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u428 .u428-in:focus-visible{outline:none}
+.u428-in[aria-invalid="true"]{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 14%,transparent)}
+textarea.u428-in{height:66px;padding:9px 11px;resize:none;line-height:1.5;font-family:inherit}
+.u428-go{position:relative;height:40px;margin-top:2px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:750;transition:transform .35s var(--ux-spring),opacity .15s}
+.u428-go:hover{opacity:.9}
+.u428-go:active{transform:scale(.97)}
+.u428-go[aria-busy="true"]{color:transparent}
+.u428-go[aria-busy="true"]::after{content:"";position:absolute;left:50%;top:50%;width:15px;height:15px;margin:-7.5px 0 0 -7.5px;border-radius:50%;border:2px solid var(--ux-surface);border-right-color:transparent;animation:u428-spin .7s linear infinite}
+@keyframes u428-spin{to{transform:rotate(360deg)}}
+.u428-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u428-er{margin:-2px 0 0;font-size:11px;font-weight:600;color:var(--ux-danger);text-align:center}
+.u428-er:empty{display:none}
+
+.u428-cd.is-fold{width:132px!important;height:90px!important;border-radius:8px;background:#FFF4E2;box-shadow:0 0 0 1px rgba(160,120,60,.25),0 16px 30px -14px rgba(60,40,10,.45)}
+.u428-cd.is-fold .u428-fm{opacity:0}
+.u428-env{position:absolute;inset:0;opacity:0;transition:opacity .25s .25s;pointer-events:none;perspective:300px}
+.u428-cd.is-fold .u428-env{opacity:1}
+.u428-env .u428-bk{position:absolute;inset:0;width:100%;height:100%}
+.u428-flap{position:absolute;left:0;right:0;top:0;height:62%;transform-origin:50% 0;transform:rotateX(178deg);transition:transform .55s cubic-bezier(.3,1.3,.5,1) .55s}
+.u428-cd.is-fold .u428-flap{transform:rotateX(0)}
+.u428-flap svg{position:absolute;inset:0;width:100%;height:100%}
+.u428-seal{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-6px 0 0 -10px;transform:scale(0) rotate(-30deg);transition:transform .45s cubic-bezier(.3,2,.5,1) 1s}
+.u428-cd.is-fold .u428-seal{transform:none}
+.u428-cd.is-fly{animation:u428-fly .8s cubic-bezier(.45,-.15,.7,.5) forwards}
+@keyframes u428-fly{0%{transform:none;opacity:1}18%{transform:translateY(6px) scale(.97);opacity:1}100%{transform:translate(150px,-190px) rotate(-18deg) scale(.55);opacity:0}}
+
+.u428-ok{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .35s,transform .55s cubic-bezier(.3,1.4,.5,1),visibility 0s .5s}
+.u428.is-sent .u428-ok{opacity:1;visibility:visible;transform:none;transition:opacity .4s var(--ux-ease),transform .6s cubic-bezier(.3,1.4,.5,1),visibility 0s}
+.u428-ck{width:52px;height:52px;margin-bottom:6px}
+.u428-ck circle{fill:color-mix(in srgb,var(--ux-mint) 14%,transparent);stroke:var(--ux-mint);stroke-width:2.2;stroke-dasharray:151;stroke-dashoffset:151;transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset .6s var(--ux-ease) .1s}
+.u428-ck path{fill:none;stroke:var(--ux-mint);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;transition:stroke-dashoffset .35s var(--ux-ease) .55s}
+.u428.is-sent .u428-ck circle,.u428.is-sent .u428-ck path{stroke-dashoffset:0}
+.u428-ok b{font-size:18px;font-weight:850;letter-spacing:-.03em}
+.u428-ok p{margin:0;font-size:12px;color:var(--ux-ink-3)}
+.u428-again{margin-top:12px;height:32px;padding:0 14px;border:0;border-radius:9px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12px;font-weight:700;color:var(--ux-ink);transition:background-color .2s,transform .3s var(--ux-spring)}
+.u428-again:hover{background:var(--ux-surface-2)}
+.u428-again:active{transform:scale(.95)}
+.u428-again:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u428-cd,.u428-flap,.u428-seal,.u428-env,.u428-ok,.u428-ck *{transition:none!important}.u428-cd.is-fly,.u428-cd.is-bad{animation:none!important;opacity:0}}
+</style>
+<div class="ux u428">
+  <div class="u428-cd">
+    <form class="u428-fm" novalidate>
+      <div class="u428-r2">
+        <div class="u428-f"><label data-for="nm">Name</label><input class="u428-in u428-nm" type="text" autocomplete="name" placeholder="Jane Doe" required></div>
+        <div class="u428-f"><label data-for="em">Email</label><input class="u428-in u428-em" type="email" inputmode="email" autocomplete="email" placeholder="you@mail.com" required></div>
+      </div>
+      <div class="u428-f"><label data-for="tx">Message</label><textarea class="u428-in u428-tx" placeholder="Ask us anything" required></textarea></div>
+      <button class="u428-go" type="submit">Send</button>
+      <p class="u428-er" role="alert"></p>
+    </form>
+    <div class="u428-env" aria-hidden="true">
+      <svg class="u428-bk" viewBox="0 0 132 90" preserveAspectRatio="none"><path d="M0 0 60 48 0 90z" fill="#F7E6C8"/><path d="M132 0 72 48 132 90z" fill="#F7E6C8"/><path d="M0 90 66 42 132 90z" fill="#FBEDD5"/><path d="M0 90 66 42 132 90" fill="none" stroke="#E2C595" stroke-width="1"/></svg>
+      <div class="u428-flap"><svg viewBox="0 0 132 56" preserveAspectRatio="none"><path d="M0 0 66 54 132 0z" fill="#F1D9AE"/><path d="M0 0 66 54 132 0" fill="none" stroke="#DDBB84" stroke-width="1"/></svg></div>
+      <svg class="u428-seal" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#E5484D"/><path d="M10 14.2c-2.7-1.7-4-3-4-4.5 0-1 .8-1.8 1.8-1.8.9 0 1.7.5 2.2 1.3.5-.8 1.3-1.3 2.2-1.3 1 0 1.8.8 1.8 1.8 0 1.5-1.3 2.8-4 4.5z" fill="#fff"/></svg>
+    </div>
+  </div>
+  <div class="u428-ok" role="status">
+    <svg class="u428-ck" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="m16.5 26.5 6.5 6.5 12.5-14"/></svg>
+    <b>Sent</b>
+    <p>We usually reply within one business day</p>
+    <button class="u428-again" type="button" tabindex="-1">Write another</button>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var cd = root.querySelector('.u428-cd'), fm = root.querySelector('.u428-fm'), go = root.querySelector('.u428-go'), er = root.querySelector('.u428-er');
+  var nm = root.querySelector('.u428-nm'), em = root.querySelector('.u428-em'), tx = root.querySelector('.u428-tx'), again = root.querySelector('.u428-again');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u428-' + Math.random().toString(36).slice(2, 7);
+  var timers = [], busy = false;
+  [['nm', nm], ['em', em], ['tx', tx]].forEach(function (p) { p[1].id = uid + '-' + p[0]; root.querySelector('[data-for="' + p[0] + '"]').setAttribute('for', p[1].id); });
+  function later(fn, ms) { timers.push(setTimeout(function () { if (root.isConnected) fn(); }, rm ? 0 : ms)); }
+  fm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (busy) return;
+    var bad = [];
+    if (!nm.value.trim()) bad.push(nm);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())) bad.push(em);
+    if (tx.value.trim().length < 2) bad.push(tx);
+    [nm, em, tx].forEach(function (el) { if (bad.indexOf(el) >= 0) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid'); });
+    if (bad.length) {
+      er.textContent = 'Check the empty fields and email format';
+      cd.classList.remove('is-bad'); void cd.offsetWidth; cd.classList.add('is-bad');
+      bad[0].focus({ preventScroll: true });
+      return;
+    }
+    er.textContent = '';
+    busy = true;
+    go.setAttribute('aria-busy', 'true'); go.setAttribute('aria-label', 'Sending…');
+    later(function () {
+      cd.style.width = cd.offsetWidth + 'px'; cd.style.height = cd.offsetHeight + 'px';
+      void cd.offsetWidth;
+      cd.classList.add('is-fold');
+      fm.inert = true;
+    }, 450);
+    later(function () { cd.classList.add('is-fly'); }, 1900);
+    later(function () { root.classList.add('is-sent'); again.tabIndex = 0; again.focus({ preventScroll: true }); }, 2550);
+  });
+  [nm, em, tx].forEach(function (el) { el.addEventListener('input', function () { if (el.getAttribute('aria-invalid')) { el.removeAttribute('aria-invalid'); if (!root.querySelector('[aria-invalid]')) er.textContent = ''; } }); });
+  again.addEventListener('click', function () {
+    timers.forEach(clearTimeout); timers = [];
+    root.classList.remove('is-sent');
+    cd.classList.remove('is-fold', 'is-fly', 'is-bad');
+    cd.style.width = ''; cd.style.height = '';
+    go.removeAttribute('aria-busy'); go.removeAttribute('aria-label');
+    fm.reset(); fm.inert = false; busy = false; again.tabIndex = -1;
+    nm.focus({ preventScroll: true });
+  });
+})();
+</script>

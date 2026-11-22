@@ -1,0 +1,125 @@
+<!-- @meta {"title":"쿠폰 적용","category":"커머스·가격","summary":"쿠폰 한 장과 코드 입력칸입니다. 코드를 넣고 적용하면 쿠폰 위에 ‘적용됨’ 도장이 쿵 찍히고, 원래 가격에 줄이 그어지며 할인된 가격으로 숫자가 굴러 내려갑니다. 틀린 코드면 입력칸이 고개를 젓습니다.","hint":"WELCOME10을 넣고 적용을 눌러 보세요. 다른 코드는 오류가 납니다","shape":"square","hue":"#F97316","hue2":"#EAB308","tags":["coupon","promo-code","stamp","price","discount","spring"]} -->
+<!-- @demo [["wait",800],["tap",".u445-in",0,{"after":200}],["type",".u445-in",0,"WELCOME10",80],["wait",250],["tap",".u445-ap",0,{"after":2600}],["reset"]] -->
+<!-- @en {"title":"Apply a coupon","summary":"A coupon ticket and a code field. Enter the code and apply it: an “Applied” stamp thumps onto the ticket, the original price is struck through, and the number rolls down to the discounted price. A wrong code makes the field shake its head.","hint":"Enter WELCOME10 and press Apply. Other codes show an error","map":[
+  [">신규 가입 쿠폰<", ">New member coupon<"],
+  [">최대 5,000원 · 12월 31일까지<", ">Up to ₩5,000 · until Dec 31<"],
+  [">적용됨<", ">Applied<"],
+  ["aria-label=\"쿠폰 코드\"", "aria-label=\"Coupon code\""],
+  ["placeholder=\"쿠폰 코드\"", "placeholder=\"Coupon code\""],
+  ["'적용'", "'Apply'"],
+  ["'해제'", "'Remove'"],
+  ["'없는 쿠폰 코드예요'", "'That code doesn’t exist'"],
+  ["'쿠폰을 적용했어요'", "'Coupon applied'"],
+  ["'쿠폰을 해제했어요'", "'Coupon removed'"]
+]} -->
+<style>
+.u445{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.u445-tk{position:relative;display:flex;width:284px;height:108px;border-radius:16px;filter:drop-shadow(0 12px 18px var(--ux-shadow));transform:scale(var(--k,1));transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.u445.is-thud .u445-tk{animation:u445-thud .5s cubic-bezier(.3,1.5,.5,1) .12s}
+@keyframes u445-thud{0%{transform:none}30%{transform:scale(.97,.95) translateY(2px)}60%{transform:scale(1.01,1.02)}100%{transform:none}}
+.u445-l,.u445-r{position:relative;height:100%}
+.u445-l{flex:none;width:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px 0 0 16px;background:linear-gradient(150deg,#8B7CF6,#6A57F2 55%,#4C3FD0);color:#fff;-webkit-mask:radial-gradient(circle 8px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 8px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle 8px at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 8px at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.u445-l b{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.u445-l small{margin-top:3px;font-size:11px;font-weight:700;letter-spacing:.12em;opacity:.85}
+.u445-l::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(60% 50% at 20% 10%,rgba(255,255,255,.28),transparent 70%)}
+.u445-r{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0 16px;border-radius:0 16px 16px 0;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-3));-webkit-mask:radial-gradient(circle 8px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 8px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle 8px at 0 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 8px at 0 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.u445-r::before{content:"";position:absolute;left:0;top:12px;bottom:12px;border-left:2px dashed var(--ux-line-2)}
+.u445-r b{font-size:14.5px;font-weight:700;letter-spacing:-.02em}
+.u445-r small{margin-top:3px;font-size:11.5px;color:var(--ux-ink-3)}
+.u445-r code{align-self:flex-start;margin-top:8px;padding:2px 7px;border-radius:6px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-2));font:inherit;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--ux-ink-2)}
+.u445-stamp{position:absolute;right:14px;top:50%;margin-top:-26px;height:52px;padding:0 12px;border:3px solid var(--ux-mint);border-radius:12px;display:grid;place-items:center;color:var(--ux-mint);font-size:17px;font-weight:800;letter-spacing:.02em;background:color-mix(in srgb,var(--ux-surface) 70%,transparent);transform:rotate(-14deg) scale(1.9);opacity:0;pointer-events:none;-webkit-mask:radial-gradient(circle at 30% 40%,#000 55%,rgba(0,0,0,.75) 70%) ;mask:radial-gradient(circle at 30% 40%,#000 55%,rgba(0,0,0,.75) 70%)}
+.u445-stamp::before{content:"";position:absolute;inset:3px;border:1.5px solid currentColor;border-radius:7px;opacity:.6}
+.u445.is-on .u445-stamp{opacity:1;transform:rotate(-14deg) scale(1);transition:opacity .12s,transform .38s cubic-bezier(.5,1.7,.6,1)}
+.u445-pr{display:flex;align-items:baseline;gap:10px;width:284px;height:34px;margin-top:16px;padding-left:4px;font-variant-numeric:tabular-nums}
+.u445-old{position:relative;font-size:22px;font-weight:750;letter-spacing:-.03em;color:var(--ux-ink);transition:font-size .4s cubic-bezier(.3,1.3,.5,1),color .3s}
+.u445-old::after{content:"";position:absolute;left:-2px;right:-2px;top:52%;height:2px;border-radius:1px;background:currentColor;transform:scaleX(0);transform-origin:0 50%;transition:transform .35s var(--ux-ease) .1s}
+.u445.is-on .u445-old{font-size:14px;color:var(--ux-ink-3)}
+.u445.is-on .u445-old::after{transform:none}
+.u445-new{font-size:22px;font-weight:800;letter-spacing:-.03em;color:var(--ux-accent);opacity:0;transform:translateY(10px);transition:opacity .25s,transform .5s cubic-bezier(.3,1.5,.5,1)}
+.u445.is-on .u445-new{opacity:1;transform:none;transition-delay:.15s}
+.u445-fd{display:flex;gap:8px;width:284px;margin-top:12px}
+.u445-fd.is-shake{animation:u445-shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u445-shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.u445-in{flex:1;min-width:0;height:44px;padding:0 14px;border:0;border-radius:12px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2);font-size:14px;font-weight:650;letter-spacing:.05em;color:var(--ux-ink);outline:none;transition:box-shadow .2s}
+.u445-in::placeholder{font-weight:500;letter-spacing:0;color:var(--ux-ink-3);opacity:1}
+.u445-in:focus,.u445-in.is-act{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft)}
+.u445-fd.is-err .u445-in{box-shadow:0 0 0 1.5px var(--ux-danger),0 0 0 5px color-mix(in srgb,var(--ux-danger) 14%,transparent)}
+.u445 .u445-in:focus-visible{outline:none}
+.u445-ap{flex:none;min-width:70px;height:44px;padding:0 14px;border:0;border-radius:12px;display:grid;place-items:center;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:650;transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),opacity .15s}
+.u445-ap:active{--k:.93;transition:transform .1s var(--ux-ease)}
+.u445-ap i{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u445-spin .7s linear infinite}
+@keyframes u445-spin{to{transform:rotate(360deg)}}
+.u445 .u445-ap:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u445-msg{height:18px;margin:6px 0 0;width:284px;padding-left:4px;font-size:12px;color:var(--ux-danger);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .35s cubic-bezier(.3,1.5,.5,1)}
+.u445-msg.is-on{opacity:1;transform:none}
+.u445-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u445">
+  <div class="u445-tk">
+    <div class="u445-l" aria-hidden="true"><b>10%</b><small>OFF</small></div>
+    <div class="u445-r"><b>신규 가입 쿠폰</b><small>최대 5,000원 · 12월 31일까지</small><code>WELCOME10</code></div>
+    <span class="u445-stamp" aria-hidden="true">적용됨</span>
+  </div>
+  <div class="u445-pr"><span class="u445-old">₩48,200</span><span class="u445-new" aria-hidden="true">₩43,380</span></div>
+  <div class="u445-fd"><input class="u445-in" type="text" aria-label="쿠폰 코드" placeholder="쿠폰 코드" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="16"><button type="button" class="u445-ap"></button></div>
+  <p class="u445-msg" aria-live="polite"></p>
+  <p class="u445-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var fd = q('.u445-fd'), input = q('.u445-in'), ap = q('.u445-ap'), msg = q('.u445-msg'), nw = q('.u445-new'), live = q('.u445-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { apply: '적용', remove: '해제', bad: '없는 쿠폰 코드예요', ok: '쿠폰을 적용했어요', off: '쿠폰을 해제했어요' };
+  var PRICE = 48200, OFF = 4820, on = false, busy = false, raf = 0;
+  function won(n) { return '₩' + Math.round(n).toLocaleString('ko-KR'); }
+  // 새 가격은 원래 가격에서 숫자가 굴러 내려가듯 줄어듭니다
+  function roll() {
+    cancelAnimationFrame(raf);
+    var t0 = performance.now() + 150, dur = rm ? 0 : 700;
+    (function step(now) {
+      if (!root.isConnected) return;
+      var k = dur ? Math.max(0, Math.min(1, (now - t0) / dur)) : 1, e = 1 - Math.pow(1 - k, 3);
+      nw.textContent = won(PRICE - OFF * e);
+      if (k < 1) raf = requestAnimationFrame(step);
+    })(performance.now());
+  }
+  function setOn(v) {
+    on = v;
+    root.classList.toggle('is-on', v);
+    nw.setAttribute('aria-hidden', v ? 'false' : 'true');
+    ap.textContent = v ? T.remove : T.apply;
+    if (v) { roll(); root.classList.remove('is-thud'); void root.offsetWidth; root.classList.add('is-thud'); }
+    live.textContent = v ? T.ok : T.off;
+  }
+  function apply() {
+    if (busy) return;
+    if (on) { setOn(false); input.value = ''; input.focus({ preventScroll: true }); return; }
+    var code = input.value.trim().toUpperCase();
+    if (!code) { input.focus({ preventScroll: true }); return; }
+    busy = true;
+    ap.innerHTML = '<i aria-hidden="true"></i>';
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      busy = false;
+      if (code === 'WELCOME10') { msg.classList.remove('is-on'); fd.classList.remove('is-err'); setOn(true); input.classList.remove('is-act'); return; }
+      ap.textContent = T.apply;
+      msg.textContent = T.bad; msg.classList.add('is-on');
+      fd.classList.add('is-err');
+      fd.classList.remove('is-shake'); void fd.offsetWidth; fd.classList.add('is-shake');
+    }, rm ? 150 : 600);
+  }
+  input.addEventListener('input', function () {
+    var up = input.value.toUpperCase().replace(/\s/g, '');
+    if (up !== input.value) input.value = up;
+    input.classList.add('is-act');
+    if (fd.classList.contains('is-err')) { fd.classList.remove('is-err'); msg.classList.remove('is-on'); }
+  });
+  input.addEventListener('blur', function () { input.classList.remove('is-act'); });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); apply(); } });
+  ap.addEventListener('click', apply);
+  ap.textContent = T.apply;
+  nw.textContent = won(PRICE - OFF);
+})();
+</script>

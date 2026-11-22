@@ -1,0 +1,115 @@
+<!-- Lucian UX/UI Prompt #403 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#403 -->
+<!--
+Element: Email sign-in form
+ID: 403 · Category: Sign-in & Sign-up · Tags: login, sign-in, form, floating-label, password, shake
+What it does: Just email and password fields and a sign-in button. Labels float up as you focus, and the eye icon closes and opens like a real eye. A wrong password shakes the field as a red underline sweeps across; the right one shrinks the button into a round check.
+How to use it: Try any wrong password, then sign in with lucian2026
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#403
+-->
+<style>
+.u403{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u403-form{width:280px;margin:0}
+.u403-f{position:relative;height:52px;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s}
+.u403-f+.u403-f{margin-top:10px}
+.u403-f:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u403-f.is-f{box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 4px var(--ux-accent-soft)}
+.u403-f.is-err{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-danger) 55%,transparent)}
+.u403-f::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;border-radius:2px;background:var(--ux-danger);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ux-ease)}
+.u403-f.is-err::after{transform:scaleX(1)}
+.u403-f.is-shake{animation:u403-shake .45s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u403-shake{15%{transform:translateX(-7px)}35%{transform:translateX(6px)}55%{transform:translateX(-4px)}75%{transform:translateX(2px)}}
+.u403-f label{position:absolute;left:15px;top:17px;font-size:14px;color:var(--ux-ink-3);transform-origin:left top;transition:transform .4s var(--ux-spring),color .2s;pointer-events:none}
+.u403-f.is-up label{transform:translateY(-10px) scale(.76);color:var(--ux-ink-2)}
+.u403-f.is-f label{color:var(--ux-accent)}
+.u403-f.is-err label{color:var(--ux-danger)}
+.u403-in{position:absolute;inset:0;width:100%;padding:21px 15px 6px;border:0;border-radius:12px;background:none;outline:none;font-size:14px;color:var(--ux-ink)}
+.u403 .u403-in:focus-visible{outline:none}
+.u403-in[type="password"]{letter-spacing:.14em}
+.u403-pw .u403-in{padding-right:48px}
+.u403-eye{position:absolute;right:8px;top:9px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--ux-ink-3);transition:color .2s,background .2s}
+.u403-eye:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u403 .u403-eye:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u403-eye svg{width:20px;height:20px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u403-eye .lid{transform-origin:10px 10px;transform:scaleY(.1);transition:transform .45s var(--ux-spring)}
+.u403-eye .lash{opacity:1;transition:opacity .2s,transform .4s var(--ux-spring);transform-origin:10px 10px}
+.u403-eye[aria-pressed="true"] .lid{transform:none}
+.u403-eye[aria-pressed="true"] .lash{opacity:0;transform:translateY(-3px)}
+.u403-msg{height:24px;margin:0;padding:6px 4px 0;font-size:12px;font-weight:500;color:var(--ux-danger);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .35s var(--ux-spring)}
+.u403-msg.is-on{opacity:1;transform:none}
+.u403-go{position:relative;display:grid;place-items:center;width:280px;height:48px;margin:6px auto 0;padding:0;border:0;border-radius:14px;background:var(--ux-ink);color:var(--ux-surface);font-size:14.5px;font-weight:600;overflow:hidden;transition:width .55s var(--ux-spring),border-radius .45s var(--ux-ease),background .35s,color .35s,transform .4s var(--ux-spring)}
+.u403-go:hover{transform:translateY(-1px)}
+.u403-go:active{transform:scale(.97,.94);transition-duration:.55s,.45s,.35s,.35s,.1s}
+.u403 .u403-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u403-go>*{grid-area:1/1;transition:opacity .2s,transform .4s var(--ux-spring)}
+.u403-go i{width:18px;height:18px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;opacity:0;transform:scale(.5);animation:u403-spin .7s linear infinite}
+.u403-go svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.5)}
+.u403-go svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s var(--ux-ease) .1s}
+@keyframes u403-spin{to{rotate:360deg}}
+.u403-go.is-busy,.u403-go.is-ok{width:48px;border-radius:24px;cursor:default}
+.u403-go.is-busy span,.u403-go.is-ok span{opacity:0;transform:scale(.8)}
+.u403-go.is-busy i{opacity:1;transform:none}
+.u403-go.is-ok{background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12)}
+.u403-go.is-ok svg{opacity:1;transform:none}
+.u403-go.is-ok svg path{stroke-dashoffset:0}
+.u403-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u403">
+  <form class="u403-form" novalidate>
+    <div class="u403-f"><input class="u403-in" type="email" autocomplete="username" spellcheck="false"><label>Email</label></div>
+    <div class="u403-f u403-pw"><input class="u403-in" type="password" autocomplete="current-password"><label>Password</label>
+      <button type="button" class="u403-eye" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><g class="lid"><path d="M2 10s3-5.2 8-5.2S18 10 18 10s-3 5.2-8 5.2S2 10 2 10z"/><circle cx="10" cy="10" r="2.4"/></g><g class="lash"><path d="M3 10.4c2 2.4 4.4 3.4 7 3.4s5-1 7-3.4M6 13l-1 1.6M10 14v1.8M14 13l1 1.6"/></g></svg></button>
+    </div>
+    <p class="u403-msg" aria-live="polite">That password isn’t right</p>
+    <button type="submit" class="u403-go"><span>Sign in</span><i aria-hidden="true"></i><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5.5 11.5l4 4L17 7.5"/></svg></button>
+  </form>
+  <p class="u403-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { busy: 'Checking', ok: 'Signed in', pw: 'That password isn’t right', em: 'Check your email address' };
+  var PASS = 'lucian2026';
+  var form = root.querySelector('.u403-form'), fs = [].slice.call(root.querySelectorAll('.u403-f')), ins = root.querySelectorAll('.u403-in');
+  var em = ins[0], pw = ins[1], eye = root.querySelector('.u403-eye'), go = root.querySelector('.u403-go'), msg = root.querySelector('.u403-msg'), live = root.querySelector('.u403-live');
+  var uid = 'u403' + Math.random().toString(36).slice(2, 7), gen = 0;
+  fs.forEach(function (f, k) { ins[k].id = uid + k; f.querySelector('label').htmlFor = ins[k].id; });
+  msg.id = uid + 'm';
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  function sync() { fs.forEach(function (f, k) { f.classList.toggle('is-up', f.classList.contains('is-f') || !!ins[k].value); }); }
+  root.addEventListener('pointerdown', function (e) { fs.forEach(function (f) { f.classList.toggle('is-f', f.contains(e.target)); }); sync(); });
+  [em, pw].forEach(function (i, k) {
+    i.addEventListener('focus', function () { fs[k].classList.add('is-f'); sync(); });
+    i.addEventListener('blur', function () { fs[k].classList.remove('is-f'); sync(); });
+    i.addEventListener('input', function () {
+      if (fs[k].classList.contains('is-err')) { fs[k].classList.remove('is-err'); msg.classList.remove('is-on'); i.removeAttribute('aria-invalid'); }
+      sync();
+    });
+  });
+  eye.addEventListener('click', function () {
+    var show = eye.getAttribute('aria-pressed') !== 'true';
+    eye.setAttribute('aria-pressed', String(show)); pw.type = show ? 'text' : 'password';
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (go.classList.contains('is-busy') || go.classList.contains('is-ok')) return;
+    fs.forEach(function (f) { f.classList.remove('is-f'); }); sync();
+    gen += 1; go.classList.add('is-busy'); go.setAttribute('aria-busy', 'true'); live.textContent = T.busy;
+    later(function () {
+      go.classList.remove('is-busy'); go.removeAttribute('aria-busy');
+      if (pw.value === PASS && /\S+@\S+\.\S+/.test(em.value)) {
+        go.classList.add('is-ok'); live.textContent = T.ok;
+        later(function () { go.classList.remove('is-ok'); pw.value = ''; pw.type = 'password'; eye.setAttribute('aria-pressed', 'false'); sync(); }, rm ? 1200 : 2400);
+        return;
+      }
+      var f = /\S+@\S+\.\S+/.test(em.value) ? fs[1] : fs[0], inp = f === fs[1] ? pw : em;
+      f.classList.remove('is-shake'); void f.offsetWidth; f.classList.add('is-err', 'is-shake');
+      inp.setAttribute('aria-invalid', 'true'); inp.setAttribute('aria-describedby', msg.id);
+      msg.textContent = f === fs[1] ? T.pw : T.em; msg.classList.add('is-on');
+      inp.focus({ preventScroll: true });
+    }, rm ? 200 : 650);
+  });
+})();
+</script>

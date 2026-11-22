@@ -8,17 +8,18 @@
   ["aria-label=\"축소\"", "aria-label=\"Zoom out\""]
 ]} -->
 <style>
-.u381{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F1EFE8;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1F2937}
+/* 지도 색: 캔버스는 숨은 탐침 요소로 이 값들을 실제 색으로 풀어 읽습니다 */
+.u381{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F1EFE8;background:light-dark(#F1EFE8,#15171D);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1F2937;color:light-dark(#1F2937,#EEF0F5);transition:background-color 1ms;--m-land:light-dark(#F1EFE8,#15171D);--m-alley:light-dark(#fff,#1E2129);--m-park:light-dark(#CDEBC4,#1B3125);--m-case:light-dark(#E2DDD0,#0D0E12);--m-road:light-dark(#fff,#2A2E39);--m-river:light-dark(#BFDBFE,#1A3150);--m-pin:light-dark(#92400E,#FDBA74);--m-hole:light-dark(#fff,#15171D)}
 .u381-cv{position:absolute;inset:0;width:100%;height:100%;cursor:grab;touch-action:none}
 .u381.is-drag .u381-cv{cursor:grabbing}
 .u381-cv:focus-visible{outline:2px solid #F97316;outline-offset:-4px;border-radius:30px}
-.u381-hd{position:absolute;left:16px;top:16px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 4px 14px -6px rgba(0,0,0,.25);font-size:11px;font-weight:850;font-variant-numeric:tabular-nums;pointer-events:none}
-.u381-zm{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;border-radius:14px;background:#fff;box-shadow:0 6px 18px -8px rgba(0,0,0,.35);overflow:hidden}
-.u381-zm button{width:36px;height:36px;border:0;background:none;color:#1F2937;font:inherit;font-size:20px;font-weight:700;line-height:1;cursor:pointer;display:grid;place-items:center}
-.u381-zm button+button{box-shadow:inset 0 1px 0 #E5E7EB}
-.u381-zm button:disabled{color:#CBD5E1;cursor:default}
+.u381-hd{position:absolute;left:16px;top:16px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.92);background:light-dark(rgba(255,255,255,.92),rgba(35,38,49,.92));box-shadow:0 4px 14px -6px rgba(0,0,0,.25);box-shadow:0 4px 14px -6px light-dark(rgba(0,0,0,.25),rgba(0,0,0,.6));font-size:11px;font-weight:850;font-variant-numeric:tabular-nums;pointer-events:none}
+.u381-zm{position:absolute;right:16px;top:16px;display:flex;flex-direction:column;border-radius:14px;background:#fff;background:light-dark(#fff,#232631);box-shadow:0 6px 18px -8px rgba(0,0,0,.35);box-shadow:0 6px 18px -8px light-dark(rgba(0,0,0,.35),rgba(0,0,0,.7));overflow:hidden}
+.u381-zm button{width:36px;height:36px;border:0;background:none;color:#1F2937;color:light-dark(#1F2937,#EEF0F5);font:inherit;font-size:20px;font-weight:700;line-height:1;cursor:pointer;display:grid;place-items:center}
+.u381-zm button+button{box-shadow:inset 0 1px 0 #E5E7EB;box-shadow:inset 0 1px 0 light-dark(#E5E7EB,rgba(255,255,255,.08))}
+.u381-zm button:disabled{color:#CBD5E1;color:light-dark(#CBD5E1,#4A505E);cursor:default}
 .u381-zm button:focus-visible{outline:2px solid #F97316;outline-offset:-3px}
-.u381-tip{position:absolute;left:0;top:0;padding:6px 9px;border-radius:10px;background:#1F2937;color:#fff;font-size:10.5px;font-weight:750;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,-100%);transition:opacity .15s}
+.u381-tip{position:absolute;left:0;top:0;padding:6px 9px;border-radius:10px;background:#1F2937;background:light-dark(#1F2937,#EEF0F5);color:#fff;color:light-dark(#fff,#15171D);font-size:10.5px;font-weight:750;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,-100%);transition:opacity .15s}
 .u381-tip.is-on{opacity:1}
 </style>
 <div class="ux u381">
@@ -60,6 +61,15 @@
     return { list: out, id: id };
   }
   var CL = [0, 1, 2, 3].map(cluster);
+  // 테마 색: CSS의 --m-* 값을 숨은 탐침의 color로 풀어 실제 rgb로 읽고, 루트 배경이 바뀔 때만 다시 읽습니다
+  var probe = document.createElement('i'), PAL = null, palKey = ''; probe.hidden = true; root.appendChild(probe);
+  function pal() {
+    var k = getComputedStyle(root).backgroundColor;
+    if (PAL && k === palKey) return PAL;
+    palKey = k; PAL = {};
+    ['land', 'alley', 'park', 'case', 'road', 'river', 'pin', 'hole'].forEach(function (n) { probe.style.color = 'var(--m-' + n + ')'; PAL[n] = getComputedStyle(probe).color; });
+    return PAL;
+  }
   function bubble(x, y, n, a) {
     cx.globalAlpha = a;
     if (n > 1) {
@@ -69,19 +79,19 @@
       cx.strokeStyle = '#fff'; cx.lineWidth = 2; cx.stroke();
       cx.fillStyle = '#fff'; cx.font = '800 ' + (n > 9 ? 11 : 12) + 'px system-ui, sans-serif'; cx.textAlign = 'center'; cx.fillText(n, x, y + 4);
     } else {
-      cx.fillStyle = '#92400E'; cx.beginPath(); cx.arc(x, y - 9, 6.5, 0, 6.2832); cx.fill(); cx.beginPath(); cx.moveTo(x - 5, y - 6); cx.lineTo(x, y); cx.lineTo(x + 5, y - 6); cx.fill();
-      cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(x, y - 9, 2.6, 0, 6.2832); cx.fill();
+      cx.fillStyle = PAL.pin; cx.beginPath(); cx.arc(x, y - 9, 6.5, 0, 6.2832); cx.fill(); cx.beginPath(); cx.moveTo(x - 5, y - 6); cx.lineTo(x, y); cx.lineTo(x + 5, y - 6); cx.fill();
+      cx.fillStyle = PAL.hole; cx.beginPath(); cx.arc(x, y - 9, 2.6, 0, 6.2832); cx.fill();
     }
     cx.globalAlpha = 1;
   }
   function path(pts, w, col) { cx.strokeStyle = col; cx.lineWidth = w; cx.lineCap = 'round'; cx.lineJoin = 'round'; cx.beginPath(); pts.forEach(function (p, i) { var q = scr(p[0], p[1]); if (i) cx.lineTo(q[0], q[1]); else cx.moveTo(q[0], q[1]); }); cx.stroke(); }
   function drawMap() {
-    cx.fillStyle = '#F1EFE8'; cx.fillRect(0, 0, W, H);
+    var P = pal(); cx.fillStyle = P.land; cx.fillRect(0, 0, W, H);
     // 작은 길: 확대할수록 촘촘한 골목이 보입니다
-    if (cam.s > 0.55) { cx.globalAlpha = Math.min(1, (cam.s - 0.55) * 2); for (var g = 0; g <= 1000; g += 62) { path([[g, 0], [g + 20, 1000]], 2.2 * cam.s, '#fff'); path([[0, g], [1000, g - 18]], 2.2 * cam.s, '#fff'); } cx.globalAlpha = 1; }
-    PARKS.forEach(function (p) { var q = scr(p[0], p[1]); cx.fillStyle = '#CDEBC4'; cx.beginPath(); cx.ellipse(q[0], q[1], p[2] * cam.s, p[3] * cam.s, 0.3, 0, 6.2832); cx.fill(); });
-    ROADS.forEach(function (r) { path(r, 12 * cam.s + 2, '#E2DDD0'); path(r, 12 * cam.s, '#fff'); });
-    path(RIVER, 34 * cam.s, '#BFDBFE');
+    if (cam.s > 0.55) { cx.globalAlpha = Math.min(1, (cam.s - 0.55) * 2); for (var g = 0; g <= 1000; g += 62) { path([[g, 0], [g + 20, 1000]], 2.2 * cam.s, P.alley); path([[0, g], [1000, g - 18]], 2.2 * cam.s, P.alley); } cx.globalAlpha = 1; }
+    PARKS.forEach(function (p) { var q = scr(p[0], p[1]); cx.fillStyle = P.park; cx.beginPath(); cx.ellipse(q[0], q[1], p[2] * cam.s, p[3] * cam.s, 0.3, 0, 6.2832); cx.fill(); });
+    ROADS.forEach(function (r) { path(r, 12 * cam.s + 2, P.case); path(r, 12 * cam.s, P.road); });
+    path(RIVER, 34 * cam.s, P.river);
   }
   function draw() {
     drawMap();
@@ -137,6 +147,8 @@
     if (e.key === '-') { zoomTo(z - 1, cam.x, cam.y); e.preventDefault(); return; }
     if (!d || z === 0) return; e.preventDefault(); cam.x += d[0] / cam.s; cam.y += d[1] / cam.s; draw();
   });
+  // 둘레 테마가 바뀌면 루트 배경의 아주 짧은 전환이 끝나는 순간 지도를 다시 그립니다
+  root.addEventListener('transitionend', function (e) { if (e.target === root) draw(); });
   info(); draw();
 })();
 </script>

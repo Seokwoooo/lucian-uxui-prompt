@@ -1,9 +1,9 @@
 {
   "name": "Lucian UX/UI Prompt",
   "api": 1,
-  "version": "4fd448eb1e",
-  "updated": "2026-10-15T17:55:02.224Z",
-  "count": 400,
+  "version": "e541a46912",
+  "updated": "2026-11-22T17:26:27.801Z",
+  "count": 450,
   "languages": [
     "en",
     "ko"
@@ -17,33 +17,33 @@
     "tokens": "{lang}/tokens.css"
   },
   "catalogs": {
-    "en": "34c4b3e61d",
-    "ko": "26bbe93e4d"
+    "en": "dd4eb394c5",
+    "ko": "55a4e8606e"
   },
   "categories": [
     {
       "slug": "buttons",
       "en": "Buttons",
       "ko": "버튼",
-      "count": 12
+      "count": 13
     },
     {
       "slug": "toggles-pickers",
       "en": "Toggles & Pickers",
       "ko": "토글·선택",
-      "count": 12
+      "count": 14
     },
     {
       "slug": "inputs-search",
       "en": "Inputs & Search",
       "ko": "입력·검색",
-      "count": 12
+      "count": 16
     },
     {
       "slug": "menus-tabs",
       "en": "Menus & Tabs",
       "ko": "메뉴·탭",
-      "count": 12
+      "count": 15
     },
     {
       "slug": "cards-content",
@@ -55,25 +55,25 @@
       "slug": "sign-in-sign-up",
       "en": "Sign-in & Sign-up",
       "ko": "로그인·가입",
-      "count": 8
+      "count": 16
     },
     {
       "slug": "alerts-feedback",
       "en": "Alerts & Feedback",
       "ko": "알림·피드백",
-      "count": 9
+      "count": 12
     },
     {
       "slug": "loading-progress",
       "en": "Loading & Progress",
       "ko": "로딩·진행",
-      "count": 9
+      "count": 11
     },
     {
       "slug": "empty-error-states",
       "en": "Empty & Error States",
       "ko": "빈·오류 상태",
-      "count": 6
+      "count": 7
     },
     {
       "slug": "widgets-charts",
@@ -109,7 +109,7 @@
       "slug": "sections-content",
       "en": "Sections & Content",
       "ko": "섹션·콘텐츠",
-      "count": 21
+      "count": 24
     },
     {
       "slug": "data-motion",
@@ -121,7 +121,7 @@
       "slug": "commerce-pricing",
       "en": "Commerce & Pricing",
       "ko": "커머스·가격",
-      "count": 18
+      "count": 24
     },
     {
       "slug": "text-motion",
@@ -133,25 +133,25 @@
       "slug": "social-proof",
       "en": "Social Proof",
       "ko": "소셜 증명",
-      "count": 7
+      "count": 10
     },
     {
       "slug": "navigation",
       "en": "Navigation",
       "ko": "내비게이션",
-      "count": 16
+      "count": 23
     },
     {
       "slug": "forms-input",
       "en": "Forms & Input",
       "ko": "폼·입력",
-      "count": 15
+      "count": 20
     },
     {
       "slug": "hero-backgrounds",
       "en": "Hero & Backgrounds",
       "ko": "히어로·배경",
-      "count": 18
+      "count": 20
     },
     {
       "slug": "app-screens",

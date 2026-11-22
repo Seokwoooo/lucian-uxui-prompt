@@ -1,0 +1,120 @@
+<!-- Lucian UX/UI Prompt #404 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#404 -->
+<!--
+Element: 회원가입 비밀번호
+ID: 404 · Category: 로그인·가입 · Tags: sign-up, password, strength-meter, rules, validation, form
+What it does: 가입 화면의 비밀번호 칸에만 집중했습니다. 글자를 칠수록 네 칸짜리 강도 막대가 자라고, 8자 이상·숫자·특수문자 세 규칙이 하나씩 통통 튀며 체크됩니다. 셋이 모두 맞으면 잠들어 있던 가입하기 버튼이 깨어납니다.
+How to use it: 비밀번호를 한 글자씩 쳐 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#404
+-->
+<style>
+.u404{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u404-w{width:280px}
+.u404-f{position:relative;height:52px;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s}
+.u404-f:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u404-f.is-f{box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 4px var(--ux-accent-soft)}
+.u404-f label{position:absolute;left:15px;top:17px;font-size:14px;color:var(--ux-ink-3);transform-origin:left top;transition:transform .4s var(--ux-spring),color .2s;pointer-events:none}
+.u404-f.is-up label{transform:translateY(-10px) scale(.76);color:var(--ux-ink-2)}
+.u404-f.is-f label{color:var(--ux-accent)}
+.u404-in{position:absolute;inset:0;width:100%;padding:21px 48px 6px 15px;border:0;border-radius:12px;background:none;outline:none;font-size:14px;color:var(--ux-ink);letter-spacing:.14em}
+.u404-in[type="text"]{letter-spacing:0}
+.u404 .u404-in:focus-visible{outline:none}
+.u404-eye{position:absolute;right:8px;top:9px;width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--ux-ink-3);transition:color .2s,background .2s}
+.u404-eye:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u404 .u404-eye:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u404-eye svg{width:20px;height:20px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u404-eye .lid{transform-origin:10px 10px;transform:scaleY(.1);transition:transform .45s var(--ux-spring)}
+.u404-eye .lash{transition:opacity .2s,transform .4s var(--ux-spring)}
+.u404-eye[aria-pressed="true"] .lid{transform:none}
+.u404-eye[aria-pressed="true"] .lash{opacity:0;transform:translateY(-3px)}
+.u404-st{display:flex;align-items:center;gap:10px;height:16px;margin-top:12px}
+.u404-bars{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.u404-bars i{position:relative;height:5px;border-radius:3px;background:var(--ux-surface-3);overflow:hidden}
+.u404-bars i::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--c,var(--ux-ink-3));transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ux-spring),background .3s}
+.u404-bars i.is-on::after{transform:none}
+.u404-st em{width:62px;flex:none;text-align:right;font-style:normal;font-size:11.5px;font-weight:600;color:var(--c,var(--ux-ink-3));transition:color .3s}
+.u404[data-lv="1"]{--c:var(--ux-danger)}
+.u404[data-lv="2"]{--c:var(--ux-warn)}
+.u404[data-lv="3"],.u404[data-lv="4"]{--c:var(--ux-mint)}
+.u404-rules{margin:14px 0 0;padding:0 2px;list-style:none;display:grid;gap:8px}
+.u404-rules li{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ux-ink-3);transition:color .3s}
+.u404-rules svg{width:18px;height:18px;flex:none;overflow:visible}
+.u404-rules circle{fill:transparent;stroke:var(--ux-line-2);stroke-width:1.5;transition:fill .3s,stroke .3s}
+.u404-rules path{fill:none;stroke:var(--ux-surface);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:12;stroke-dashoffset:12;transition:stroke-dashoffset .35s var(--ux-ease) .08s}
+.u404-rules li.is-ok{color:var(--ux-ink)}
+.u404-rules li.is-ok circle{fill:var(--ux-mint);stroke:var(--ux-mint)}
+.u404-rules li.is-ok path{stroke-dashoffset:0}
+.u404-rules li.is-ok svg{animation:u404-pop .5s var(--ux-spring)}
+@keyframes u404-pop{0%{transform:scale(.6)}55%{transform:scale(1.25)}100%{transform:none}}
+.u404-go{position:relative;display:grid;place-items:center;width:280px;height:48px;margin:18px auto 0;padding:0;border:0;border-radius:14px;background:var(--ux-surface-3);color:var(--ux-ink-3);font-size:14.5px;font-weight:600;overflow:hidden;cursor:not-allowed;transition:width .55s var(--ux-spring),border-radius .45s var(--ux-ease),background .35s,color .35s,transform .45s var(--ux-spring),box-shadow .35s}
+.u404-go.is-awake{background:var(--ux-ink);color:var(--ux-surface);cursor:pointer;animation:u404-wake .6s var(--ux-spring);box-shadow:0 10px 24px -12px var(--ux-shadow-strong)}
+@keyframes u404-wake{40%{transform:scale(1.04,.94) translateY(-2px)}70%{transform:scale(.98,1.03)}}
+.u404-go.is-awake:hover{transform:translateY(-1px)}
+.u404-go.is-awake:active{transform:scale(.97,.94);transition-duration:.55s,.45s,.35s,.35s,.1s,.35s}
+.u404 .u404-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u404-go>*{grid-area:1/1;transition:opacity .2s,transform .4s var(--ux-spring)}
+.u404-go svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.5)}
+.u404-go svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .4s var(--ux-ease) .15s}
+.u404-go.is-ok{width:48px;border-radius:24px;background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);box-shadow:none}
+.u404-go.is-ok span{opacity:0;transform:scale(.8)}
+.u404-go.is-ok svg{opacity:1;transform:none}
+.u404-go.is-ok svg path{stroke-dashoffset:0}
+.u404-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u404">
+  <div class="u404-w">
+    <div class="u404-f"><input class="u404-in" type="password" autocomplete="new-password"><label>비밀번호</label>
+      <button type="button" class="u404-eye" aria-label="비밀번호 보기" aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true"><g class="lid"><path d="M2 10s3-5.2 8-5.2S18 10 18 10s-3 5.2-8 5.2S2 10 2 10z"/><circle cx="10" cy="10" r="2.4"/></g><g class="lash"><path d="M3 10.4c2 2.4 4.4 3.4 7 3.4s5-1 7-3.4M6 13l-1 1.6M10 14v1.8M14 13l1 1.6"/></g></svg></button>
+    </div>
+    <div class="u404-st"><div class="u404-bars" role="meter" aria-label="비밀번호 강도" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i></i><i></i><i></i><i></i></div><em></em></div>
+    <ul class="u404-rules">
+      <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8"/><path d="M5.6 9.3l2.3 2.3 4.6-4.8"/></svg><span>8자 이상</span></li>
+      <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8"/><path d="M5.6 9.3l2.3 2.3 4.6-4.8"/></svg><span>숫자 포함</span></li>
+      <li><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="8"/><path d="M5.6 9.3l2.3 2.3 4.6-4.8"/></svg><span>특수문자 포함</span></li>
+    </ul>
+    <button type="button" class="u404-go" aria-disabled="true"><span>가입하기</span><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M5.5 11.5l4 4L17 7.5"/></svg></button>
+  </div>
+  <p class="u404-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LV = ['', '약함', '보통', '강함', '아주 강함'];
+  var T = { ok: '가입할 수 있어요', done: '가입했어요' };
+  var f = root.querySelector('.u404-f'), inp = root.querySelector('.u404-in'), eye = root.querySelector('.u404-eye');
+  var bars = [].slice.call(root.querySelectorAll('.u404-bars i')), meter = root.querySelector('.u404-bars'), lvl = root.querySelector('.u404-st em');
+  var rules = [].slice.call(root.querySelectorAll('.u404-rules li')), go = root.querySelector('.u404-go'), live = root.querySelector('.u404-live');
+  var uid = 'u404' + Math.random().toString(36).slice(2, 7), ready = false;
+  inp.id = uid; f.querySelector('label').htmlFor = uid;
+  rules.forEach(function (r, k) { r.id = uid + 'r' + k; });
+  inp.setAttribute('aria-describedby', rules.map(function (r) { return r.id; }).join(' '));
+  var CHECK = [function (v) { return v.length >= 8; }, function (v) { return /\d/.test(v); }, function (v) { return /[^A-Za-z0-9\s]/.test(v); }];
+  function up() { f.classList.toggle('is-up', f.classList.contains('is-f') || !!inp.value); }
+  root.addEventListener('pointerdown', function (e) { f.classList.toggle('is-f', f.contains(e.target) && !eye.contains(e.target)); up(); });
+  inp.addEventListener('focus', function () { f.classList.add('is-f'); up(); });
+  inp.addEventListener('blur', function () { f.classList.remove('is-f'); up(); });
+  eye.addEventListener('click', function () { var s = eye.getAttribute('aria-pressed') !== 'true'; eye.setAttribute('aria-pressed', String(s)); inp.type = s ? 'text' : 'password'; });
+  // 강도: 길이·숫자·특수문자·(12자 이상 또는 대소문자 섞임)을 하나씩 더합니다
+  function score(v) { return v ? Math.max(1, (v.length >= 8) + /\d/.test(v) + /[^A-Za-z0-9\s]/.test(v) + (v.length >= 12 || (/[a-z]/.test(v) && /[A-Z]/.test(v)))) : 0; }
+  function sync() {
+    var v = inp.value, lv = score(v), all = true;
+    rules.forEach(function (r, k) { var ok = CHECK[k](v); if (ok !== r.classList.contains('is-ok')) r.classList.toggle('is-ok', ok); all = all && ok; });
+    root.setAttribute('data-lv', lv);
+    bars.forEach(function (b, k) { b.classList.toggle('is-on', k < lv); });
+    meter.setAttribute('aria-valuenow', lv); meter.setAttribute('aria-valuetext', LV[lv] || '');
+    lvl.textContent = LV[lv];
+    // 세 규칙이 모두 맞으면 버튼이 깨어납니다
+    if (all !== ready) { ready = all; go.classList.toggle('is-awake', all); go.setAttribute('aria-disabled', String(!all)); if (all) live.textContent = T.ok; }
+    up();
+  }
+  inp.addEventListener('input', sync);
+  go.addEventListener('click', function () {
+    if (!ready || go.classList.contains('is-ok')) return;
+    go.classList.add('is-ok'); live.textContent = T.done;
+    setTimeout(function () { if (!root.isConnected) return; go.classList.remove('is-ok'); inp.value = ''; sync(); }, rm ? 1200 : 2200);
+  });
+  sync();
+})();
+</script>

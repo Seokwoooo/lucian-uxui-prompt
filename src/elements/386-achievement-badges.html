@@ -10,31 +10,31 @@
   ["'획득 '", "'Earned '"]
 ]} -->
 <style>
-.u386{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:linear-gradient(165deg,#F8F9FA,#EDF0F3);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#212529}
+.u386{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:linear-gradient(165deg,#F8F9FA,#EDF0F3);background:linear-gradient(165deg,light-dark(#F8F9FA,#0F1016),light-dark(#EDF0F3,#08090D));box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#212529;color:light-dark(#212529,#F1F3F5)}
 .u386-hd{position:absolute;left:20px;right:20px;top:20px;display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:900;letter-spacing:-.02em}
-.u386-hd span{padding:3px 9px;border-radius:999px;background:#fff;box-shadow:inset 0 0 0 1px rgba(33,37,41,.08);font-size:10.5px;font-weight:850;color:#495057;letter-spacing:0;font-variant-numeric:tabular-nums}
+.u386-hd span{padding:3px 9px;border-radius:999px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px rgba(33,37,41,.08);box-shadow:inset 0 0 0 1px light-dark(rgba(33,37,41,.08),rgba(255,255,255,.1));font-size:10.5px;font-weight:850;color:#495057;color:light-dark(#495057,#C4C9D1);letter-spacing:0;font-variant-numeric:tabular-nums}
 .u386-gd{position:absolute;left:16px;right:16px;top:54px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;perspective:800px}
 .u386-b{position:relative;height:104px;border:0;padding:0;background:none;cursor:pointer;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.3,.5,1);font:inherit;color:inherit}
 .u386-b.is-flip{transform:rotateY(180deg)}
-.u386-b:focus-visible{outline:2px solid #212529;outline-offset:3px;border-radius:16px}
+.u386-b:focus-visible{outline:2px solid #212529;outline:2px solid light-dark(#212529,#F1F3F5);outline-offset:3px;border-radius:16px}
 .u386-f,.u386-k{position:absolute;inset:0;border-radius:16px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.u386-f{background:#fff;box-shadow:0 6px 16px -10px rgba(33,37,41,.4),inset 0 0 0 1px rgba(33,37,41,.06)}
+.u386-f{background:var(--ux-surface);box-shadow:0 6px 16px -10px rgba(33,37,41,.4),inset 0 0 0 1px rgba(33,37,41,.06);box-shadow:0 6px 16px -10px light-dark(rgba(33,37,41,.4),rgba(0,0,0,.8)),inset 0 0 0 1px light-dark(rgba(33,37,41,.06),rgba(255,255,255,.08))}
 .u386-m{position:relative;width:52px;height:52px}
 .u386-m svg{position:absolute;inset:0;width:100%;height:100%}
 .u386-md{transition:filter .5s,opacity .5s}
 .u386-lk{transition:transform .45s cubic-bezier(.3,1.6,.5,1),opacity .3s}
 .u386-f b{margin-top:7px;font-size:11.5px;font-weight:850;letter-spacing:-.01em;transition:color .4s}
 .u386-pg{display:none;align-items:center;gap:5px;margin-top:5px}
-.u386-pg i{position:relative;width:38px;height:4px;border-radius:2px;background:#E9ECEF;overflow:hidden}
-.u386-pg i::after{content:"";position:absolute;inset:0;border-radius:2px;background:#ADB5BD;transform:scaleX(var(--p));transform-origin:0 50%;transition:transform .35s ease-out}
-.u386-pg small{font-size:9px;font-weight:800;color:#ADB5BD;font-variant-numeric:tabular-nums}
+.u386-pg i{position:relative;width:38px;height:4px;border-radius:2px;background:#E9ECEF;background:light-dark(#E9ECEF,#2A2C37);overflow:hidden}
+.u386-pg i::after{content:"";position:absolute;inset:0;border-radius:2px;background:#ADB5BD;background:light-dark(#ADB5BD,#7C8290);transform:scaleX(var(--p));transform-origin:0 50%;transition:transform .35s ease-out}
+.u386-pg small{font-size:9px;font-weight:800;color:#ADB5BD;color:light-dark(#ADB5BD,#6C717E);font-variant-numeric:tabular-nums}
 .u386-b.is-lock{cursor:default}
 .u386-b.is-lock .u386-md{filter:grayscale(1);opacity:.28}
 .u386-b:not(.is-lock) .u386-lk{transform:translateY(-14px) scale(1.4) rotate(-20deg);opacity:0}
-.u386-b.is-lock .u386-f b{color:#ADB5BD}
+.u386-b.is-lock .u386-f b{color:#ADB5BD;color:light-dark(#ADB5BD,#6C717E)}
 .u386-b.is-lock .u386-pg{display:flex}
 .u386-b.is-lock .u386-f b{margin-top:6px}
-.u386-f::after{content:"";position:absolute;inset:-20%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.95) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
+.u386-f::after{content:"";position:absolute;inset:-20%;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.95) 50%,transparent 65%);background:linear-gradient(110deg,transparent 35%,light-dark(rgba(255,255,255,.95),rgba(255,255,255,.28)) 50%,transparent 65%);transform:translateX(-120%);pointer-events:none}
 .u386-b.is-new .u386-f::after{animation:u386-shine .9s ease-out .35s}
 @keyframes u386-shine{to{transform:translateX(120%)}}
 .u386-b.is-new .u386-m{animation:u386-pop .75s cubic-bezier(.3,1.6,.5,1)}
@@ -43,9 +43,9 @@
 .u386-k b{font-size:12px;font-weight:900;color:var(--c)}
 .u386-k span{font-size:10.5px;font-weight:700;line-height:1.35;word-break:keep-all}
 .u386-k small{margin-top:3px;font-size:9px;font-weight:700;color:#ADB5BD;font-variant-numeric:tabular-nums}
-.u386-go{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;border:0;padding:0 18px;height:38px;border-radius:999px;background:#212529;color:#fff;font:inherit;font-size:12.5px;font-weight:850;cursor:pointer;box-shadow:0 8px 18px -10px rgba(33,37,41,.8)}
+.u386-go{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;border:0;padding:0 18px;height:38px;border-radius:999px;background:#212529;background:light-dark(#212529,#F1F3F5);color:#fff;color:light-dark(#fff,#16151B);font:inherit;font-size:12.5px;font-weight:850;cursor:pointer;box-shadow:0 8px 18px -10px rgba(33,37,41,.8);box-shadow:0 8px 18px -10px light-dark(rgba(33,37,41,.8),rgba(0,0,0,.9))}
 .u386-go:disabled{opacity:.35;cursor:default}
-.u386-go:focus-visible{outline:2px solid #212529;outline-offset:3px}
+.u386-go:focus-visible{outline:2px solid #212529;outline:2px solid light-dark(#212529,#F1F3F5);outline-offset:3px}
 .u386-sp{position:absolute;width:6px;height:6px;border-radius:50%;pointer-events:none;animation:u386-sp .8s ease-out forwards}
 @keyframes u386-sp{to{transform:translate(var(--dx),var(--dy)) scale(.4);opacity:0}}
 @media (prefers-reduced-motion: reduce){.u386-b,.u386-md,.u386-lk,.u386-pg i::after{transition:none}.u386-b.is-new .u386-m,.u386-b.is-new .u386-f::after{animation:none}}

@@ -31,13 +31,13 @@
 .u249-tb[aria-selected="true"]{background:var(--ux-surface-2);color:var(--ux-ink)}
 .u249-pv{position:absolute;left:12px;right:12px;top:190px;bottom:12px}
 .u249-gs,.u249-og{position:absolute;inset:0;border-radius:16px;transition:opacity .3s,transform .4s cubic-bezier(.3,1.3,.5,1)}
-.u249-gs{padding:12px 14px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.08);color:#202124;font-family:Arial,system-ui,sans-serif}
+.u249-gs{padding:12px 14px;background:#fff;background:light-dark(#fff,#1F2023);box-shadow:0 0 0 1px rgba(0,0,0,.08);box-shadow:0 0 0 1px light-dark(rgba(0,0,0,.08),rgba(255,255,255,.09));color:#202124;color:light-dark(#202124,#E8EAED);font-family:Arial,system-ui,sans-serif}
 .u249-gs header{display:flex;align-items:center;gap:8px}
 .u249-gs header i{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#FBBF24,#F472B6);box-shadow:0 0 0 1px rgba(0,0,0,.06)}
-.u249-gs header b{display:block;font-size:11px;font-weight:600;color:#202124}
-.u249-gs header small{display:block;font-size:10px;color:#4d5156}
-.u249-gs h4{margin:8px 0 0;font-size:14.5px;line-height:1.3;font-weight:400;color:#1a0dab;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.u249-gs p{margin:4px 0 0;font-size:11px;line-height:1.45;color:#4d5156;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.u249-gs header b{display:block;font-size:11px;font-weight:600;color:#202124;color:light-dark(#202124,#DADCE0)}
+.u249-gs header small{display:block;font-size:10px;color:#4d5156;color:light-dark(#4d5156,#BDC1C6)}
+.u249-gs h4{margin:8px 0 0;font-size:14.5px;line-height:1.3;font-weight:400;color:#1a0dab;color:light-dark(#1a0dab,#99C3FF);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u249-gs p{margin:4px 0 0;font-size:11px;line-height:1.45;color:#4d5156;color:light-dark(#4d5156,#BDC1C6);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .u249-og{display:flex;overflow:hidden;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);opacity:0;transform:translateY(10px);pointer-events:none}
 .u249.is-og .u249-gs{opacity:0;transform:translateY(-10px);pointer-events:none}
 .u249.is-og .u249-og{opacity:1;transform:none}

@@ -1,0 +1,205 @@
+<!-- @meta {"title":"토스트 알림","category":"알림·피드백","summary":"저장을 누르면 토스트가 아래에서 살짝 튀어 오르며 체크가 그려지고, 얇은 시간 막대가 줄어듭니다. 여러 번 누르면 카드 더미처럼 겹쳐 쌓이고(최대 3개), 커서를 올리면 부채처럼 펼쳐지며 시간이 멈춥니다. 옆으로 휙 밀거나 ×로 닫고, ‘실행 취소’를 누르면 토스트가 ‘되돌렸어요’로 바뀝니다.","hint":"저장을 여러 번 눌러 쌓은 뒤 토스트에 커서를 올려 보세요. 옆으로 밀면 닫힙니다","shape":"square","hue":"#FB923C","hue2":"#7B61FF","tags":["toast","notification","stack","swipe","undo","spring","auto-dismiss"]} -->
+<!-- @demo [["wait",800],["tap",".u435-tr",0,{"after":550}],["tap",".u435-tr",0,{"after":900}],["hover",".u435-t",-1,{"after":1100}],["tap",".u435-t:last-child .u435-un",0,{"after":1000}],["drag",".u435-t",-2,[0.35,0.5],[1.25,0.5],320,{"after":700}],["leave",900],["reset"]] -->
+<!-- @en {"title":"Toast notifications","summary":"Press Save and a toast springs up from below, a check draws itself and a thin time bar runs down. Press again and toasts stack like a deck (up to three); hover and they fan out while the timers pause. Flick one sideways or press × to dismiss, and Undo turns the toast into “Undone”.","hint":"Press Save a few times, then hover the toasts. Swipe one sideways to dismiss","map":[
+  [">저장<", ">Save<"],
+  ["aria-label=\"알림\"", "aria-label=\"Notifications\""],
+  ["'변경 사항을 저장했어요'", "'Changes saved'"],
+  ["'되돌렸어요'", "'Undone'"],
+  ["'실행 취소'", "'Undo'"],
+  ["'알림 닫기'", "'Dismiss'"]
+]} -->
+<style>
+.u435{position:relative;width:340px;height:300px}
+.u435-tr{position:absolute;left:50%;top:46px;height:40px;padding:0 22px;border:0;border-radius:999px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 6px 14px -8px var(--ux-shadow-strong);font-size:14px;font-weight:650;color:var(--ux-ink);transform:translateX(-50%) scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),box-shadow .2s}
+.u435-tr:hover{box-shadow:0 0 0 1px color-mix(in srgb,var(--ux-ink) 28%,transparent),0 8px 18px -8px var(--ux-shadow-strong)}
+.u435-tr:active{--k:.92;transition:transform .1s var(--ux-ease)}
+.u435 .u435-tr:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u435-rg{position:absolute;left:22px;right:22px;bottom:20px;height:76px}
+.u435-t{position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;gap:11px;padding:0 8px 0 14px;border-radius:16px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 14px 30px -14px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);transform-origin:50% 100%;transform:translate3d(var(--x,0px),var(--y,0px),0) scale(var(--s,1));opacity:var(--o,1);transition:transform .62s cubic-bezier(.3,1.42,.52,1),opacity .3s var(--ux-ease);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
+.u435-t.is-drag{transition:opacity .3s var(--ux-ease);cursor:grabbing}
+.u435-t>*{transition:opacity .25s var(--ux-ease)}
+.u435-t.is-back>*{opacity:0}
+.u435-ic{position:relative;flex:none;width:22px;height:22px}
+.u435-ic>span{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;transition:opacity .25s var(--ux-ease),transform .45s cubic-bezier(.34,1.6,.5,1)}
+.u435-ic .ok{background:var(--ux-mint);color:var(--ux-surface)}
+.u435-ic .bk{background:var(--ux-surface-3);color:var(--ux-ink-2);opacity:0;transform:scale(.4) rotate(-90deg)}
+.u435-ic svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.u435-ic .ok path{stroke-dasharray:18;stroke-dashoffset:18;animation:u435-draw .4s var(--ux-ease) .22s forwards}
+.u435-t.is-in .u435-ic .ok{animation:u435-pop .5s cubic-bezier(.34,1.7,.5,1) .08s both}
+@keyframes u435-draw{to{stroke-dashoffset:0}}
+@keyframes u435-pop{from{transform:scale(.3)}}
+.u435-t.is-undo .u435-ic .ok{opacity:0;transform:scale(.4) rotate(90deg)}
+.u435-t.is-undo .u435-ic .bk{opacity:1;transform:none}
+.u435-tx{flex:1;min-width:0;display:grid}
+.u435-tx b{grid-area:1/1;font-size:13.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .25s var(--ux-ease),transform .35s var(--ux-ease),filter .25s var(--ux-ease)}
+.u435-tx b+b{opacity:0;transform:translateY(7px);filter:blur(3px)}
+.u435-t.is-undo .u435-tx b:first-child{opacity:0;transform:translateY(-7px);filter:blur(3px)}
+.u435-t.is-undo .u435-tx b+b{opacity:1;transform:none;filter:none}
+.u435-un{flex:none;height:28px;padding:0 10px;border:0;border-radius:8px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));font-size:12.5px;font-weight:650;color:var(--ux-ink);transition:opacity .2s var(--ux-ease),transform .3s var(--ux-ease),background-color .15s}
+.u435-un:hover{background:var(--ux-surface-3)}
+.u435-t.is-undo .u435-un{opacity:0;transform:scale(.9);pointer-events:none}
+.u435-x{flex:none;width:26px;height:26px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s}
+.u435-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u435-x svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.u435 .u435-un:focus-visible,.u435 .u435-x:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u435-pb{position:absolute;left:16px;right:16px;bottom:0;height:2px;border-radius:2px;overflow:hidden}
+.u435-pb i{display:block;height:100%;border-radius:inherit;background:var(--ux-mint);opacity:.75;transform-origin:0 50%;animation:u435-pb linear forwards}
+.u435-t.is-undo .u435-pb i{background:var(--ux-ink-3)}
+@keyframes u435-pb{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.u435-rg.is-paused .u435-pb i{animation-play-state:paused}
+.u435-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.u435-pb{display:none}}
+</style>
+<div class="ux u435">
+  <button type="button" class="u435-tr">저장</button>
+  <section class="u435-rg" aria-label="알림"></section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var tr = root.querySelector('.u435-tr'), rg = root.querySelector('.u435-rg');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { saved: '변경 사항을 저장했어요', undone: '되돌렸어요', undo: '실행 취소', close: '알림 닫기' };
+  var H = 56, GAP = 8, LIFE = 4500, MAX = 3;
+  var toasts = [], open = false, paused = false;
+
+  // 모든 토스트의 자리: 접히면 카드 더미처럼 뒤로 작아지고, 펼치면 위로 나란히 섭니다
+  function layout() {
+    var live = toasts.filter(function (t) { return !t.gone; }), n = live.length;
+    live.forEach(function (t, k) {
+      var i = n - 1 - k;
+      var y = open ? -i * (H + GAP) : -i * 11, s = open ? 1 : 1 - i * 0.055;
+      t.el.style.setProperty('--y', y + 'px');
+      t.el.style.setProperty('--s', s.toFixed(3));
+      t.el.style.setProperty('--o', i < MAX ? 1 : 0);
+      t.el.style.zIndex = String(20 - i);
+      t.el.classList.toggle('is-back', !open && i > 0);
+    });
+    rg.style.height = (open && n > 1 ? n * H + (n - 1) * GAP : H + 20) + 'px';
+  }
+  function timer(t) {
+    clearTimeout(t.tm);
+    t.t0 = Date.now();
+    if (!paused) t.tm = setTimeout(function () { if (root.isConnected) dismiss(t); }, t.left);
+  }
+  function bar(t, ms) {
+    var pb = t.el.querySelector('.u435-pb');
+    pb.innerHTML = '<i style="animation-duration:' + ms + 'ms"></i>';
+    t.left = ms;
+    timer(t);
+  }
+  function make(animate) {
+    var el = document.createElement('div');
+    el.className = 'u435-t';
+    el.setAttribute('role', 'status');
+    el.innerHTML = '<span class="u435-ic" aria-hidden="true"><span class="ok"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span><span class="bk"><svg viewBox="0 0 24 24"><path d="M9 14 4.5 9.5 9 5"/><path d="M4.5 9.5h9a5.5 5.5 0 0 1 0 11H11"/></svg></span></span>' +
+      '<span class="u435-tx"><b></b><b aria-hidden="true"></b></span><button type="button" class="u435-un"></button><button type="button" class="u435-x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button><span class="u435-pb" aria-hidden="true"></span>';
+    var bs = el.querySelectorAll('.u435-tx b');
+    bs[0].textContent = T.saved; bs[1].textContent = T.undone;
+    el.querySelector('.u435-un').textContent = T.undo;
+    el.querySelector('.u435-x').setAttribute('aria-label', T.close);
+    var t = { el: el };
+    el.querySelector('.u435-x').addEventListener('click', function () { dismiss(t); });
+    // 실행 취소: 같은 토스트가 ‘되돌렸어요’로 모양을 바꾸고 조금 뒤에 사라집니다
+    el.querySelector('.u435-un').addEventListener('click', function () {
+      if (t.undone) return;
+      t.undone = true;
+      el.classList.add('is-undo');
+      bs[0].setAttribute('aria-hidden', 'true'); bs[1].removeAttribute('aria-hidden');
+      el.querySelector('.u435-x').focus({ preventScroll: true });
+      bar(t, 2000);
+    });
+    swipe(t);
+    toasts.push(t);
+    if (animate && !rm) {
+      el.classList.add('is-in');
+      el.style.setProperty('--y', '84px'); el.style.setProperty('--s', '.9'); el.style.setProperty('--o', '0');
+      el.style.transition = 'none';
+      rg.appendChild(el);
+      void el.offsetWidth;
+      el.style.transition = '';
+    } else rg.appendChild(el);
+    bar(t, LIFE);
+    var live = toasts.filter(function (x) { return !x.gone; });
+    if (live.length > MAX) dismiss(live[0], 0, true);
+    layout();
+    return t;
+  }
+  // 닫기: 옆으로 밀었으면 그 속도 그대로 날아가고, 아니면 살짝 가라앉으며 흐려집니다
+  function dismiss(t, dir, quiet) {
+    if (t.gone) return;
+    t.gone = true;
+    clearTimeout(t.tm);
+    var el = t.el;
+    if (el.contains(document.activeElement)) { var other = toasts.filter(function (x) { return !x.gone; }).pop(); (other ? other.el.querySelector('.u435-x') : tr).focus({ preventScroll: true }); }
+    el.style.pointerEvents = 'none';
+    var done = function () { el.remove(); var i = toasts.indexOf(t); if (i >= 0) toasts.splice(i, 1); };
+    layout();
+    if (rm || !el.animate) { done(); return; }
+    var y = el.style.getPropertyValue('--y') || '0px', s = el.style.getPropertyValue('--s') || '1';
+    if (dir) {
+      var v = Math.max(1.2, Math.abs(t.v || 0)), dist = 380, dur = Math.max(160, Math.min(320, dist / v));
+      el.classList.add('is-drag');
+      el.animate([{ transform: 'translate3d(' + (t.dx || 0) + 'px,' + y + ',0) scale(' + s + ')', opacity: 1 }, { transform: 'translate3d(' + dir * dist + 'px,' + y + ',0) scale(' + s + ') rotate(' + dir * 6 + 'deg)', opacity: 0 }], { duration: dur, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' }).onfinish = done;
+    } else {
+      el.animate([{ opacity: quiet ? 0 : 1 }, { transform: 'translate3d(0,calc(' + y + ' + 14px),0) scale(' + (s * 0.94) + ')', opacity: 0 }], { duration: 260, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'forwards' }).onfinish = done;
+    }
+  }
+  // 밀어서 닫기: 마지막 움직임의 속도를 재서, 충분히 빠르거나 멀리 밀었으면 날려 보냅니다
+  function swipe(t) {
+    var el = t.el, on = false, x0 = 0, last = [];
+    el.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0 || e.target.closest('button') || t.gone) return;
+      on = true; x0 = e.clientX; t.dx = 0; t.v = 0; last = [[e.clientX, e.timeStamp]];
+      el.classList.add('is-drag');
+      try { el.setPointerCapture(e.pointerId); } catch (er) { /* 무시 */ }
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!on) return;
+      var k = root.getBoundingClientRect().width / root.offsetWidth || 1;
+      t.dx = (e.clientX - x0) / k;
+      last.push([e.clientX, e.timeStamp]);
+      if (last.length > 5) last.shift();
+      el.style.setProperty('--x', t.dx.toFixed(1) + 'px');
+      el.style.opacity = String(Math.max(0.35, 1 - Math.abs(t.dx) / 320));
+    });
+    var end = function () {
+      if (!on) return;
+      on = false;
+      var a = last[0], b = last[last.length - 1], k = root.getBoundingClientRect().width / root.offsetWidth || 1;
+      t.v = b && a && b[1] > a[1] ? (b[0] - a[0]) / k / (b[1] - a[1]) : 0;
+      el.style.opacity = '';
+      if (Math.abs(t.dx) > 80 || Math.abs(t.v) > 0.6) { dismiss(t, (Math.abs(t.v) > 0.6 ? t.v : t.dx) > 0 ? 1 : -1); return; }
+      el.classList.remove('is-drag');
+      el.style.setProperty('--x', '0px');
+      t.dx = 0;
+    };
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+  }
+  // 커서를 올리거나 초점이 들어오면 펼치고 시간을 멈춥니다
+  function setOpen(v) {
+    if (open === v) return;
+    open = v;
+    paused = v;
+    rg.classList.toggle('is-paused', v);
+    toasts.forEach(function (t) {
+      if (t.gone) return;
+      if (v) { clearTimeout(t.tm); t.left = Math.max(500, t.left - (Date.now() - t.t0)); } else timer(t);
+    });
+    layout();
+  }
+  var leaveT = 0;
+  rg.addEventListener('pointerenter', function () { clearTimeout(leaveT); setOpen(true); });
+  rg.addEventListener('pointerleave', function () { clearTimeout(leaveT); leaveT = setTimeout(function () { if (!rg.contains(document.activeElement)) setOpen(false); }, 120); });
+  rg.addEventListener('focusin', function () { setOpen(true); });
+  rg.addEventListener('focusout', function (e) { if (!rg.contains(e.relatedTarget)) setOpen(false); });
+  rg.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    var el = e.target.closest('.u435-t'), t = toasts.filter(function (x) { return x.el === el; })[0];
+    if (t && !t.gone) { e.preventDefault(); e.stopPropagation(); dismiss(t); }
+  });
+  tr.addEventListener('click', function () { make(true); });
+  make(false);
+})();
+</script>

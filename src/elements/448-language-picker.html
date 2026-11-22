@@ -1,0 +1,119 @@
+<!-- @meta {"title":"언어 선택","category":"내비게이션","summary":"지구본 버튼과 다섯 언어 목록입니다. 누르면 목록이 버튼에서 스프링처럼 튀어나오고, 언어는 그 나라 말로 적혀 있습니다. 하나를 고르면 지구본이 한 바퀴 돌며 경선이 흘러가고, 버튼의 글자가 새 언어 이름으로 바뀌며 폭도 부드럽게 맞춰집니다.","hint":"지구본 버튼을 눌러 언어를 골라 보세요","shape":"square","hue":"#3D8BFF","hue2":"#6366F1","tags":["language","locale","i18n","globe","popover","listbox"]} -->
+<!-- @demo [["wait",600],["tap",".u448-b",0,{"after":800}],["hover",".u448-o",2,{"after":450}],["tap",".u448-o",2,{"after":1400}],["tap",".u448-b",0,{"after":800}],["hover",".u448-o",0,{"after":350}],["tap",".u448-o",0,{"after":1300}]] -->
+<!-- @en {"title":"Language picker","summary":"A globe button and a list of five languages. Press it and the list springs out of the button, each language written in its own script. Pick one and the globe turns as its meridians roll past, while the button label changes to the new language name and smoothly resizes.","hint":"Press the globe button and pick a language","keep":["한국어"],"map":[
+  ["aria-label=\"언어\"", "aria-label=\"Language\""],
+  ["changed: function (n) { return '언어: ' + n; }", "changed: function (n) { return 'Language: ' + n; }"]
+]} -->
+<style>
+.u448{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u448-w{position:relative;width:212px;height:262px}
+.u448-b{position:absolute;left:50%;top:0;display:flex;align-items:center;gap:8px;height:44px;padding:0 12px 0 10px;border:0;border-radius:22px;background:var(--ux-surface);color:var(--ux-ink);font-size:14px;font-weight:600;white-space:nowrap;box-shadow:inset 0 0 0 1px var(--ux-line-2),0 6px 16px -10px var(--ux-shadow-strong);transform:translateX(-50%);transition:box-shadow .2s,transform .4s var(--ux-spring)}
+.u448-b:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3),0 8px 18px -10px var(--ux-shadow-strong)}
+.u448-b:active{transform:translateX(-50%) scale(.96)}
+.u448 .u448-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u448-g{width:22px;height:22px;flex:none;color:var(--ux-accent)}
+.u448-g svg{width:22px;height:22px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.u448-g .mer{transform:translateX(0)}
+.u448-g.is-spin .mer{animation:u448-roll .9s cubic-bezier(.3,.7,.2,1)}
+.u448-g.is-spin svg{animation:u448-tilt .9s var(--ux-spring)}
+@keyframes u448-roll{from{transform:translateX(-16px)}}
+@keyframes u448-tilt{30%{transform:rotate(-24deg) scale(1.12)}}
+.u448-lb{display:grid;grid-template-columns:minmax(0,1fr);overflow-x:clip;transition:width .45s var(--ux-spring)}
+.u448-lb span{grid-area:1/1;justify-self:start;width:max-content;white-space:nowrap;transition:opacity .2s,transform .4s var(--ux-spring),filter .2s}
+.u448-lb span.is-out{opacity:0;transform:translateY(-10px);filter:blur(2px)}
+.u448-lb span.is-in{animation:u448-in .45s var(--ux-spring)}
+@keyframes u448-in{from{opacity:0;transform:translateY(10px);filter:blur(2px)}}
+.u448-cv{width:12px;height:12px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s var(--ux-spring)}
+.u448-b[aria-expanded="true"] .u448-cv{transform:rotate(180deg)}
+.u448-p{position:absolute;left:0;right:0;top:54px;margin:0;padding:6px;list-style:none;border-radius:16px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 22px 44px -18px var(--ux-shadow-strong),0 4px 12px -6px var(--ux-shadow);transform-origin:50% -32px;transform:scale(.3) translateY(-8px);opacity:0;visibility:hidden;outline:none;transition:transform .25s var(--ux-ease),opacity .18s,visibility 0s .25s}
+.u448.is-open .u448-p{transform:none;opacity:1;visibility:visible;transition:transform .55s var(--ux-spring),opacity .15s,visibility 0s}
+.u448-o{display:flex;align-items:center;gap:10px;height:38px;padding:0 10px;border-radius:10px;font-size:14px;color:var(--ux-ink);cursor:pointer;opacity:0;transform:translateY(-6px);transition:background .15s,opacity .15s,transform .35s var(--ux-spring)}
+.u448.is-open .u448-o{opacity:1;transform:none;transition-delay:0s,calc(60ms + var(--i) * 30ms),calc(60ms + var(--i) * 30ms)}
+.u448-o:hover,.u448-o.is-act{background:var(--ux-surface-2)}
+.u448-o span{flex:1}
+.u448-o em{font-style:normal;font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--ux-ink-3)}
+.u448-o svg{width:16px;height:16px;fill:none;stroke:var(--ux-accent);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .2s,transform .35s var(--ux-spring)}
+.u448-o[aria-selected="true"]{font-weight:600}
+.u448-o[aria-selected="true"] svg{opacity:1;transform:none}
+.u448-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u448">
+  <div class="u448-w">
+    <button type="button" class="u448-b" aria-haspopup="listbox" aria-expanded="false">
+      <span class="u448-g" aria-hidden="true"><svg viewBox="0 0 22 22"><defs><clipPath class="cp"><circle cx="11" cy="11" r="8.6"/></clipPath></defs><circle cx="11" cy="11" r="8.6"/><g class="clip"><g class="mer"><path d="M-13 2.4c-4.2 2.6-4.2 14.6 0 17.2M-13 2.4c4.2 2.6 4.2 14.6 0 17.2M-5 2.4c-4.2 2.6-4.2 14.6 0 17.2M-5 2.4c4.2 2.6 4.2 14.6 0 17.2M3 2.4c-4.2 2.6-4.2 14.6 0 17.2M3 2.4c4.2 2.6 4.2 14.6 0 17.2M11 2.4c-4.2 2.6-4.2 14.6 0 17.2M11 2.4c4.2 2.6 4.2 14.6 0 17.2M19 2.4c-4.2 2.6-4.2 14.6 0 17.2M19 2.4c4.2 2.6 4.2 14.6 0 17.2M27 2.4c-4.2 2.6-4.2 14.6 0 17.2M27 2.4c4.2 2.6 4.2 14.6 0 17.2"/></g><path d="M2.6 8.2h16.8M2.6 13.8h16.8"/></g></svg></span>
+      <span class="u448-lb"><span lang="ko">한국어</span></span>
+      <svg class="u448-cv" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.6 6 7.6l3-3"/></svg>
+    </button>
+    <ul class="u448-p" role="listbox" aria-label="언어" tabindex="-1">
+      <li class="u448-o" role="option" lang="ko" data-code="KO" style="--i:0"><span>한국어</span><em>KO</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="en" data-code="EN" style="--i:1"><span>English</span><em>EN</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="ja" data-code="JA" style="--i:2"><span>日本語</span><em>JA</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="zh-Hans" data-code="ZH" style="--i:3"><span>简体中文</span><em>ZH</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+      <li class="u448-o" role="option" lang="es" data-code="ES" style="--i:4"><span>Español</span><em>ES</em><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></li>
+    </ul>
+  </div>
+  <p class="u448-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var T = { changed: function (n) { return '언어: ' + n; } };
+  var b = root.querySelector('.u448-b'), p = root.querySelector('.u448-p'), lb = root.querySelector('.u448-lb'), g = root.querySelector('.u448-g'), w = root.querySelector('.u448-w'), live = root.querySelector('.u448-live');
+  var os = [].slice.call(root.querySelectorAll('.u448-o')), cur = 0, act = 0;
+  var uid = 'u448' + Math.random().toString(36).slice(2, 7);
+  // 지구본: 경선 무리를 원 모양으로 잘라 두고, 언어가 바뀌면 옆으로 흘려 보냅니다
+  var cp = g.querySelector('.cp'); cp.id = uid + 'c'; g.querySelector('.clip').setAttribute('clip-path', 'url(#' + cp.id + ')');
+  p.id = uid + 'p'; b.setAttribute('aria-controls', p.id);
+  os.forEach(function (o, k) { o.id = uid + 'o' + k; o.setAttribute('aria-selected', String(k === cur)); });
+  // 버튼 글자 칸의 폭을 실제 글자 폭에 맞춰 부드럽게 늘이고 줄입니다
+  function fit() { var s = lb.querySelector('span:not(.is-out)'); if (s) lb.style.width = s.offsetWidth + 'px'; }
+  fit();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  function setAct(k) {
+    act = (k + os.length) % os.length;
+    os.forEach(function (o, n) { o.classList.toggle('is-act', n === act); });
+    p.setAttribute('aria-activedescendant', os[act].id);
+  }
+  function open() { root.classList.add('is-open'); b.setAttribute('aria-expanded', 'true'); setAct(cur); p.focus({ preventScroll: true }); }
+  function close(back) {
+    root.classList.remove('is-open'); b.setAttribute('aria-expanded', 'false');
+    os.forEach(function (o) { o.classList.remove('is-act'); });
+    if (back) b.focus({ preventScroll: true });
+  }
+  function pick(k) {
+    close(true);
+    if (k === cur) return;
+    cur = k;
+    os.forEach(function (o, n) { o.setAttribute('aria-selected', String(n === k)); });
+    var name = os[k].querySelector('span').textContent;
+    lb.querySelectorAll('.is-out').forEach(function (s) { s.remove(); });
+    var old = lb.querySelector('span'), s = document.createElement('span');
+    s.textContent = name; s.lang = os[k].lang; s.className = 'is-in';
+    old.classList.add('is-out'); lb.appendChild(s);
+    setTimeout(function () { if (old.isConnected) old.remove(); }, 420);
+    fit();
+    g.classList.remove('is-spin'); void g.offsetWidth; g.classList.add('is-spin');
+    live.textContent = T.changed(name);
+  }
+  b.addEventListener('click', function () { if (root.classList.contains('is-open')) close(); else open(); });
+  b.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); } });
+  os.forEach(function (o, k) {
+    o.addEventListener('click', function () { pick(k); });
+    o.addEventListener('pointerenter', function () { if (root.classList.contains('is-open')) setAct(k); });
+  });
+  p.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown') { e.preventDefault(); setAct(act + 1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); setAct(act - 1); }
+    else if (e.key === 'Home') { e.preventDefault(); setAct(0); }
+    else if (e.key === 'End') { e.preventDefault(); setAct(os.length - 1); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(act); }
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); close(true); }
+    else if (e.key === 'Tab') close();
+  });
+  function outside(e) {
+    if (!root.isConnected) { document.removeEventListener('pointerdown', outside, true); return; }
+    if (root.classList.contains('is-open') && !w.contains(e.target)) close();
+  }
+  document.addEventListener('pointerdown', outside, true);
+})();
+</script>

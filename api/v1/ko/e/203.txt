@@ -9,51 +9,53 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#203
 -->
 <style>
-.u203{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(70% 55% at 50% 40%,#FFFFFF,transparent 75%),linear-gradient(165deg,#F4F6F8,#E6E9ED);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1D1D1F;--c1:#CFE0EA;--c2:#97B5C7;--cn:#DFEAF0;--cu:#B3CAD7}
+.u203{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(70% 55% at 50% 40%,#FFFFFF,transparent 75%),linear-gradient(165deg,#F4F6F8,#E6E9ED);background:radial-gradient(70% 55% at 50% 40%,light-dark(#FFFFFF,#2E323A),transparent 75%),linear-gradient(165deg,light-dark(#F4F6F8,#1A1C21),light-dark(#E6E9ED,#0C0D10));box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1D1D1F;color:light-dark(#1D1D1F,#F5F5F7);--bl:#0071E3;--bl:light-dark(#0071E3,#2997FF);--c1:#CFE0EA;--c2:#97B5C7;--cn:#DFEAF0;--cu:#B3CAD7}
 .u203-sv{position:absolute;left:0;top:0;width:340px;height:262px;overflow:visible}
 .u203-sv stop{transition:stop-color .6s ease}
 .u203-part{transition:opacity .3s,filter .3s}
 .u203.is-act .u203-part{opacity:.45}
-.u203.is-act .u203-part.is-on{filter:drop-shadow(0 0 7px rgba(0,113,227,.5))}
-.u203-ln{fill:none;stroke:#0071E3;stroke-width:1.6;stroke-dasharray:3 3}
-.u203-dot{fill:#0071E3}
+.u203.is-act .u203-part.is-on{filter:drop-shadow(0 0 7px rgba(0,113,227,.5));filter:drop-shadow(0 0 7px light-dark(rgba(0,113,227,.5),rgba(41,151,255,.6)))}
+.u203-ln{fill:none;stroke:var(--bl);stroke-width:1.6;stroke-dasharray:3 3}
+.u203-dot{fill:var(--bl)}
+/* 바닥 그림자: 어두운 스튜디오에서는 더 짙게 깔립니다 */
+.u203-sv>ellipse{fill:rgba(29,29,31,.10);fill:light-dark(rgba(29,29,31,.10),rgba(0,0,0,.55))}
 /* 크라운 핀: 다이얼 홈이 옆으로 흘러 돌아가는 것처럼 보입니다 */
 .u203-kn{transition:none}
 .u203.is-a3 .u203-kn{animation:u203-kn .5s linear infinite}
 @keyframes u203-kn{to{transform:translateX(-2.5px)}}
 /* 마이크 핀: 소리 물결이 퍼지다 사라집니다 */
-.u203-wv path{fill:none;stroke:#0071E3;stroke-width:1.6;stroke-linecap:round;opacity:0}
+.u203-wv path{fill:none;stroke:var(--bl);stroke-width:1.6;stroke-linecap:round;opacity:0}
 .u203.is-a1 .u203-wv path{animation:u203-wv 1.4s ease-out infinite}
 .u203.is-a1 .u203-wv path:nth-child(2){animation-delay:.35s}
 .u203.is-a1 .u203-wv path:nth-child(3){animation-delay:.7s}
 @keyframes u203-wv{0%{opacity:0;transform:translateX(6px)}25%{opacity:.9}100%{opacity:0;transform:translateX(-10px)}}
 .u203.is-a2 .u203-cs{animation:u203-cs 1.2s ease-in-out infinite}
 @keyframes u203-cs{50%{filter:brightness(1.12)}}
-.u203-pin{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border:0;border-radius:50%;background:rgba(0,113,227,.18);cursor:pointer;z-index:2;transition:opacity .25s,transform .25s cubic-bezier(.3,1.6,.5,1)}
-.u203-pin::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px #0071E3}
-.u203-pin::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid #0071E3;animation:u203-p 2.2s infinite}
+.u203-pin{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;padding:0;border:0;border-radius:50%;background:rgba(0,113,227,.18);background:light-dark(rgba(0,113,227,.18),rgba(41,151,255,.22));cursor:pointer;z-index:2;transition:opacity .25s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+.u203-pin::before{content:"";position:absolute;inset:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--bl)}
+.u203-pin::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--bl);animation:u203-p 2.2s infinite}
 @keyframes u203-p{from{transform:scale(.6);opacity:1}to{transform:scale(1.7);opacity:0}}
 .u203.is-act .u203-pin{opacity:.35}
 .u203.is-act .u203-pin.is-on{opacity:1;transform:scale(1.15)}
-.u203-pin:focus-visible{outline:2px solid #1D1D1F;outline-offset:3px}
+.u203-pin:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .u203-ft{position:absolute;left:16px;right:16px;top:266px;height:58px}
 .u203-sws{position:absolute;inset:0;display:flex;align-items:center;gap:10px;padding:0 6px;transition:opacity .25s,transform .35s cubic-bezier(.3,1.2,.5,1)}
 .u203.is-act .u203-sws{opacity:0;transform:translateY(8px);pointer-events:none}
 .u203-cl{flex:1;min-width:0}
-.u203-cl small{display:block;font-size:10px;font-weight:800;color:#86868B}
+.u203-cl small{display:block;font-size:10px;font-weight:800;color:#86868B;color:light-dark(#86868B,#98989D)}
 .u203-nw{position:relative;display:block;height:18px;margin-top:2px;overflow:hidden}
 .u203-nw b{position:absolute;left:0;top:0;white-space:nowrap;font-size:13.5px;font-weight:850;letter-spacing:-.02em;transition:transform .4s cubic-bezier(.3,1.2,.5,1),opacity .3s}
 .u203-nw b.is-in{transform:translateY(100%);opacity:0;transition:none}
 .u203-nw b.is-out{transform:translateY(-100%);opacity:0}
-.u203-sw{position:relative;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:linear-gradient(145deg,var(--a),var(--b));box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
-.u203-sw::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1.5px #0071E3;opacity:0;transform:scale(.8);transition:opacity .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
+.u203-sw{position:relative;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:linear-gradient(145deg,var(--a),var(--b));box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);box-shadow:inset 0 0 0 1px light-dark(rgba(0,0,0,.12),rgba(255,255,255,.18));cursor:pointer;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.u203-sw::after{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1.5px var(--bl);opacity:0;transform:scale(.8);transition:opacity .2s,transform .3s cubic-bezier(.3,1.6,.5,1)}
 .u203-sw[aria-checked="true"]::after{opacity:1;transform:none}
 .u203-sw:hover,.u203-sw.g-hov{transform:scale(1.1)}
-.u203-sw:focus-visible{outline:2px solid #1D1D1F;outline-offset:5px}
-.u203-cd{position:absolute;inset:0;padding:10px 14px;border-radius:16px;background:#fff;box-shadow:0 14px 30px -14px rgba(29,29,31,.35),0 0 0 1px rgba(29,29,31,.06);opacity:0;transform:translateY(10px);transition:opacity .25s,transform .35s cubic-bezier(.3,1.3,.5,1);pointer-events:none;box-sizing:border-box}
+.u203-sw:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.u203-cd{position:absolute;inset:0;padding:10px 14px;border-radius:16px;background:#fff;background:light-dark(#fff,#24262C);box-shadow:0 14px 30px -14px rgba(29,29,31,.35),0 0 0 1px rgba(29,29,31,.06);box-shadow:0 14px 30px -14px light-dark(rgba(29,29,31,.35),rgba(0,0,0,.7)),0 0 0 1px light-dark(rgba(29,29,31,.06),rgba(255,255,255,.09));opacity:0;transform:translateY(10px);transition:opacity .25s,transform .35s cubic-bezier(.3,1.3,.5,1);pointer-events:none;box-sizing:border-box}
 .u203.is-act .u203-cd{opacity:1;transform:none}
-.u203-cd b{display:block;font-size:12.5px;font-weight:850;color:#0071E3}
-.u203-cd span{display:block;margin-top:3px;font-size:11px;font-weight:600;line-height:1.45;color:#424245;word-break:keep-all}
+.u203-cd b{display:block;font-size:12.5px;font-weight:850;color:var(--bl)}
+.u203-cd span{display:block;margin-top:3px;font-size:11px;font-weight:600;line-height:1.45;color:#424245;color:light-dark(#424245,#C7C7CC);word-break:keep-all}
 @media (prefers-reduced-motion: reduce){.u203-pin::after,.u203.is-a3 .u203-kn,.u203.is-a1 .u203-wv path,.u203.is-a2 .u203-cs{animation:none}.u203-sws,.u203-cd,.u203-nw b{transition:none}}
 </style>
 <div class="ux u203">

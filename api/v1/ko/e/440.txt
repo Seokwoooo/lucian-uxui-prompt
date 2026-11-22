@@ -1,0 +1,92 @@
+<!-- Lucian UX/UI Prompt #440 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#440 -->
+<!--
+Element: 첫 사용 빈 화면
+ID: 440 · Category: 빈·오류 상태 · Tags: empty-state, onboarding, illustration, first-run, cta, spring
+What it does: 빈 워크스페이스의 첫 화면입니다. 빈 폴더 그림이 둥실둥실 떠 있고, ‘첫 프로젝트 만들기’를 누르면 문서 한 장이 폴더 속으로 쏙 떨어지며 폴더가 통 튀고 반짝임이 터집니다.
+How to use it: ‘첫 프로젝트 만들기’를 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#440
+-->
+<style>
+.u440{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.u440-il{width:176px;height:132px;overflow:visible;animation:u440-float 3.2s ease-in-out infinite}
+@keyframes u440-float{50%{transform:translateY(-6px)}}
+.u440-il .sh{fill:var(--ux-ink);opacity:.08;transform-box:fill-box;transform-origin:center;animation:u440-sh 3.2s ease-in-out infinite}
+@keyframes u440-sh{50%{transform:scaleX(.86);opacity:.05}}
+.u440-il .bk{fill:color-mix(in srgb,var(--ux-accent) 38%,var(--ux-surface))}
+.u440-il .fr{fill:var(--ux-accent)}
+.u440-il .fh{fill:#fff;opacity:.16}
+.u440-il .doc rect.p{fill:var(--ux-surface);stroke:var(--ux-line-2);stroke-width:1.2}
+.u440-il .doc .ln{fill:var(--ux-line-2)}
+.u440-il .doc .hd{fill:var(--ux-mint)}
+.u440-il .doc{opacity:0;transform:translateY(-110px) rotate(-10deg);transform-box:view-box;transform-origin:80px 50px}
+.u440-il .fol{transform-box:view-box;transform-origin:80px 112px}
+.u440-il .sp{fill:var(--ux-warn);transform-box:fill-box;transform-origin:center;animation:u440-tw 2.4s ease-in-out infinite}
+.u440-il .sp:nth-of-type(2){animation-delay:-.8s;fill:var(--ux-mint)}
+.u440-il .sp:nth-of-type(3){animation-delay:-1.6s;fill:var(--ux-accent-2)}
+@keyframes u440-tw{0%,100%{transform:scale(.6);opacity:.35}50%{transform:scale(1);opacity:1}}
+.u440.is-done .u440-il .doc{animation:u440-drop .8s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes u440-drop{0%{opacity:0;transform:translateY(-110px) rotate(-10deg)}20%{opacity:1}62%{transform:translateY(6px) rotate(2deg)}80%{transform:translateY(-3px) rotate(-1deg)}100%{opacity:1;transform:none}}
+.u440.is-done .u440-il .fol{animation:u440-bump .9s cubic-bezier(.3,1.4,.5,1) .38s}
+@keyframes u440-bump{0%{transform:none}25%{transform:scale(1.06,.9)}55%{transform:scale(.97,1.04)}100%{transform:none}}
+.u440-burst{position:absolute;left:50%;top:50%;width:0;height:0}
+.u440-burst i{position:absolute;left:-3px;top:-3px;width:6px;height:6px;border-radius:50%;background:var(--c);opacity:0}
+.u440.is-done .u440-burst i{animation:u440-pop .7s cubic-bezier(.2,.8,.3,1) .42s forwards}
+@keyframes u440-pop{0%{opacity:1;transform:rotate(var(--a)) translateY(0) scale(1)}100%{opacity:0;transform:rotate(var(--a)) translateY(-58px) scale(.4)}}
+.u440-ill{position:relative}
+.u440-h{display:grid;margin:14px 0 16px}
+.u440-h b{grid-area:1/1;font-size:18px;font-weight:700;letter-spacing:-.025em;transition:opacity .25s var(--ux-ease),transform .45s cubic-bezier(.3,1.4,.5,1),filter .25s}
+.u440-h b+b{opacity:0;transform:translateY(8px);filter:blur(3px)}
+.u440.is-done .u440-h b:first-child{opacity:0;transform:translateY(-8px);filter:blur(3px)}
+.u440.is-done .u440-h b+b{opacity:1;transform:none;filter:none;transition-delay:.45s}
+.u440-go{position:relative;display:inline-flex;align-items:center;gap:7px;height:44px;padding:0 20px;border:0;border-radius:999px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:14px;font-weight:650;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 10px 22px -12px var(--ux-accent);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),box-shadow .2s}
+.u440-go:hover{--k:1.03}
+.u440-go:active{--k:.94;transition:transform .1s var(--ux-ease)}
+.u440-go svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u440 .u440-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u440-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u440">
+  <div class="u440-ill" aria-hidden="true">
+    <svg class="u440-il" viewBox="0 0 160 120">
+      <ellipse class="sh" cx="80" cy="116" rx="50" ry="5"/>
+      <path class="sp" d="M138 22l1.8 4.4 4.4 1.8-4.4 1.8-1.8 4.4-1.8-4.4-4.4-1.8 4.4-1.8z"/>
+      <path class="sp" d="M20 40l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z"/>
+      <path class="sp" d="M128 70l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/>
+      <g class="fol">
+        <path class="bk" d="M28 34a8 8 0 0 1 8-8h22a6 6 0 0 1 4.6 2.2l4.6 5.8H124a8 8 0 0 1 8 8v58a8 8 0 0 1-8 8H36a8 8 0 0 1-8-8z"/>
+        <g class="doc"><rect class="p" x="50" y="24" width="60" height="58" rx="6"/><rect class="hd" x="57" y="31" width="20" height="5" rx="2.5"/><rect class="ln" x="57" y="42" width="44" height="3.5" rx="1.75"/><rect class="ln" x="57" y="50" width="36" height="3.5" rx="1.75"/></g>
+        <path class="fr" d="M22 56a8 8 0 0 1 8-8h100a8 8 0 0 1 8 8.6l-4.4 44a8 8 0 0 1-8 7.4H34.4a8 8 0 0 1-8-7.4z"/>
+        <path class="fh" d="M30 48h100a8 8 0 0 1 8 8.6l-.3 3H22.1l-.1-3.6A8 8 0 0 1 30 48z"/>
+      </g>
+    </svg>
+    <span class="u440-burst"><i style="--a:-60deg;--c:var(--ux-warn)"></i><i style="--a:-25deg;--c:var(--ux-mint)"></i><i style="--a:10deg;--c:var(--ux-accent-2)"></i><i style="--a:45deg;--c:var(--ux-warn)"></i><i style="--a:-95deg;--c:var(--ux-accent)"></i><i style="--a:80deg;--c:var(--ux-mint)"></i></span>
+  </div>
+  <div class="u440-h"><b></b><b aria-hidden="true"></b></div>
+  <button type="button" class="u440-go"></button>
+  <p class="u440-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var hs = root.querySelectorAll('.u440-h b'), go = root.querySelector('.u440-go'), live = root.querySelector('.u440-live');
+  var T = { empty: '아직 프로젝트가 없어요', done: '첫 프로젝트가 생겼어요', create: '첫 프로젝트 만들기', open: '하나 더 만들기' };
+  var PLUS = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  hs[0].textContent = T.empty; hs[1].textContent = T.done;
+  var done = false;
+  function sync() {
+    root.classList.toggle('is-done', done);
+    hs[0].setAttribute('aria-hidden', done ? 'true' : 'false'); hs[1].setAttribute('aria-hidden', done ? 'false' : 'true');
+    go.innerHTML = PLUS + '<span>' + (done ? T.open : T.create) + '</span>';
+  }
+  // 만들 때마다 문서가 폴더에 떨어집니다(다시 누르면 한 장 더)
+  go.addEventListener('click', function () {
+    if (done) { root.classList.remove('is-done'); void root.offsetWidth; }
+    done = true;
+    sync();
+    live.textContent = T.done;
+  });
+  sync();
+})();
+</script>

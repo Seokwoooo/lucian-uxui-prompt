@@ -9,17 +9,17 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#312
 -->
 <style>
-.u312{position:relative;width:340px;height:330px;display:flex;flex-direction:column;justify-content:center;padding:14px 18px;border-radius:28px;background:var(--ux-ink);box-shadow:0 30px 60px -36px var(--ux-shadow-strong);overflow:hidden}
-.u312-it{position:relative;display:block;width:100%;height:96px;border:0;padding:0;background:none;text-align:left;color:var(--ux-page);cursor:pointer;--o:0}
-.u312-it+.u312-it{border-top:1px solid color-mix(in srgb,var(--ux-page) 14%,transparent)}
+.u312{position:relative;width:340px;height:330px;display:flex;flex-direction:column;justify-content:center;padding:14px 18px;border-radius:28px;--fg:var(--ux-page);--fg:light-dark(var(--ux-page),var(--ux-ink));background:var(--ux-ink);background:light-dark(var(--ux-ink),var(--ux-surface-2));box-shadow:0 30px 60px -36px var(--ux-shadow-strong);box-shadow:0 0 0 1px light-dark(transparent,var(--ux-line)),0 30px 60px -36px var(--ux-shadow-strong);overflow:hidden}
+.u312-it{position:relative;display:block;width:100%;height:96px;border:0;padding:0;background:none;text-align:left;color:var(--ux-page);color:var(--fg);cursor:pointer;--o:0}
+.u312-it+.u312-it{border-top:1px solid color-mix(in srgb,var(--fg) 14%,transparent)}
 .u312-h{position:absolute;left:0;right:0;top:50%;height:56px;margin-top:-28px;font-size:56px;line-height:56px;font-weight:900;letter-spacing:-.05em;white-space:nowrap;transition:transform .5s cubic-bezier(.3,1.3,.4,1)}
 .u312-h.t{clip-path:inset(0 0 50% 0);transform:translateY(calc(var(--o) * -1px))}
 .u312-h.b{clip-path:inset(50% 0 0 0);transform:translateY(calc(var(--o) * 1px))}
 .u312-it:nth-child(2) .u312-h{color:var(--ux-accent)}
-.u312-it:nth-child(2) .u312-h.t,.u312-it:nth-child(2) .u312-h.b{color:var(--ux-page)}
-.u312-d{position:absolute;left:0;right:0;top:50%;height:22px;margin-top:-11px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:-.01em;color:color-mix(in srgb,var(--ux-page) 80%,transparent);opacity:calc(var(--o) / 18);transform:scaleY(calc(.3 + var(--o) / 26));transition:transform .5s cubic-bezier(.3,1.3,.4,1),opacity .3s}
+.u312-it:nth-child(2) .u312-h.t,.u312-it:nth-child(2) .u312-h.b{color:var(--ux-page);color:var(--fg)}
+.u312-d{position:absolute;left:0;right:0;top:50%;height:22px;margin-top:-11px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:-.01em;color:color-mix(in srgb,var(--fg) 80%,transparent);opacity:calc(var(--o) / 18);transform:scaleY(calc(.3 + var(--o) / 26));transition:transform .5s cubic-bezier(.3,1.3,.4,1),opacity .3s}
 .u312-d::before{content:"";width:18px;height:2px;border-radius:2px;background:var(--ux-accent)}
-.u312-n{position:absolute;right:0;top:12px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:color-mix(in srgb,var(--ux-page) 40%,transparent)}
+.u312-n{position:absolute;right:0;top:12px;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:color-mix(in srgb,var(--fg) 40%,transparent)}
 .u312-it:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px;border-radius:12px}
 </style>
 <nav class="ux u312" aria-label="Main menu">

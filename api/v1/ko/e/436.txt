@@ -1,0 +1,109 @@
+<!-- Lucian UX/UI Prompt #436 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#436 -->
+<!--
+Element: 삭제 확인 모달
+ID: 436 · Category: 알림·피드백 · Tags: modal, dialog, confirm, destructive, trash, micro-interaction
+What it does: 되돌릴 수 없는 삭제 앞에서 한 번 더 묻는 확인 창입니다. 삭제를 누르면 휴지통 뚜껑이 열리고 문서 한 장이 쏙 들어간 뒤 뚜껑이 탁 닫히며, 창이 부드럽게 사라집니다.
+How to use it: 삭제를 눌러 보세요. 취소나 Esc로도 닫힙니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#436
+-->
+<style>
+.u436{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u436-d{width:296px;padding:22px 22px 20px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 28px 56px -24px var(--ux-shadow-strong),0 4px 12px -4px var(--ux-shadow);outline:none;transition:transform .55s cubic-bezier(.3,1.45,.5,1),opacity .3s var(--ux-ease)}
+.u436.is-gone .u436-d{transform:translateY(10px) scale(.92);opacity:0;transition:transform .32s cubic-bezier(.5,0,.75,0),opacity .26s var(--ux-ease)}
+.u436.is-pre .u436-d{transform:translateY(14px) scale(.9);opacity:0;transition:none}
+.u436-ic{width:60px;height:60px;margin-bottom:16px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,var(--ux-danger) 12%,transparent);color:var(--ux-danger)}
+.u436-ic svg{width:38px;height:38px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u436-ic .lid{transform-box:view-box;transform-origin:6px 9.5px}
+.u436-ic .bd{transform-box:view-box;transform-origin:16px 27px}
+.u436-ic .doc{opacity:0}
+.u436-ic .doc path{fill:var(--ux-surface);stroke:currentColor;stroke-width:1.5}
+.u436.is-del .u436-ic .lid{animation:u436-lid 1.25s cubic-bezier(.3,1.3,.5,1)}
+.u436.is-del .u436-ic .doc{animation:u436-doc 1.25s cubic-bezier(.5,0,.6,1)}
+.u436.is-del .u436-ic .bd{animation:u436-bd 1.25s ease-out}
+.u436.is-del .u436-ic{animation:u436-tile 1.25s ease-out}
+@keyframes u436-lid{0%{transform:none}22%,58%{transform:rotate(-38deg)}74%{transform:rotate(7deg)}86%,100%{transform:none}}
+@keyframes u436-doc{0%,14%{opacity:0;transform:translateY(-14px) rotate(-8deg)}26%{opacity:1;transform:translateY(-12px) rotate(-4deg)}52%{opacity:1;transform:translateY(9px) rotate(0)}60%,100%{opacity:1;transform:translateY(14px)}}
+@keyframes u436-bd{0%,72%{transform:none}80%{transform:scale(1.07,.9)}90%{transform:scale(.97,1.04)}100%{transform:none}}
+@keyframes u436-tile{0%,74%{transform:none}80%{transform:translateY(2px)}90%{transform:translateY(-1px)}100%{transform:none}}
+.u436-d h3{margin:0;font-size:17px;font-weight:700;letter-spacing:-.025em}
+.u436-d p{margin:6px 0 20px;font-size:13px;line-height:1.55;color:var(--ux-ink-2)}
+.u436-bs{display:flex;gap:8px}
+.u436-bs button{flex:1;height:42px;border:0;border-radius:12px;font-size:14px;font-weight:650;transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),background-color .15s,opacity .2s}
+.u436-bs button:active:not([aria-disabled="true"]){--k:.94;transition:transform .1s var(--ux-ease)}
+.u436-no{background:transparent;box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink)}
+.u436-no:hover:not([aria-disabled="true"]){background:color-mix(in srgb,var(--ux-ink) 6%,transparent)}
+.u436-ok{background:#D9304A;background:light-dark(#D9304A,#E5484D);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+.u436-ok:hover:not([aria-disabled="true"]){background:#C2253E;background:light-dark(#C2253E,#EC5D61)}
+.u436-bs button[aria-disabled="true"]{cursor:default}
+.u436-no[aria-disabled="true"]{opacity:.45}
+.u436 .u436-no:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u436 .u436-ok:focus-visible{outline:2px solid #D9304A;outline:2px solid light-dark(#D9304A,#FF8A93);outline-offset:2px}
+.u436-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u436">
+  <div class="u436-d" role="alertdialog" tabindex="-1">
+    <div class="u436-ic" aria-hidden="true"></div>
+    <h3>프로젝트를 삭제할까요?</h3>
+    <p>‘봄 캠페인 랜딩’의 파일이 모두 지워지고, 되돌릴 수 없어요.</p>
+    <div class="u436-bs"><button type="button" class="u436-no">취소</button><button type="button" class="u436-ok">삭제</button></div>
+  </div>
+  <p class="u436-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var d = q('.u436-d'), ic = q('.u436-ic'), no = q('.u436-no'), ok = q('.u436-ok'), live = q('.u436-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { done: '삭제했어요' };
+  var uid = 'u436' + Math.random().toString(36).slice(2, 7);
+  d.querySelector('h3').id = uid + 't'; d.querySelector('p').id = uid + 'p';
+  d.setAttribute('aria-labelledby', uid + 't'); d.setAttribute('aria-describedby', uid + 'p');
+  // 휴지통: 뚜껑(왼쪽 경첩으로 열림), 몸통, 들어갈 문서. 문서는 몸통 입구 아래로는 잘려 보이지 않습니다
+  ic.innerHTML = '<svg viewBox="0 0 32 32"><defs><clipPath id="' + uid + 'c"><rect x="-10" y="-30" width="52" height="40.5"/></clipPath></defs>' +
+    '<g clip-path="url(#' + uid + 'c)"><g class="doc"><path d="M12.5 -1.5h5l3 3v8h-8z"/><path d="M14.5 3.5h3.5M14.5 6h3.5" stroke-width="1.2"/></g></g>' +
+    '<g class="lid"><path d="M5.5 9.5h21"/><path d="M12.5 9V7a1.5 1.5 0 0 1 1.5-1.5h4A1.5 1.5 0 0 1 19.5 7v2"/></g>' +
+    '<g class="bd"><path d="M8 10.5l1.3 14.6a2.4 2.4 0 0 0 2.4 2.2h8.6a2.4 2.4 0 0 0 2.4-2.2L24 10.5"/><path d="M13.5 15v7.5M18.5 15v7.5"/></g></svg>';
+  var busy = false, kb = false, timers = [];
+  function later(fn, ms) { timers.push(setTimeout(function () { if (root.isConnected) fn(); }, ms)); }
+  function lock(v) { [ok, no].forEach(function (b) { if (v) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); }); }
+  // 닫혔다가 잠시 뒤 다시 튀어나옵니다(데모 무대에서 계속 눌러 볼 수 있게)
+  function closeThenReturn() {
+    root.classList.add('is-gone');
+    later(function () {
+      root.classList.remove('is-gone', 'is-del');
+      root.classList.add('is-pre');
+      void d.offsetWidth;
+      root.classList.remove('is-pre');
+      busy = false;
+      lock(false);
+      if (kb) no.focus({ preventScroll: true });
+    }, rm ? 300 : 900);
+  }
+  function cancel(fromKey) {
+    if (busy) return;
+    busy = true; kb = !!fromKey || d.contains(document.activeElement);
+    lock(true);
+    closeThenReturn();
+  }
+  no.addEventListener('click', function (e) { cancel(e.detail === 0); });
+  ok.addEventListener('click', function (e) {
+    if (busy) return;
+    busy = true; kb = e.detail === 0 || d.contains(document.activeElement);
+    lock(true);
+    root.classList.add('is-del');
+    later(function () { live.textContent = T.done; closeThenReturn(); }, rm ? 200 : 1350);
+  });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !busy && !root.classList.contains('is-gone')) { e.preventDefault(); e.stopPropagation(); cancel(true); return; }
+    // 창 안에서만 Tab이 돕니다
+    if (e.key === 'Tab' && d.contains(document.activeElement)) {
+      var a = document.activeElement;
+      if (e.shiftKey && a === no) { e.preventDefault(); ok.focus({ preventScroll: true }); }
+      else if (!e.shiftKey && a === ok) { e.preventDefault(); no.focus({ preventScroll: true }); }
+    }
+  });
+})();
+</script>

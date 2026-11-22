@@ -1,0 +1,120 @@
+<!-- Lucian UX/UI Prompt #429 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#429 -->
+<!--
+Element: Search autocomplete
+ID: 429 · Category: Inputs & Search · Tags: search, autocomplete, combobox, command-k, highlight, keyboard
+What it does: Type into a search field with a ⌘K hint and four suggestions pop open below, the matching letters in bold. Press ↑↓ and the selection bar springs from row to row; press Enter and the list folds away as the field fills in.
+How to use it: Type “desi”, then choose with ↑↓ and Enter
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#429
+-->
+<style>
+.u429{position:relative;width:340px;height:300px}
+.u429-w{position:absolute;left:20px;right:20px;top:34px}
+.u429-f{position:relative;z-index:2;display:flex;align-items:center;gap:10px;height:48px;padding:0 9px 0 15px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 10px 24px -14px var(--ux-shadow-strong);cursor:text;transition:box-shadow .2s var(--ux-ease)}
+.u429-f:focus-within,.u429.is-open .u429-f{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 10px 24px -14px var(--ux-shadow-strong)}
+.u429-f>svg{flex:none;width:18px;height:18px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round}
+.u429-in{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:15px;font-weight:500;color:var(--ux-ink)}
+.u429-in::placeholder{color:var(--ux-ink-3);opacity:1}
+.u429 .u429-in:focus-visible{outline:none}
+.u429-kb{flex:none;height:24px;padding:0 7px;border-radius:7px;display:grid;place-items:center;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));box-shadow:inset 0 0 0 1px var(--ux-line);font:inherit;font-size:11.5px;font-weight:600;color:var(--ux-ink-3)}
+.u429-dd{position:relative;margin-top:8px;padding:6px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -18px var(--ux-shadow-strong);transform-origin:50% 0;opacity:0;transform:translateY(-8px) scale(.96);visibility:hidden;transition:opacity .16s var(--ux-ease),transform .2s var(--ux-ease),visibility 0s linear .2s}
+.u429.is-open .u429-dd{opacity:1;transform:none;visibility:visible;transition:opacity .18s var(--ux-ease),transform .5s cubic-bezier(.3,1.4,.5,1),visibility 0s}
+.u429-pill{position:absolute;left:6px;right:6px;top:6px;height:40px;border-radius:10px;background:color-mix(in srgb,var(--ux-ink) 7%,transparent);transform:translateY(var(--py,0px));opacity:var(--po,0);transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .15s}
+.u429-lb{position:relative}
+.u429-o{position:relative;display:flex;align-items:center;gap:11px;height:40px;padding:0 10px;border-radius:10px;cursor:pointer;color:var(--ux-ink-2)}
+.u429.is-open .u429-o{animation:u429-row .45s cubic-bezier(.3,1.4,.5,1) both;animation-delay:calc(var(--i) * 35ms)}
+@keyframes u429-row{from{opacity:0;transform:translateY(-6px)}}
+.u429-o[aria-selected="true"]{color:var(--ux-ink)}
+.u429-ic{flex:none;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink-2)}
+.u429-ic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u429-ic.is-av{border-radius:50%;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:11px;font-weight:700}
+.u429-t{flex:1;min-width:0;font-size:13.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u429-t mark{background:none;color:var(--ux-ink);font-weight:700}
+.u429-m{flex:none;font-size:11.5px;color:var(--ux-ink-3)}
+.u429-en{flex:none;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11px;color:var(--ux-ink-3);opacity:0;transform:scale(.6);transition:opacity .15s,transform .35s cubic-bezier(.34,1.7,.5,1)}
+.u429-o[aria-selected="true"] .u429-en{opacity:1;transform:none}
+.u429-no{padding:12px 10px;font-size:13px;color:var(--ux-ink-3)}
+.u429-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u429">
+  <div class="u429-w">
+    <label class="u429-f"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input class="u429-in" type="text" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-label="Search" placeholder="Search docs, people, projects" value="desi" autocomplete="off" spellcheck="false"><kbd class="u429-kb" aria-hidden="true"></kbd></label>
+    <div class="u429-dd"><i class="u429-pill" aria-hidden="true"></i><div class="u429-lb" role="listbox"></div></div>
+  </div>
+  <p class="u429-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var input = q('.u429-in'), kbd = q('.u429-kb'), pill = q('.u429-pill'), lb = q('.u429-lb'), live = q('.u429-live');
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
+  var uid = 'u429' + Math.random().toString(36).slice(2, 7);
+  lb.id = uid + 'lb'; input.setAttribute('aria-controls', lb.id);
+  kbd.textContent = mac ? '⌘K' : 'Ctrl K';
+  var T = { none: 'No results', count: '{n} results' };
+  var P = { doc: '<path d="M14 3H7.5A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', project: '<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8.5 8v8M12 8v5M15.5 8v3"/>', job: '<rect x="3.5" y="7" width="17" height="12.5" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7"/>' };
+  var DATA = [['doc', 'Design system guide', 'Design'], ['doc', 'Design review checklist', 'Design'], ['project', 'Design tokens v2', 'Project'], ['job', 'Hiring: product designer', 'Careers'], ['doc', 'Payment error playbook', 'Engineering'], ['doc', 'Onboarding guide', 'People'], ['project', 'H2 roadmap', 'Product'], ['person', 'Seoyeon Han', 'Designer']];
+  var list = [], act = -1;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function hl(s, t) { var i = s.toLowerCase().indexOf(t); return i < 0 ? esc(s) : esc(s.slice(0, i)) + '<mark>' + esc(s.slice(i, i + t.length)) + '</mark>' + esc(s.slice(i + t.length)); }
+  function setOpen(v) { root.classList.toggle('is-open', v); input.setAttribute('aria-expanded', v ? 'true' : 'false'); if (!v) input.removeAttribute('aria-activedescendant'); }
+  function render() {
+    var t = input.value.trim().toLowerCase();
+    if (!t) { list = []; setOpen(false); return; }
+    list = DATA.filter(function (d) { return d[1].toLowerCase().indexOf(t) >= 0 || d[2].toLowerCase().indexOf(t) >= 0; })
+      .sort(function (a, b) { return (a[1].toLowerCase().indexOf(t) === 0 ? 0 : 1) - (b[1].toLowerCase().indexOf(t) === 0 ? 0 : 1); }).slice(0, 4);
+    lb.innerHTML = list.length ? list.map(function (d, i) {
+      var ic = d[0] === 'person' ? '<span class="u429-ic is-av" aria-hidden="true">' + esc(d[1].charAt(0)) + '</span>' : '<span class="u429-ic" aria-hidden="true"><svg viewBox="0 0 24 24">' + P[d[0]] + '</svg></span>';
+      return '<div class="u429-o" role="option" id="' + uid + i + '" aria-selected="false" style="--i:' + i + '">' + ic + '<span class="u429-t">' + hl(d[1], t) + '</span><span class="u429-m">' + esc(d[2]) + '</span><span class="u429-en" aria-hidden="true">↵</span></div>';
+    }).join('') : '<div class="u429-no">' + T.none + '</div>';
+    var was = root.classList.contains('is-open');
+    setOpen(true);
+    if (!was) Array.prototype.forEach.call(lb.children, function (o) { o.style.animation = 'none'; void o.offsetWidth; o.style.animation = ''; });
+    act = list.length ? 0 : -1;
+    paint(true);
+    live.textContent = list.length ? T.count.replace('{n}', list.length) : T.none;
+  }
+  function paint(jump) {
+    Array.prototype.forEach.call(lb.querySelectorAll('.u429-o'), function (o, i) { o.setAttribute('aria-selected', i === act ? 'true' : 'false'); });
+    if (jump) { pill.style.transition = 'none'; void pill.offsetWidth; }
+    pill.style.setProperty('--py', (Math.max(0, act) * 40) + 'px');
+    pill.style.setProperty('--po', act >= 0 ? 1 : 0);
+    if (jump) { void pill.offsetWidth; pill.style.transition = ''; }
+    if (act >= 0) input.setAttribute('aria-activedescendant', uid + act); else input.removeAttribute('aria-activedescendant');
+  }
+  function choose(i) {
+    var d = list[i];
+    if (!d) return;
+    input.value = d[1];
+    setOpen(false);
+    live.textContent = d[1];
+  }
+  input.addEventListener('input', render);
+  input.addEventListener('click', function () { if (!root.classList.contains('is-open') && input.value.trim()) render(); });
+  input.addEventListener('keydown', function (e) {
+    var open = root.classList.contains('is-open');
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && list.length) {
+      e.preventDefault();
+      if (!open) { render(); return; }
+      act = (act + (e.key === 'ArrowDown' ? 1 : -1) + list.length) % list.length;
+      paint(false);
+    } else if (e.key === 'Enter' && open && act >= 0) { e.preventDefault(); choose(act); }
+    else if (e.key === 'Escape' && open) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+  });
+  root.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); input.focus({ preventScroll: true }); input.select(); }
+  });
+  q('.u429-dd').addEventListener('mousedown', function (e) { e.preventDefault(); });
+  lb.addEventListener('pointermove', function (e) {
+    var o = e.target.closest('.u429-o');
+    if (!o) return;
+    var i = Array.prototype.indexOf.call(lb.children, o);
+    if (i !== act) { act = i; paint(false); }
+  });
+  lb.addEventListener('click', function (e) { var o = e.target.closest('.u429-o'); if (o) choose(Array.prototype.indexOf.call(lb.children, o)); });
+  root.addEventListener('focusout', function (e) { if (e.relatedTarget && !root.contains(e.relatedTarget)) setOpen(false); });
+  render();
+})();
+</script>

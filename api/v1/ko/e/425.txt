@@ -1,0 +1,52 @@
+<!-- Lucian UX/UI Prompt #425 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#425 -->
+<!--
+Element: CTA 카드
+ID: 425 · Category: 히어로·배경 · Tags: cta, gradient, shimmer, glow, button, spring
+What it does: 그라디언트 카드 위에 굵은 한 줄과 버튼 하나가 있는 행동 유도 카드입니다. 카드 위에서는 포인터를 따라 부드러운 빛이 움직이고, 버튼에는 몇 초마다 빛줄기가 스쳐 지나갑니다. 버튼을 누르면 말랑하게 눌렸다 튀어 오릅니다.
+How to use it: 카드 위로 포인터를 움직여 보고, 버튼을 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#425
+-->
+<style>
+.u425{position:relative;width:340px;height:300px;display:grid;place-items:center}
+/* 카드: 고정 브랜드 그라디언트 + 천천히 흐르는 빛 덩어리 + 포인터를 따라가는 빛 */
+.u425-cd{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;width:300px;height:200px;border-radius:24px;background:linear-gradient(135deg,#5B47E0 0%,#3D6FF0 55%,#1C9F8C 100%);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 24px 50px -24px rgba(50,40,160,.7);overflow:hidden;text-align:center;color:#fff}
+.u425-cd i.b{position:absolute;z-index:-2;border-radius:50%;filter:blur(28px);animation:u425-drift 12s ease-in-out infinite alternate}
+.u425-cd i.b1{width:180px;height:180px;left:-50px;top:-70px;background:rgba(190,170,255,.65)}
+.u425-cd i.b2{width:160px;height:160px;right:-50px;bottom:-80px;background:rgba(80,230,200,.5);animation-duration:15s;animation-delay:-6s}
+@keyframes u425-drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,18px) scale(1.1)}100%{transform:translate(-14px,26px) scale(.94)}}
+.u425-gl{position:absolute;inset:0;z-index:-1;background:radial-gradient(150px circle at var(--mx,50%) var(--my,40%),rgba(255,255,255,.32),transparent 70%);opacity:0;transition:opacity .4s}
+.u425-cd:hover .u425-gl{opacity:1}
+.u425-cd::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 40%);pointer-events:none}
+.u425-cd h2{margin:0;font-size:22px;line-height:1.3;font-weight:850;letter-spacing:-.045em;text-shadow:0 1px 12px rgba(20,10,80,.25)}
+/* 버튼: 빛줄기가 스쳐 지나가고, 누르면 말랑하게 눌렸다 튑니다 */
+.u425-go{position:relative;display:flex;align-items:center;gap:7px;height:44px;padding:0 20px;border:0;border-radius:99px;background:#fff;color:#2A1F8F;font-size:13.5px;font-weight:800;box-shadow:0 8px 20px -8px rgba(20,10,80,.55),inset 0 -2px 0 rgba(42,31,143,.08);overflow:hidden;transition:transform .5s cubic-bezier(.3,1.8,.5,1),box-shadow .3s}
+.u425-go::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:50%;background:linear-gradient(100deg,transparent,rgba(160,140,255,.45),transparent);transform:skewX(-20deg);animation:u425-shine 3.4s ease-in-out infinite}
+@keyframes u425-shine{0%,62%{left:-60%}100%{left:130%}}
+.u425-go:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 14px 26px -10px rgba(20,10,80,.6)}
+.u425-go:active{transform:scale(.92);transition-duration:.12s}
+.u425-go svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.3,1.8,.5,1)}
+.u425-go:hover svg{transform:translateX(3px)}
+.u425-go:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.u425-cd i.b,.u425-go::before{animation:none!important}.u425-go::before{display:none}}
+</style>
+<div class="ux u425">
+  <section class="u425-cd">
+    <i class="b b1" aria-hidden="true"></i><i class="b b2" aria-hidden="true"></i><span class="u425-gl" aria-hidden="true"></span>
+    <h2>오늘 시작하면<br>내일 회의가 짧아져요</h2>
+    <button class="u425-go" type="button">무료로 시작하기<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 6h7M6.5 3l3 3-3 3"/></svg></button>
+  </section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var cd = root.querySelector('.u425-cd');
+  // 포인터를 따라 카드 위의 빛이 움직입니다
+  cd.addEventListener('pointermove', function (e) {
+    var r = cd.getBoundingClientRect();
+    cd.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    cd.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  });
+})();
+</script>

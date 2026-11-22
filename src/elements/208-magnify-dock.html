@@ -6,15 +6,15 @@
   ["aria-label=\"앱 독\"", "aria-label=\"App dock\""]
 ]} -->
 <style>
-.u208{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(90% 70% at 20% 10%,#FFC6A8,transparent 60%),radial-gradient(80% 70% at 90% 30%,#A5B4FC,transparent 60%),linear-gradient(160deg,#FDE2E4,#C3B1E1);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
-.u208-dk{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:flex-end;gap:3px;padding:6px 8px;border-radius:18px;background:rgba(255,255,255,.38);box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 10px 30px -12px rgba(60,40,90,.45);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);height:40px}
+.u208{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(90% 70% at 20% 10%,#FFC6A8,transparent 60%),radial-gradient(80% 70% at 90% 30%,#A5B4FC,transparent 60%),linear-gradient(160deg,#FDE2E4,#C3B1E1);background:radial-gradient(90% 70% at 20% 10%,light-dark(#FFC6A8,#86483E),transparent 60%),radial-gradient(80% 70% at 90% 30%,light-dark(#A5B4FC,#3542A4),transparent 60%),linear-gradient(160deg,light-dark(#FDE2E4,#2E1C30),light-dark(#C3B1E1,#17122B));box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
+.u208-dk{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);display:flex;align-items:flex-end;gap:3px;padding:6px 8px;border-radius:18px;background:rgba(255,255,255,.38);background:light-dark(rgba(255,255,255,.38),rgba(30,26,42,.46));box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 10px 30px -12px rgba(60,40,90,.45);box-shadow:inset 0 0 0 1px light-dark(rgba(255,255,255,.55),rgba(255,255,255,.16)),0 10px 30px -12px light-dark(rgba(60,40,90,.45),rgba(0,0,0,.6));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);height:40px}
 .u208-a{position:relative;flex:none;width:var(--s,28px);height:var(--s,28px);margin-bottom:var(--lift,0px);padding:0;border:0;border-radius:24%;background:none;cursor:pointer}
 .u208-a svg{width:100%;height:100%;display:block;border-radius:24%;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
-.u208-a::after{content:"";position:absolute;left:50%;bottom:-6px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#3B3355;opacity:0;transition:opacity .2s}
+.u208-a::after{content:"";position:absolute;left:50%;bottom:-6px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:#3B3355;background:light-dark(#3B3355,#E6E0F5);opacity:0;transition:opacity .2s}
 .u208-a.is-run::after{opacity:1}
 .u208-a.is-hop{animation:u208-hop .9s cubic-bezier(.3,.6,.4,1) 2}
 @keyframes u208-hop{30%{transform:translateY(-22px)}55%{transform:translateY(0)}72%{transform:translateY(-6px)}}
-.u208-a:focus-visible{outline:2px solid #3B3355;outline-offset:2px}
+.u208-a:focus-visible{outline:2px solid #3B3355;outline-color:light-dark(#3B3355,#E6E0F5);outline-offset:2px}
 .u208-tip{position:absolute;left:0;bottom:0;padding:4px 10px;border-radius:8px;background:rgba(40,32,60,.85);color:#fff;font-size:11.5px;font-weight:700;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,0);transition:opacity .15s}
 .u208-tip.is-on{opacity:1}
 @media (prefers-reduced-motion: reduce){.u208-a.is-hop{animation:none}}

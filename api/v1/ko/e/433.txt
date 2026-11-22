@@ -1,0 +1,61 @@
+<!-- Lucian UX/UI Prompt #433 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#433 -->
+<!--
+Element: 체크박스·라디오·스위치
+ID: 433 · Category: 토글·선택 · Tags: checkbox, radio, switch, toggle, spring, micro-interaction
+What it does: 기본 선택 컨트롤 세 가지를 손맛 있게 다듬었습니다. 체크박스는 통통 튀며 체크가 그려지고, 라디오는 점이 스프링처럼 옆 칸으로 옮겨 가며, 스위치는 누르는 동안 손잡이가 말랑하게 늘어났다가 미끄러집니다.
+How to use it: 세 컨트롤을 눌러 보세요. Tab과 Space, 방향키도 됩니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#433
+-->
+<style>
+.u433{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u433-g{display:flex;flex-direction:column;gap:26px;width:230px}
+.u433-row{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:550;letter-spacing:-.01em;cursor:pointer;-webkit-user-select:none;user-select:none}
+.u433-in{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
+.u433-cb,.u433-rd{position:relative;flex:none;width:26px;height:26px;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:inset 0 0 0 1.75px var(--ux-line-2);transition:background-color .2s var(--ux-ease),box-shadow .2s var(--ux-ease)}
+.u433-cb{border-radius:8px;color:var(--ux-accent-ink)}
+.u433-row:hover .u433-cb,.u433-row:hover .u433-rd{box-shadow:inset 0 0 0 1.75px color-mix(in srgb,var(--ux-ink) 40%,transparent)}
+.u433-cb svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u433-cb path{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .12s var(--ux-ease)}
+.u433-in:checked+.u433-cb{background:var(--ux-accent);box-shadow:inset 0 0 0 1.75px var(--ux-accent);animation:u433-bounce .5s cubic-bezier(.3,1.6,.5,1)}
+.u433-in:checked+.u433-cb path{stroke-dashoffset:0;transition:stroke-dashoffset .32s var(--ux-ease) .08s}
+@keyframes u433-bounce{0%{transform:scale(.8)}45%{transform:scale(1.14)}100%{transform:none}}
+.u433-rg{display:flex;gap:22px}
+.u433-rd{border-radius:50%}
+.u433-rd::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--ux-accent-ink);transform:scale(0);transition:transform .2s var(--ux-ease)}
+.u433-in:checked+.u433-rd{background:var(--ux-accent);box-shadow:inset 0 0 0 1.75px var(--ux-accent)}
+.u433-in:checked+.u433-rd::after{transform:scale(1);transition:transform .55s cubic-bezier(.3,1.9,.5,1)}
+.u433-row:active .u433-cb,.u433-row:active .u433-rd{transform:scale(.88);transition:transform .1s var(--ux-ease)}
+.u433-sw{position:relative;flex:none;width:54px;height:32px;margin-left:auto;border-radius:999px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background-color .3s var(--ux-ease)}
+.u433-sw::after{content:"";position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:13px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2),0 3px 8px -2px rgba(0,0,0,.25);transition:transform .55s cubic-bezier(.3,1.5,.5,1),width .3s cubic-bezier(.3,1.5,.5,1)}
+.u433-in:checked+.u433-sw{background:var(--ux-accent)}
+.u433-in:checked+.u433-sw::after{transform:translateX(22px)}
+.u433-row.is-press .u433-sw::after{width:33px}
+.u433-row.is-press .u433-in:checked+.u433-sw::after{transform:translateX(15px)}
+.u433-sw-row{gap:14px}
+.u433-in:focus-visible+span{outline:2px solid var(--ux-accent);outline-offset:3px}
+</style>
+<div class="ux u433">
+  <div class="u433-g">
+    <label class="u433-row"><input class="u433-in" type="checkbox"><span class="u433-cb" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9.5"/></svg></span>약관에 동의해요</label>
+    <div class="u433-rg" role="radiogroup" aria-label="받는 주기">
+      <label class="u433-row"><input class="u433-in" type="radio" checked><span class="u433-rd" aria-hidden="true"></span>매일</label>
+      <label class="u433-row"><input class="u433-in" type="radio"><span class="u433-rd" aria-hidden="true"></span>매주</label>
+    </div>
+    <label class="u433-row u433-sw-row">푸시 알림<input class="u433-in" type="checkbox" role="switch" checked><span class="u433-sw" aria-hidden="true"></span></label>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var uid = 'u433' + Math.random().toString(36).slice(2, 7);
+  root.querySelectorAll('input[type="radio"]').forEach(function (r) { r.name = uid; });
+  // 스위치: 누르는 동안 손잡이가 늘어나고, 놓으면 스프링처럼 미끄러집니다
+  var sw = root.querySelector('.u433-sw-row');
+  sw.addEventListener('pointerdown', function (e) { if (e.button === 0) sw.classList.add('is-press'); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { sw.addEventListener(t, function () { sw.classList.remove('is-press'); }); });
+  sw.querySelector('input').addEventListener('keydown', function (e) { if (e.key === ' ') sw.classList.add('is-press'); });
+  sw.querySelector('input').addEventListener('keyup', function () { sw.classList.remove('is-press'); });
+})();
+</script>

@@ -1,0 +1,85 @@
+<!-- Lucian UX/UI Prompt #401 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#401 -->
+<!--
+Element: Google 로그인 버튼
+ID: 401 · Category: 로그인·가입 · Tags: google, sign-in, oauth, button, loading, morph
+What it does: Google 공식 버튼 하나입니다. 무대가 밝으면 라이트, 어두우면 다크 버튼이 됩니다. 누르면 G 마크가 네 가지 색으로 도는 고리가 되고 글자가 ‘연결 중…’으로 바뀌며 버튼 폭이 글자에 맞게 줄어들고, 체크와 ‘로그인됨’을 거쳐 처음으로 돌아옵니다.
+How to use it: 버튼을 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#401
+-->
+<style>
+.u401{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u401-b{--bg:#FFFFFF;--bd:#747775;--fg:#1F1F1F;--sh:rgba(60,64,67,.32);--bg:light-dark(#FFFFFF,#131314);--bd:light-dark(#747775,#8E918F);--fg:light-dark(#1F1F1F,#E3E3E3);--sh:light-dark(rgba(60,64,67,.32),rgba(0,0,0,.75));position:relative;isolation:isolate;height:40px;display:flex;align-items:center;padding:0 16px 0 12px;border:1px solid var(--bd);border-radius:20px;background:var(--bg);color:var(--fg);font-family:Roboto,"Google Sans",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:14px;font-weight:500;letter-spacing:.25px;white-space:nowrap;box-shadow:0 0 0 0 transparent;transition:transform .5s var(--ux-spring),box-shadow .3s var(--ux-ease)}
+.u401-b::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--fg);opacity:0;transition:opacity .2s}
+.u401-b:hover{transform:translateY(-2px);box-shadow:0 1px 2px var(--sh),0 8px 18px -8px var(--sh)}
+.u401-b:hover::after{opacity:.06}
+.u401-b:active{transform:translateY(0) scale(.95,.92);transition-duration:.12s,.2s;box-shadow:0 1px 2px var(--sh)}
+.u401-b:active::after{opacity:.1}
+.u401 .u401-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u401-b[aria-busy="true"],.u401-b.is-ok{cursor:default}
+.u401-ic{position:relative;width:20px;height:20px;flex:none;margin-right:10px}
+.u401-ic svg{position:absolute;inset:0;width:20px;height:20px;overflow:visible}
+.u401-g{transition:transform .5s var(--ux-spring),opacity .25s}
+.u401-arc{opacity:0;transform:scale(.35) rotate(-120deg);transition:transform .55s var(--ux-spring),opacity .2s}
+.u401-arc g{transform-origin:10px 10px;animation:u401-spin .9s linear infinite}
+.u401-arc circle{fill:none;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:8.6 41.7;transition:stroke-dasharray .35s var(--ux-ease)}
+.u401-ck{opacity:0;transform:scale(.4);transition:transform .5s var(--ux-spring),opacity .2s}
+.u401-ck path{fill:none;stroke:#34A853;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18;stroke-dashoffset:18;transition:stroke-dashoffset .4s var(--ux-ease) .08s}
+@keyframes u401-spin{to{transform:rotate(360deg)}}
+.u401-b.is-busy .u401-g,.u401-b.is-ok .u401-g{opacity:0;transform:scale(.3) rotate(90deg)}
+.u401-b.is-busy .u401-arc{opacity:1;transform:none}
+.u401-b.is-ok .u401-arc{opacity:0;transform:scale(1.5)}
+.u401-b.is-ok .u401-arc circle{stroke-dasharray:0 50.3}
+.u401-b.is-ok .u401-ck{opacity:1;transform:none}
+.u401-b.is-ok .u401-ck path{stroke-dashoffset:0}
+.u401-lb{position:relative;display:grid;grid-template-columns:minmax(0,1fr);overflow-x:clip;transition:width .55s var(--ux-spring)}
+.u401-lb span{grid-area:1/1;justify-self:center;transition:opacity .22s,transform .45s var(--ux-spring),filter .3s}
+.u401-lb .s1,.u401-lb .s2{opacity:0;transform:translateY(9px);filter:blur(2px)}
+.u401-b.is-busy .u401-lb .s0,.u401-b.is-ok .u401-lb .s0,.u401-b.is-ok .u401-lb .s1{opacity:0;transform:translateY(-9px);filter:blur(2px)}
+.u401-b.is-busy .u401-lb .s1,.u401-b.is-ok .u401-lb .s2{opacity:1;transform:none;filter:none}
+.u401-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u401">
+  <button type="button" class="u401-b">
+    <span class="u401-ic" aria-hidden="true">
+      <svg class="u401-g" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <svg class="u401-arc" viewBox="0 0 20 20"><g><circle cx="10" cy="10" r="8" stroke="#EA4335" stroke-dashoffset="0"/><circle cx="10" cy="10" r="8" stroke="#4285F4" stroke-dashoffset="-12.57"/><circle cx="10" cy="10" r="8" stroke="#34A853" stroke-dashoffset="-25.13"/><circle cx="10" cy="10" r="8" stroke="#FBBC05" stroke-dashoffset="-37.7"/></g></svg>
+      <svg class="u401-ck" viewBox="0 0 20 20"><path d="M4.8 10.4l3.4 3.4 7-7.4"/></svg>
+    </span>
+    <span class="u401-lb"><span class="s0">Google 계정으로 계속하기</span><span class="s1" aria-hidden="true">연결 중…</span><span class="s2" aria-hidden="true">로그인됨</span></span>
+  </button>
+  <p class="u401-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { busy: 'Google에 연결하는 중이에요', ok: 'Google 계정으로 로그인했어요' };
+  var b = root.querySelector('.u401-b'), lb = root.querySelector('.u401-lb'), live = root.querySelector('.u401-live');
+  var sp = lb.querySelectorAll('span'), timer = 0;
+  // 버튼 폭이 보이는 글자에 맞게 늘고 줄도록, 글자 칸 폭을 실제 글자 폭으로 옮깁니다(측정이 안 되면 자연 폭 그대로)
+  function fit(k) {
+    var w = sp[k].offsetWidth;
+    if (!w) { lb.style.width = ''; return; }
+    lb.style.width = w + 'px';
+  }
+  function later(fn, ms) { timer = setTimeout(function () { if (root.isConnected) fn(); }, ms); }
+  // 대기 → 연결 중(G가 네 색 고리로) → 로그인됨(체크) → 대기
+  b.addEventListener('click', function () {
+    if (b.classList.contains('is-busy') || b.classList.contains('is-ok')) return;
+    fit(0); void lb.offsetWidth;
+    b.classList.add('is-busy'); b.setAttribute('aria-busy', 'true'); fit(1);
+    live.textContent = T.busy;
+    later(function () {
+      b.classList.remove('is-busy'); b.removeAttribute('aria-busy');
+      b.classList.add('is-ok'); fit(2);
+      live.textContent = T.ok;
+      later(function () {
+        b.classList.remove('is-ok'); fit(0);
+        later(function () { if (!b.classList.contains('is-busy')) lb.style.width = ''; }, rm ? 0 : 600);
+      }, rm ? 900 : 1300);
+    }, rm ? 500 : 1400);
+  });
+})();
+</script>

@@ -13,8 +13,9 @@
 ]} -->
 <style>
 .u219{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
-.u219-pg{position:absolute;inset:0;padding:14px 16px;background:var(--bg);color:var(--fg);--bg:#F7F7FA;--fg:#14151A;--card:#fff;--mut:#7A7D8C;--ln:#E7E8EE;--ac:#4F46E5}
-.u219-pg.is-dark{--bg:#0D0E14;--fg:#ECEDF5;--card:#171925;--mut:#8C90A6;--ln:#262938;--ac:#A5B4FC}
+/* 바닥 판은 둘레 테마를 따르고, 원으로 열리는 판은 그 반대 테마입니다 */
+.u219-pg{position:absolute;inset:0;padding:14px 16px;background:var(--bg);color:var(--fg);--bg:light-dark(#F7F7FA,#0D0E14);--fg:light-dark(#14151A,#ECEDF5);--card:light-dark(#fff,#171925);--mut:light-dark(#7A7D8C,#8C90A6);--ln:light-dark(#E7E8EE,#262938);--ac:light-dark(#4F46E5,#A5B4FC)}
+.u219-pg.is-dark{--bg:light-dark(#0D0E14,#F7F7FA);--fg:light-dark(#ECEDF5,#14151A);--card:light-dark(#171925,#fff);--mut:light-dark(#8C90A6,#7A7D8C);--ln:light-dark(#262938,#E7E8EE);--ac:light-dark(#A5B4FC,#4F46E5)}
 .u219-dk{clip-path:circle(0px at var(--cx,300px) var(--cy,30px));transition:clip-path .7s cubic-bezier(.65,0,.35,1);pointer-events:none}
 .u219.is-on .u219-dk{clip-path:circle(520px at var(--cx,300px) var(--cy,30px));pointer-events:auto}
 .u219-nv{display:flex;align-items:center;gap:12px;height:32px;font-size:11px;font-weight:750;color:var(--mut)}
@@ -22,7 +23,9 @@
 .u219-nv b i{width:14px;height:14px;border-radius:50%;background:var(--ac)}
 .u219-tg{width:32px;height:32px;border:0;border-radius:10px;background:var(--card);box-shadow:inset 0 0 0 1px var(--ln);color:var(--fg);display:grid;place-items:center;cursor:pointer}
 .u219-tg:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.u219-tg svg{width:16px;height:16px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.u219-tg svg{grid-area:1/1;width:16px;height:16px;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.u219-lt .u219-sun,.u219-dk .u219-moon{color:var(--fg);color:light-dark(var(--fg),transparent)}
+.u219-lt .u219-moon,.u219-dk .u219-sun{color:transparent;color:light-dark(transparent,var(--fg))}
 .u219-dk .u219-tg svg{transform:rotate(-90deg)}
 .u219-h{margin:16px 0 10px;font-size:20px;font-weight:900;letter-spacing:-.035em}
 .u219-kp{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
@@ -42,24 +45,32 @@
 (function () {
   var root = document.currentScript.previousElementSibling;
   var lt = root.querySelector('.u219-lt'), dk = root.querySelector('.u219-dk');
-  var SUN = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1.5v1.4M8 13.1v1.4M1.5 8h1.4M13.1 8h1.4M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></g></svg>';
-  var MOON = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.6 5.6 0 1 0 7.3 7.3z" fill="currentColor"/></svg>';
-  // 같은 페이지를 밝은 판과 어두운 판 두 장으로 만들고, 어두운 판을 원으로 열고 닫습니다
-  function page(dark) {
-    return '<div class="u219-nv"><b><i></i>Pulse</b><span>대시보드</span><span>보고서</span><button type="button" class="u219-tg">' + (dark ? MOON : SUN) + '</button></div>' +
+  var SUN = '<svg class="u219-sun" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 1.5v1.4M8 13.1v1.4M1.5 8h1.4M13.1 8h1.4M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></g></svg>';
+  var MOON = '<svg class="u219-moon" viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.6 5.6 0 1 0 7.3 7.3z" fill="currentColor"/></svg>';
+  // 같은 페이지를 둘레 테마 판과 반대 테마 판 두 장으로 만들고, 반대 판을 원으로 열고 닫습니다
+  // 해·달 아이콘은 둘 다 넣어 두고, 지금 테마에 맞는 쪽만 CSS(light-dark)로 보입니다
+  function page() {
+    return '<div class="u219-nv"><b><i></i>Pulse</b><span>대시보드</span><span>보고서</span><button type="button" class="u219-tg">' + SUN + MOON + '</button></div>' +
       '<h3 class="u219-h">10월 요약</h3><div class="u219-kp"><div><small>방문</small><b>18.4k</b></div><div><small>가입</small><b>1,206</b></div><div><small>전환</small><b>6.5%</b></div></div>' +
       '<div class="u219-ch"><small>주간 방문 추이</small><svg viewBox="0 0 280 112" preserveAspectRatio="none"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--ac)" stop-opacity=".35"/><stop offset="1" stop-color="var(--ac)" stop-opacity="0"/></linearGradient></defs><path d="M0 84 C30 70 50 92 80 66 S130 40 160 54 S220 20 280 26 L280 112 L0 112 Z" fill="url(#g)"/><path d="M0 84 C30 70 50 92 80 66 S130 40 160 54 S220 20 280 26" fill="none" stroke="var(--ac)" stroke-width="2.5"/></svg></div>';
   }
-  lt.innerHTML = page(false); dk.innerHTML = page(true);
+  lt.innerHTML = page(); dk.innerHTML = page();
   // 그라디언트 id가 페이지 안에서 겹치지 않게 바꿉니다
   var uid = 'u219' + Math.random().toString(36).slice(2, 7);
   [lt, dk].forEach(function (pg, i) { var g = pg.querySelector('linearGradient'); g.id = uid + i; pg.querySelector('path').setAttribute('fill', 'url(#' + uid + i + ')'); });
   var on = false, T = [lt.querySelector('.u219-tg'), dk.querySelector('.u219-tg')];
+  // 바닥 판의 실제 배경색으로 둘레 테마가 어두운지 알아냅니다
+  function isDark() { var c = (getComputedStyle(lt).backgroundColor.match(/\d+/g) || [255, 255, 255]); return +c[0] + +c[1] + +c[2] < 384; }
+  function labels() {
+    var toDark = on === isDark();
+    T.forEach(function (t) { t.setAttribute('aria-label', toDark ? '다크 모드로 바꾸기' : '라이트 모드로 바꾸기'); t.setAttribute('aria-pressed', !toDark); });
+  }
   function sync() {
     root.classList.toggle('is-on', on); dk.setAttribute('aria-hidden', !on); lt.setAttribute('aria-hidden', on);
     T[0].tabIndex = on ? -1 : 0; T[1].tabIndex = on ? 0 : -1;
-    T.forEach(function (t) { t.setAttribute('aria-label', on ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기'); t.setAttribute('aria-pressed', on); });
+    labels();
   }
+  root.addEventListener('pointerenter', labels); root.addEventListener('focusin', labels);
   T.forEach(function (t) {
     t.addEventListener('click', function () {
       // 원의 중심 = 누른 버튼의 가운데

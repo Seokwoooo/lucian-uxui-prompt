@@ -9,10 +9,11 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#371
 -->
 <style>
-.u371{position:relative;width:340px;height:330px;border-radius:30px;overflow:hidden;background:#F4EFE3;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
-.u371-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.u371{position:relative;width:340px;height:330px;border-radius:30px;overflow:hidden;background:#F4EFE3;background:light-dark(#F4EFE3,#1D1A15);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
+.u371-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;color:#3B2F2A;color:light-dark(#3B2F2A,#F1E6D2)}
 .u371-pk{position:absolute;left:0;top:0;transform:translate(-50%,-130%);padding:2px 6px;border-radius:6px;background:#3B2F2A;color:#FFF4E0;font:700 10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none;animation:u371-in .4s var(--ux-spring)}
-.u371-pk::after{content:"▲";position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:8px;color:#3B2F2A}
+.u371-pk{background:light-dark(#3B2F2A,#F1E6D2);color:light-dark(#FFF4E0,#2A211C)}
+.u371-pk::after{content:"▲";position:absolute;left:50%;top:100%;transform:translateX(-50%);font-size:8px;color:#3B2F2A;color:light-dark(#3B2F2A,#F1E6D2)}
 @keyframes u371-in{from{opacity:0;transform:translate(-50%,-90%)}}
 </style>
 <div class="ux u371"><canvas class="u371-cv" role="img" aria-label="Contour map, press to raise a peak"></canvas></div>
@@ -33,11 +34,13 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#371
       hgt[j * GX + i] = v;
     }
   }
+  function isDark() { var m = getComputedStyle(cv).color.match(/[\d.]+/g); return !!m && (+m[0] * 0.299 + +m[1] * 0.587 + +m[2] * 0.114) > 128; }
   function contours() {
     cx.clearRect(0, 0, W, H);
+    var dk = isDark();
     for (var l = 1; l < LV; l++) {
       var lev = l / LV * 1.2, bold = l % 5 === 0, warm = l / LV;
-      cx.strokeStyle = 'hsl(' + (200 - warm * 180).toFixed(0) + ' ' + (35 + warm * 30).toFixed(0) + '% ' + (bold ? 34 : 46) + '%)';
+      cx.strokeStyle = 'hsl(' + (200 - warm * 180).toFixed(0) + ' ' + (35 + warm * 30).toFixed(0) + '% ' + (dk ? (bold ? 74 : 63) : (bold ? 34 : 46)) + '%)';
       cx.lineWidth = bold ? 1.8 : 0.9; cx.globalAlpha = bold ? 0.95 : 0.7;
       cx.beginPath();
       for (var j = 0; j < GY - 1; j++) for (var i = 0; i < GX - 1; i++) {

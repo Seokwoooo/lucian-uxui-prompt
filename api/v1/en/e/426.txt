@@ -1,0 +1,87 @@
+<!-- Lucian UX/UI Prompt #426 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#426 -->
+<!--
+Element: Stats
+ID: 426 · Category: Sections & Content · Tags: stats, odometer, count-up, numbers, social-proof
+What it does: A stats card with three big numbers split by hairlines. When it comes into view each digit rolls like an odometer and settles on its number; hover a number and it rolls around once more.
+How to use it: Hover a number to roll it again
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#426
+-->
+<style>
+.u426{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u426-cd{display:grid;grid-template-columns:repeat(3,1fr);width:324px;margin:0;padding:22px 6px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong);list-style:none}
+.u426-c{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:4px 0;cursor:default}
+.u426-c+.u426-c::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:1px;background:var(--ux-line-2)}
+.u426-n{display:flex;align-items:center;height:30px;font-size:24px;line-height:30px;font-weight:850;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.u426-n i{font-style:normal}
+.u426-n i.st{margin-left:2px;font-size:18px;color:#F5B83D}
+
+.u426-col{display:block;height:30px;overflow:hidden}
+.u426-col span{display:flex;flex-direction:column;transform:translateY(calc(var(--d,0) * -30px));transition:transform 1.3s cubic-bezier(.25,1.12,.4,1);transition-delay:calc(var(--k,0) * 70ms)}
+.u426-col span b{display:block;height:30px;padding:0 .5px;font-weight:inherit;text-align:center}
+.u426-c small{font-size:11.5px;color:var(--ux-ink-3)}
+@media (prefers-reduced-motion:reduce){.u426-col span{transition:none!important}}
+</style>
+<div class="ux u426">
+  <ul class="u426-cd">
+    <li class="u426-c" data-v="3,200+"><span class="u426-n"></span><small>teams</small></li>
+    <li class="u426-c" data-v="99.99%"><span class="u426-n"></span><small>uptime</small></li>
+    <li class="u426-c" data-v="4.9★"><span class="u426-n"></span><small>avg. rating</small></li>
+  </ul>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var cells = Array.prototype.slice.call(root.querySelectorAll('.u426-c'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DIG = '01234567890123456789'.split('').map(function (d) { return '<b>' + d + '</b>'; }).join('');
+  var stats = cells.map(function (li) {
+    var v = li.getAttribute('data-v'), n = li.querySelector('.u426-n'), cols = [], k = 0;
+    li.setAttribute('aria-label', v + ' ' + li.querySelector('small').textContent);
+    n.setAttribute('aria-hidden', 'true');
+    v.split('').forEach(function (ch) {
+      if (/\d/.test(ch)) {
+        var c = document.createElement('span');
+        c.className = 'u426-col';
+        c.innerHTML = '<span>' + DIG + '</span>';
+        c.firstChild.style.setProperty('--k', k++);
+        c.firstChild.setAttribute('data-d', ch);
+        n.appendChild(c); cols.push(c.firstChild);
+      } else {
+        var i = document.createElement('i');
+        i.textContent = ch;
+        if (ch === '★') i.className = 'st';
+        n.appendChild(i);
+      }
+    });
+    return cols;
+  });
+  function roll(cols, from) {
+    cols.forEach(function (c) {
+      var d = +c.getAttribute('data-d');
+      c.style.transition = 'none';
+      c.style.setProperty('--d', from === null ? d : from);
+    });
+    void root.offsetWidth;
+    cols.forEach(function (c) { c.style.transition = ''; c.style.setProperty('--d', +c.getAttribute('data-d') + 10); });
+  }
+  var shown = false;
+  function reveal() {
+    if (shown) return; shown = true;
+    if (rm) { stats.forEach(function (cols) { cols.forEach(function (c) { c.style.setProperty('--d', +c.getAttribute('data-d') + 10); }); }); return; }
+    stats.forEach(function (cols) { roll(cols, 0); });
+  }
+  cells.forEach(function (li, i) {
+    var busy = 0;
+    li.addEventListener('pointerenter', function () {
+      if (!shown || rm || Date.now() - busy < 900) return;
+      busy = Date.now(); roll(stats[i], null);
+    });
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { reveal(); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(root);
+  } else reveal();
+})();
+</script>

@@ -1,0 +1,88 @@
+<!-- Lucian UX/UI Prompt #415 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#415 -->
+<!--
+Element: Breadcrumb
+ID: 415 · Category: Navigation · Tags: breadcrumb, navigation, overflow, path, spring
+What it does: A single breadcrumb trail from Home to the current page. The middle steps sit folded behind …; press it and they spring open sideways. Press a step and the trail after it folds away as that step becomes the current page.
+How to use it: Press … to open the hidden steps, then press a step in the middle
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#415
+-->
+<style>
+.u415{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u415-bc{display:flex;align-items:center;height:44px;padding:0 10px 0 6px;border-radius:14px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow),0 14px 30px -20px var(--ux-shadow-strong)}
+.u415-ol{display:flex;align-items:center;margin:0;padding:0;list-style:none}
+
+.u415-li{display:grid;grid-template-columns:1fr;opacity:1;transition:grid-template-columns .55s cubic-bezier(.25,1,.35,1),opacity .3s var(--ux-ease)}
+.u415-li>span{display:flex;align-items:center;min-width:0;overflow:hidden}
+.u415-li.is-shut{grid-template-columns:0fr;opacity:0;transition:grid-template-columns .45s cubic-bezier(.5,0,.2,1),opacity .2s}
+.u415-li.is-shut .u415-in{transform:translateX(-10px) scale(.9)}
+.u415-in{display:flex;align-items:center;transition:transform .6s cubic-bezier(.3,1.6,.5,1)}
+.u415-sep{display:grid;place-items:center;width:16px;flex:none;color:var(--ux-ink-3)}
+.u415-sep svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u415-a,.u415-more{display:flex;align-items:center;height:30px;padding:0 8px;border:0;border-radius:9px;background:none;font-size:13px;font-weight:550;color:var(--ux-ink-3);text-decoration:none;white-space:nowrap;transition:color .2s,background-color .2s}
+.u415-a:hover,.u415-more:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u415-a.hm{padding:0 7px}
+.u415-a.hm svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.u415-more{padding:0 8px;font-weight:800;letter-spacing:.1em}
+.u415-cur{display:flex;align-items:center;height:30px;padding:0 8px;font-size:13px;font-weight:750;color:var(--ux-ink);white-space:nowrap;letter-spacing:-.01em}
+.u415 a:focus-visible,.u415 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){.u415-li,.u415-in{transition:none!important}}
+</style>
+<div class="ux u415">
+  <nav class="u415-bc" aria-label="Breadcrumb"><ol class="u415-ol"></ol></nav>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ol = root.querySelector('.u415-ol');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SEP = '<span class="u415-sep" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M3.8 2 6.8 5l-3 3"/></svg></span>';
+  var HOME = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 7 8 2.5 13.5 7v6.5H9.8V10H6.2v3.5H2.5z"/></svg>';
+  var PATH = [null, 'Teams', 'Marketing', '2026', 'Launch event'];
+  var cur = 4, open = false;
+  var lis = PATH.map(function (name, i) {
+    var li = document.createElement('li');
+    li.className = 'u415-li';
+    li.innerHTML = '<span><span class="u415-in">' + (i ? SEP : '') + '</span></span>';
+    var inn = li.querySelector('.u415-in');
+    if (i === 0) inn.insertAdjacentHTML('beforeend', '<a class="u415-a hm" href="#" aria-label="Home">' + HOME + '</a>');
+    else { var a = document.createElement('a'); a.className = 'u415-a'; a.href = '#'; a.textContent = name; inn.appendChild(a); var c = document.createElement('span'); c.className = 'u415-cur'; c.setAttribute('aria-current', 'page'); c.textContent = name; c.hidden = true; inn.appendChild(c); }
+    var link = inn.querySelector('a');
+    link.addEventListener('click', function (e) { e.preventDefault(); go(i); });
+    ol.appendChild(li);
+    return li;
+  });
+  var moreLi = document.createElement('li');
+  moreLi.className = 'u415-li';
+  moreLi.innerHTML = '<span><span class="u415-in">' + SEP + '<button class="u415-more" type="button" aria-label="Show 2 hidden steps" aria-expanded="false">…</button></span></span>';
+  ol.insertBefore(moreLi, lis[1]);
+  var more = moreLi.querySelector('button');
+  function shut(li, v) { li.classList.toggle('is-shut', v); li.inert = v; }
+  function draw() {
+    lis.forEach(function (li, i) {
+      var hide = i > cur || (!open && cur >= 4 && (i === 1 || i === 2));
+      shut(li, hide);
+      if (i) { li.querySelector('a').hidden = i === cur; li.querySelector('.u415-cur').hidden = i !== cur; }
+    });
+    shut(moreLi, open || cur < 4);
+    more.setAttribute('aria-expanded', String(open));
+  }
+  more.addEventListener('click', function () {
+    open = true; draw();
+    var a = lis[1].querySelector('a'); a.focus({ preventScroll: true });
+  });
+  function go(i) {
+    if (i === cur) return;
+    cur = i; draw();
+    var c = i ? lis[i].querySelector('.u415-cur') : null;
+    if (!c) lis[0].querySelector('a').focus({ preventScroll: true });
+  }
+  lis.forEach(function (li) { li.style.transition = 'none'; });
+  moreLi.style.transition = 'none';
+  draw();
+  void ol.offsetWidth;
+  lis.forEach(function (li) { li.style.transition = ''; });
+  moreLi.style.transition = '';
+})();
+</script>

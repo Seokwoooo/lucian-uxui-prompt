@@ -1,0 +1,113 @@
+<!-- Lucian UX/UI Prompt #410 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#410 -->
+<!--
+Element: 쿠키 세부 설정
+ID: 410 · Category: 폼·입력 · Tags: cookie, consent, preferences, switch, illustration, gdpr
+What it does: 작은 쿠키 설정 시트입니다. 필수는 자물쇠가 달린 채 늘 켜져 있고, 분석·마케팅·기능 스위치는 누르는 동안 손잡이가 말랑하게 늘어납니다. 스위치를 켤 때마다 머리의 쿠키에 초코칩이 톡톡 박히고, 끄면 쏙 빠집니다. 저장하면 쿠키가 한 번 폴짝 뜁니다.
+How to use it: 스위치를 켜고 끄며 쿠키의 초코칩을 지켜보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#410
+-->
+<style>
+.u410{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u410-s{width:280px;padding:14px;border-radius:22px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 46px -26px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow)}
+.u410-hd{display:flex;align-items:center;gap:10px;height:52px;padding:0 4px 4px}
+.u410-hd b{font-size:15px;font-weight:650;letter-spacing:-.02em}
+.u410-ck{width:52px;height:52px;flex:none;overflow:visible;--cs:rgba(150,80,20,.28);--cs:light-dark(rgba(150,80,20,.28),rgba(0,0,0,.55));filter:drop-shadow(0 4px 5px var(--cs))}
+.u410-ck.is-hop{animation:u410-hop .6s var(--ux-spring)}
+.u410-ck.is-tap{animation:u410-tap .45s var(--ux-spring)}
+@keyframes u410-hop{30%{transform:translateY(-9px) rotate(-12deg) scale(1.06)}60%{transform:translateY(1px) scale(1.04,.94)}}
+@keyframes u410-tap{40%{transform:scale(1.08) rotate(6deg)}}
+.u410-ck .cp{transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-40deg);transition:transform .45s var(--ux-spring)}
+.u410-ck .cg.is-on .cp{transform:none}
+.u410-ck .cg.is-on .cp:nth-child(2){transition-delay:.07s}
+.u410-r{position:relative;display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 6px 0 8px;border-radius:11px;font-size:13.5px;font-weight:500;cursor:pointer;transition:background .2s}
+.u410-r:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u410-r.is-lock{cursor:default}
+.u410-r.is-lock:hover{background:none}
+.u410-r input{position:absolute;opacity:0;width:1px;height:1px;margin:0;pointer-events:none}
+.u410-tr{position:relative;width:40px;height:24px;flex:none;border-radius:12px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background .3s,box-shadow .3s}
+.u410-tr b{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:9px;background:#FFFFFF;box-shadow:0 1px 3px rgba(0,0,0,.25);display:grid;place-items:center;transition:transform .45s var(--ux-spring),width .45s var(--ux-spring)}
+.u410-r input:checked+.u410-tr{background:var(--ux-accent);box-shadow:none}
+.u410-r input:checked+.u410-tr b{transform:translateX(16px)}
+.u410-r:active input:not(:disabled)+.u410-tr b{width:24px}
+.u410-r:active input:not(:disabled):checked+.u410-tr b{transform:translateX(10px)}
+.u410-r input:focus-visible+.u410-tr{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u410-r.is-lock .u410-tr{background:color-mix(in srgb,var(--ux-accent) 45%,var(--ux-surface-3))}
+.u410-tr svg{width:10px;height:10px;fill:none;stroke:#6B6880;stroke-width:1.6;stroke-linecap:round}
+.u410-r.is-nope .u410-tr b{animation:u410-nope .4s var(--ux-ease)}
+@keyframes u410-nope{25%{transform:translateX(13px) rotate(-14deg)}55%{transform:translateX(18px) rotate(10deg)}80%{transform:translateX(15px)}}
+.u410-go{position:relative;display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;width:100%;height:42px;margin-top:10px;border:0;border-radius:13px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:600;overflow:clip;transition:background .35s,color .35s,transform .4s var(--ux-spring)}
+.u410-go:hover{transform:translateY(-1px)}
+.u410-go:active{transform:scale(.97,.93);transition-duration:.35s,.35s,.1s}
+.u410 .u410-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u410-go>span{grid-area:1/1;display:flex;align-items:center;gap:6px;transition:opacity .2s,transform .4s var(--ux-spring),filter .2s}
+.u410-go>span:last-child{opacity:0;transform:translateY(9px);filter:blur(2px)}
+.u410-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u410-go.is-ok{background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12)}
+.u410-go.is-ok>span:first-child{opacity:0;transform:translateY(-9px);filter:blur(2px)}
+.u410-go.is-ok>span:last-child{opacity:1;transform:none;filter:none}
+.u410-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u410">
+  <div class="u410-s">
+    <div class="u410-hd"><svg class="u410-ck" viewBox="0 0 64 64" aria-hidden="true"></svg><b>쿠키 설정</b></div>
+    <label class="u410-r is-lock" data-k="0"><span>필수</span><input type="checkbox" role="switch" checked disabled aria-label="필수 쿠키, 항상 켜짐"><i class="u410-tr" aria-hidden="true"><b style="transform:translateX(16px)"><svg viewBox="0 0 10 10"><rect x="2" y="4.4" width="6" height="4.4" rx="1" fill="#6B6880" stroke="none"/><path d="M3.4 4.6V3.4a1.6 1.6 0 0 1 3.2 0v1.2"/></svg></b></i></label>
+    <label class="u410-r" data-k="1"><span>분석</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <label class="u410-r" data-k="2"><span>마케팅</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <label class="u410-r" data-k="3"><span>기능</span><input type="checkbox" role="switch"><i class="u410-tr" aria-hidden="true"><b></b></i></label>
+    <button type="button" class="u410-go"><span>저장</span><span aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-6.5"/></svg>저장했어요</span></button>
+  </div>
+  <p class="u410-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { saved: '쿠키 설정을 저장했어요' };
+  var ck = root.querySelector('.u410-ck'), go = root.querySelector('.u410-go'), live = root.querySelector('.u410-live');
+  var rows = [].slice.call(root.querySelectorAll('.u410-r')), uid = 'u410' + Math.random().toString(36).slice(2, 7), gen = 0;
+  // 쿠키: 반죽과 결, 그리고 스위치마다 두 개씩 박히는 초코칩(필수 몫은 늘 박혀 있습니다)
+  var DOUGH = 'M32 5C40 4.6 47.5 8 52.6 13.6C57.8 19.3 60 26 59.4 33.2C58.8 41 55.6 47.6 49.6 52.8C44 57.6 37.6 59.6 30.6 59.2C23 58.8 16.4 55.6 11.6 49.8C6.8 44 4.8 37.4 5.2 30.4C5.6 23.4 8.6 16.8 13.8 11.8C19 6.9 25.2 5.3 32 5Z';
+  var CHIPS = [
+    ['M19.5 19.8c1.6-1.4 4.4-1.2 5.6.5 1.1 1.6.6 4-1 5.1-1.7 1.1-4.3.8-5.3-.9-.9-1.5-.6-3.4.7-4.7z', 'M24.2 37.9c1.4-1.5 4-1.6 5.3-.2 1.3 1.4 1 3.8-.6 4.8-1.6 1-4 .6-4.9-.9-.7-1.2-.6-2.7.2-3.7z'],
+    ['M37.6 15.4c1.2-.9 3.2-.8 4.1.4 1 1.3.5 3.2-.9 3.9-1.3.7-3.1.4-3.8-.8-.6-1.1-.4-2.6.6-3.5z', 'M48.6 23.6c1-.8 2.6-.7 3.3.4.7 1 .2 2.5-.9 3-1 .5-2.4.1-2.9-.9-.4-.8-.2-1.9.5-2.5z'],
+    ['M41.4 33.6c1.9-1.3 4.7-.7 5.5 1.3.8 1.9-.3 4.1-2.3 4.6-1.8.5-3.9-.4-4.4-2.1-.4-1.4.1-2.9 1.2-3.8z', 'M33 48.4c1.2-.9 3.1-.7 3.9.5.7 1.2-.1 2.9-1.4 3.3-1.3.4-2.9-.2-3.2-1.4-.2-.9.1-1.8.7-2.4z'],
+    ['M11.8 29.6c1.1-1 3-1 3.9.1.9 1.1.6 3-.7 3.7-1.2.7-3 .3-3.6-.8-.5-.9-.3-2.2.4-3z', 'M30.6 26c1-.8 2.6-.7 3.3.3.7 1 .2 2.5-.9 3-1 .5-2.5.1-3-.9-.3-.8-.1-1.8.6-2.4z']
+  ];
+  var specks = [[16, 18], [27, 13], [46, 22], [21, 47], [44, 46], [37, 39], [14, 40], [50, 40], [28, 32], [39, 9]].map(function (p, k) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (k % 3 ? .55 : .8) + '" fill="#A8642C" opacity=".45"/>'; }).join('');
+  var chips = CHIPS.map(function (g, k) {
+    return '<g class="cg' + (k ? '' : ' is-on') + '">' + g.map(function (d) {
+      var m = d.match(/^M([\d.]+) ([\d.]+)/);
+      return '<g class="cp"><path d="' + d + '" fill="#4A2817"/><ellipse cx="' + (+m[1] + 1.6) + '" cy="' + (+m[2] - .1) + '" rx="1.2" ry=".7" fill="#8A5634" opacity=".75"/></g>';
+    }).join('') + '</g>';
+  }).join('');
+  ck.innerHTML = '<defs><radialGradient id="' + uid + 'd" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#F5CF8E"/><stop offset=".55" stop-color="#E2A95E"/><stop offset="1" stop-color="#BC7A3A"/></radialGradient>' +
+    '<radialGradient id="' + uid + 'h" cx="34%" cy="28%" r="40%"><stop offset="0" stop-color="#FFF6E0" stop-opacity=".55"/><stop offset="1" stop-color="#FFF6E0" stop-opacity="0"/></radialGradient>' +
+    '<clipPath id="' + uid + 'c"><path d="' + DOUGH + '"/></clipPath></defs>' +
+    '<path d="' + DOUGH + '" fill="url(#' + uid + 'd)"/><g clip-path="url(#' + uid + 'c)"><path d="' + DOUGH + '" fill="none" stroke="#9E5E26" stroke-opacity=".35" stroke-width="3"/>' +
+    '<path d="M16.5 27.6l2-.9 1.6.5 1.9-.8M35.6 21.4l1.5 1.2.4 1.7M28.4 46.4l1.8-.5 1.3.8 1.7-.4M47.6 30.4l-.5 1.8.6 1.6" fill="none" stroke="#A9682F" stroke-opacity=".45" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>' +
+    specks + '<ellipse cx="25" cy="20" rx="17" ry="13" fill="url(#' + uid + 'h)"/>' + chips + '</g>';
+  var groups = [].slice.call(ck.querySelectorAll('.cg'));
+  function bump(cls) { ck.classList.remove('is-hop', 'is-tap'); void ck.getBoundingClientRect(); ck.classList.add(cls); }
+  rows.forEach(function (r, k) {
+    var inp = r.querySelector('input');
+    if (inp.disabled) {
+      // 필수는 끌 수 없습니다: 누르면 자물쇠 손잡이가 고개를 젓습니다
+      r.addEventListener('click', function () { r.classList.remove('is-nope'); void r.offsetWidth; r.classList.add('is-nope'); });
+      return;
+    }
+    inp.addEventListener('change', function () {
+      groups[k].classList.toggle('is-on', inp.checked);
+      if (inp.checked) bump('is-tap');
+    });
+  });
+  ck.addEventListener('animationend', function () { ck.classList.remove('is-hop', 'is-tap'); });
+  go.addEventListener('click', function () {
+    if (go.classList.contains('is-ok')) return;
+    gen += 1; var g = gen;
+    go.classList.add('is-ok'); bump('is-hop'); live.textContent = T.saved;
+    setTimeout(function () { if (root.isConnected && g === gen) go.classList.remove('is-ok'); }, rm ? 1000 : 1700);
+  });
+})();
+</script>

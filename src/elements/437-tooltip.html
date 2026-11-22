@@ -1,0 +1,101 @@
+<!-- @meta {"title":"툴팁","category":"알림·피드백","summary":"아이콘 버튼 세 개짜리 도구 막대입니다. 버튼에 잠깐 머무르면 화살표 달린 툴팁이 버튼에서 톡 튀어나와 이름과 단축키를 보여 주고, 옆 버튼으로 옮기면 기다림 없이 미끄러지듯 따라갑니다.","hint":"버튼 위로 커서를 천천히 옮겨 보세요. Tab으로 초점을 옮겨도 뜨고, Esc로 닫힙니다","shape":"square","hue":"#FB923C","hue2":"#7B61FF","tags":["tooltip","toolbar","keyboard-shortcut","spring","micro-interaction"]} -->
+<!-- @demo [["wait",800],["hover",".u437-b",0,{"after":1100}],["hover",".u437-b",1,{"after":750}],["hover",".u437-b",2,{"after":900}],["hover",".u437-b",0,{"after":800}],["leave",900],["reset"]] -->
+<!-- @en {"title":"Tooltip","summary":"A three-button toolbar. Rest on a button and a tooltip with an arrow pops out of it, showing the name and shortcut; slide to the next button and it glides along with no second wait.","hint":"Move the pointer slowly across the buttons. Tab focus shows it too, and Esc closes it","map":[
+  ["aria-label=\"서식\"", "aria-label=\"Formatting\""],
+  ["'굵게'", "'Bold'"],
+  ["'기울임꼴'", "'Italic'"],
+  ["'링크'", "'Link'"]
+]} -->
+<style>
+.u437{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u437-bar{display:flex;gap:4px;margin-top:40px;padding:5px;border-radius:16px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 12px 28px -14px var(--ux-shadow-strong)}
+.u437-b{width:44px;height:44px;padding:0;border:0;border-radius:11px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transform:scale(var(--k,1));transition:background-color .15s,color .15s,transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u437-b:hover,.u437-b.is-on{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u437-b:active{--k:.9;transition:transform .1s var(--ux-ease)}
+.u437-b[aria-pressed="true"]{color:var(--ux-accent)}
+.u437-b svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u437 .u437-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u437-tip{position:absolute;left:0;top:0;z-index:2;transform:translate(var(--x,0px),var(--y,0px));pointer-events:none}
+.u437-tip.is-glide{transition:transform .42s cubic-bezier(.3,1.35,.5,1)}
+.u437-in{position:relative;display:flex;align-items:center;gap:8px;height:32px;padding:0 7px 0 11px;border-radius:9px;white-space:nowrap;font-size:13px;font-weight:600;background:#16151B;background:light-dark(var(--ux-ink),var(--ux-surface-3));color:#fff;color:light-dark(var(--ux-surface),var(--ux-ink));box-shadow:0 8px 20px -8px var(--ux-shadow-strong),0 0 0 1px light-dark(transparent,var(--ux-line-2));transform-origin:var(--ax,50%) 100%;opacity:0;transform:translateY(6px) scale(.6);transition:opacity .14s var(--ux-ease),transform .16s var(--ux-ease)}
+.u437-tip.is-on .u437-in{opacity:1;transform:none;transition:opacity .16s var(--ux-ease),transform .5s cubic-bezier(.3,1.6,.5,1)}
+.u437-in kbd{display:inline-flex;gap:2px}
+.u437-in kbd span{min-width:18px;height:18px;padding:0 4px;border-radius:5px;display:grid;place-items:center;background:color-mix(in srgb,currentColor 16%,transparent);font:inherit;font-size:11px;font-weight:600;opacity:.85}
+.u437-ar{position:absolute;left:var(--ax,50%);bottom:-4px;width:9px;height:9px;margin-left:-4.5px;transform:rotate(45deg);border-radius:2px;background:inherit;transition:left .42s cubic-bezier(.3,1.35,.5,1)}
+</style>
+<div class="ux u437">
+  <div class="u437-bar" role="toolbar" aria-label="서식">
+    <button type="button" class="u437-b" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h6a3.5 3.5 0 0 1 0 7H7zM7 12h7a3.5 3.5 0 0 1 0 7H7z"/></svg></button>
+    <button type="button" class="u437-b" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5h8M6 19h8M14 5l-4 14"/></svg></button>
+    <button type="button" class="u437-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7.3l3-3a4 4 0 0 0-5.7-5.6l-1 1"/><path d="M14 10a4 4 0 0 0-5.7-.3l-3 3a4 4 0 0 0 5.7 5.6l1-1"/></svg></button>
+  </div>
+  <div class="u437-tip" role="tooltip"><div class="u437-in"><span class="u437-tl"></span><kbd></kbd><i class="u437-ar"></i></div></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var btns = root.querySelectorAll('.u437-b'), tip = root.querySelector('.u437-tip'), tl = root.querySelector('.u437-tl'), kb = root.querySelector('.u437-tip kbd');
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
+  var TIPS = [['굵게', 'B'], ['기울임꼴', 'I'], ['링크', 'K']];
+  var uid = 'u437' + Math.random().toString(36).slice(2, 7);
+  tip.id = uid;
+  btns.forEach(function (b, i) { b.setAttribute('aria-label', TIPS[i][0]); b.setAttribute('aria-keyshortcuts', (mac ? 'Meta+' : 'Control+') + TIPS[i][1]); });
+  var cur = null, openT = 0, closeT = 0, lastClose = 0, muted = null;
+  // 버튼 바로 위 가운데에 놓고, 화살표가 버튼 한가운데를 가리키게 합니다
+  function place(b) {
+    var rr = root.getBoundingClientRect(), br = b.getBoundingClientRect(), k = rr.width / root.offsetWidth || 1;
+    var cx = (br.left - rr.left + br.width / 2) / k, top = (br.top - rr.top) / k;
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = Math.max(8, Math.min(root.offsetWidth - 8 - w, cx - w / 2));
+    tip.style.setProperty('--x', x.toFixed(1) + 'px');
+    tip.style.setProperty('--y', (top - h - 10).toFixed(1) + 'px');
+    tip.style.setProperty('--ax', (cx - x).toFixed(1) + 'px');
+  }
+  function show(b, glide) {
+    var t = TIPS[Array.prototype.indexOf.call(btns, b)];
+    tl.textContent = t[0];
+    kb.innerHTML = '<span>' + (mac ? '⌘' : 'Ctrl') + '</span><span>' + t[1] + '</span>';
+    tip.classList.toggle('is-glide', !!glide);
+    place(b);
+    if (cur) { cur.removeAttribute('aria-describedby'); cur.classList.remove('is-on'); }
+    cur = b;
+    b.setAttribute('aria-describedby', tip.id);
+    b.classList.add('is-on');
+    tip.classList.add('is-on');
+  }
+  function hide() {
+    clearTimeout(openT);
+    if (!cur) return;
+    cur.removeAttribute('aria-describedby'); cur.classList.remove('is-on');
+    cur = null;
+    tip.classList.remove('is-on');
+    lastClose = Date.now();
+  }
+  // 처음엔 0.4초 기다렸다 열고, 떠 있거나 방금 닫혔으면 이웃으로 바로 미끄러집니다
+  function want(b) {
+    if (b === muted) return;
+    clearTimeout(closeT); clearTimeout(openT);
+    if (cur === b) return;
+    if (cur || Date.now() - lastClose < 300) show(b, !!cur);
+    else openT = setTimeout(function () { if (root.isConnected) show(b, false); }, 400);
+  }
+  function unwant(b) {
+    if (muted === b) muted = null;
+    clearTimeout(openT); clearTimeout(closeT);
+    closeT = setTimeout(hide, 100);
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') want(b); });
+    b.addEventListener('pointerleave', function () { unwant(b); });
+    b.addEventListener('focus', function () { if (b.matches(':focus-visible')) want(b); });
+    b.addEventListener('blur', function () { unwant(b); });
+    b.addEventListener('pointerdown', function () { muted = b; hide(); });
+    b.addEventListener('click', function () { if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
+  });
+  // 처음 그릴 때 첫 버튼의 툴팁을 띄워 둡니다(초점은 옮기지 않습니다)
+  setTimeout(function () { if (root.isConnected && !cur) show(btns[0], false); }, 300);
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && cur) { e.preventDefault(); e.stopPropagation(); muted = cur; hide(); }
+  });
+})();
+</script>

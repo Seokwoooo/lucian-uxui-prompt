@@ -1,0 +1,72 @@
+<!-- Lucian UX/UI Prompt #424 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#424 -->
+<!--
+Element: FAQ 아코디언
+ID: 424 · Category: 섹션·콘텐츠 · Tags: faq, accordion, plus-minus, disclosure, spring
+What it does: 질문 네 개짜리 아코디언입니다. 질문을 누르면 답이 부드럽게 펼쳐지고, 더하기 기호의 세로 획이 돌아 누우며 빼기로 바뀝니다. 한 번에 하나만 열립니다.
+How to use it: 질문을 눌러 열고 닫아 보세요. 키보드는 위아래 방향키로 질문을 옮깁니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#424
+-->
+<style>
+.u424{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u424-ls{width:300px;margin:0;padding:6px;border-radius:20px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong);list-style:none}
+.u424-it+.u424-it{box-shadow:0 -1px 0 var(--ux-line)}
+.u424-q{display:flex;align-items:center;gap:12px;width:100%;height:50px;padding:0 10px 0 14px;border:0;border-radius:14px;background:none;font-size:13.5px;font-weight:650;letter-spacing:-.02em;color:var(--ux-ink);text-align:left;transition:background-color .2s}
+.u424-q:hover{background:var(--ux-surface-2)}
+.u424-q span{flex:1}
+.u424-q:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+/* 더하기 → 빼기: 세로 획이 돌아 누워 가로 획과 겹칩니다 */
+.u424-pm{position:relative;width:26px;height:26px;flex:none;border-radius:50%;background:var(--ux-surface-2);transition:background-color .3s,transform .5s var(--ux-spring)}
+.u424-q:hover .u424-pm{transform:scale(1.08)}
+.u424-pm::before,.u424-pm::after{content:"";position:absolute;left:50%;top:50%;width:10px;height:1.75px;margin:-.875px 0 0 -5px;border-radius:2px;background:var(--ux-ink);transition:transform .55s cubic-bezier(.3,1.6,.5,1),background-color .3s}
+.u424-pm::after{transform:rotate(90deg)}
+.u424-it.open .u424-pm{background:var(--ux-ink)}
+.u424-it.open .u424-pm::before,.u424-it.open .u424-pm::after{background:var(--ux-surface)}
+.u424-it.open .u424-pm::after{transform:rotate(180deg)}
+.u424-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.25,1,.35,1)}
+.u424-it.open .u424-a{grid-template-rows:1fr}
+.u424-a>div{min-height:0;overflow:hidden}
+.u424-a p{margin:0;padding:0 46px 14px 14px;font-size:12px;line-height:1.6;color:var(--ux-ink-2);opacity:0;transform:translateY(-6px);transition:opacity .2s,transform .3s var(--ux-ease)}
+.u424-it.open .u424-a p{opacity:1;transform:none;transition:opacity .35s var(--ux-ease) .1s,transform .5s cubic-bezier(.3,1.4,.5,1) .08s}
+@media (prefers-reduced-motion:reduce){.u424-a,.u424-a p,.u424-pm::before,.u424-pm::after{transition:none!important}}
+</style>
+<div class="ux u424">
+  <ul class="u424-ls">
+    <li class="u424-it"><button class="u424-q" type="button" aria-expanded="false"><span>무료 체험이 있나요?</span><i class="u424-pm" aria-hidden="true"></i></button><div class="u424-a" role="region"><div><p>네, 모든 요금제를 14일 동안 카드 등록 없이 써 볼 수 있어요.</p></div></div></li>
+    <li class="u424-it"><button class="u424-q" type="button" aria-expanded="false"><span>언제든 해지할 수 있나요?</span><i class="u424-pm" aria-hidden="true"></i></button><div class="u424-a" role="region"><div><p>설정에서 바로 해지할 수 있고, 남은 기간까지는 그대로 쓸 수 있어요.</p></div></div></li>
+    <li class="u424-it"><button class="u424-q" type="button" aria-expanded="false"><span>팀원은 몇 명까지 초대하나요?</span><i class="u424-pm" aria-hidden="true"></i></button><div class="u424-a" role="region"><div><p>Pro는 20명, Team은 인원 제한 없이 초대할 수 있어요.</p></div></div></li>
+    <li class="u424-it"><button class="u424-q" type="button" aria-expanded="false"><span>데이터는 안전한가요?</span><i class="u424-pm" aria-hidden="true"></i></button><div class="u424-a" role="region"><div><p>모든 데이터는 암호화되어 저장되고 매일 백업돼요.</p></div></div></li>
+  </ul>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var its = Array.prototype.slice.call(root.querySelectorAll('.u424-it'));
+  var qs = its.map(function (it) { return it.querySelector('.u424-q'); });
+  var uid = 'u424-' + Math.random().toString(36).slice(2, 7);
+  its.forEach(function (it, i) {
+    var a = it.querySelector('.u424-a');
+    qs[i].id = uid + '-q' + i; a.id = uid + '-a' + i;
+    qs[i].setAttribute('aria-controls', a.id); a.setAttribute('aria-labelledby', qs[i].id);
+    a.inert = true;
+  });
+  // 한 번에 하나만 열립니다
+  function toggle(i) {
+    its.forEach(function (it, k) {
+      var v = k === i && !it.classList.contains('open');
+      it.classList.toggle('open', v);
+      qs[k].setAttribute('aria-expanded', String(v));
+      it.querySelector('.u424-a').inert = !v;
+    });
+  }
+  qs.forEach(function (q, i) {
+    q.addEventListener('click', function () { toggle(i); });
+    q.addEventListener('keydown', function (e) {
+      var n = qs.length, to = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+      if (to === null) return;
+      e.preventDefault(); qs[(to + n) % n].focus();
+    });
+  });
+})();
+</script>

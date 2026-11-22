@@ -1,0 +1,82 @@
+<!-- Lucian UX/UI Prompt #434 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#434 -->
+<!--
+Element: 입력칸 상태
+ID: 434 · Category: 폼·입력 · Tags: input, validation, error, success, shake, form-field
+What it does: 이메일 입력칸 하나가 상태를 차례로 보여 줍니다. 누르면 테두리가 은은하게 빛나고, 형식이 틀린 채 멈추면 고개를 젓듯 흔들리며 빨간 안내가 내려오고, 맞게 고치면 초록 체크가 톡 튀어나옵니다.
+How to use it: 이메일을 일부만 쳐서 멈춰 보고, 이어서 끝까지 입력해 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#434
+-->
+<style>
+.u434{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u434-w{width:284px}
+.u434-w label{display:block;margin:0 0 8px 2px;font-size:13px;font-weight:600;color:var(--ux-ink-2)}
+.u434-f{position:relative;display:flex;align-items:center;height:52px;padding:0 12px 0 16px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 8px 20px -14px var(--ux-shadow-strong);transition:box-shadow .3s var(--ux-ease)}
+.u434-f.is-focus{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 6px var(--ux-accent-soft),0 8px 20px -14px var(--ux-shadow-strong)}
+.u434-f.is-err{box-shadow:0 0 0 1.5px var(--ux-danger),0 0 0 6px color-mix(in srgb,var(--ux-danger) 14%,transparent);animation:u434-shake .45s cubic-bezier(.36,.07,.19,.97)}
+.u434-f.is-ok{box-shadow:0 0 0 1.5px var(--ux-mint),0 0 0 6px color-mix(in srgb,var(--ux-mint) 14%,transparent)}
+@keyframes u434-shake{15%,85%{transform:translateX(-2px)}30%,70%{transform:translateX(5px)}45%,55%{transform:translateX(-7px)}}
+.u434-in{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:15.5px;font-weight:500;color:var(--ux-ink)}
+.u434 .u434-in:focus-visible{outline:none}
+.u434-ic{position:relative;flex:none;width:26px;height:26px}
+.u434-ic span{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.2) rotate(-40deg);transition:opacity .15s,transform .25s var(--ux-ease)}
+.u434-ic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u434-ic .ok{background:var(--ux-mint);color:var(--ux-surface)}
+.u434-ic .no{background:var(--ux-danger);color:var(--ux-surface)}
+.u434-f.is-ok .u434-ic .ok,.u434-f.is-err .u434-ic .no{opacity:1;transform:none;transition:opacity .15s,transform .6s cubic-bezier(.3,1.9,.5,1)}
+.u434-ok path{stroke-dasharray:20;stroke-dashoffset:20}
+.u434-f.is-ok .u434-ic .ok path{stroke-dashoffset:0;transition:stroke-dashoffset .35s var(--ux-ease) .12s}
+.u434-ok path{transition:none}
+.u434-msg{display:grid;margin:9px 0 0 2px;min-height:20px;font-size:13px;line-height:1.4}
+.u434-msg span{grid-area:1/1;opacity:0;transform:translateY(-6px);transition:opacity .2s var(--ux-ease),transform .45s cubic-bezier(.3,1.5,.5,1)}
+.u434-msg .h{color:var(--ux-ink-3)}
+.u434-msg .e{color:var(--ux-danger)}
+.u434-msg .s{color:var(--ux-mint)}
+.u434-w[data-s="idle"] .u434-msg .h,.u434-w[data-s="err"] .u434-msg .e,.u434-w[data-s="ok"] .u434-msg .s{opacity:1;transform:none}
+</style>
+<div class="ux u434">
+  <div class="u434-w" data-s="idle">
+    <label class="u434-lb">이메일</label>
+    <div class="u434-f"><input class="u434-in" type="email" autocomplete="off" spellcheck="false" placeholder="name@company.com"><span class="u434-ic" aria-hidden="true"><span class="ok u434-ok"><svg viewBox="0 0 24 24"><path d="m5.5 12.5 4 4 9-9.5"/></svg></span><span class="no"><svg viewBox="0 0 24 24"><path d="M12 7v6M12 17h.01"/></svg></span></span></div>
+    <p class="u434-msg" aria-live="polite"><span class="h"></span><span class="e"></span><span class="s"></span></p>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var w = q('.u434-w'), f = q('.u434-f'), input = q('.u434-in'), lb = q('.u434-lb'), h = q('.u434-msg .h'), e = q('.u434-msg .e'), s = q('.u434-msg .s');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { bad: '올바른 이메일 형식이 아니에요', ok: '좋아요, 쓸 수 있는 이메일이에요', help: '회사 메일이면 팀에 바로 합류해요' };
+  var uid = 'u434' + Math.random().toString(36).slice(2, 7);
+  input.id = uid; lb.htmlFor = uid;
+  h.textContent = T.help; e.textContent = T.bad; s.textContent = T.ok;
+  var msg = q('.u434-msg'); msg.id = uid + 'm'; input.setAttribute('aria-describedby', msg.id);
+  var timer = 0;
+  function set(st) {
+    w.dataset.s = st;
+    f.classList.toggle('is-ok', st === 'ok');
+    if (st === 'err') { f.classList.remove('is-err'); void f.offsetWidth; f.classList.add('is-err'); } else f.classList.remove('is-err');
+    input.setAttribute('aria-invalid', st === 'err' ? 'true' : 'false');
+    [h, e, s].forEach(function (x) { x.setAttribute('aria-hidden', 'true'); });
+    ({ idle: h, err: e, ok: s })[st].removeAttribute('aria-hidden');
+  }
+  // 치는 동안에는 기다렸다가, 손을 멈추면 형식을 확인합니다
+  function check() {
+    var v = input.value.trim();
+    if (!v) { set('idle'); return; }
+    set(/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v) ? 'ok' : 'err');
+  }
+  input.addEventListener('input', function () {
+    clearTimeout(timer);
+    f.classList.add('is-focus');
+    if (w.dataset.s !== 'idle') set('idle');
+    timer = setTimeout(function () { if (root.isConnected) check(); }, rm ? 300 : 800);
+  });
+  input.addEventListener('focus', function () { f.classList.add('is-focus'); });
+  input.addEventListener('blur', function () { f.classList.remove('is-focus'); clearTimeout(timer); check(); });
+  f.addEventListener('click', function () { f.classList.add('is-focus'); input.focus({ preventScroll: true }); });
+  set('idle');
+})();
+</script>

@@ -1,0 +1,107 @@
+<!-- Lucian UX/UI Prompt #402 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#402 -->
+<!--
+Element: 소셜 로그인 버튼
+ID: 402 · Category: 로그인·가입 · Tags: social-login, kakao, naver, apple, google, oauth, stagger
+What it does: 카카오, 네이버, Apple, Google 버튼 네 개를 같은 폭으로 쌓았습니다. 차례로 튀어 오르며 나타나고, 하나를 누르면 그 버튼만 가운데로 모이며 스피너가 돌고 나머지 셋은 그 뒤로 접혀 사라집니다. 체크와 ‘연결됐어요’를 보여 준 뒤 모두 제자리로 돌아옵니다.
+How to use it: 버튼 하나를 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#402
+-->
+<style>
+.u402{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u402-st{display:flex;flex-direction:column;gap:10px;width:280px}
+.u402-b{--y:0px;position:relative;isolation:isolate;height:46px;display:flex;align-items:center;justify-content:center;padding:0 46px;border:0;border-radius:12px;background:var(--bg);color:var(--fg);box-shadow:var(--bd,0 0 0 0 transparent);font-size:14.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;transform:translateY(var(--y));transition:transform .6s var(--ux-spring),opacity .3s,box-shadow .3s var(--ux-ease);transition-delay:calc(var(--d,0) * 50ms);animation:u402-in .7s var(--ux-spring) backwards;animation-delay:calc(var(--i) * 70ms + 80ms)}
+@keyframes u402-in{from{opacity:0;transform:translateY(16px) scale(.94)}}
+.u402-b::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--ov);opacity:0;transition:opacity .2s}
+.u402-b:hover{--y:-2px;box-shadow:var(--bd,0 0 0 0 transparent),0 10px 22px -12px var(--lift)}
+.u402-b:hover::after{opacity:1}
+.u402-b:active{transform:translateY(var(--y)) scale(.96,.93);transition-duration:.12s,.3s,.2s}
+.u402 .u402-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u402-kakao{--bg:#FEE500;--fg:rgba(0,0,0,.85);--ov:rgba(0,0,0,.05);--lift:rgba(120,100,0,.55)}
+.u402-naver{--bg:#03C75A;--fg:#FFFFFF;--ov:rgba(0,0,0,.06);--lift:rgba(0,110,50,.6)}
+.u402-apple{--bg:#000000;--fg:#FFFFFF;--ov:rgba(255,255,255,.14);--lift:rgba(0,0,0,.6);--bg:light-dark(#000000,#FFFFFF);--fg:light-dark(#FFFFFF,#000000);--ov:light-dark(rgba(255,255,255,.14),rgba(0,0,0,.06));--lift:light-dark(rgba(0,0,0,.55),rgba(0,0,0,.9))}
+.u402-google{--bg:#FFFFFF;--fg:#1F1F1F;--ov:rgba(31,31,31,.05);--bd:inset 0 0 0 1px #747775;--lift:rgba(60,64,67,.45);--bg:light-dark(#FFFFFF,#131314);--fg:light-dark(#1F1F1F,#E3E3E3);--ov:light-dark(rgba(31,31,31,.05),rgba(227,227,227,.08));--bd:inset 0 0 0 1px light-dark(#747775,#8E918F);--lift:light-dark(rgba(60,64,67,.45),rgba(0,0,0,.9))}
+.u402-ic{position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;display:grid;place-items:center}
+.u402-ic svg{display:block;width:20px;height:20px}
+.u402-naver .u402-ic svg{width:14px;height:14px}
+.u402-tx,.u402-ss{grid-area:1/1}
+.u402-lb{display:grid;place-items:center}
+.u402-tx{transition:opacity .2s,transform .45s var(--ux-spring),filter .3s}
+.u402-ss{display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(9px);filter:blur(2px);transition:opacity .2s,transform .45s var(--ux-spring),filter .3s}
+.u402-ss i{position:relative;width:16px;height:16px;flex:none}
+.u402-ss i::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u402-spin .7s linear infinite;transition:opacity .2s,transform .3s}
+.u402-ss svg{position:absolute;inset:-1px;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.u402-ss svg path{stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .4s var(--ux-ease) .1s}
+.u402-ss em{display:grid;font-style:normal}
+.u402-ss em span{grid-area:1/1;transition:opacity .2s,transform .45s var(--ux-spring)}
+.u402-ss em span+span{opacity:0;transform:translateY(8px)}
+@keyframes u402-spin{to{rotate:360deg}}
+.u402-b.is-busy .u402-tx,.u402-b.is-ok .u402-tx{opacity:0;transform:translateY(-9px);filter:blur(2px)}
+.u402-b.is-busy .u402-ss,.u402-b.is-ok .u402-ss{opacity:1;transform:none;filter:none}
+.u402-b.is-ok .u402-ss i::before{opacity:0;transform:scale(.4)}
+.u402-b.is-ok .u402-ss svg path{stroke-dashoffset:0}
+.u402-b.is-ok .u402-ss em span:first-child{opacity:0;transform:translateY(-8px)}
+.u402-b.is-ok .u402-ss em span+span{opacity:1;transform:none}
+.u402-b.is-gone{opacity:0;transform:translateY(var(--y)) scale(.9);pointer-events:none;transition:transform .5s var(--ux-ease),opacity .25s,box-shadow .3s;transition-delay:calc(var(--d,0) * 45ms)}
+.u402-b:active{transition-delay:0s}
+.u402-b.is-pick{z-index:1}
+.u402-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u402">
+  <div class="u402-st">
+    <button type="button" class="u402-b u402-kakao" style="--i:0" data-n="카카오"><span class="u402-ic" aria-hidden="true"><svg viewBox="2 2.6 20 20"><path fill="#000000" d="M12 18.75c-.591 0-1.1697-.0413-1.7317-.1209-.5626.3965-3.813 2.6797-4.1198 2.7225 0 0-.1258.0489-.2328-.0141s-.0876-.2282-.0876-.2282c.0322-.2198.8426-3.0183.992-3.5333-2.7452-1.36-4.5701-3.7686-4.5701-6.5135C2.25 6.8168 6.6152 3.375 12 3.375s9.75 3.4418 9.75 7.6875c0 4.2457-4.3652 7.6875-9.75 7.6875z"/></svg></span><span class="u402-lb"><span class="u402-tx">카카오 로그인</span></span></button>
+    <button type="button" class="u402-b u402-naver" style="--i:1" data-n="네이버"><span class="u402-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#FFFFFF" d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z"/></svg></span><span class="u402-lb"><span class="u402-tx">네이버 로그인</span></span></button>
+    <button type="button" class="u402-b u402-apple" style="--i:2" data-n="Apple"><span class="u402-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg></span><span class="u402-lb"><span class="u402-tx">Apple로 로그인</span></span></button>
+    <button type="button" class="u402-b u402-google" style="--i:3" data-n="Google"><span class="u402-ic" aria-hidden="true"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg></span><span class="u402-lb"><span class="u402-tx">Google 계정으로 로그인</span></span></button>
+  </div>
+  <p class="u402-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { busy: ' 로그인 창을 여는 중이에요', ok: ' 계정과 연결됐어요' };
+  var st = root.querySelector('.u402-st'), live = root.querySelector('.u402-live');
+  var bs = [].slice.call(st.querySelectorAll('.u402-b'));
+  // 상태 표시(스피너→체크와 문구)를 버튼마다 하나씩 붙입니다
+  bs.forEach(function (b) {
+    var s = document.createElement('span');
+    s.className = 'u402-ss'; s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = '<i><svg viewBox="0 0 18 18"><path d="M4 9.4l3.2 3.1L14 5.6"/></svg></i><em><span>연결 중…</span><span>연결됐어요</span></em>';
+    b.querySelector('.u402-lb').appendChild(s);
+  });
+  function later(fn, ms) { setTimeout(function () { if (root.isConnected) fn(); }, ms); }
+  // 누른 버튼은 묶음 가운데로 모이고, 나머지는 그 버튼 쪽으로 접혀 사라집니다(transform만 쓰므로 자리 이동이 없습니다)
+  bs.forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      if (st.classList.contains('is-pick')) return;
+      var name = b.getAttribute('data-n');
+      // offsetTop은 루트 기준이므로 묶음의 위치를 빼서 묶음 안 좌표로 바꿉니다
+      var mid = (st.offsetHeight - b.offsetHeight) / 2, top = b.offsetTop - st.offsetTop;
+      st.classList.add('is-pick');
+      bs.forEach(function (o, k) {
+        o.style.setProperty('--y', (k === i ? mid - top : (mid - (o.offsetTop - st.offsetTop)) * 0.55) + 'px');
+        o.style.setProperty('--d', Math.abs(k - i));
+        o.classList.toggle('is-gone', k !== i);
+        if (k !== i) { o.tabIndex = -1; o.setAttribute('aria-hidden', 'true'); }
+      });
+      b.classList.add('is-pick', 'is-busy'); b.setAttribute('aria-busy', 'true');
+      live.textContent = name + T.busy;
+      later(function () {
+        b.classList.remove('is-busy'); b.removeAttribute('aria-busy'); b.classList.add('is-ok');
+        live.textContent = name + T.ok;
+        later(function () {
+          b.classList.remove('is-ok', 'is-pick');
+          bs.forEach(function (o, k) {
+            o.style.setProperty('--y', '0px');
+            o.style.setProperty('--d', Math.max(0, Math.abs(k - i) - 1));
+            o.classList.remove('is-gone'); o.removeAttribute('tabindex'); o.removeAttribute('aria-hidden');
+          });
+          later(function () { st.classList.remove('is-pick'); bs.forEach(function (o) { o.style.removeProperty('--y'); o.style.removeProperty('--d'); }); }, rm ? 0 : 800);
+        }, rm ? 800 : 1200);
+      }, rm ? 500 : 1500);
+    });
+  });
+})();
+</script>

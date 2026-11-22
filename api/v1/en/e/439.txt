@@ -1,0 +1,88 @@
+<!-- Lucian UX/UI Prompt #439 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#439 -->
+<!--
+Element: Skeleton card
+ID: 439 · Category: Loading & Progress · Tags: skeleton, loading, shimmer, placeholder, crossfade, card
+What it does: While an article card loads, bones in the exact place and size of the real content shimmer to hold the space; when it arrives, the image, title and author fade in over them one after another. The button below loads it again.
+How to use it: Press the refresh button below to load it again
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#439
+-->
+<style>
+.u439{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.u439-c{display:grid;width:248px;padding:10px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 40px -22px var(--ux-shadow-strong)}
+.u439-c>*{grid-area:1/1;min-width:0}
+.u439-im{height:104px;border-radius:13px;overflow:hidden}
+.u439-tx{padding:12px 6px 4px}
+.u439-tg{font-size:11.5px;font-weight:650;color:var(--ux-accent)}
+.u439-tt{margin-top:3px;font-size:15px;font-weight:700;line-height:1.35;letter-spacing:-.02em}
+.u439-mt{display:flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;color:var(--ux-ink-3)}
+.u439-av{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#F7B267,#F25C78)}
+.u439-art{position:relative;width:100%;height:100%;background:linear-gradient(140deg,#1E2A4A,#3A3F8F 45%,#7C6CF2)}
+.u439-art i{position:absolute;border-radius:50%}
+.u439-art i:nth-child(1){width:96px;height:96px;left:-18px;bottom:-34px;background:radial-gradient(circle at 35% 35%,#F8F7FF,#C9C3FF 40%,rgba(201,195,255,0) 72%);opacity:.55}
+.u439-art i:nth-child(2){width:64px;height:64px;right:28px;top:18px;background:radial-gradient(circle at 40% 35%,#FFD9A8,#F4845F 60%,rgba(244,132,95,0) 74%)}
+.u439-art i:nth-child(3){width:150px;height:150px;right:-60px;bottom:-90px;border:1px solid rgba(255,255,255,.25)}
+.u439-art i:nth-child(4){width:110px;height:110px;right:-40px;bottom:-70px;border:1px solid rgba(255,255,255,.18)}
+.u439-real>*{opacity:1;transform:none;transition:opacity .5s var(--ux-ease),transform .6s cubic-bezier(.3,1.3,.5,1);transition-delay:var(--d,0s)}
+.u439.is-loading .u439-real>*{opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s;transition-delay:0s}
+.u439-sk{pointer-events:none}
+.u439-sk>*{opacity:0;transition:opacity .4s var(--ux-ease);transition-delay:var(--d,0s)}
+.u439.is-loading .u439-sk>*{opacity:1;transition:opacity .15s;transition-delay:0s}
+.u439-sk i{display:block;border-radius:7px;background:var(--ux-surface-3);background-image:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.75) 50%,transparent 70%);background-image:linear-gradient(100deg,transparent 30%,light-dark(rgba(255,255,255,.75),rgba(255,255,255,.07)) 50%,transparent 70%);background-size:220% 100%;background-repeat:no-repeat;animation:u439-sh 1.25s ease-in-out infinite}
+@keyframes u439-sh{from{background-position:130% 0}to{background-position:-30% 0}}
+.u439-sk .u439-im{display:block;border-radius:13px}
+.u439-sk .a{width:52px;height:11px}
+.u439-sk .b{width:92%;height:15px;margin-top:8px}
+.u439-sk .c{width:58%;height:15px;margin-top:6px}
+.u439-sk .u439-mt i:first-child{width:20px;height:20px;border-radius:50%}
+.u439-sk .u439-mt i:last-child{width:86px;height:11px}
+.u439-rl{width:36px;height:36px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 6px 14px -8px var(--ux-shadow-strong);color:var(--ux-ink-2);transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1),color .15s}
+.u439-rl:hover{color:var(--ux-ink)}
+.u439-rl:active{--k:.88;transition:transform .1s var(--ux-ease)}
+.u439-rl svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u439.is-loading .u439-rl svg{animation:u439-rot .8s linear infinite}
+@keyframes u439-rot{to{transform:rotate(360deg)}}
+.u439 .u439-rl:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u439-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.u439-sk i{animation:none;background-image:none}.u439.is-loading .u439-rl svg{animation:none}}
+</style>
+<div class="ux u439 is-loading">
+  <article class="u439-c" aria-busy="true">
+    <div class="u439-real">
+      <div class="u439-im" style="--d:0s"><div class="u439-art" aria-hidden="true"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u439-tx" style="--d:.12s"><div class="u439-tg">Design</div><div class="u439-tt">Start dark mode colors with contrast</div></div>
+      <div class="u439-mt" style="--d:.22s;padding:0 6px 4px;margin-top:0"><span class="u439-av" aria-hidden="true"></span>Seoyeon Han · 4 min</div>
+    </div>
+    <div class="u439-sk" aria-hidden="true">
+      <i class="u439-im" style="--d:0s"></i>
+      <div class="u439-tx" style="--d:.12s"><i class="a"></i><i class="b"></i><i class="c"></i></div>
+      <div class="u439-mt" style="--d:.22s;padding:0 6px 4px;margin-top:0"><i></i><i></i></div>
+    </div>
+  </article>
+  <button type="button" class="u439-rl" aria-label="Reload"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3L19.5 9"/><path d="M19.5 4.5V9H15"/></svg></button>
+  <p class="u439-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var card = root.querySelector('.u439-c'), rl = root.querySelector('.u439-rl'), live = root.querySelector('.u439-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { loading: 'Loading', done: 'Loaded' };
+  var timer = 0;
+  function load() {
+    clearTimeout(timer);
+    root.classList.add('is-loading');
+    card.setAttribute('aria-busy', 'true');
+    live.textContent = T.loading;
+    timer = setTimeout(function () {
+      if (!root.isConnected) return;
+      root.classList.remove('is-loading');
+      card.setAttribute('aria-busy', 'false');
+      live.textContent = T.done;
+    }, rm ? 500 : 1500);
+  }
+  rl.addEventListener('click', load);
+  load();
+})();
+</script>

@@ -1,0 +1,57 @@
+<!-- Lucian UX/UI Prompt #443 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#443 -->
+<!--
+Element: Payment method
+ID: 443 · Category: Commerce & Pricing · Tags: payment, radio-cards, kakaopay, naverpay, tosspay, checkout, spring
+What it does: Radio cards for credit or debit card, Kakao Pay, Naver Pay and Toss Pay, each with its brand mark. Choose one and the selection outline springs over to it while the dot inside the circle pops up.
+How to use it: Tap a payment method. Arrow keys move it too
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#443
+-->
+<style>
+.u443{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u443-ls{position:relative;display:flex;flex-direction:column;gap:8px;width:276px}
+.u443-ring{position:absolute;left:0;right:0;top:0;height:54px;border-radius:15px;box-shadow:0 0 0 1.75px var(--ux-accent),0 0 0 6px var(--ux-accent-soft);transform:translateY(var(--y,0px));transition:transform .55s cubic-bezier(.3,1.45,.5,1);pointer-events:none;z-index:2}
+.u443-c{position:relative;display:flex;align-items:center;gap:12px;height:54px;padding:0 14px 0 12px;border-radius:15px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 6px 16px -12px var(--ux-shadow-strong);cursor:pointer;transform:scale(var(--k,1));transition:transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u443-c:active{--k:.97;transition:transform .1s var(--ux-ease)}
+.u443-c input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.u443-mk{flex:none;width:46px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:2px;font-weight:800;letter-spacing:-.03em}
+.u443-mk.is-card{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink-2)}
+.u443-mk.is-card svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u443-mk.is-kakao{background:#FFEB00;color:#191600;font-size:11.5px}
+.u443-mk.is-kakao svg{width:13px;height:12px}
+.u443-mk.is-naver{background:#03C75A;color:#fff;font-size:11.5px}
+.u443-mk.is-naver svg{width:9px;height:9px;margin-right:1px}
+.u443-mk.is-toss{background:#0064FF;color:#fff;font-size:12px}
+.u443-nm{flex:1;min-width:0;font-size:14.5px;font-weight:600;letter-spacing:-.015em}
+.u443-rd{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.75px var(--ux-line-2);transition:background-color .2s,box-shadow .2s}
+.u443-rd::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--ux-accent-ink);transform:scale(0);transition:transform .2s var(--ux-ease)}
+.u443-c.is-sel .u443-rd{background:var(--ux-accent);box-shadow:inset 0 0 0 1.75px var(--ux-accent)}
+.u443-c.is-sel .u443-rd::after{transform:none;transition:transform .55s cubic-bezier(.3,1.9,.5,1) .08s}
+.u443-c input:focus-visible~.u443-rd{outline:2px solid var(--ux-accent);outline-offset:3px}
+</style>
+<div class="ux u443">
+  <div class="u443-ls" role="radiogroup" aria-label="Payment method">
+    <i class="u443-ring" aria-hidden="true"></i>
+    <label class="u443-c"><input type="radio" value="card" checked><span class="u443-mk is-card" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span><span class="u443-nm">Credit or debit card</span><span class="u443-rd" aria-hidden="true"></span></label>
+    <label class="u443-c"><input type="radio" value="kakao"><span class="u443-mk is-kakao" aria-hidden="true"><svg viewBox="0 0 14 13"><path d="M7 1C3.7 1 1 3.1 1 5.7c0 1.7 1.1 3.1 2.8 3.9L3.2 12l2.7-1.8c.4.1.7.1 1.1.1 3.3 0 6-2.1 6-4.6S10.3 1 7 1z" fill="#191600"/></svg>pay</span><span class="u443-nm">Kakao Pay</span><span class="u443-rd" aria-hidden="true"></span></label>
+    <label class="u443-c"><input type="radio" value="naver"><span class="u443-mk is-naver" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#fff" d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z"/></svg>pay</span><span class="u443-nm">Naver Pay</span><span class="u443-rd" aria-hidden="true"></span></label>
+    <label class="u443-c"><input type="radio" value="toss"><span class="u443-mk is-toss" aria-hidden="true">toss</span><span class="u443-nm">Toss Pay</span><span class="u443-rd" aria-hidden="true"></span></label>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ring = root.querySelector('.u443-ring'), cards = root.querySelectorAll('.u443-c'), radios = root.querySelectorAll('.u443-c input');
+  var uid = 'u443' + Math.random().toString(36).slice(2, 7);
+  radios.forEach(function (r) { r.name = uid; });
+  function sync() {
+    radios.forEach(function (r, i) {
+      cards[i].classList.toggle('is-sel', r.checked);
+      if (r.checked) ring.style.setProperty('--y', cards[i].offsetTop + 'px');
+    });
+  }
+  radios.forEach(function (r) { r.addEventListener('change', sync); });
+  sync();
+})();
+</script>

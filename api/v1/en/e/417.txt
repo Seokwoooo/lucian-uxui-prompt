@@ -1,0 +1,90 @@
+<!-- Lucian UX/UI Prompt #417 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#417 -->
+<!--
+Element: Collapsible sidebar
+ID: 417 · Category: Navigation · Tags: sidebar, rail, collapsible, navigation, spring
+What it does: An app sidebar with icons and labels. Pick an item and the highlight springs over to it; press the round button on the edge and the width bounces down to an icon-only rail as the labels melt away.
+How to use it: Press a few items, then collapse and expand with the round button on the right edge
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#417
+-->
+<style>
+
+.u417{position:relative;width:340px;height:300px;display:grid;align-items:center;justify-items:start;padding-left:58px;color:var(--ux-ink)}
+.u417-sb{position:relative;width:224px;height:270px;padding:12px 10px;border-radius:20px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -24px var(--ux-shadow-strong);transition:width .6s cubic-bezier(.3,1.3,.45,1)}
+.u417.is-rail .u417-sb{width:64px}
+.u417-hd{display:flex;align-items:center;gap:10px;height:36px;padding-left:7px;margin-bottom:8px}
+.u417-mk{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:9px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u417-mk svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.u417-lb{white-space:nowrap;overflow:hidden;transition:opacity .3s var(--ux-ease) .12s,transform .45s var(--ux-ease) .1s}
+.u417.is-rail .u417-lb{opacity:0;transform:translateX(-8px);transition:opacity .15s,transform .25s}
+.u417-hd b{font-size:15px;font-weight:800;letter-spacing:-.03em}
+.u417-nav{position:relative;margin:0;padding:0;list-style:none}
+.u417-pl{position:absolute;left:0;right:0;top:0;height:40px;border-radius:11px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);transform:translateY(var(--py,0px));transition:transform .55s cubic-bezier(.3,1.45,.5,1)}
+.u417-it{position:relative;display:flex;align-items:center;gap:12px;height:40px;padding:0 10px 0 13px;border-radius:11px;color:var(--ux-ink-3);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
+.u417-it:hover{color:var(--ux-ink)}
+.u417-it[aria-current="page"]{color:var(--ux-ink)}
+.u417-it svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ux-spring),color .2s}
+.u417-it[aria-current="page"] svg{color:var(--ux-accent)}
+.u417-it:active svg{transform:scale(.85)}
+.u417-it .u417-lb{flex:1}
+.u417-bd{position:absolute;right:10px;top:11px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:10px;font-weight:800;line-height:18px;text-align:center;box-shadow:0 0 0 2px var(--ux-surface);animation:u417-pop .5s cubic-bezier(.3,1.8,.5,1)}
+
+.u417.is-rail .u417-bd{right:auto;left:26px;top:5px;min-width:15px;height:15px;padding:0 4px;font-size:9px;line-height:15px;animation:u417-pop2 .5s cubic-bezier(.3,1.8,.5,1)}
+@keyframes u417-pop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+@keyframes u417-pop2{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+.u417-it:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+
+.u417-tg{position:absolute;right:-12px;top:20px;z-index:2;display:grid;place-items:center;width:24px;height:24px;border:0;border-radius:50%;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 2px 6px -2px var(--ux-shadow-strong);color:var(--ux-ink-2);transition:transform .5s cubic-bezier(.3,1.6,.5,1),color .2s}
+.u417-tg:hover{color:var(--ux-ink);transform:scale(1.12)}
+.u417-tg svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .55s cubic-bezier(.3,1.6,.5,1)}
+.u417.is-rail .u417-tg svg{transform:rotate(180deg)}
+.u417-tg:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u417-sb,.u417-pl,.u417-lb,.u417-tg svg{transition:none!important}}
+</style>
+<div class="ux u417">
+  <aside class="u417-sb" aria-label="Sidebar">
+    <div class="u417-hd"><span class="u417-mk" aria-hidden="true"><svg viewBox="0 0 17 17"><path d="M3.7 10.8a4.8 4.8 0 0 1 9.6 0"/><path d="M2.2 13.8h12.6"/></svg></span><b class="u417-lb">Haru</b></div>
+    <ul class="u417-nav">
+      <li class="u417-pl" aria-hidden="true"></li>
+      <li><a class="u417-it" href="#" aria-current="page"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 8.2 9 3.2l6 5V15h-3.8v-3.8H6.8V15H3z"/></svg><span class="u417-lb">Home</span></a></li>
+      <li><a class="u417-it" href="#"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2.6 10.4 4.7 4h8.6l2.1 6.4V14a1 1 0 0 1-1 1H3.6a1 1 0 0 1-1-1z"/><path d="M2.6 10.4h3.7l.9 1.8h3.6l.9-1.8h3.7"/></svg><span class="u417-lb">Inbox</span><span class="u417-bd" aria-hidden="true">3</span></a></li>
+      <li><a class="u417-it" href="#"><svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2.8" y="3.3" width="12.4" height="11.4" rx="2.2"/><path d="M7 3.3v11.4M11 3.3v7"/></svg><span class="u417-lb">Projects</span></a></li>
+      <li><a class="u417-it" href="#"><svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2.8" y="3.8" width="12.4" height="11.4" rx="2"/><path d="M2.8 7.5h12.4M6.2 2.5v2.6M11.8 2.5v2.6"/></svg><span class="u417-lb">Calendar</span></a></li>
+      <li><a class="u417-it" href="#"><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="2.3"/><path d="M9 2.6v1.8M9 13.6v1.8M2.6 9h1.8M13.6 9h1.8M4.5 4.5l1.3 1.3M12.2 12.2l1.3 1.3M4.5 13.5l1.3-1.3M12.2 5.8l1.3-1.3"/></svg><span class="u417-lb">Settings</span></a></li>
+    </ul>
+    <button class="u417-tg" type="button" aria-expanded="true" aria-label="Collapse sidebar"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5"/></svg></button>
+  </aside>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var pl = root.querySelector('.u417-pl'), tg = root.querySelector('.u417-tg'), sb = root.querySelector('.u417-sb');
+  var its = Array.prototype.slice.call(root.querySelectorAll('.u417-it'));
+  var uid = 'u417-' + Math.random().toString(36).slice(2, 7);
+  var rail = false, act = its[0];
+  sb.id = uid + '-sb'; tg.setAttribute('aria-controls', sb.id);
+  function slide() { pl.style.setProperty('--py', act.parentNode.offsetTop + 'px'); }
+  its.forEach(function (a, i) {
+    a.setAttribute('title', a.querySelector('.u417-lb').textContent);
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      act.removeAttribute('aria-current');
+      act = a; a.setAttribute('aria-current', 'page');
+      slide();
+    });
+    a.addEventListener('keydown', function (e) {
+      var to = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : null;
+      if (to === null || !its[to]) return;
+      e.preventDefault(); its[to].focus();
+    });
+  });
+  tg.addEventListener('click', function () {
+    rail = !rail;
+    root.classList.toggle('is-rail', rail);
+    tg.setAttribute('aria-expanded', String(!rail));
+    tg.setAttribute('aria-label', rail ? 'Expand sidebar' : 'Collapse sidebar');
+  });
+  pl.style.transition = 'none'; slide(); void pl.offsetWidth; pl.style.transition = '';
+})();
+</script>

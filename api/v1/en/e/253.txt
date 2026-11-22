@@ -14,13 +14,16 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#253
 .u253-pg h3{margin:0 0 12px;font-size:16px;font-weight:900;letter-spacing:-.03em}
 .u253-gd{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .u253-gd div i{display:block;height:128px;border-radius:14px}
+
+.u253-gd>div:nth-child(1) i{background:linear-gradient(160deg,#F5F5F4,#D6D3D1);background:linear-gradient(160deg,light-dark(#F5F5F4,#383430),light-dark(#D6D3D1,#24211F))}
+.u253-gd>div:nth-child(2) i{background:linear-gradient(160deg,#DBEAFE,#93C5FD);background:linear-gradient(160deg,light-dark(#DBEAFE,#1E3556),light-dark(#93C5FD,#2D5C92))}
 .u253-gd b{display:block;margin-top:7px;font-size:11.5px;font-weight:800}
 .u253-gd span{font-size:11px;font-weight:850;color:var(--ux-ink-2)}
 .u253-tt{position:absolute;left:12px;bottom:12px;width:268px;display:flex;align-items:center;gap:10px;padding:10px 30px 13px 10px;border-radius:16px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 18px 36px -14px var(--ux-shadow-strong);transform-origin:20% 100%;transform:translateY(130%) scale(.9);opacity:0;transition:transform .5s cubic-bezier(.3,1.4,.5,1),opacity .3s;overflow:hidden}
 .u253-tt.is-on{transform:none;opacity:1}
 .u253-tt.is-shut{transform:translateY(20px) scale(.85);opacity:0;transition:transform .35s cubic-bezier(.5,0,.75,0),opacity .3s}
-.u253-th{position:relative;flex:none;width:44px;height:44px;border-radius:11px}
-.u253-th::after{content:"";position:absolute;inset:9px 11px;border-radius:6px 6px 3px 3px;background:rgba(255,255,255,.65)}
+.u253-th{position:relative;flex:none;width:44px;height:44px;border-radius:11px;--c:#E7E5E4;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 70%,#000));background:linear-gradient(150deg,light-dark(var(--c),color-mix(in srgb,var(--c) 40%,#1A1A20)),light-dark(color-mix(in srgb,var(--c) 70%,#000),color-mix(in srgb,var(--c) 24%,#0C0C10)))}
+.u253-th::after{content:"";position:absolute;inset:9px 11px;border-radius:6px 6px 3px 3px;background:rgba(255,255,255,.65);background:light-dark(rgba(255,255,255,.65),rgba(255,255,255,.28))}
 .u253-tx{min-width:0;font-size:11px;line-height:1.4;font-weight:650;color:var(--ux-ink-2)}
 .u253-tx b{color:var(--ux-ink);font-weight:850}
 .u253-tx small{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:9.5px;font-weight:750;color:var(--ux-ink-3)}
@@ -36,7 +39,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#253
 @media (prefers-reduced-motion: reduce){.u253-tt,.u253-tt.is-shut,.u253-ok{transition:opacity .2s}}
 </style>
 <div class="ux u253">
-  <div class="u253-pg" aria-hidden="true"><h3>Summer arrivals</h3><div class="u253-gd"><div><i style="background:linear-gradient(160deg,#F5F5F4,#D6D3D1)"></i><b>Linen shirt</b><span>$39</span></div><div><i style="background:linear-gradient(160deg,#DBEAFE,#93C5FD)"></i><b>Half pants</b><span>$32</span></div></div></div>
+  <div class="u253-pg" aria-hidden="true"><h3>Summer arrivals</h3><div class="u253-gd"><div><i></i><b>Linen shirt</b><span>$39</span></div><div><i></i><b>Half pants</b><span>$32</span></div></div></div>
   <div class="u253-tt" role="status"><span class="u253-th"></span><div class="u253-tx"></div><button type="button" class="u253-x" aria-label="Close notice"><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button><i class="u253-tm" aria-hidden="true"></i></div>
   <div class="u253-ok" role="status"><span>Purchase notices off</span><button type="button" class="u253-un" tabindex="-1">Undo</button></div>
 </div>
@@ -49,7 +52,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#253
   var WHO = '%n from %c just bought ';
   var SHOW = 4200, GAP = 1300, k = 0, left = 0, last = 0, hold = false, off = false, state = 'wait', wait = 900, vis = true, raf = 0;
   function fill(b) {
-    th.style.background = 'linear-gradient(150deg,' + b[4] + ',color-mix(in srgb,' + b[4] + ' 70%,#000))';
+    th.style.setProperty('--c', b[4]);
     tx.innerHTML = '<span></span><small></small>';
     var s = tx.firstChild; s.appendChild(document.createTextNode(WHO.replace('%c', b[0]).replace('%n', b[1]))); var bb = document.createElement('b'); bb.textContent = b[2]; s.appendChild(bb); s.appendChild(document.createTextNode(b[5] + (b[5] ? '' : '')));
     tx.lastChild.textContent = b[3] + ' min ago · Verified';

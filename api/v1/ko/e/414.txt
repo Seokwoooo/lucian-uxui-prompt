@@ -1,0 +1,98 @@
+<!-- Lucian UX/UI Prompt #414 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#414 -->
+<!--
+Element: 공지 알약
+ID: 414 · Category: 내비게이션 · Tags: announcement, banner, pill, rotating, dismiss, spring
+What it does: ‘새 기능 출시 · 자세히 보기 →’ 공지 한 줄이 든 알약입니다. 공지 세 개가 몇 초마다 위로 굴러 바뀌고, 포인터를 올리면 멈춥니다. ×를 누르면 알약이 반짝이 버튼 하나로 부드럽게 접히고, 그 버튼을 누르면 다시 펼쳐집니다.
+How to use it: 공지가 바뀌는 걸 보고, ×를 눌러 접은 뒤 남은 반짝이 버튼으로 다시 펼쳐 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#414
+-->
+<style>
+.u414{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+/* 알약: 접히면 폭이 반짝이 버튼 크기까지 줄어듭니다 */
+.u414-pl{position:relative;display:flex;align-items:center;width:316px;height:44px;padding:0 6px 0 7px;border-radius:99px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow),0 14px 30px -18px var(--ux-shadow-strong);overflow:hidden;transition:width .6s cubic-bezier(.3,1.25,.45,1),padding .6s cubic-bezier(.3,1.25,.45,1),box-shadow .3s}
+.u414.is-min .u414-pl{width:44px;padding:0 6px;transition:width .5s cubic-bezier(.5,0,.2,1.15),padding .5s}
+.u414-sp{position:relative;display:grid;place-items:center;width:30px;height:30px;flex:none;border:0;border-radius:50%;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),0 4px 10px -4px rgba(80,70,220,.6);cursor:default;transition:transform .5s var(--ux-spring)}
+.u414.is-min .u414-sp{cursor:pointer}
+.u414.is-min .u414-sp:hover{transform:scale(1.08) rotate(12deg)}
+.u414-sp svg{width:15px;height:15px;fill:#fff;animation:u414-tw 3.2s ease-in-out infinite}
+@keyframes u414-tw{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(.86) rotate(20deg)}}
+.u414-bd{display:flex;align-items:center;flex:1;min-width:0;opacity:1;transition:opacity .3s var(--ux-ease) .18s}
+.u414.is-min .u414-bd{opacity:0;transition:opacity .15s}
+.u414-msgs{position:relative;flex:1;min-width:0;height:44px;margin-left:10px;overflow:hidden}
+.u414-m{position:absolute;inset:0;display:flex;align-items:center;gap:7px;color:inherit;text-decoration:none;font-size:12px;font-weight:650;white-space:nowrap;transform:translateY(100%);opacity:0;transition:transform .6s cubic-bezier(.3,1.3,.45,1),opacity .35s}
+.u414-m.is-on{transform:none;opacity:1}
+.u414-m.is-out{transform:translateY(-100%);opacity:0}
+.u414-m span{overflow:hidden;text-overflow:ellipsis}
+.u414-m b{display:inline-flex;align-items:center;gap:3px;flex:none;font-weight:750;color:var(--ux-accent)}
+.u414-m b i{font-style:normal;transition:transform .35s var(--ux-spring)}
+.u414-m:hover b i{transform:translateX(3px)}
+.u414-m:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-3px;border-radius:8px}
+.u414-x{display:grid;place-items:center;width:30px;height:30px;flex:none;margin-left:4px;border:0;border-radius:50%;background:none;color:var(--ux-ink-3);transition:background-color .2s,color .2s,transform .3s var(--ux-spring)}
+.u414-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u414-x:active{transform:scale(.88)}
+.u414-x svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.u414 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u414-pl,.u414-m,.u414-bd{transition:none!important}.u414-sp svg{animation:none!important}}
+</style>
+<div class="ux u414">
+  <div class="u414-pl" role="region" aria-label="공지">
+    <button class="u414-sp" type="button" tabindex="-1" aria-label="공지 열기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.2c.4 3.4 2 5 5.4 5.4v.2c-3.4.4-5 2-5.4 5.4h-.2c-.4-3.4-2-5-5.4-5.4v-.2C5.8 6.2 7.4 4.6 7.8 1.2z"/><path d="M13 10.6c.15 1.2.75 1.8 1.95 1.95-1.2.15-1.8.75-1.95 1.95-.15-1.2-.75-1.8-1.95-1.95 1.2-.15 1.8-.75 1.95-1.95z"/></svg></button>
+    <div class="u414-bd">
+      <div class="u414-msgs">
+        <a class="u414-m is-on" href="#"><span>새 기능 출시 · AI 회의록</span><b>자세히 보기<i aria-hidden="true">→</i></b></a>
+        <a class="u414-m" href="#"><span>요금제 2개월 무료</span><b>요금제 보기<i aria-hidden="true">→</i></b></a>
+        <a class="u414-m" href="#"><span>12월 4일 웨비나</span><b>신청하기<i aria-hidden="true">→</i></b></a>
+      </div>
+      <button class="u414-x" type="button" aria-label="공지 닫기"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3 3 9"/></svg></button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ms = Array.prototype.slice.call(root.querySelectorAll('.u414-m'));
+  var box = root.querySelector('.u414-msgs'), x = root.querySelector('.u414-x'), sp = root.querySelector('.u414-sp'), bd = root.querySelector('.u414-bd');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cur = 0, t = 0, hover = false, min = false;
+  function show(i) {
+    var prev = cur;
+    ms.forEach(function (m, k) {
+      m.classList.toggle('is-out', k === prev && k !== i);
+      m.classList.toggle('is-on', k === i);
+      m.tabIndex = k === i ? 0 : -1;
+      m.setAttribute('aria-hidden', String(k !== i));
+    });
+    cur = i;
+    setTimeout(function () { if (ms[prev] && prev !== cur) ms[prev].classList.remove('is-out'); }, 650);
+  }
+  // 포인터나 초점이 있거나 접혀 있으면 넘기지 않습니다
+  function tick() {
+    clearTimeout(t);
+    if (rm) return;
+    t = setTimeout(function () {
+      if (!root.isConnected) return;
+      if (!hover && !min && !root.contains(document.activeElement)) show((cur + 1) % ms.length);
+      tick();
+    }, 3000);
+  }
+  box.addEventListener('pointerenter', function () { hover = true; });
+  box.addEventListener('pointerleave', function () { hover = false; });
+  function fold(v) {
+    min = v;
+    root.classList.toggle('is-min', v);
+    bd.inert = v;
+    sp.tabIndex = v ? 0 : -1;
+    sp.setAttribute('aria-label', v ? '공지 열기' : '공지 접기');
+    sp.setAttribute('aria-expanded', String(!v));
+    (v ? sp : x).focus({ preventScroll: true });
+  }
+  x.addEventListener('click', function () { fold(true); });
+  sp.addEventListener('click', function () { if (min) fold(false); });
+  ms.forEach(function (m) { m.addEventListener('click', function (e) { e.preventDefault(); }); });
+  ms.forEach(function (m, k) { m.tabIndex = k === 0 ? 0 : -1; m.setAttribute('aria-hidden', String(k !== 0)); });
+  sp.removeAttribute('aria-expanded');
+  tick();
+})();
+</script>

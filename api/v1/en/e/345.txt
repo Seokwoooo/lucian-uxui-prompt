@@ -9,14 +9,19 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#345
 -->
 <style>
-.u345{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:var(--bg,#FFF9DB);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);transition:background .5s}
-.u345-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}
+.u345{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#FFF9DB;background:light-dark(#FFF9DB,#211C0B);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);transition:background .5s}
+
+.u345[data-fl="1"]{background:#FFF0F6;background:light-dark(#FFF0F6,#25101A)}
+.u345[data-fl="2"]{background:#E6FCF5;background:light-dark(#E6FCF5,#0A201A)}
+
+.u345::before{content:"";position:absolute;inset:0;background:radial-gradient(52% 46% at 50% 46%,light-dark(transparent,rgba(255,255,255,.07)),transparent);pointer-events:none}
+.u345-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;color:rgba(0,0,0,.13);color:light-dark(rgba(0,0,0,.13),rgba(0,0,0,.5))}
 .u345-cv:active{cursor:grabbing}
 .u345-ui{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:6px}
-.u345-ch,.u345-op{border:0;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.75);color:#343A40;font:inherit;font-size:11.5px;font-weight:750;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.06);transition:background .2s,color .2s}
-.u345-ch[aria-pressed="true"]{background:#343A40;color:#fff}
-.u345-op{background:#fff;margin-left:8px}
-.u345-ch:focus-visible,.u345-op:focus-visible{outline:2px solid #343A40;outline-offset:2px}
+.u345-ch,.u345-op{border:0;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.75);background:light-dark(rgba(255,255,255,.75),rgba(255,255,255,.09));color:#343A40;color:light-dark(#343A40,#E9ECEF);font:inherit;font-size:11.5px;font-weight:750;cursor:pointer;box-shadow:0 0 0 1px rgba(0,0,0,.06);box-shadow:0 0 0 1px light-dark(rgba(0,0,0,.06),rgba(255,255,255,.1));transition:background .2s,color .2s}
+.u345-ch[aria-pressed="true"]{background:#343A40;background:light-dark(#343A40,#F1F3F5);color:#fff;color:light-dark(#fff,#212529)}
+.u345-op{background:#fff;background:light-dark(#fff,rgba(255,255,255,.15));margin-left:8px}
+.u345-ch:focus-visible,.u345-op:focus-visible{outline:2px solid #343A40;outline-color:light-dark(#343A40,#F1F3F5);outline-offset:2px}
 </style>
 <div class="ux u345">
   <canvas class="u345-cv" role="img" aria-label="Soda can, drag sideways to spin"></canvas>
@@ -30,8 +35,8 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#345
   var W = 340, H = 340, dpr = Math.min(2, window.devicePixelRatio || 1), CXp = 170, R = 62, TOP = 62, BOT = 268;
   cv.width = W * dpr; cv.height = H * dpr; cx.scale(dpr, dpr);
   var FL = [['Lemon', 'LEMON'], ['Cherry', 'CHERRY'], ['Mint', 'MINT']];
-  var TH = [{ a: '#FFD43B', b: '#F59F00', c: '#2B8A3E', bg: '#FFF9DB' }, { a: '#FA5252', b: '#C92A2A', c: '#2B8A3E', bg: '#FFF0F6' }, { a: '#63E6BE', b: '#0CA678', c: '#087F5B', bg: '#E6FCF5' }];
-  var LW = Math.round(2 * Math.PI * R), LH = BOT - TOP, fi = 0, lab = null;
+  var TH = [{ a: '#FFD43B', b: '#F59F00', c: '#2B8A3E' }, { a: '#FA5252', b: '#C92A2A', c: '#2B8A3E' }, { a: '#63E6BE', b: '#0CA678', c: '#087F5B' }];
+  var LW = Math.round(2 * Math.PI * R), LH = BOT - TOP, fi = 0, lab = null, shc = getComputedStyle(cv);
   function label() {
     var c = document.createElement('canvas'); c.width = LW * dpr; c.height = LH * dpr; var g = c.getContext('2d'); g.scale(dpr, dpr);
     var th = TH[fi];
@@ -55,7 +60,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#345
   var rot = 0.4, vel = 0.5, tab = 0, tabT = 0, bub = [], t = 0;
   function draw() {
     cx.clearRect(0, 0, W, H);
-    cx.fillStyle = 'rgba(0,0,0,.13)'; cx.beginPath(); cx.ellipse(CXp, BOT + 16, R + 14, 12, 0, 0, 6.2832); cx.fill();
+    cx.fillStyle = shc.color; cx.beginPath(); cx.ellipse(CXp, BOT + 16, R + 14, 12, 0, 0, 6.2832); cx.fill();
     for (var x = -R; x < R; x += 1.5) {
       var th = Math.asin(Math.max(-1, Math.min(1, (x + 0.75) / R))), u = ((th + rot) / (2 * Math.PI) % 1 + 1) % 1 * LW;
       cx.drawImage(lab, u * dpr, 0, 1.5 * dpr, LH * dpr, CXp + x, TOP, 1.6, LH);
@@ -97,7 +102,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#345
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { vis = es[0].isIntersecting; run(); }).observe(root);
   FL.forEach(function (f, i) {
     var b = document.createElement('button'); b.type = 'button'; b.className = 'u345-ch'; b.textContent = f[0]; b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-    b.addEventListener('click', function () { fi = i; label(); root.style.setProperty('--bg', TH[i].bg); [].forEach.call(chs.children, function (c, j) { c.setAttribute('aria-pressed', j === i ? 'true' : 'false'); }); vel += 3; run(); });
+    b.addEventListener('click', function () { fi = i; label(); root.setAttribute('data-fl', i); [].forEach.call(chs.children, function (c, j) { c.setAttribute('aria-pressed', j === i ? 'true' : 'false'); }); vel += 3; run(); });
     chs.appendChild(b);
   });
   opb.addEventListener('click', function () { tabT = tabT ? 0 : 1; opb.textContent = tabT ? 'Reseal' : 'Open'; run(); });

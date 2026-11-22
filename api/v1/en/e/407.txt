@@ -1,0 +1,90 @@
+<!-- Lucian UX/UI Prompt #407 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#407 -->
+<!--
+Element: Passkey sign-in button
+ID: 407 · Category: Sign-in & Sign-up · Tags: passkey, webauthn, fingerprint, biometric, scan, morph
+What it does: A single Sign in with passkey button. Press it and the tiny fingerprint icon grows as the button turns into a square pad; the ridges draw in one by one, then a scan beam sweeps top to bottom and tints them. Once verified, a check is drawn inside a green circle.
+How to use it: Press Sign in with passkey
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#407
+-->
+<style>
+.u407{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u407-b{position:relative;display:grid;grid-template:minmax(0,1fr)/minmax(0,1fr);place-items:center;overflow:clip;width:260px;height:52px;padding:0;border:0;border-radius:26px;background:var(--ux-ink);color:var(--ux-surface);font-size:14.5px;font-weight:600;transition:width .6s var(--ux-spring),height .6s var(--ux-spring),border-radius .5s var(--ux-ease),background .35s,color .35s,box-shadow .35s,transform .4s var(--ux-spring)}
+.u407:not(.is-scan) .u407-b:hover{transform:translateY(-1px)}
+.u407:not(.is-scan) .u407-b:active{transform:scale(.97,.94);transition-duration:.6s,.6s,.5s,.35s,.35s,.35s,.1s}
+.u407 .u407-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u407-b>*{grid-area:1/1}
+.u407-t{padding-left:34px;white-space:nowrap;transition:opacity .2s,transform .45s var(--ux-spring),filter .2s}
+.u407-fp{width:64px;height:64px;overflow:visible;transform:translate(var(--fx,-60px),1.5px) scale(.38);transition:transform .6s var(--ux-spring),opacity .25s}
+.u407-fp path{fill:none;stroke:currentColor;stroke-width:3.3;stroke-linecap:round;stroke-dasharray:1;transition:stroke-width .5s}
+.u407-fp .ac path{stroke:var(--ux-accent)}
+.u407-fp .cr{transform:translateY(-66px)}
+.u407-fp .sl{opacity:0}
+.u407-fp .sl rect:last-child{fill:var(--ux-accent)}
+.u407-fp stop{stop-color:var(--ux-accent)}
+.u407.is-scan .u407-b{width:120px;height:120px;border-radius:36px;background:var(--ux-surface);color:color-mix(in srgb,var(--ux-ink-3) 55%,transparent);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 18px 40px -22px var(--ux-shadow-strong);cursor:default}
+.u407.is-scan .u407-t{opacity:0;transform:scale(.9);filter:blur(2px)}
+.u407.is-scan .u407-fp{transform:none}
+.u407.is-scan .u407-fp path{stroke-width:2.6;animation:u407-draw .6s var(--ux-ease) backwards;animation-delay:calc(.15s + var(--i) * 70ms)}
+.u407.is-scan .u407-fp .cr{animation:u407-sweep 1.2s cubic-bezier(.45,0,.4,1) .75s forwards}
+.u407.is-scan .u407-fp .sl{animation:u407-line 1.2s cubic-bezier(.45,0,.4,1) .75s forwards}
+@keyframes u407-draw{from{stroke-dashoffset:1}}
+@keyframes u407-sweep{to{transform:translateY(0)}}
+@keyframes u407-line{0%{opacity:0;transform:translateY(2px)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateY(56px)}}
+.u407-ck{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:opacity .2s,transform .5s var(--ux-spring)}
+.u407-ck path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .4s var(--ux-ease) .18s}
+.u407.is-scan.is-ok .u407-b{width:72px;height:72px;border-radius:36px;background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,#0B0C12);box-shadow:0 14px 30px -18px var(--ux-mint)}
+.u407.is-ok .u407-fp{opacity:0;transform:scale(.5)}
+.u407.is-ok .u407-ck{opacity:1;transform:none}
+.u407.is-ok .u407-ck path{stroke-dashoffset:0}
+.u407-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.u407.is-scan .u407-fp path{animation-duration:.01s;animation-delay:0s}.u407.is-scan .u407-fp .cr,.u407.is-scan .u407-fp .sl{animation-duration:.5s;animation-delay:.1s}}
+</style>
+<div class="ux u407">
+  <button type="button" class="u407-b">
+    <span class="u407-t">Sign in with passkey</span>
+    <svg class="u407-fp" viewBox="0 0 64 64" aria-hidden="true">
+      <defs><clipPath class="cp"><rect class="cr" x="0" y="0" width="64" height="66"/></clipPath><linearGradient class="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-opacity="0"/><stop offset="1" stop-opacity=".24"/></linearGradient></defs>
+      <g class="bs">
+        <path style="--i:0" pathLength="1" d="M28 37v-6a4 4 0 0 1 8 0v3.5c0 3-.6 5.8-1.8 8.3"/>
+        <path style="--i:1" pathLength="1" d="M22 46V31a10 10 0 0 1 20 0v2.5c0 5.6-1.1 10.6-3.2 15"/>
+        <path style="--i:2" pathLength="1" d="M16 41V31a16 16 0 0 1 32 0v1.5"/>
+        <path style="--i:3" pathLength="1" d="M47.8 38.5c-.4 4.6-1.5 8.8-3.2 12.6"/>
+        <path style="--i:4" pathLength="1" d="M10 36v-5a22 22 0 0 1 36.6-16.4"/>
+        <path style="--i:5" pathLength="1" d="M51.2 20.4A22 22 0 0 1 54 31v5"/>
+      </g>
+      <g class="ac"></g>
+      <g class="sl"><rect x="4" y="-14" width="56" height="14"/><rect x="4" y="-1" width="56" height="2" rx="1"/></g>
+    </svg>
+    <svg class="u407-ck" viewBox="0 0 30 30" aria-hidden="true"><path d="M7.5 15.5l5 5L22.5 10"/></svg>
+  </button>
+  <p class="u407-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { busy: 'Checking your passkey', ok: 'Signed in' };
+  var b = root.querySelector('.u407-b'), t = root.querySelector('.u407-t'), fp = root.querySelector('.u407-fp'), live = root.querySelector('.u407-live');
+  var uid = 'u407' + Math.random().toString(36).slice(2, 7), gen = 0;
+  var cp = fp.querySelector('.cp'), lg = fp.querySelector('.lg'), ac = fp.querySelector('.ac');
+  cp.id = uid + 'c'; lg.id = uid + 'g';
+  ac.innerHTML = fp.querySelector('.bs').innerHTML;
+  ac.setAttribute('clip-path', 'url(#' + cp.id + ')');
+  fp.querySelector('.sl rect').setAttribute('fill', 'url(#' + lg.id + ')');
+  function place() { b.style.setProperty('--fx', (12 - t.offsetWidth / 2) + 'px'); }
+  place();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  b.addEventListener('click', function () {
+    if (root.classList.contains('is-scan')) return;
+    gen += 1;
+    root.classList.add('is-scan'); b.setAttribute('aria-busy', 'true'); live.textContent = T.busy;
+    later(function () {
+      root.classList.add('is-ok'); b.removeAttribute('aria-busy'); live.textContent = T.ok;
+      later(function () { root.classList.remove('is-scan', 'is-ok'); }, rm ? 1200 : 1700);
+    }, rm ? 800 : 2150);
+  });
+})();
+</script>

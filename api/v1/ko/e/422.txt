@@ -1,0 +1,175 @@
+<!-- Lucian UX/UI Prompt #422 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#422 -->
+<!--
+Element: 후기 카드 더미
+ID: 422 · Category: 소셜 증명 · Tags: testimonial, card-stack, swipe, drag, stars, spring
+What it does: 후기 카드 한 장 뒤로 두 장이 살짝 겹쳐 쌓여 있습니다. 몇 초마다 맨 위 카드가 살짝 기울며 옆으로 날아가고 다음 카드가 스프링처럼 앞으로 올라오며, 새 카드의 별은 하나씩 채워집니다. 카드를 직접 끌어 넘길 수도 있습니다.
+How to use it: 맨 위 카드를 옆으로 끌어 넘겨 보세요. 키보드는 카드에 초점을 두고 좌우 방향키를 씁니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#422
+-->
+<style>
+.u422{position:relative;width:340px;height:300px;display:grid;place-items:center;color:var(--ux-ink)}
+.u422-st{position:relative;width:268px;height:168px;margin-top:-16px;outline:none;touch-action:pan-y}
+.u422-st:focus-visible{outline:2px solid var(--ux-accent);outline-offset:8px;border-radius:22px}
+/* 카드 더미: 깊이에 따라 아래로 내려가며 작아집니다 */
+.u422-cd{position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 18px 16px;border-radius:20px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 18px 36px -22px var(--ux-shadow-strong);transform-origin:50% 100%;transform:translate(var(--x,0px),calc(var(--dy,0px) + var(--y,0px))) rotate(var(--r,0deg)) scale(var(--s,1));opacity:var(--o,1);transition:transform .6s cubic-bezier(.3,1.35,.5,1),opacity .4s var(--ux-ease);will-change:transform;-webkit-user-select:none;user-select:none}
+.u422-cd.is-top{cursor:grab}
+.u422-cd.is-drag{cursor:grabbing;transition:none}
+.u422-cd.is-fly{transition:transform .5s cubic-bezier(.4,.1,.6,1),opacity .4s ease-in .1s}
+.u422-cd>*{transition:opacity .35s var(--ux-ease)}
+.u422-cd:not(.is-top)>*{opacity:.35}
+/* 별: 새 카드가 맨 위로 오면 하나씩 채워집니다 */
+.u422-sr{display:flex;gap:3px}
+.u422-sr i{position:relative;width:14px;height:14px}
+.u422-sr svg{position:absolute;inset:0;width:14px;height:14px}
+.u422-sr svg.bg{fill:var(--ux-surface-3)}
+.u422-sr svg.fg{fill:#F5B83D;transform:scale(0) rotate(-40deg);opacity:0}
+.u422-cd.is-on .u422-sr svg.fg{animation:u422-star .5s cubic-bezier(.3,1.7,.5,1) both;animation-delay:calc(180ms + var(--i) * 80ms)}
+@keyframes u422-star{from{transform:scale(0) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+.u422-q{margin:12px 0 0;font-size:14.5px;line-height:1.55;font-weight:650;letter-spacing:-.02em;text-wrap:pretty}
+.u422-by{display:flex;align-items:center;gap:10px;margin-top:auto}
+.u422-av{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;color:#fff;font-size:11px;font-weight:800;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u422-by b{font-size:12px;font-weight:750}
+.u422-by small{margin-left:6px;font-size:11px;color:var(--ux-ink-3)}
+@media (prefers-reduced-motion:reduce){.u422-cd,.u422-cd.is-fly,.u422-cd>*{transition:none!important}.u422-cd.is-on .u422-sr svg.fg{animation:none!important;transform:none;opacity:1}}
+</style>
+<div class="ux u422">
+  <div class="u422-st" tabindex="0" role="region" aria-roledescription="carousel" aria-label="고객 후기"></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var st = root.querySelector('.u422-st');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // [후기, 이름, 직함, 이니셜, 색]
+  var R = [
+    ['회의가 끝나면 할 일이 이미 담당자에게 가 있어요.', '박지민', '프로덕트 매니저', '지민', '#7B61FF'],
+    ['도구 다섯 개를 하나로 줄였어요. 온보딩이 하루면 끝나요.', '이도윤', '엔지니어링 리드', '도윤', '#0EA5E9'],
+    ['매주 손으로 만들던 보고서가 이제 알아서 만들어져요.', '최서아', '운영 팀장', '서아', '#F97316'],
+    ['디자이너와 개발자가 같은 화면을 보니 되묻는 일이 줄었어요.', '정하준', '디자인 리드', '하준', '#14B8A6']
+  ];
+  var STAR = '<path d="m7 1.2 1.75 3.6 3.95.55-2.86 2.78.68 3.92L7 10.2l-3.52 1.85.68-3.92L1.3 5.35l3.95-.55z"/>';
+  var cards = R.map(function (r) {
+    var c = document.createElement('figure');
+    c.className = 'u422-cd';
+    c.style.margin = '0';
+    c.innerHTML = '<div class="u422-sr" role="img"></div><blockquote class="u422-q"></blockquote><figcaption class="u422-by"><span class="u422-av" aria-hidden="true"></span><span><b></b><small></small></span></figcaption>';
+    var sr = c.querySelector('.u422-sr');
+    sr.setAttribute('aria-label', '별 5개 만점에 5개');
+    for (var k = 0; k < 5; k++) sr.insertAdjacentHTML('beforeend', '<i style="--i:' + k + '"><svg class="bg" viewBox="0 0 14 14" aria-hidden="true">' + STAR + '</svg><svg class="fg" viewBox="0 0 14 14" aria-hidden="true">' + STAR + '</svg></i>');
+    c.querySelector('.u422-q').textContent = r[0];
+    c.querySelector('b').textContent = r[1];
+    c.querySelector('small').textContent = r[2];
+    c.querySelector('.u422-av').textContent = r[3];
+    c.querySelector('.u422-av').style.background = r[4];
+    st.appendChild(c);
+    return c;
+  });
+  var order = cards.slice(), busy = false, tAuto = 0, held = false;
+  // 깊이 0은 맨 위, 1·2는 뒤에서 살짝 보이고, 그 뒤는 숨깁니다
+  var DEPTH = [[0, 1, 1], [12, .94, 1], [24, .88, 1], [24, .86, 0]];
+  function place(c, d) {
+    var p = DEPTH[Math.min(d, 3)];
+    c.style.setProperty('--dy', p[0] + 'px');
+    c.style.setProperty('--s', p[1]);
+    c.style.setProperty('--o', p[2]);
+    c.style.zIndex = 10 - d;
+    c.classList.toggle('is-top', d === 0);
+    c.setAttribute('aria-hidden', String(d !== 0));
+  }
+  function layout() { order.forEach(place); }
+  function stars(c) { c.classList.remove('is-on'); void c.offsetWidth; c.classList.add('is-on'); }
+  function clearPose(c) { ['--x', '--y', '--r'].forEach(function (k) { c.style.removeProperty(k); }); }
+  // 맨 위 카드를 dir 쪽으로 날려 보내고, 맨 뒤로 돌려놓습니다
+  function next(dir) {
+    if (busy) return;
+    busy = true;
+    var top = order[0];
+    top.classList.add('is-fly');
+    top.style.zIndex = 12;
+    top.style.setProperty('--x', (dir * 130) + '%');
+    top.style.setProperty('--y', '-14px');
+    top.style.setProperty('--r', (dir * 14) + 'deg');
+    top.style.setProperty('--o', 0);
+    order.push(order.shift());
+    order.slice(0, -1).forEach(place);
+    stars(order[0]);
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      top.classList.remove('is-fly');
+      top.style.transition = 'none';
+      clearPose(top); place(top, order.length - 1);
+      void top.offsetWidth; top.style.transition = '';
+      busy = false; schedule();
+    }, rm ? 0 : 460);
+  }
+  // 맨 뒤 카드를 왼쪽 밖에서 데려와 맨 위에 놓습니다
+  function prev() {
+    if (busy) return;
+    busy = true;
+    var c = order.pop();
+    c.style.transition = 'none';
+    c.style.setProperty('--x', '-130%'); c.style.setProperty('--y', '-14px'); c.style.setProperty('--r', '-14deg'); c.style.setProperty('--o', 0);
+    c.style.zIndex = 11;
+    void c.offsetWidth; c.style.transition = '';
+    order.unshift(c);
+    clearPose(c); layout(); stars(c);
+    setTimeout(function () { busy = false; schedule(); }, rm ? 0 : 400);
+  }
+  function schedule() {
+    clearTimeout(tAuto);
+    if (rm || held) return;
+    tAuto = setTimeout(function () { if (root.isConnected && !held) next(-1); }, 3200);
+  }
+  function hold(v) { held = v; if (v) clearTimeout(tAuto); else schedule(); }
+  // 끌기: 카드가 손을 따라 기울고, 충분히 끌거나 빠르게 던지면 넘어갑니다
+  var drag = null;
+  st.addEventListener('pointerdown', function (e) {
+    var top = order[0];
+    if (busy || !top.contains(e.target) || (e.button && e.button !== 0)) return;
+    drag = { x: e.clientX, y: e.clientY, t: performance.now(), lx: e.clientX, lt: performance.now(), dx: 0, k: root.getBoundingClientRect().width / root.offsetWidth || 1 };
+    top.classList.add('is-drag');
+    try { st.setPointerCapture(e.pointerId); } catch (err) { /* 시연 포인터는 붙잡을 수 없습니다 */ }
+    hold(true);
+  });
+  st.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var top = order[0];
+    drag.dx = (e.clientX - drag.x) / drag.k;
+    var dy = (e.clientY - drag.y) / drag.k * 0.25;
+    drag.v = (e.clientX - drag.lx) / Math.max(1, performance.now() - drag.lt);
+    drag.lx = e.clientX; drag.lt = performance.now();
+    top.style.setProperty('--x', drag.dx + 'px');
+    top.style.setProperty('--y', dy + 'px');
+    top.style.setProperty('--r', (drag.dx / 18) + 'deg');
+    // 뒤 카드는 끄는 만큼 조금씩 앞으로 다가옵니다
+    var p = Math.min(1, Math.abs(drag.dx) / 140), b = order[1];
+    b.style.setProperty('--dy', (12 - 12 * p) + 'px');
+    b.style.setProperty('--s', .94 + .06 * p);
+  });
+  function end() {
+    if (!drag) return;
+    var top = order[0], d = drag;
+    drag = null;
+    top.classList.remove('is-drag');
+    if (Math.abs(d.dx) > 80 || Math.abs(d.v || 0) > 0.6) next(d.dx < 0 ? -1 : 1);
+    else { clearPose(top); place(order[1], 1); }
+    hold(st.matches(':hover') || st.matches(':focus-visible'));
+  }
+  st.addEventListener('pointerup', end);
+  st.addEventListener('pointercancel', end);
+  st.addEventListener('pointerenter', function () { hold(true); });
+  // 키보드 초점일 때만 멈춥니다. 마우스로 끌고 나간 뒤에는 다시 흘러갑니다
+  st.addEventListener('pointerleave', function () { if (!drag) hold(st.matches(':focus-visible')); });
+  st.addEventListener('focus', function () { if (st.matches(':focus-visible')) hold(true); });
+  st.addEventListener('blur', function () { hold(st.matches(':hover')); });
+  st.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); next(-1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+  });
+  layout();
+  stars(order[0]);
+  schedule();
+})();
+</script>

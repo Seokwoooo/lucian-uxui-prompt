@@ -1,0 +1,115 @@
+<!-- Lucian UX/UI Prompt #427 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#427 -->
+<!--
+Element: 뉴스레터 구독
+ID: 427 · Category: 폼·입력 · Tags: newsletter, subscribe, email, morph, envelope, illustration
+What it does: 이메일 칸과 구독 버튼 하나입니다. 형식이 틀리면 칸이 살짝 흔들리며 알려 주고, 구독하면 버튼이 동그랗게 줄어들며 체크로 바뀌고 작은 편지 봉투가 하트 봉인을 달고 날아갑니다.
+How to use it: 이메일을 넣고 구독을 눌러 보세요. 체크를 누르면 처음으로 돌아갑니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#427
+-->
+<style>
+.u427{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--ux-ink)}
+.u427 h3{margin:0;font-size:14px;font-weight:750;letter-spacing:-.02em}
+.u427-fm{position:relative;display:flex;align-items:center;width:300px;height:52px;padding:6px 6px 6px 16px;border-radius:16px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow),0 16px 34px -22px var(--ux-shadow-strong);transition:box-shadow .25s}
+.u427-fm:focus-within{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 16px 34px -22px var(--ux-shadow-strong)}
+.u427-fm.is-bad{box-shadow:0 0 0 1.5px var(--ux-danger),0 0 0 5px color-mix(in srgb,var(--ux-danger) 14%,transparent);animation:u427-shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u427-shake{15%,55%{transform:translateX(-5px)}35%,75%{transform:translateX(5px)}90%{transform:translateX(-1px)}}
+.u427-fm label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.u427-in{flex:1;min-width:0;height:40px;padding:0;border:0;background:none;font-size:13.5px;color:var(--ux-ink);outline:none;transition:opacity .25s}
+.u427-in::placeholder{color:var(--ux-ink-3)}
+.u427 .u427-in:focus-visible{outline:none}
+.u427-ok{position:absolute;left:16px;right:58px;top:50%;font-size:13px;font-weight:650;color:var(--ux-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-50%) translateY(6px);transition:opacity .3s,transform .45s var(--ux-ease);pointer-events:none}
+.u427.is-done .u427-in{opacity:0}
+.u427.is-done .u427-ok{opacity:1;transform:translateY(-50%);transition-delay:.35s}
+/* 버튼: 구독하면 동그랗게 줄며 초록 체크가 됩니다 */
+.u427-go{position:relative;flex:none;display:grid;place-items:center;width:78px;height:40px;border:0;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:750;transition:width .55s cubic-bezier(.3,1.4,.5,1),border-radius .55s,background-color .35s,transform .35s var(--ux-spring)}
+.u427-go:active{transform:scale(.94)}
+.u427-go span{transition:opacity .2s}
+.u427-go[aria-busy="true"] span{opacity:0}
+.u427-go[aria-busy="true"]::after{content:"";position:absolute;width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u427-spin .7s linear infinite}
+@keyframes u427-spin{to{transform:rotate(360deg)}}
+.u427-go svg{position:absolute;width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18;stroke-dashoffset:18;transition:stroke-dashoffset .35s var(--ux-ease) .3s}
+.u427.is-done .u427-go{width:40px;border-radius:20px;background:#22A06B}
+.u427.is-done .u427-go span{opacity:0}
+.u427.is-done .u427-go svg{stroke-dashoffset:0}
+.u427-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u427-ms{min-height:16px;margin:0;font-size:11.5px;font-weight:600;color:var(--ux-danger);opacity:0;transform:translateY(-4px);transition:opacity .25s,transform .35s var(--ux-ease)}
+.u427-ms.is-on{opacity:1;transform:none}
+/* 날아가는 편지 봉투 */
+.u427-env{position:absolute;right:26px;top:50%;width:34px;height:26px;margin-top:-13px;opacity:0;pointer-events:none}
+.u427-env svg{width:34px;height:26px;overflow:visible}
+.u427-env .pp{fill:#FFFFFF;fill:light-dark(#FFFFFF,#F4F0E8);stroke:#B9AEF7;stroke:light-dark(#B9AEF7,#8B7BFF)}
+.u427-env .fl{fill:none;stroke:#B9AEF7;stroke:light-dark(#B9AEF7,#8B7BFF)}
+.u427-env .ht{fill:#FF5C7A}
+.u427.is-fly .u427-env{animation:u427-fly 1.2s cubic-bezier(.35,.1,.3,1) forwards}
+.u427.is-fly .u427-env.t1,.u427.is-fly .u427-env.t2{animation-name:u427-trail}
+.u427.is-fly .u427-env.t1{animation-delay:.07s}
+.u427.is-fly .u427-env.t2{animation-delay:.14s}
+.u427-env.t1 svg,.u427-env.t2 svg{display:none}
+.u427-env.t1::before,.u427-env.t2::before{content:"";position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:var(--ux-accent)}
+.u427-env.t2::before{width:3px;height:3px;margin:-1.5px}
+@keyframes u427-fly{0%{opacity:0;transform:translate(0,0) scale(.3) rotate(0)}14%{opacity:1;transform:translate(-6px,-10px) scale(1.05) rotate(-6deg)}55%{opacity:1;transform:translate(40px,-74px) scale(1) rotate(-16deg)}100%{opacity:0;transform:translate(96px,-140px) scale(.7) rotate(10deg)}}
+@keyframes u427-trail{0%{opacity:0;transform:translate(0,0)}20%{opacity:.8;transform:translate(-6px,-10px)}60%{opacity:.5;transform:translate(36px,-66px)}100%{opacity:0;transform:translate(84px,-124px)}}
+@media (prefers-reduced-motion:reduce){.u427-fm.is-bad,.u427.is-fly .u427-env{animation:none!important}.u427-go,.u427-go svg,.u427-ok{transition:none!important}}
+</style>
+<div class="ux u427">
+  <h3>매주 화요일, 5분 뉴스레터</h3>
+  <form class="u427-fm" novalidate>
+    <label>이메일 주소</label>
+    <input class="u427-in" type="email" inputmode="email" autocomplete="email" placeholder="이메일 주소">
+    <span class="u427-ok" aria-hidden="true"></span>
+    <button class="u427-go" type="submit"><span>구독</span><svg viewBox="0 0 18 18" aria-hidden="true"><path d="m4.5 9.4 3 3 6-6.6"/></svg></button>
+    <span class="u427-env" aria-hidden="true"><svg viewBox="0 0 34 26"><rect class="pp" x="1" y="1" width="32" height="24" rx="4" stroke-width="1.5"/><path class="fl" d="M2.2 3.6 17 14.4 31.8 3.6" stroke-width="1.6" stroke-linejoin="round"/><path class="fl" d="M2.5 23.5 12.5 13M31.5 23.5 21.5 13" stroke-width="1.2" opacity=".55"/><path class="ht" d="M17 18.6c-2.6-1.6-3.9-2.9-3.9-4.3 0-1 .8-1.8 1.8-1.8.9 0 1.6.5 2.1 1.2.5-.7 1.2-1.2 2.1-1.2 1 0 1.8.8 1.8 1.8 0 1.4-1.3 2.7-3.9 4.3z"/></svg></span>
+    <span class="u427-env t1" aria-hidden="true"></span><span class="u427-env t2" aria-hidden="true"></span>
+  </form>
+  <p class="u427-ms" role="status" aria-live="polite"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var fm = root.querySelector('.u427-fm'), inp = root.querySelector('.u427-in'), go = root.querySelector('.u427-go');
+  var ok = root.querySelector('.u427-ok'), ms = root.querySelector('.u427-ms');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u427-' + Math.random().toString(36).slice(2, 7);
+  var state = 'idle';
+  inp.id = uid + '-e'; fm.querySelector('label').setAttribute('for', inp.id);
+  ms.id = uid + '-m'; inp.setAttribute('aria-describedby', ms.id);
+  function say(t, bad) {
+    ms.textContent = t || '';
+    ms.classList.toggle('is-on', !!t);
+    ms.style.color = bad ? '' : 'var(--ux-mint)';
+    if (bad) { inp.setAttribute('aria-invalid', 'true'); fm.classList.remove('is-bad'); void fm.offsetWidth; fm.classList.add('is-bad'); }
+    else { inp.removeAttribute('aria-invalid'); fm.classList.remove('is-bad'); }
+  }
+  // 구독하면 버튼이 체크로 바뀌고, 봉투가 날아갑니다. 체크를 다시 누르면 처음으로 돌아갑니다
+  fm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (state === 'busy') return;
+    if (state === 'done') { reset(); return; }
+    var v = inp.value.trim();
+    if (!v) return say('이메일 주소를 입력해 주세요', true);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return say('이메일 형식을 확인해 주세요', true);
+    say(''); state = 'busy';
+    go.setAttribute('aria-busy', 'true'); go.setAttribute('aria-label', '구독하는 중…');
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      go.removeAttribute('aria-busy');
+      go.setAttribute('aria-label', '처음으로');
+      ok.textContent = '구독했어요. 메일함을 확인해 주세요';
+      root.classList.add('is-done', 'is-fly');
+      inp.readOnly = true; inp.tabIndex = -1;
+      ms.textContent = ok.textContent;
+      state = 'done';
+    }, rm ? 100 : 650);
+  });
+  function reset() {
+    root.classList.remove('is-done', 'is-fly');
+    go.removeAttribute('aria-label');
+    inp.readOnly = false; inp.tabIndex = 0; inp.value = ''; ms.textContent = '';
+    state = 'idle';
+    inp.focus({ preventScroll: true });
+  }
+  inp.addEventListener('input', function () { if (inp.getAttribute('aria-invalid')) say(''); });
+})();
+</script>

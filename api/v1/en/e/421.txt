@@ -1,0 +1,69 @@
+<!-- Lucian UX/UI Prompt #421 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#421 -->
+<!--
+Element: Customer logo strip
+ID: 421 · Category: Social Proof · Tags: logos, marquee, social-proof, customers, hover
+What it does: A single row of fictional customer wordmarks drifts slowly, fading out at both ends. Hover and the flow glides to a stop while only the logo under the pointer sharpens.
+How to use it: Hover the logo strip
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#421
+-->
+<style>
+.u421{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:var(--ux-ink)}
+.u421-cp{margin:0;font-size:12.5px;font-weight:600;color:var(--ux-ink-3)}
+.u421-mq{align-self:stretch;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}
+.u421-tr{display:flex;width:max-content;will-change:transform}
+.u421-tr ul{display:flex;gap:34px;margin:0;padding:0 17px;list-style:none}
+.u421-lg{display:flex;align-items:center;gap:7px;height:52px;color:var(--ux-ink-2);white-space:nowrap;opacity:.8;transition:opacity .35s var(--ux-ease),color .35s,transform .45s var(--ux-spring)}
+.u421-mq:hover .u421-lg{opacity:.35}
+.u421-mq .u421-lg:hover{opacity:1;color:var(--ux-ink);transform:scale(1.06)}
+.u421-lg svg{width:20px;height:20px;flex:none}
+.u421-lg span{font-size:17px;line-height:1}
+.u421 .w1 span{font-weight:800;letter-spacing:-.04em}
+.u421 .w2 span{font-size:13px;font-weight:650;letter-spacing:.16em}
+.u421 .w3 span{font-weight:700;letter-spacing:-.02em}
+.u421 .w4 span{font-weight:750;font-style:italic;letter-spacing:-.03em}
+.u421 .w5 span{font-family:ui-serif,Georgia,"Times New Roman",serif;font-weight:600;font-size:18px}
+.u421 .w6 span{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;font-size:14px;letter-spacing:.04em}
+.u421 .w7 span{font-weight:850;letter-spacing:-.05em;font-size:18px}
+.u421 .w8 span{font-family:ui-serif,Georgia,"Times New Roman",serif;font-style:italic;font-weight:500;font-size:18px}
+</style>
+<section class="ux u421">
+  <p class="u421-cp">Trusted by 3,200 teams</p>
+  <div class="u421-mq"><div class="u421-tr"></div></div>
+</section>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var mq = root.querySelector('.u421-mq'), tr = root.querySelector('.u421-tr');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var M = 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  var LOGOS = [
+    ['Velora', '<circle cx="9" cy="9" r="7" ' + M + '/><path d="M5.5 6.5 9 12l3.5-5.5" ' + M + '/>'],
+    ['NORTHPINE', '<path d="M9 2.5 15 14H3z" fill="currentColor"/><path d="M9 14v2.5" ' + M + '/>'],
+    ['paperkite', '<path d="M9 2 15 8l-6 8-6-8z" ' + M + '/><path d="M3 8h12M9 2v14" ' + M + ' stroke-width="1.2"/>'],
+    ['Orbita', '<circle cx="9" cy="9" r="6.5" ' + M + '/><circle cx="13.6" cy="4.4" r="2" fill="currentColor"/>'],
+    ['Mintleaf', '<path d="M3.5 14.5C3.5 7 8 3.5 14.5 3.5 14.5 10 11 14.5 3.5 14.5z" ' + M + '/><path d="M3.5 14.5 10 8" ' + M + '/>'],
+    ['TESSEL', '<rect x="2.5" y="2.5" width="5.5" height="5.5" rx="1" fill="currentColor"/><rect x="10" y="2.5" width="5.5" height="5.5" rx="1" ' + M + '/><rect x="2.5" y="10" width="5.5" height="5.5" rx="1" ' + M + '/><rect x="10" y="10" width="5.5" height="5.5" rx="1" fill="currentColor"/>'],
+    ['Kestrel', '<path d="M2 12c3-1 5-3.5 7-8 2 4.5 4 7 7 8-3 .2-5 1.3-7 3-2-1.7-4-2.8-7-3z" fill="currentColor"/>'],
+    ['Brightwell', '<path d="M3 12.5a6 6 0 0 1 12 0" ' + M + '/><path d="M9 3v2M3.6 5.6 5 7M14.4 5.6 13 7M1.5 15.5h15" ' + M + '/>']
+  ];
+  function list(hide) { return '<ul' + (hide ? ' aria-hidden="true"' : ' aria-label="Customers"') + '>' + LOGOS.map(function (l, i) { return '<li class="u421-lg w' + (i + 1) + '"><svg viewBox="0 0 18 18" aria-hidden="true">' + l[1] + '</svg><span>' + l[0] + '</span></li>'; }).join('') + '</ul>'; }
+  tr.innerHTML = list(false) + list(true);
+  var x = 0, v = 26, target = 26, last = 0, half = 0;
+  mq.addEventListener('pointerenter', function () { target = 0; });
+  mq.addEventListener('pointerleave', function () { target = 26; });
+  function frame(now) {
+    if (!root.isConnected) return;
+    var dt = last ? Math.min(.05, (now - last) / 1000) : 0;
+    last = now;
+    if (!half) half = tr.firstChild.offsetWidth;
+    v += (target - v) * Math.min(1, dt * 3.2);
+    x -= v * dt;
+    if (half && x <= -half) x += half;
+    tr.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)';
+    requestAnimationFrame(frame);
+  }
+  if (!rm) requestAnimationFrame(frame);
+})();
+</script>
