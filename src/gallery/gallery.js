@@ -243,10 +243,35 @@
   if (schemeQ.addEventListener) schemeQ.addEventListener('change', onScheme); else if (schemeQ.addListener) schemeQ.addListener(onScheme);
 
   /* ---------- 요소 마운트와 배율 맞춤 ---------- */
+  // 사파리는 <style>을 넣거나 뺄 때마다 페이지 전체 스타일을 다시 계산합니다(카드 450개에서 한 번에 약 50ms, Chrome은 1ms 미만).
+  // 그래서 요소 CSS는 카드에 붙일 때마다 넣지 않고 공용 시트에 요소당 한 번만 등록합니다. 등록이 필요할 때는
+  // 그때까지 받아 둔 요소를 모두 한 번에 넣어, 스크롤 중 시트를 바꾸는 횟수를 줄입니다
+  var STYLE_RE = /<style>([\s\S]*?)<\/style>/, cssKey = {}, cssText = {};
+  function cssLang(it) { return lang === 'en' && it.en ? 'en' : 'ko'; }
+  function regCss(list) {
+    var buf = '';
+    list.forEach(function (it) {
+      if (!it || typeof it.html !== 'string') return;
+      var k = cssLang(it);
+      if (cssKey[it.id] === k) return;
+      cssKey[it.id] = k;
+      var m = STYLE_RE.exec(loc(it).html);
+      // 언어를 바꿔도 CSS가 같으면(대부분) 다시 넣지 않습니다
+      if (m && cssText[it.id] !== m[1]) { cssText[it.id] = m[1]; buf += m[1] + '\n'; }
+    });
+    if (!buf) return;
+    var s = document.createElement('style');
+    s.setAttribute('data-ux-elements', '');
+    s.textContent = buf;
+    document.head.appendChild(s);
+  }
+  // 코드가 이미 들어 있는 요소(단일 파일판)는 처음에 한 번에 등록합니다
+  regCss(ITEMS);
   // 요소 HTML을 넣고 스크립트를 새로 만들어 붙입니다. 스크립트 바로 앞 형제가 요소의 루트입니다
   function mountInto(fit, it) {
+    if (cssKey[it.id] !== cssLang(it)) regCss(ITEMS);
     var c = loc(it);
-    fit.innerHTML = c.html;
+    fit.innerHTML = c.html.replace(STYLE_RE, '');
     var s = document.createElement('script');
     s.textContent = c.js;
     fit.appendChild(s);
@@ -930,20 +955,22 @@
     }
     if (mountQ.length) qRaf = requestAnimationFrame(drainMount);
   }
+  // 감시는 카드(.g-tile) 자체에 겁니다. 카드에 content-visibility:auto가 걸려 있어, 안쪽 무대를 감시하면 사파리는 화면 밖 카드를
+  // 아예 안 보이는 것으로 보고 화면 가장자리에서 붙였다 뗐다를 되풀이합니다(스크롤이 초당 4~7프레임까지 떨어짐)
   var tileIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
-      var st = en.target;
+      var st = en.target._st;
       st._near = en.isIntersecting;
       if (en.isIntersecting && !st.firstElementChild.firstChild) queueMount(st);
     });
   }, { rootMargin: mobileQ.matches ? '150% 0px' : '200% 0px' });
   var keepIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
-      var fit = en.target.firstElementChild;
+      var fit = en.target._st.firstElementChild;
       if (!en.isIntersecting && fit.firstChild) unmount(fit);
     });
   }, { rootMargin: mobileQ.matches ? '300% 0px' : '350% 0px' });
-  function watchStage(st) { tileIO.observe(st); keepIO.observe(st); }
+  function watchStage(st) { var tl = st.parentNode; tl._st = st; tileIO.observe(tl); keepIO.observe(tl); }
   function unwatchAll() { tileIO.disconnect(); keepIO.disconnect(); mountQ = []; }
   var tileRO = new ResizeObserver(function (entries) {
     entries.forEach(function (en) {
@@ -1731,6 +1758,7 @@
     store.set(LANG_KEY, next);
     if (next === lang) return;
     lang = next;
+    regCss(ITEMS);
     applyStatic();
     renderCats();
     movePill(false);
