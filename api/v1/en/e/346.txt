@@ -9,13 +9,13 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#346
 -->
 <style>
-.u346{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F5F1E8;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);cursor:none}
+.u346{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F5F1E8;background:light-dark(#F5F1E8,#1F1C17);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);cursor:none}
 .u346-l{position:absolute;inset:0;padding:30px 26px;display:flex;flex-direction:column;justify-content:center;gap:2px;font-size:56px;line-height:1.06;font-weight:900;letter-spacing:-.04em;word-break:keep-all;pointer-events:none}
-.u346-a{color:#1D1A16}
-.u346-b{background:#1D1A16;color:#FFD43B;clip-path:ellipse(var(--rx,0px) var(--ry,0px) at var(--x,170px) var(--y,170px))}
+.u346-a{color:#1D1A16;color:light-dark(#1D1A16,#EDE5D5)}
+.u346-b{background:#1D1A16;background:light-dark(#1D1A16,#0A0907);color:#FFD43B;clip-path:ellipse(var(--rx,0px) var(--ry,0px) at var(--x,170px) var(--y,170px))}
 .u346-b span:nth-child(2n){color:#FF8787}
 .u346-hit{position:absolute;inset:0;border:0;padding:0;background:transparent;cursor:none;border-radius:inherit}
-.u346-hit:focus-visible{outline:2px solid #1D1A16;outline-offset:-6px}
+.u346-hit:focus-visible{outline:2px solid #1D1A16;outline-color:light-dark(#1D1A16,#EDE5D5);outline-offset:-6px}
 .u346-ring{position:absolute;left:0;top:0;border-radius:50%;box-shadow:0 0 0 1.5px rgba(255,212,59,.9);pointer-events:none;opacity:0;transition:opacity .2s}
 </style>
 <div class="ux u346">

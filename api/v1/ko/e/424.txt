@@ -1,0 +1,141 @@
+<!-- Lucian UX/UI Prompt #424 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#424 -->
+<!--
+Element: FAQ
+ID: 424 · Category: 섹션·콘텐츠 · Tags: faq, accordion, questions, support, filter, chips
+What it does: 분류 칩과 아코디언으로 된 실제 서비스용 자주 묻는 질문 섹션입니다. 칩을 고르면 그 분류의 질문으로 목록이 바뀌고, 질문을 누르면 답이 부드럽게 펼쳐지며 화살표가 뒤집힙니다. 한 번에 하나만 열리고, 맨 아래에서 바로 문의할 수 있습니다.
+How to use it: 질문을 눌러 열어 보고, 위의 칩으로 분류를 바꿔 보세요. 키보드는 질문에서 위아래 방향키로 옮깁니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#424
+-->
+<style>
+.u424{position:relative;width:340px;height:372px;padding:20px 16px 14px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
+.u424 h2{margin:0 2px;font-size:18px;font-weight:850;letter-spacing:-.04em}
+.u424-chips{display:flex;gap:6px;margin-top:12px}
+.u424-chip{height:28px;padding:0 11px;border:0;border-radius:99px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11px;font-weight:650;color:var(--ux-ink-2);white-space:nowrap;transition:background-color .2s,color .2s,box-shadow .2s,transform .25s var(--ux-spring)}
+.u424-chip:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u424-chip:active{transform:scale(.95)}
+.u424-chip[aria-selected="true"]{background:var(--ux-ink);color:var(--ux-surface);box-shadow:none}
+.u424-chip:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u424-ls{flex:1;min-height:0;margin:10px 0 0;padding:0;list-style:none;transition:opacity .18s,transform .25s var(--ux-ease)}
+.u424-ls.is-sw{opacity:0;transform:translateY(4px)}
+.u424-it{border-bottom:1px solid var(--ux-line)}
+.u424-q{display:flex;align-items:center;gap:10px;width:100%;min-height:44px;padding:8px 4px 8px 2px;border:0;background:none;font-size:12.5px;font-weight:650;letter-spacing:-.02em;color:var(--ux-ink);text-align:left;border-radius:8px;transition:color .15s}
+.u424-q:hover{color:var(--ux-accent)}
+.u424-q span{flex:1}
+.u424-q svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .4s cubic-bezier(.3,1.3,.5,1),stroke .2s}
+.u424-q[aria-expanded="true"] svg{transform:rotate(180deg);stroke:var(--ux-ink)}
+.u424-q:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u424-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ux-ease)}
+.u424-it.open .u424-a{grid-template-rows:1fr}
+.u424-a>div{min-height:0;overflow:hidden}
+.u424-a p{margin:0;padding:0 26px 12px 2px;font-size:11.5px;line-height:1.6;color:var(--ux-ink-2);opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .3s var(--ux-ease)}
+.u424-it.open .u424-a p{opacity:1;transform:none;transition:opacity .3s var(--ux-ease) .08s,transform .4s var(--ux-ease) .08s}
+.u424-ft{display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 10px 10px 12px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u424-av{display:flex;flex:none}
+.u424-av i{display:grid;place-items:center;width:24px;height:24px;margin-left:-7px;border-radius:50%;font-style:normal;font-size:9px;font-weight:800;color:#fff;box-shadow:0 0 0 2px var(--ux-surface-2)}
+.u424-av i:first-child{margin-left:0}
+.u424-ft div{flex:1;min-width:0}
+.u424-ft b{display:block;font-size:11.5px;font-weight:750}
+.u424-ft small{display:block;margin-top:1px;font-size:10px;color:var(--ux-ink-3)}
+.u424-ask{display:flex;align-items:center;gap:4px;height:30px;padding:0 12px;border:0;border-radius:9px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:700;white-space:nowrap;transition:opacity .15s,transform .25s var(--ux-spring)}
+.u424-ask:hover{opacity:.88}
+.u424-ask:active{transform:scale(.96)}
+.u424-ask i{font-style:normal;transition:transform .3s var(--ux-spring)}
+.u424-ask:hover i{transform:translateX(2px)}
+.u424-ask:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u424-a,.u424-a p,.u424-ls,.u424-q svg{transition:none!important}}
+</style>
+<section class="ux u424">
+  <h2>자주 묻는 질문</h2>
+  <div class="u424-chips" role="tablist" aria-label="질문 분류">
+    <button class="u424-chip" type="button" role="tab" aria-selected="true">인기</button>
+    <button class="u424-chip" type="button" role="tab" aria-selected="false" tabindex="-1">요금·결제</button>
+    <button class="u424-chip" type="button" role="tab" aria-selected="false" tabindex="-1">계정</button>
+    <button class="u424-chip" type="button" role="tab" aria-selected="false" tabindex="-1">보안</button>
+  </div>
+  <ul class="u424-ls" role="tabpanel"></ul>
+  <div class="u424-ft"><span class="u424-av" aria-hidden="true"><i style="background:#7B61FF">S</i><i style="background:#F97316">M</i><i style="background:#14B8A6">J</i></span><div><b>원하는 답이 없나요?</b><small>평균 2시간 안에 답해요</small></div><button class="u424-ask" type="button">문의하기<i aria-hidden="true">→</i></button></div>
+</section>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ls = root.querySelector('.u424-ls');
+  var chips = Array.prototype.slice.call(root.querySelectorAll('.u424-chip'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u424-' + Math.random().toString(36).slice(2, 7);
+  var BILL = [
+    ['무료 체험이 끝나면 자동으로 결제되나요?', '아니요. 체험이 끝나기 3일 전에 알려 드리고, 결제 수단을 등록해야만 유료로 바뀌어요.'],
+    ['연간 결제 중에 해지하면 환불되나요?', '남은 기간만큼 날짜로 계산해 돌려 드려요. 설정 > 결제에서 바로 신청할 수 있어요.'],
+    ['세금계산서를 받을 수 있나요?', '네. 사업자 정보를 등록하면 매달 결제일에 전자세금계산서가 자동으로 발행돼요.']
+  ];
+  var ACC = [
+    ['팀원은 어떻게 초대하나요?', '설정 > 멤버에서 이메일을 입력하면 초대 링크가 바로 발송돼요.'],
+    ['워크스페이스를 여러 개 만들 수 있나요?', '네. 한 계정으로 여러 워크스페이스를 만들고 왼쪽 위에서 바로 전환할 수 있어요.'],
+    ['이메일 주소를 바꿀 수 있나요?', '설정 > 내 계정에서 바꿀 수 있고, 새 주소로 인증 메일이 발송돼요.']
+  ];
+  var SEC = [
+    ['데이터는 어디에 저장되나요?', '모든 데이터는 국내 리전에 암호화되어 저장되고, 매일 백업돼요.'],
+    ['SSO를 지원하나요?', 'Team 요금제에서 SAML 기반 SSO와 SCIM 프로비저닝을 쓸 수 있어요.'],
+    ['2단계 인증을 켤 수 있나요?', '네. 설정 > 보안에서 인증 앱이나 문자로 2단계 인증을 켤 수 있어요.']
+  ];
+  var CATS = [[BILL[0], ACC[0], SEC[0]], BILL, ACC, SEC];
+  var cat = 0, qs = [], swT = 0;
+  chips.forEach(function (c, i) { c.id = uid + '-c' + i; });
+  ls.id = uid + '-p';
+  function render(open) {
+    var list = CATS[cat];
+    ls.innerHTML = '';
+    ls.setAttribute('aria-labelledby', chips[cat].id);
+    qs = list.map(function (qa, i) {
+      var li = document.createElement('li');
+      li.className = 'u424-it';
+      li.innerHTML = '<button class="u424-q" type="button" aria-expanded="false"><span></span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m3.5 5.3 3.5 3.5 3.5-3.5"/></svg></button><div class="u424-a" role="region"><div><p></p></div></div>';
+      var q = li.querySelector('button'), a = li.querySelector('.u424-a');
+      q.querySelector('span').textContent = qa[0];
+      li.querySelector('p').textContent = qa[1];
+      q.id = uid + '-q' + cat + i; a.id = uid + '-a' + cat + i;
+      q.setAttribute('aria-controls', a.id); a.setAttribute('aria-labelledby', q.id);
+      a.inert = true;
+      q.addEventListener('click', function () { toggle(i); });
+      q.addEventListener('keydown', function (e) {
+        var to = e.key === 'ArrowDown' ? i + 1 : e.key === 'ArrowUp' ? i - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? list.length - 1 : null;
+        if (to === null) return;
+        e.preventDefault(); qs[(to + list.length) % list.length].focus();
+      });
+      ls.appendChild(li);
+      return q;
+    });
+    if (open >= 0) toggle(open);
+  }
+  // 한 번에 하나만 열립니다
+  function toggle(i) {
+    qs.forEach(function (q, k) {
+      var li = q.parentNode, v = k === i && q.getAttribute('aria-expanded') !== 'true';
+      li.classList.toggle('open', v);
+      q.setAttribute('aria-expanded', String(v));
+      li.querySelector('.u424-a').inert = !v;
+    });
+  }
+  function pick(i, focus) {
+    if (i === cat) return;
+    cat = i;
+    chips.forEach(function (c, k) { c.setAttribute('aria-selected', String(k === i)); c.tabIndex = k === i ? 0 : -1; });
+    if (focus) chips[i].focus({ preventScroll: true });
+    clearTimeout(swT);
+    if (rm) { render(-1); return; }
+    ls.classList.add('is-sw');
+    swT = setTimeout(function () { if (!root.isConnected) return; render(-1); ls.classList.remove('is-sw'); }, 180);
+  }
+  chips.forEach(function (c, i) {
+    c.setAttribute('aria-controls', ls.id);
+    c.addEventListener('click', function () { pick(i); });
+    c.addEventListener('keydown', function (e) {
+      var n = chips.length, to = e.key === 'ArrowRight' ? cat + 1 : e.key === 'ArrowLeft' ? cat - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+      if (to === null) return;
+      e.preventDefault(); pick((to + n) % n, true);
+    });
+  });
+  render(0);
+})();
+</script>

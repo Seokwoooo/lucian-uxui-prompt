@@ -1,0 +1,177 @@
+<!-- @meta {"title":"입력칸 상태 세트","category":"폼·입력","summary":"입력칸 하나를 기본, 포커스, 입력됨, 오류, 성공, 비활성 여섯 상태로 나란히 보여 주는 시스템 시트입니다. 맨 위 사용자 이름 칸은 실제로 입력할 수 있어서, 치는 동안 글자 수가 세어지고 규칙에 어긋나면 바로 오류가, 쓸 수 있는 이름이면 확인을 거쳐 성공이 뜨며 오른쪽 상태 꼬리표도 함께 바뀝니다.","hint":"맨 위 칸에 대문자나 공백을 넣어 보고, admin, 그다음 seoyeon_han처럼 쳐 보세요","shape":"tall","hue":"#22C55E","hue2":"#06B6D4","tags":["input","form-field","states","validation","error","success","disabled","character-counter","helper-text"]} -->
+<!-- @demo [["wait",1100],["tap",".u434-live",0,{"after":300}],["type",".u434-live",0,"Seo Han",150],["wait",1100],["erase",".u434-live",0,"all",40],["type",".u434-live",0,"admin",140],["wait",1500],["erase",".u434-live",0,"all",40],["type",".u434-live",0,"seoyeon_han",110],["wait",2000],["reset"]] -->
+<!-- @en {"title":"Input field states","summary":"A system sheet showing one input field in six states side by side: default, focus, filled, error, success and disabled. The username field on top is live: characters are counted as you type, a rule break shows an error at once, and an available name passes a quick check to success, with the state tag on the right following along.","hint":"Try capitals or a space in the top field, then type admin, and then seoyeon_han","map":[
+  [">입력칸 상태<", ">Field states<"],
+  [">맨 위 칸은 직접 입력해 볼 수 있어요.<", ">The top field is live — try typing.<"],
+  [">사용자 이름<", ">Username<"],
+  [">이메일<", ">Email<"],
+  [">회사 메일이면 팀에 바로 합류해요<", ">Work email joins your team right away<"],
+  [">회사<", ">Company<"],
+  [">루시안랩스<", ">Lucian Labs<"],
+  [">비밀번호<", ">Password<"],
+  [">8자 이상, 숫자를 하나 넣어 주세요<", ">Use 8+ characters with a number<"],
+  [">휴대폰 번호<", ">Phone<"],
+  [">인증을 마쳤어요<", ">Verified<"],
+  [">가입 경로<", ">Signed up via<"],
+  [">팀 초대 링크<", ">Team invite link<"],
+  [">초대받은 계정은 바꿀 수 없어요<", ">Invited accounts can’t change this<"],
+  [">기본<", ">Default<"],
+  [">포커스<", ">Focus<"],
+  [">입력됨<", ">Filled<"],
+  [">오류<", ">Error<"],
+  [">성공<", ">Success<"],
+  [">비활성<", ">Disabled<"],
+  ["aria-label=\"상태 예시\"", "aria-label=\"State examples\""],
+  ["'기본'", "'Default'"],
+  ["'포커스'", "'Focus'"],
+  ["'입력됨'", "'Filled'"],
+  ["'확인 중'", "'Checking'"],
+  ["'오류'", "'Error'"],
+  ["'성공'", "'Success'"],
+  ["'영문 소문자, 숫자, _로 3–16자'", "'3–16 lowercase letters, numbers or _'"],
+  ["'영문 소문자, 숫자, _만 쓸 수 있어요'", "'Only lowercase letters, numbers and _'"],
+  ["'3자 이상 입력해 주세요'", "'Use at least 3 characters'"],
+  ["'쓸 수 있는지 확인하는 중…'", "'Checking availability…'"],
+  ["'이미 쓰고 있는 이름이에요'", "'That name is taken'"],
+  ["'쓸 수 있는 이름이에요'", "'That name is available'"]
+]} -->
+<style>
+.u434{position:relative;width:340px;height:680px;padding:22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u434 svg{display:block;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u434-hd h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.02em}
+.u434-hd p{margin:4px 0 0;font-size:12px;line-height:1.45;color:var(--ux-ink-3)}
+.u434-f{margin-top:13px}
+.u434-f.is-live{margin-top:16px;padding:12px 12px 10px;margin-left:-12px;margin-right:-12px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u434-ex{margin-top:6px}
+.u434-lr{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.u434-lr label,.u434-lr b{font-size:12.5px;font-weight:600;color:var(--ux-ink-2)}
+.u434-tag{display:inline-flex;align-items:center;gap:5px;height:19px;padding:0 7px;border-radius:6px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:10.5px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap}
+.u434-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--d,var(--ux-ink-3));transition:background-color .2s}
+.u434-tag[data-s="focus"]{--d:var(--ux-accent)}
+.u434-tag[data-s="filled"]{--d:var(--ux-ink)}
+.u434-tag[data-s="check"]{--d:var(--ux-warn)}
+.u434-tag[data-s="error"]{--d:var(--ux-danger)}
+.u434-tag[data-s="success"]{--d:var(--ux-mint)}
+.u434-tag[data-s="disabled"]{--d:var(--ux-line-2)}
+.u434-box{position:relative;display:flex;align-items:center;gap:8px;height:38px;padding:0 12px;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13.5px;transition:box-shadow .18s var(--ux-ease),background-color .18s}
+.u434-box>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden}
+.u434-box svg{flex:none;width:16px;height:16px}
+.u434-box.is-focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u434-caret{display:inline-block;width:1.5px;height:16px;margin-left:1px;vertical-align:-3px;background:var(--ux-accent);animation:u434-blink 1.1s steps(1) infinite}
+@keyframes u434-blink{50%{opacity:0}}
+.u434-box.is-error{box-shadow:inset 0 0 0 1px var(--ux-danger)}
+.u434-box.is-error svg{color:var(--ux-danger)}
+.u434-box.is-success{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 70%,transparent)}
+.u434-box.is-success svg{color:var(--ux-mint)}
+.u434-box.is-disabled{background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-3);cursor:not-allowed}
+.u434-pw{letter-spacing:.18em}
+.u434-help{display:flex;align-items:flex-start;gap:8px;margin:6px 0 0;min-height:16px;font-size:12px;line-height:1.35;color:var(--ux-ink-3)}
+.u434-help>span:first-child{flex:1;min-width:0}
+.u434-help.is-error{color:var(--ux-danger)}
+.u434-help.is-success{color:var(--ux-mint)}
+.u434-help.is-disabled{color:color-mix(in srgb,var(--ux-ink-3) 75%,transparent)}
+.u434-ct{flex:none;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u434-ct.is-max{color:var(--ux-warn)}
+.u434-lbox{cursor:text}
+.u434-lbox:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent)}
+.u434-lbox:focus-within,.u434-lbox.is-act{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u434-lbox.is-error,.u434-lbox.is-error:hover{box-shadow:inset 0 0 0 1px var(--ux-danger)}
+.u434-lbox.is-error:focus-within,.u434-lbox.is-error.is-act{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
+.u434-lbox.is-success,.u434-lbox.is-success:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 70%,transparent)}
+.u434-lbox.is-success:focus-within,.u434-lbox.is-success.is-act{box-shadow:inset 0 0 0 1px var(--ux-mint),0 0 0 3px color-mix(in srgb,var(--ux-mint) 16%,transparent)}
+.u434-live{flex:1;min-width:0;height:100%;padding:0;border:0;background:none;outline:none;font-size:13.5px;color:var(--ux-ink)}
+.u434-live::placeholder{color:var(--ux-ink-3);opacity:1}
+.u434 .u434-live:focus-visible{outline:none}
+.u434-box>.u434-st{flex:0 0 16px;width:16px;height:16px;display:grid;place-items:center;overflow:visible}
+.u434-st svg{animation:u434-pop .3s var(--ux-spring)}
+.u434-st .ok{color:var(--ux-mint)}
+.u434-st .no{color:var(--ux-danger)}
+.u434-spin{width:14px;height:14px;border-radius:50%;border:1.75px solid var(--ux-line-2);border-top-color:var(--ux-ink-2);animation:u434-spin .7s linear infinite}
+@keyframes u434-spin{to{transform:rotate(360deg)}}
+@keyframes u434-pop{from{transform:scale(.4);opacity:0}to{transform:none;opacity:1}}
+.u434-help.is-error>span,.u434-help.is-success>span{animation:u434-msg .25s var(--ux-ease)}
+@keyframes u434-msg{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+</style>
+<div class="ux u434">
+  <div class="u434-hd"><h3>입력칸 상태</h3><p>맨 위 칸은 직접 입력해 볼 수 있어요.</p></div>
+  <div class="u434-f is-live">
+    <div class="u434-lr"><label class="u434-ll">사용자 이름</label><span class="u434-tag u434-ltag" data-s="default" aria-hidden="true">기본</span></div>
+    <div class="u434-box u434-lbox"><input class="u434-live" type="text" maxlength="16" placeholder="seoyeon_han" autocomplete="off" spellcheck="false" autocapitalize="off"><span class="u434-st" aria-hidden="true"></span></div>
+    <p class="u434-help u434-lhelp"><span aria-live="polite"></span><span class="u434-ct" aria-hidden="true">0/16</span></p>
+  </div>
+  <div class="u434-ex" role="group" aria-label="상태 예시">
+    <div class="u434-f" aria-hidden="true">
+      <div class="u434-lr"><b>이메일</b><span class="u434-tag" data-s="focus">포커스</span></div>
+      <div class="u434-box is-focus"><span>seoyeon@lucian<i class="u434-caret"></i></span></div>
+      <p class="u434-help"><span>회사 메일이면 팀에 바로 합류해요</span></p>
+    </div>
+    <div class="u434-f" aria-hidden="true">
+      <div class="u434-lr"><b>회사</b><span class="u434-tag" data-s="filled">입력됨</span></div>
+      <div class="u434-box"><span>루시안랩스</span></div>
+    </div>
+    <div class="u434-f" aria-hidden="true">
+      <div class="u434-lr"><b>비밀번호</b><span class="u434-tag" data-s="error">오류</span></div>
+      <div class="u434-box is-error"><span class="u434-pw">••••••</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg></div>
+      <p class="u434-help is-error"><span>8자 이상, 숫자를 하나 넣어 주세요</span></p>
+    </div>
+    <div class="u434-f" aria-hidden="true">
+      <div class="u434-lr"><b>휴대폰 번호</b><span class="u434-tag" data-s="success">성공</span></div>
+      <div class="u434-box is-success"><span>010-2481-3579</span><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+      <p class="u434-help is-success"><span>인증을 마쳤어요</span></p>
+    </div>
+    <div class="u434-f" aria-hidden="true">
+      <div class="u434-lr"><b>가입 경로</b><span class="u434-tag" data-s="disabled">비활성</span></div>
+      <div class="u434-box is-disabled"><span>팀 초대 링크</span><svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg></div>
+      <p class="u434-help is-disabled"><span>초대받은 계정은 바꿀 수 없어요</span></p>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var input = q('.u434-live'), box = q('.u434-lbox'), tag = q('.u434-ltag'), help = q('.u434-lhelp'), msg = q('.u434-lhelp span'), ct = q('.u434-ct'), st = q('.u434-st'), lbl = q('.u434-ll');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { s: { default: '기본', focus: '포커스', filled: '입력됨', check: '확인 중', error: '오류', success: '성공' }, help: '영문 소문자, 숫자, _로 3–16자', bad: '영문 소문자, 숫자, _만 쓸 수 있어요', short: '3자 이상 입력해 주세요', checking: '쓸 수 있는지 확인하는 중…', taken: '이미 쓰고 있는 이름이에요', ok: '쓸 수 있는 이름이에요' };
+  var TAKEN = ['admin', 'root', 'lucian', 'test', 'support'];
+  var ICON = { ok: '<svg class="ok" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>', no: '<svg class="no" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg>' };
+  var uid = 'u434' + Math.random().toString(36).slice(2, 7);
+  input.id = uid + 'in'; lbl.htmlFor = input.id;
+  msg.id = uid + 'h'; input.setAttribute('aria-describedby', msg.id);
+  var focused = false, timer = 0, state = '';
+
+  function set(s, text, icon) {
+    state = s;
+    tag.dataset.s = s;
+    tag.textContent = T.s[s];
+    box.classList.toggle('is-error', s === 'error');
+    box.classList.toggle('is-success', s === 'success');
+    help.classList.toggle('is-error', s === 'error');
+    help.classList.toggle('is-success', s === 'success');
+    if (msg.textContent !== text) msg.textContent = text;
+    st.innerHTML = icon === 'spin' ? '<i class="u434-spin"></i>' : icon ? ICON[icon] : '';
+    input.setAttribute('aria-invalid', s === 'error' ? 'true' : 'false');
+  }
+  // 규칙 검사는 바로, 이미 쓰는 이름인지는 입력이 멈춘 뒤 잠깐 확인합니다
+  function check() {
+    var v = input.value;
+    clearTimeout(timer);
+    ct.textContent = v.length + '/16';
+    ct.classList.toggle('is-max', v.length >= 16);
+    if (!v) { set(focused ? 'focus' : 'default', T.help); return; }
+    if (!/^[a-z0-9_]*$/.test(v)) { set('error', T.bad, 'no'); return; }
+    if (v.length < 3) { set('filled', T.short); return; }
+    set('check', T.checking, 'spin');
+    timer = setTimeout(function () {
+      if (!root.isConnected || input.value !== v) return;
+      if (TAKEN.indexOf(v) >= 0) set('error', T.taken, 'no');
+      else set('success', T.ok, 'ok');
+    }, rm ? 150 : 650);
+  }
+  input.addEventListener('input', function () { box.classList.add('is-act'); check(); });
+  input.addEventListener('focus', function () { focused = true; if (!input.value) set('focus', T.help); });
+  input.addEventListener('blur', function () { focused = false; box.classList.remove('is-act'); if (!input.value) set('default', T.help); });
+  box.addEventListener('click', function () { box.classList.add('is-act'); if (!input.value) set('focus', T.help); input.focus({ preventScroll: true }); });
+  set('default', T.help);
+})();
+</script>

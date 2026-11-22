@@ -1,0 +1,108 @@
+<!-- Lucian UX/UI Prompt #447 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#447 -->
+<!--
+Element: 다크 모드 토글
+ID: 447 · Category: 토글·선택 · Tags: dark-mode, theme, segmented-control, settings, preview, toggle
+What it does: 설정 화면의 ‘라이트 · 다크 · 시스템’ 테마 선택입니다. 아이콘이 있는 세그먼트 위로 표시가 미끄러지고, 아래 작은 미리보기 화면만 고른 테마로 부드럽게 바뀝니다(페이지 테마는 그대로). 시스템을 고르면 기기 설정을 따르고, 지금 어느 쪽인지 함께 알려 줍니다.
+How to use it: 라이트, 다크, 시스템을 차례로 눌러 미리보기가 바뀌는 걸 보세요. 화살표 키로도 바꿀 수 있습니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#447
+-->
+<style>
+.u447{position:relative;width:340px;padding:20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink)}
+.u447-hd b{display:block;font-size:15px;font-weight:700;letter-spacing:-.02em}
+.u447-hd span{display:block;margin-top:3px;font-size:12px;color:var(--ux-ink-3)}
+.u447-seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:14px;padding:3px;border-radius:11px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u447-thumb{position:absolute;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 3);border-radius:8px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line),0 1px 3px var(--ux-shadow);transform:translateX(calc(var(--k,2) * 100%));transition:transform .45s var(--ux-spring)}
+.u447-opt{position:relative;z-index:1;height:34px;display:flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:8px;background:none;font-size:12.5px;font-weight:600;color:var(--ux-ink-3);transition:color .2s}
+.u447-opt:hover{color:var(--ux-ink-2)}
+.u447-opt[aria-checked="true"]{color:var(--ux-ink)}
+.u447 .u447-opt:focus-visible{outline-offset:1px}
+.u447-opt svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--ux-spring)}
+.u447-opt[aria-checked="true"] svg{transform:rotate(-14deg) scale(1.06)}
+.u447-pl{display:flex;align-items:center;justify-content:space-between;margin:16px 0 8px;font-size:11.5px;color:var(--ux-ink-3)}
+.u447-pl em{font-style:normal;font-weight:600;color:var(--ux-ink-2)}
+.u447-pv{--bg:#FFFFFF;--sf:#F4F4F5;--ln:rgba(24,24,27,.09);--ink:#18181B;--ink3:#A1A1AA;--ac:#6A57F2;--acs:rgba(106,87,242,.12);--sh:0 8px 20px -12px rgba(24,24,27,.25);display:grid;grid-template-columns:74px 1fr;height:150px;border-radius:12px;background:var(--bg);color:var(--ink);box-shadow:0 0 0 1px var(--ln),var(--sh);overflow:hidden;transition:background-color .5s var(--ux-ease),color .5s,box-shadow .5s}
+.u447-pv[data-mode="dark"]{--bg:#141418;--sf:#202026;--ln:rgba(255,255,255,.09);--ink:#F4F4F5;--ink3:#71717A;--ac:#B7A4FF;--acs:rgba(183,164,255,.16);--sh:0 8px 20px -12px rgba(0,0,0,.6)}
+.u447-pv *{transition:background-color .5s var(--ux-ease),color .5s,border-color .5s,box-shadow .5s}
+.u447-side{padding:10px 8px;background:var(--sf);border-right:1px solid var(--ln)}
+.u447-dots{display:flex;gap:4px;margin-bottom:12px}
+.u447-dots i{width:6px;height:6px;border-radius:50%;background:var(--ln)}
+.u447-nav{display:grid;gap:5px}
+.u447-nav span{display:flex;align-items:center;gap:5px;height:20px;padding:0 6px;border-radius:6px;font-size:9.5px;font-weight:600;color:var(--ink3)}
+.u447-nav span::before{content:"";width:7px;height:7px;border-radius:2px;background:currentColor;opacity:.7}
+.u447-nav span.on{background:var(--acs);color:var(--ac)}
+.u447-nav i{display:block;height:6px;margin:0 6px;border-radius:3px;background:var(--ln)}
+.u447-main{padding:12px}
+.u447-main b{display:block;font-size:11.5px;font-weight:700}
+.u447-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:9px}
+.u447-cards div{padding:8px;border-radius:8px;background:var(--sf);box-shadow:inset 0 0 0 1px var(--ln)}
+.u447-cards small{display:block;font-size:8.5px;color:var(--ink3)}
+.u447-cards strong{display:block;margin-top:2px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+.u447-cards strong em{font-style:normal;font-size:8.5px;font-weight:600;color:#16A34A;margin-left:3px}
+.u447-pv[data-mode="dark"] .u447-cards strong em{color:#4ADE80}
+.u447-row{display:flex;align-items:center;justify-content:space-between;margin-top:8px;padding:7px 8px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--ln);font-size:9.5px;font-weight:600}
+.u447-row i{position:relative;width:22px;height:13px;border-radius:7px;background:var(--ac)}
+.u447-row i::after{content:"";position:absolute;right:2px;top:2px;width:9px;height:9px;border-radius:50%;background:#FFFFFF}
+.u447-pv[data-mode="dark"] .u447-row i::after{background:#141418}
+.u447-ft{margin:10px 0 0;font-size:11px;color:var(--ux-ink-3)}
+.u447-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u447">
+  <div class="u447-hd"><b>화면 테마</b><span>기기 설정을 따르거나 직접 고를 수 있어요</span></div>
+  <div class="u447-seg" role="radiogroup" aria-label="화면 테마">
+    <i class="u447-thumb" aria-hidden="true"></i>
+    <button type="button" class="u447-opt" role="radio" aria-checked="false" tabindex="-1"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="3"/><path d="M8 1.5v1.3M8 13.2v1.3M14.5 8h-1.3M2.8 8H1.5M12.6 3.4l-.9.9M4.3 11.7l-.9.9M12.6 12.6l-.9-.9M4.3 4.3l-.9-.9"/></svg>라이트</button>
+    <button type="button" class="u447-opt" role="radio" aria-checked="false" tabindex="-1"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.5 9.8A5.8 5.8 0 0 1 6.2 2.5a5.8 5.8 0 1 0 7.3 7.3z"/></svg>다크</button>
+    <button type="button" class="u447-opt" role="radio" aria-checked="true"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="1.8" y="2.8" width="12.4" height="8.6" rx="1.5"/><path d="M5.8 14h4.4M8 11.4V14"/></svg>시스템</button>
+  </div>
+  <div class="u447-pl"><span>미리보기</span><em></em></div>
+  <div class="u447-pv" aria-hidden="true">
+    <div class="u447-side"><div class="u447-dots"><i></i><i></i><i></i></div><div class="u447-nav"><span class="on">홈</span><i></i><i style="width:60%"></i><i style="width:74%"></i></div></div>
+    <div class="u447-main"><b>대시보드</b>
+      <div class="u447-cards"><div><small>이번 달 방문</small><strong>48,210<em>+12%</em></strong></div><div><small>전환율</small><strong>3.8%<em>+0.4</em></strong></div></div>
+      <div class="u447-row">알림 받기<i></i></div>
+    </div>
+  </div>
+  <p class="u447-ft">선택은 이 기기에만 저장돼요</p>
+  <p class="u447-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var T = {
+    L: ['라이트', '다크', '시스템'],
+    now: function (m) { return '시스템 · 지금 ' + m; },
+    set: function (m) { return '테마: ' + m; }
+  };
+  var seg = root.querySelector('.u447-seg'), opts = [].slice.call(seg.querySelectorAll('.u447-opt'));
+  var pv = root.querySelector('.u447-pv'), em = root.querySelector('.u447-pl em'), live = root.querySelector('.u447-live');
+  var mq = window.matchMedia('(prefers-color-scheme: dark)'), cur = 2;
+  // 미리보기만 바꿉니다. 시스템이면 기기 설정(prefers-color-scheme)을 따릅니다
+  function apply() {
+    var dark = cur === 1 || (cur === 2 && mq.matches);
+    pv.setAttribute('data-mode', dark ? 'dark' : 'light');
+    em.textContent = cur === 2 ? T.now(T.L[dark ? 1 : 0]) : T.L[cur];
+  }
+  function pick(i, focus) {
+    cur = i;
+    opts.forEach(function (o, k) { o.setAttribute('aria-checked', String(k === i)); o.tabIndex = k === i ? 0 : -1; });
+    seg.style.setProperty('--k', i);
+    apply();
+    if (focus) opts[i].focus();
+  }
+  opts.forEach(function (o, i) {
+    o.addEventListener('click', function () { if (cur !== i) { pick(i); live.textContent = T.set(T.L[i]); } });
+    o.addEventListener('keydown', function (e) {
+      var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      var n = (i + d + 3) % 3; pick(n, true); live.textContent = T.set(T.L[n]);
+    });
+  });
+  // 기기 설정이 바뀌면(시스템 선택일 때) 바로 따라갑니다. 요소가 빠지면 듣기를 멈춥니다
+  function onChange() { if (!root.isConnected) { if (mq.removeEventListener) mq.removeEventListener('change', onChange); return; } if (cur === 2) apply(); }
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  pick(2);
+})();
+</script>

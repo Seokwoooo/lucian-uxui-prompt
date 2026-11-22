@@ -1,0 +1,203 @@
+<!-- Lucian UX/UI Prompt #415 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#415 -->
+<!--
+Element: 브레드크럼
+ID: 415 · Category: 내비게이션 · Tags: breadcrumb, navigation, overflow, truncate, path, file-browser
+What it does: 홈 아이콘에서 지금 페이지까지 이어지는 이동 경로입니다. 경로가 길어지면 가운데 단계가 … 버튼 하나로 접히고, 누르면 숨은 단계가 계층대로 펼쳐집니다. 지금 페이지는 링크가 아니라 굵은 글자로 끝나며, 폴더를 열거나 경로를 누르면 단계가 부드럽게 늘고 줄어듭니다.
+How to use it: 목록에서 폴더나 문서를 열고, … 버튼을 눌러 숨은 단계로 돌아가 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#415
+-->
+<style>
+.u415{position:relative;width:340px;height:340px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden}
+.u415-bar{position:relative;z-index:3;display:flex;align-items:center;height:46px;padding:0 12px;box-shadow:0 1px 0 var(--ux-line)}
+.u415-ol{display:flex;align-items:center;min-width:0;margin:0;padding:0;list-style:none}
+.u415-ol li{display:flex;align-items:center;min-width:0;flex:none}
+.u415-ol li.is-new{animation:u415-in .42s var(--ux-ease) both}
+@keyframes u415-in{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+.u415-ol li:last-child{flex:0 1 auto}
+.u415-sep{display:grid;place-items:center;width:14px;flex:none;color:var(--ux-ink-3);opacity:.7}
+.u415-sep svg{width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u415-ol a,.u415-more{display:flex;align-items:center;height:26px;max-width:104px;padding:0 6px;border:0;border-radius:7px;background:none;font-size:11.5px;font-weight:560;color:var(--ux-ink-3);text-decoration:none;white-space:nowrap;transition:color .15s,background-color .15s}
+.u415-ol a span{overflow:hidden;text-overflow:ellipsis}
+.u415-ol a:hover,.u415-more:hover,.u415-more[aria-expanded="true"]{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u415-ol a.hm{padding:0 6px;margin-left:-2px}
+.u415-ol a.hm svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.u415-more{padding:0 7px;letter-spacing:.08em;font-weight:800}
+.u415-cur{display:block;padding:0 6px;font-size:11.5px;font-weight:750;color:var(--ux-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
+.u415 a:focus-visible,.u415 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:0}
+/* 숨긴 경로 메뉴 */
+.u415-mn{position:absolute;top:40px;left:40px;z-index:5;min-width:168px;padding:5px;border-radius:12px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 18px 40px -14px var(--ux-shadow-strong);opacity:0;visibility:hidden;transform:translateY(-4px) scale(.97);transform-origin:16px 0;transition:opacity .14s,transform .18s,visibility 0s .18s}
+.u415.is-mn .u415-mn{opacity:1;visibility:visible;transform:none;transition:opacity .18s var(--ux-ease),transform .38s cubic-bezier(.25,1.35,.45,1),visibility 0s}
+.u415-mi{position:relative;display:flex;align-items:center;gap:8px;width:100%;height:32px;padding:0 10px 0 calc(8px + var(--lv) * 14px);border:0;border-radius:8px;background:none;font-size:11.5px;font-weight:600;color:var(--ux-ink-2);text-align:left;white-space:nowrap;transition:background-color .15s,color .15s}
+.u415-mi::before{content:"";position:absolute;left:calc(var(--lv) * 14px - 2px);top:6px;width:6px;height:10px;border-left:1px solid var(--ux-line-2);border-bottom:1px solid var(--ux-line-2);border-bottom-left-radius:4px;opacity:var(--tick,1)}
+.u415-mi:hover,.u415-mi.is-cur{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u415-mi.is-cur{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u415-mi svg{width:14px;height:14px;flex:none}
+/* 페이지 */
+.u415-pg{padding:18px 14px 0}
+.u415-pg.is-fw{animation:u415-fw .4s var(--ux-ease) both}
+.u415-pg.is-bw{animation:u415-bw .4s var(--ux-ease) both}
+@keyframes u415-fw{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+@keyframes u415-bw{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.u415-ph{display:flex;align-items:center;gap:10px;padding:0 4px}
+.u415-ph .tl{display:grid;place-items:center;width:34px;height:34px;flex:none;border-radius:10px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u415-ph .tl svg{width:18px;height:18px}
+.u415-ph h3{margin:0;font-size:16px;font-weight:800;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u415-ph p{margin:2px 0 0;font-size:10.5px;color:var(--ux-ink-3)}
+.u415-ls{margin:14px 0 0;padding:0;list-style:none}
+.u415-row{display:flex;align-items:center;gap:10px;width:100%;height:42px;padding:0 8px;border:0;border-radius:10px;background:none;color:var(--ux-ink);text-align:left;transition:background-color .15s}
+.u415-row:hover{background:var(--ux-surface-2)}
+.u415-row:active{background:var(--ux-surface-3)}
+.u415-row svg.ic{width:16px;height:16px;flex:none}
+.u415-row b{flex:1;min-width:0;font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u415-row small{font-size:10px;font-weight:550;color:var(--ux-ink-3);white-space:nowrap}
+.u415-row .cv{width:10px;height:10px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s var(--ux-spring)}
+.u415-row:hover .cv{transform:translateX(2px)}
+.u415-ls li+li .u415-row{box-shadow:0 -1px 0 var(--ux-line)}
+.u415-ls li+li .u415-row:hover,.u415-ls li:hover+li .u415-row{box-shadow:none}
+.u415-em{margin:28px 0 0;padding:22px 0;border-radius:12px;border:1px dashed var(--ux-line-2);text-align:center;font-size:11.5px;color:var(--ux-ink-3)}
+.u415-doc{margin:16px 4px 0;padding:14px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u415-doc i{display:block;height:7px;margin-top:9px;border-radius:4px;background:var(--ux-surface-3)}
+.u415-doc i:first-child{height:10px;width:46%;margin-top:0;background:var(--ux-line-2)}
+.u415 .fd{fill:#F5B83D;fill:light-dark(#F5B83D,#E5A93A)}
+.u415 .fd2{fill:#FFD27A;fill:light-dark(#FFD27A,#F7C463)}
+.u415 .dc{fill:none;stroke:var(--ux-accent);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round}
+@media (prefers-reduced-motion:reduce){.u415-mn{transition:none!important}.u415-ol li.is-new,.u415-pg{animation:none!important}}
+</style>
+<div class="ux u415">
+  <div class="u415-bar">
+    <nav aria-label="이동 경로"><ol class="u415-ol"></ol></nav>
+    <div class="u415-mn" role="menu" aria-label="숨긴 경로"></div>
+  </div>
+  <div class="u415-pg"></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ol = root.querySelector('.u415-ol'), mn = root.querySelector('.u415-mn'), pg = root.querySelector('.u415-pg');
+  var uid = 'u415-' + Math.random().toString(36).slice(2, 7);
+  function F(n, c) { return { n: n, c: c || [] }; }
+  function D(n, d) { return { n: n, d: d }; }
+  var TREE = F('홈', [
+    F('마케팅팀', [
+      F('2026 캠페인', [
+        F('봄 시즌', [
+          F('런칭 이벤트', [D('기획안 v3', '11월 21일'), D('예산표', '11월 18일'), D('참가자 명단', '11월 20일'), F('현장 사진')]),
+          F('SNS 콘텐츠'), D('성과 정리', '11월 12일'), D('보도 자료', '11월 8일')]),
+        F('여름 시즌'), F('가을 시즌'), D('캠페인 일정표', '10월 30일')]),
+      F('브랜드 가이드'), F('회의록'), D('월간 리포트', '11월 3일')]),
+    F('제품팀'), F('인사팀'), D('회사 소개서', '9월 24일')]);
+  var ICON = {
+    home: '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 6.2 7 2l5 4.2V12H8.6V8.8H5.4V12H2z"/></svg>',
+    sep: '<span class="u415-sep" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M3.8 2 6.8 5l-3 3"/></svg></span>',
+    fd: '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path class="fd" d="M1.5 4a1.5 1.5 0 0 1 1.5-1.5h3l1.5 1.5H13a1.5 1.5 0 0 1 1.5 1.5V12A1.5 1.5 0 0 1 13 13.5H3A1.5 1.5 0 0 1 1.5 12z"/><path class="fd2" d="M1.5 6.5h13V12a1.5 1.5 0 0 1-1.5 1.5H3A1.5 1.5 0 0 1 1.5 12z"/></svg>',
+    dc: '<svg class="ic" viewBox="0 0 16 16" aria-hidden="true"><path class="dc" d="M4 1.8h5.4L12.5 5v9.2H4z"/><path class="dc" d="M9.2 2v3.2h3.2M6 8.2h4.2M6 10.8h3"/></svg>',
+    cv: '<svg class="cv" viewBox="0 0 10 10" aria-hidden="true"><path d="M3.8 2 6.8 5l-3 3"/></svg>'
+  };
+  // 경로: 홈부터 지금 단계까지의 노드 목록. 처음에는 다섯 단계 깊이에서 시작해 가운데가 접힌 모습을 보여 줍니다
+  var path = [TREE, TREE.c[0], TREE.c[0].c[0], TREE.c[0].c[0].c[0], TREE.c[0].c[0].c[0].c[0]];
+  var shown = [], mOpen = false, mCur = -1, hid = [];
+  var MAX = 4;
+  function cnt(n) { return n ? '항목 ' + n + '개' : '비어 있음'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function go(depth, node, dir) {
+    path = path.slice(0, depth + 1);
+    if (node) path.push(node);
+    menu(false);
+    render(dir);
+  }
+  function render(dir) {
+    var n = path.length;
+    // 네 단계가 넘으면 홈과 마지막 두 단계만 남기고 가운데를 … 하나로 접습니다
+    var vis = n > MAX ? [0, -1, n - 2, n - 1] : path.map(function (_, i) { return i; });
+    hid = n > MAX ? path.slice(1, n - 2) : [];
+    var keys = vis.map(function (i) { return i < 0 ? 'more' : i + ':' + path[i].n; });
+    ol.innerHTML = '';
+    vis.forEach(function (i, k) {
+      var li = document.createElement('li');
+      if (shown.indexOf(keys[k]) < 0 && shown.length) li.className = 'is-new';
+      var sep = k ? ICON.sep : '';
+      if (i < 0) {
+        li.innerHTML = sep + '<button class="u415-more" type="button" aria-haspopup="menu" aria-expanded="false">…</button>';
+        var b = li.querySelector('button');
+        b.setAttribute('aria-label', '숨긴 경로 ' + hid.length + '개 보기');
+        b.id = uid + '-mb'; b.setAttribute('aria-controls', uid + '-m');
+        b.addEventListener('click', function () { menu(!mOpen); });
+        b.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); menu(true); mark(0); } });
+      } else if (i === n - 1) {
+        li.innerHTML = sep + '<span class="u415-cur" aria-current="page"></span>';
+        li.lastChild.textContent = path[i].n;
+      } else if (i === 0) {
+        li.innerHTML = '<a class="hm" href="#">' + ICON.home + '</a>';
+        li.lastChild.setAttribute('aria-label', path[0].n);
+        li.lastChild.addEventListener('click', function (e) { e.preventDefault(); go(0, null, -1); });
+      } else {
+        li.innerHTML = sep + '<a href="#"><span></span></a>';
+        li.querySelector('a span').textContent = path[i].n;
+        li.lastChild.addEventListener('click', function (e) { e.preventDefault(); go(i, null, -1); });
+      }
+      ol.appendChild(li);
+    });
+    shown = keys;
+    mn.id = uid + '-m';
+    mn.innerHTML = hid.map(function (h, k) { return '<button class="u415-mi" type="button" role="menuitem" tabindex="-1" style="--lv:' + k + ';--tick:' + (k ? 1 : 0) + '">' + ICON.fd + '<span>' + esc(h.n) + '</span></button>'; }).join('');
+    Array.prototype.forEach.call(mn.children, function (b, k) { b.addEventListener('click', function () { go(k + 1, null, -1); var r = pg.querySelector('.u415-row'); if (r) r.focus({ preventScroll: true }); }); });
+    page(dir);
+  }
+  function page(dir) {
+    var node = path[path.length - 1];
+    var h = '<div class="u415-ph"><span class="tl">' + (node.c ? ICON.fd : ICON.dc) + '</span><div><h3>' + esc(node.n) + '</h3><p>';
+    if (node.c) {
+      var n = node.c.length;
+      h += cnt(n) + '</p></div></div>';
+      h += n ? '<ul class="u415-ls">' + node.c.map(function (c, k) {
+        var m = c.c ? cnt(c.c.length) : c.d;
+        return '<li><button class="u415-row" type="button" data-k="' + k + '">' + (c.c ? ICON.fd : ICON.dc) + '<b>' + esc(c.n) + '</b><small>' + esc(m) + '</small>' + ICON.cv + '</button></li>';
+      }).join('') + '</ul>' : '<div class="u415-em">' + '아직 이 폴더에 아무것도 없어요' + '</div>';
+    } else {
+      var d = node.d;
+      h += '김지은 · ' + d + ' 수정' + '</p></div></div><div class="u415-doc" aria-hidden="true"><i></i><i style="width:92%"></i><i style="width:84%"></i><i style="width:88%"></i><i style="width:56%"></i></div>';
+    }
+    pg.innerHTML = h;
+    pg.querySelectorAll('.u415-row').forEach(function (b) {
+      var c = node.c[+b.getAttribute('data-k')];
+      b.setAttribute('aria-label', (c.c ? '폴더' : '문서') + ' ' + c.n);
+      b.addEventListener('click', function () { go(path.length - 1, c, 1); });
+    });
+    pg.classList.remove('is-fw', 'is-bw');
+    if (dir) { void pg.offsetWidth; pg.classList.add(dir > 0 ? 'is-fw' : 'is-bw'); }
+  }
+  function mark(i) {
+    mCur = i;
+    Array.prototype.forEach.call(mn.children, function (b, k) { b.classList.toggle('is-cur', k === i); });
+    if (i >= 0 && mn.children[i]) mn.children[i].focus({ preventScroll: true });
+  }
+  function menu(v) {
+    var mb = root.querySelector('.u415-more');
+    if (!mb) v = false;
+    mOpen = v;
+    root.classList.toggle('is-mn', v);
+    mn.inert = !v;
+    if (mb) {
+      mb.setAttribute('aria-expanded', String(v));
+      if (v) mn.style.left = Math.max(6, mb.offsetLeft + mb.parentNode.offsetLeft - 4) + 'px';
+    }
+    if (!v) mark(-1);
+  }
+  mn.addEventListener('keydown', function (e) {
+    var n = mn.children.length, to = e.key === 'ArrowDown' ? mCur + 1 : e.key === 'ArrowUp' ? mCur - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+    if (e.key === 'Escape' || e.key === 'Tab') { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); } menu(false); var mb = root.querySelector('.u415-more'); if (mb && e.key === 'Escape') mb.focus({ preventScroll: true }); return; }
+    if (to === null) return;
+    e.preventDefault(); mark((to + n) % n);
+  });
+  mn.addEventListener('pointermove', function () { if (mCur >= 0) mark(-1); });
+  root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mOpen) { e.stopPropagation(); menu(false); } });
+  function outside(e) {
+    if (!root.isConnected) { document.removeEventListener('pointerdown', outside, true); return; }
+    if (mOpen && !mn.contains(e.target) && !e.target.closest('.u415-more')) menu(false);
+  }
+  document.addEventListener('pointerdown', outside, true);
+  render(0);
+})();
+</script>

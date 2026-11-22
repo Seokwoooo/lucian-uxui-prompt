@@ -26,10 +26,10 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#266
 .u266-sh.is-spin svg{transform:rotate(360deg)}
 .u266-sh:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
 .u266-tb kbd{margin-left:auto;padding:2px 6px;border-radius:5px;box-shadow:inset 0 0 0 1px var(--ux-line),0 1px 0 var(--ux-line);font-family:inherit;font-size:9.5px;font-weight:800;color:var(--ux-ink-3)}
-.u266-pv{position:absolute;left:12px;right:12px;bottom:12px;height:72px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:16px;background:var(--p0);transition:background .55s}
+.u266-pv{position:absolute;left:12px;right:12px;bottom:12px;height:72px;display:flex;align-items:center;gap:10px;padding:0 12px;border-radius:16px;background:var(--p0);background:light-dark(var(--p0),var(--p4));transition:background .55s}
 .u266-pv div{flex:1;min-width:0}
 .u266-pv small{display:block;font-size:9px;font-weight:850;color:var(--p2);transition:color .55s}
-.u266-pv b{display:block;margin-top:2px;font-size:13px;font-weight:900;color:var(--p4);transition:color .55s}
+.u266-pv b{display:block;margin-top:2px;font-size:13px;font-weight:900;color:var(--p4);color:light-dark(var(--p4),var(--p0));transition:color .55s}
 .u266-pv span{padding:8px 12px;border-radius:10px;background:var(--p3);color:var(--p0);font-size:10.5px;font-weight:850;white-space:nowrap;transition:background .55s,color .55s}
 .u266-pv i{flex:none;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--p1),var(--p2));transition:background .55s}
 .u266-tt{position:absolute;left:50%;top:96px;padding:6px 11px;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:10.5px;font-weight:800;white-space:nowrap;transform:translate(-50%,8px);opacity:0;pointer-events:none;transition:opacity .2s,transform .3s cubic-bezier(.3,1.5,.5,1)}

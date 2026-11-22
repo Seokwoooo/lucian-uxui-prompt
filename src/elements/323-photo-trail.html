@@ -6,13 +6,13 @@
   ["aria-label=\"사진 꼬리 무대, 움직이거나 눌러 보기\"", "aria-label=\"Photo trail stage, move or press\""]
 ]} -->
 <style>
-.u323{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F4F1EA;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1E1B16}
+.u323{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#F4F1EA;background:light-dark(#F4F1EA,#1D1A16);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1E1B16;color:light-dark(#1E1B16,#F2ECE1)}
 .u323-hd{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;pointer-events:none;text-align:center}
 .u323-hd b{font-size:38px;line-height:1.05;font-weight:900;letter-spacing:-.04em;max-width:260px;word-break:keep-all}
-.u323-hd span{font-size:11.5px;font-weight:700;color:#8A8274;letter-spacing:.04em}
+.u323-hd span{font-size:11.5px;font-weight:700;color:#8A8274;color:light-dark(#8A8274,#958C7D);letter-spacing:.04em}
 .u323-hit{position:absolute;inset:0;border:0;padding:0;background:transparent;cursor:crosshair;border-radius:inherit}
-.u323-hit:focus-visible{outline:2px solid #1E1B16;outline-offset:-6px}
-.u323-p{position:absolute;left:0;top:0;width:78px;height:96px;margin:-48px 0 0 -39px;padding:5px 5px 14px;background:#fff;border-radius:3px;box-shadow:0 10px 20px -8px rgba(30,27,22,.45);pointer-events:none;animation:u323-in .32s cubic-bezier(.3,1.6,.5,1) both}
+.u323-hit:focus-visible{outline:2px solid #1E1B16;outline-color:light-dark(#1E1B16,#F2ECE1);outline-offset:-6px}
+.u323-p{position:absolute;left:0;top:0;width:78px;height:96px;margin:-48px 0 0 -39px;padding:5px 5px 14px;background:#fff;background:light-dark(#fff,#2C2924);border-radius:3px;box-shadow:0 10px 20px -8px rgba(30,27,22,.45);box-shadow:0 10px 20px -8px light-dark(rgba(30,27,22,.45),rgba(0,0,0,.7)),inset 0 0 0 1px light-dark(transparent,rgba(255,255,255,.06));pointer-events:none;animation:u323-in .32s cubic-bezier(.3,1.6,.5,1) both}
 .u323-p i{display:block;width:100%;height:100%;border-radius:1px}
 .u323-p.is-out{animation:u323-out .45s ease-in forwards}
 @keyframes u323-in{from{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(.3);opacity:0}to{transform:translate(var(--x),var(--y)) rotate(var(--r)) scale(1);opacity:1}}

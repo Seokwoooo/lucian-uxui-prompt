@@ -9,12 +9,12 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#373
 -->
 <style>
-.u373{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#FFFDF7;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1C1A2E;padding:24px 28px}
-.u373-hd{font-size:10.5px;font-weight:800;letter-spacing:.16em;color:#A19D92;margin:0 0 8px}
+.u373{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#FFFDF7;background:light-dark(#FFFDF7,#1D1B17);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#1C1A2E;color:light-dark(#1C1A2E,#F3EEE4);padding:24px 28px}
+.u373-hd{font-size:10.5px;font-weight:800;letter-spacing:.16em;color:#A19D92;color:light-dark(#A19D92,#8D877B);margin:0 0 8px}
 .u373-ls{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
 .u373-ls li{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
-.u373-ls small{font-size:10px;font-weight:650;color:#B5B1A6}
-.u373-a{--c:#5B4CF0;position:relative;display:inline-block;padding:4px 0 8px;font-size:30px;font-weight:850;letter-spacing:-.03em;color:#1C1A2E;text-decoration:none;outline:none}
+.u373-ls small{font-size:10px;font-weight:650;color:#B5B1A6;color:light-dark(#B5B1A6,#6F6A60)}
+.u373-a{--c:#5B4CF0;--c:light-dark(#5B4CF0,#A497FF);position:relative;display:inline-block;padding:4px 0 8px;font-size:30px;font-weight:850;letter-spacing:-.03em;color:#1C1A2E;color:light-dark(#1C1A2E,#F3EEE4);text-decoration:none;outline:none}
 .u373-a::before,.u373-a::after{content:"";position:absolute;left:0;bottom:2px;height:3px;border-radius:2px;background:var(--c);pointer-events:none}
 .u373-a:focus-visible{color:var(--c)}
 /* 1 밀고 지나가기: 들어올 땐 왼쪽에서, 나갈 땐 오른쪽으로 빠집니다 */
@@ -38,7 +38,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#373
 @keyframes u373-flow{to{transform:translateX(-50%)}}
 /* 4 엇갈려 지나가기: 위아래 두 가닥이 반대로 지나갑니다 */
 .u373-4::before,.u373-4::after{height:2px;right:0;transform:scaleX(0);transition:transform .45s cubic-bezier(.6,0,.2,1)}
-.u373-4::before{bottom:6px;transform-origin:100% 50%;background:#F06595}
+.u373-4::before{bottom:6px;transform-origin:100% 50%;background:#F06595;background:light-dark(#F06595,#FF86AF)}
 .u373-4::after{transform-origin:0 50%}
 .u373-4:hover::before,.u373-4:focus-visible::before,.u373-4:hover::after,.u373-4:focus-visible::after{transform:scaleX(1)}
 /* 5 점에서 늘어나기: 첫 글자 아래 점이 오른쪽으로 튕기듯 늘어납니다 */

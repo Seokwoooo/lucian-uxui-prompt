@@ -9,20 +9,24 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#320
 -->
 <style>
-.u320{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(90% 80% at 50% 30%,#FFF3BF,#FFD8A8);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#3B2A12}
-.u320-tk{position:absolute;left:30px;top:44px;width:280px;height:230px;border-radius:20px;background:#fff;box-shadow:0 18px 34px -16px rgba(120,70,10,.55);overflow:hidden}
-.u320-tk::before{content:"";position:absolute;left:0;right:0;top:0;height:44px;background:repeating-linear-gradient(45deg,#FF922B 0 10px,#FD7E14 10px 20px)}
+.u320{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:radial-gradient(90% 80% at 50% 30%,#FFF3BF,#FFD8A8);background:radial-gradient(90% 80% at 50% 30%,light-dark(#FFF3BF,#3A2B12),light-dark(#FFD8A8,#1E1408));box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:#3B2A12;color:light-dark(#3B2A12,#FFE6C2)}
+.u320-tk{position:absolute;left:30px;top:44px;width:280px;height:230px;border-radius:20px;background:#fff;background:light-dark(#fff,#2A2016);box-shadow:0 18px 34px -16px rgba(120,70,10,.55);box-shadow:0 18px 34px -16px light-dark(rgba(120,70,10,.55),rgba(0,0,0,.7)),inset 0 0 0 1px light-dark(transparent,rgba(255,230,194,.07));overflow:hidden}
+.u320-tk::before{content:"";position:absolute;left:0;right:0;top:0;height:44px;background:repeating-linear-gradient(45deg,#FF922B 0 10px,#FD7E14 10px 20px);background:repeating-linear-gradient(45deg,light-dark(#FF922B,#DE6E1E) 0 10px,light-dark(#FD7E14,#C85E10) 10px 20px)}
 .u320-tt{position:absolute;left:0;right:0;top:12px;text-align:center;color:#fff;font-size:14px;font-weight:900;letter-spacing:.08em}
-.u320-pz{position:absolute;left:20px;right:20px;top:60px;bottom:20px;border-radius:14px;background:#FFF9DB;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
-.u320-pz b{font-size:34px;font-weight:900;letter-spacing:-.03em;color:#E8590C}
+.u320-pz{position:absolute;left:20px;right:20px;top:60px;bottom:20px;border-radius:14px;background:#FFF9DB;background:light-dark(#FFF9DB,#3A2C17);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.u320-pz b{font-size:34px;font-weight:900;letter-spacing:-.03em;color:#E8590C;color:light-dark(#E8590C,#FF9A45)}
 .u320-pz span{font-size:14px;font-weight:750}
 .u320-pz.is-pop b{animation:u320-pop .6s cubic-bezier(.3,1.8,.5,1)}
 @keyframes u320-pop{from{transform:scale(.4)}}
-.u320-cv{position:absolute;left:20px;top:60px;width:240px;height:150px;border-radius:14px;cursor:grab;touch-action:none;transition:opacity .5s}
+.u320-cv{position:absolute;left:20px;top:60px;width:240px;height:150px;border-radius:14px;cursor:grab;touch-action:none;transition:opacity .5s,color 1ms;
+  /* 은박 색: 캔버스는 CSS 값을 바로 못 쓰므로 그릴 때 이 칸의 글자색(안내 글자), 테두리 네 변 색(은박 그라데이션), 밑줄 색(반짝이 점)을 읽어 씁니다. 테두리는 굵기가 0이라 보이지 않습니다 */
+  color:#868E96;color:light-dark(#868E96,#C2C8CF);text-decoration-color:rgba(255,255,255,.35);text-decoration-color:light-dark(rgba(255,255,255,.35),rgba(255,255,255,.13));border-color:#CED4DA #F1F3F5 #ADB5BD #DEE2E6;border-color:light-dark(#CED4DA,#4E555D) light-dark(#F1F3F5,#868D96) light-dark(#ADB5BD,#40464D) light-dark(#DEE2E6,#5D646C)}
 .u320-cv.is-gone{opacity:0;pointer-events:none}
-.u320-ft{position:absolute;left:30px;right:30px;bottom:22px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:750;color:#8A5A1E}
-.u320-new{border:0;padding:7px 14px;border-radius:999px;background:#3B2A12;color:#FFF3BF;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
-.u320-new:focus-visible,.u320-cv:focus-visible{outline:2px solid #3B2A12;outline-offset:2px}
+.u320-ft{position:absolute;left:30px;right:30px;bottom:22px;display:flex;align-items:center;justify-content:space-between;font-size:11.5px;font-weight:750;color:#8A5A1E;color:light-dark(#8A5A1E,#D6A566)}
+.u320-new{border:0;padding:7px 14px;border-radius:999px;background:#3B2A12;background:light-dark(#3B2A12,#FFE3B0);color:#FFF3BF;color:light-dark(#FFF3BF,#2E1F08);font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.u320-new:focus-visible,.u320-cv:focus-visible{outline:2px solid #3B2A12;outline-color:light-dark(#3B2A12,#FFE6C2);outline-offset:2px}
+/* 긁을 때 떨어지는 은박 가루 */
+.u320-tk>i{background:#ADB5BD;background:light-dark(#ADB5BD,#6E757D)}
 .u320-cf{position:absolute;left:170px;top:150px;width:8px;height:12px;border-radius:2px;pointer-events:none;animation:u320-cf 1.2s ease-out forwards}
 @keyframes u320-cf{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
 </style>
@@ -43,14 +47,24 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#320
     done = false; cv.classList.remove('is-gone'); pz.classList.remove('is-pop');
     var p = PRIZES[pi % PRIZES.length]; pz.querySelector('b').textContent = p[0]; pz.querySelector('span').textContent = p[1];
     cx.globalCompositeOperation = 'source-over';
-    var g = cx.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#CED4DA'); g.addColorStop(0.45, '#F1F3F5'); g.addColorStop(0.55, '#ADB5BD'); g.addColorStop(1, '#DEE2E6');
-    cx.fillStyle = g; cx.fillRect(0, 0, W, H);
-    cx.fillStyle = 'rgba(255,255,255,.35)'; for (var i = 0; i < 260; i++) cx.fillRect(Math.random() * W, Math.random() * H, 1.2, 1.2);
-    cx.strokeStyle = 'rgba(134,142,150,.35)'; cx.lineWidth = 1; for (var k = -H; k < W; k += 9) { cx.beginPath(); cx.moveTo(k, 0); cx.lineTo(k + H, H); cx.stroke(); }
-    cx.fillStyle = '#868E96'; cx.font = '800 15px system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
-    cx.fillText('여기를 긁어 보세요', W / 2, H / 2);
+    foil();
     pc.textContent = 0 + '% 긁음';
   }
+  // 은박 색은 CSS(.u320-cv의 글자색·테두리 색·밑줄 색)에서 읽어 테마를 따릅니다
+  function foil() {
+    var s = getComputedStyle(cv);
+    var g = cx.createLinearGradient(0, 0, W, H); g.addColorStop(0, s.borderTopColor); g.addColorStop(0.45, s.borderRightColor); g.addColorStop(0.55, s.borderBottomColor); g.addColorStop(1, s.borderLeftColor);
+    cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+    cx.fillStyle = s.textDecorationColor; for (var i = 0; i < 260; i++) cx.fillRect(Math.random() * W, Math.random() * H, 1.2, 1.2);
+    cx.strokeStyle = 'rgba(134,142,150,.35)'; cx.lineWidth = 1; for (var k = -H; k < W; k += 9) { cx.beginPath(); cx.moveTo(k, 0); cx.lineTo(k + H, H); cx.stroke(); }
+    cx.fillStyle = s.color; cx.font = '800 15px system-ui,-apple-system,"Apple SD Gothic Neo",sans-serif'; cx.textAlign = 'center'; cx.textBaseline = 'middle';
+    cx.fillText('여기를 긁어 보세요', W / 2, H / 2);
+  }
+  // 카드만 테마가 바뀌면(글자색 전환이 끝나면) 남은 은박만 새 색으로 다시 칠합니다. 긁어 낸 자리는 그대로 둡니다
+  cv.addEventListener('transitionend', function (e) {
+    if (e.propertyName !== 'color' || done) return;
+    cx.globalCompositeOperation = 'source-atop'; foil(); cx.globalCompositeOperation = 'source-over';
+  });
   function scratch(x0, y0, x1, y1) {
     cx.globalCompositeOperation = 'destination-out'; cx.lineCap = 'round'; cx.lineJoin = 'round';
     cx.lineWidth = 26; cx.beginPath(); cx.moveTo(x0, y0); cx.lineTo(x1, y1); cx.stroke();
@@ -61,7 +75,7 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#320
   // 은박 가루: 무대 위에 작은 회색 조각을 뿌려 떨어뜨립니다
   function flake(x, y) {
     var el = document.createElement('i'), tk = root.querySelector('.u320-tk');
-    el.style.cssText = 'position:absolute;left:' + (x + 20) + 'px;top:' + (y + 60) + 'px;width:3px;height:3px;background:#ADB5BD;border-radius:1px;pointer-events:none;transition:transform .7s ease-in,opacity .7s';
+    el.style.cssText = 'position:absolute;left:' + (x + 20) + 'px;top:' + (y + 60) + 'px;width:3px;height:3px;border-radius:1px;pointer-events:none;transition:transform .7s ease-in,opacity .7s';
     tk.appendChild(el);
     requestAnimationFrame(function () { el.style.transform = 'translate(' + ((Math.random() - 0.5) * 40).toFixed(0) + 'px,' + (30 + Math.random() * 40).toFixed(0) + 'px) rotate(200deg)'; el.style.opacity = '0'; });
     setTimeout(function () { el.remove(); }, 750);

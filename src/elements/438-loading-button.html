@@ -1,0 +1,87 @@
+<!-- @meta {"title":"로딩→완료 버튼","category":"로딩·진행","summary":"게시하기 버튼을 누르면 말랑하게 눌렸다가, 글자가 사라지며 동그라미로 줄어들어 돌기 시작합니다. 끝나면 민트색 원 안에 체크가 그려지고, 다시 원래 폭으로 늘어나며 글자가 돌아옵니다.","hint":"버튼을 눌러 보세요","shape":"square","hue":"#06B6D4","hue2":"#7B61FF","tags":["button","loading","spinner","success","morph","micro-interaction"]} -->
+<!-- @demo [["wait",900],["hover",".u438-b",0,{"after":500}],["hold",".u438-b",0,260,{"click":true,"after":3300}],["leave",400],["reset"]] -->
+<!-- @en {"title":"Loading to done button","summary":"Press Publish and the button squishes, its label fades as it shrinks into a circle and starts to spin. When it’s done, a check draws itself inside a mint circle, then the button stretches back to full width and the label returns.","hint":"Press the button","map":[
+  [">게시하기<", ">Publish<"],
+  ["'게시하는 중'", "'Publishing'"],
+  ["'게시했어요'", "'Published'"]
+]} -->
+<style>
+.u438{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u438-b{--w:auto;position:relative;width:var(--w);height:48px;padding:0;border:0;border-radius:24px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:15px;font-weight:650;letter-spacing:-.01em;box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 10px 24px -12px var(--ux-accent),0 2px 4px -2px var(--ux-shadow);cursor:pointer;transform:scale(var(--k,1));transition:width .46s cubic-bezier(.65,0,.35,1),background-color .35s var(--ux-ease),box-shadow .3s var(--ux-ease),transform .5s cubic-bezier(.34,1.7,.5,1)}
+.u438-b:hover{--k:1.02}
+.u438-b.is-down{--k:.93;transition:width .46s cubic-bezier(.65,0,.35,1),background-color .35s var(--ux-ease),box-shadow .3s var(--ux-ease),transform .12s var(--ux-ease)}
+.u438-b.is-grow{transition:width .62s cubic-bezier(.34,1.32,.5,1),background-color .35s var(--ux-ease),box-shadow .3s var(--ux-ease),transform .5s cubic-bezier(.34,1.7,.5,1)}
+.u438 .u438-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:4px}
+.u438-l{display:block;padding:0 30px;white-space:nowrap;transition:opacity .22s var(--ux-ease),filter .22s var(--ux-ease),transform .3s var(--ux-ease)}
+.u438-b[data-s="busy"] .u438-l,.u438-b[data-s="ok"] .u438-l{opacity:0;filter:blur(4px);transform:scale(.9)}
+.u438-b[data-s="idle"].is-grow .u438-l{transition-delay:.16s}
+.u438-sp,.u438-ck{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;opacity:0;transform:scale(.4);transition:opacity .2s var(--ux-ease),transform .4s cubic-bezier(.34,1.6,.5,1);pointer-events:none}
+.u438-sp{border-radius:50%;border:2.5px solid color-mix(in srgb,currentColor 28%,transparent);border-top-color:currentColor;animation:u438-spin .75s linear infinite}
+@keyframes u438-spin{to{rotate:360deg}}
+.u438-b[data-s="busy"] .u438-sp{opacity:1;transform:none;transition-delay:.22s}
+.u438-ck{fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.u438-ck path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .38s var(--ux-ease) .12s}
+.u438-b[data-s="ok"]{background:var(--ux-mint);box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 10px 24px -12px var(--ux-mint),0 2px 4px -2px var(--ux-shadow);animation:u438-pop .5s cubic-bezier(.34,1.7,.5,1)}
+@keyframes u438-pop{40%{transform:scale(1.12)}}
+.u438-b[data-s="ok"] .u438-ck{opacity:1;transform:none}
+.u438-b[data-s="ok"] .u438-ck path{stroke-dashoffset:0}
+.u438-ring{position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 2px var(--ux-mint);opacity:0;pointer-events:none}
+.u438-b[data-s="ok"] .u438-ring{animation:u438-ring .7s var(--ux-ease) .1s}
+@keyframes u438-ring{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.7)}}
+.u438-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u438">
+  <button type="button" class="u438-b" data-s="idle"><span class="u438-l">게시하기</span><i class="u438-sp" aria-hidden="true"></i><svg class="u438-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4.5 4.5 8.5-9.5"/></svg><i class="u438-ring" aria-hidden="true"></i></button>
+  <p class="u438-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var b = root.querySelector('.u438-b'), lbl = root.querySelector('.u438-l'), live = root.querySelector('.u438-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { busy: '게시하는 중', ok: '게시했어요' };
+  var full = 0, t1 = 0, t2 = 0, t3 = 0;
+  // 글자 폭에 맞춘 원래 너비를 재 두고, 그 값과 동그라미(48px) 사이를 오갑니다
+  function measure() {
+    if (b.dataset.s !== 'idle') return;
+    b.style.setProperty('--w', 'auto');
+    var w = lbl.getBoundingClientRect().width / (root.getBoundingClientRect().width / root.offsetWidth || 1);
+    // 아직 화면에 그려지지 않았다면 너비를 고정하지 않고, 누를 때 다시 잽니다
+    if (!w) { full = 0; return; }
+    full = Math.ceil(w);
+    b.style.setProperty('--w', full + 'px');
+  }
+  function set(s) {
+    b.dataset.s = s;
+    if (s === 'busy') { b.setAttribute('aria-busy', 'true'); b.setAttribute('aria-disabled', 'true'); }
+    else b.removeAttribute('aria-busy');
+    if (s === 'idle') b.removeAttribute('aria-disabled');
+  }
+  b.addEventListener('pointerdown', function (e) { if (e.button === 0 && b.dataset.s === 'idle') b.classList.add('is-down'); });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (t) { b.addEventListener(t, function () { b.classList.remove('is-down'); }); });
+  b.addEventListener('click', function () {
+    if (b.dataset.s !== 'idle') return;
+    if (!full) measure();
+    b.classList.remove('is-down', 'is-grow');
+    // 1) 글자가 흐려지며 동그라미로 줄고 돌기 시작 → 2) 민트 원에 체크 → 3) 원래 폭으로 늘어나며 글자 복귀
+    set('busy');
+    b.style.setProperty('--w', '48px');
+    live.textContent = T.busy;
+    clearTimeout(t1); clearTimeout(t2); clearTimeout(t3);
+    t1 = setTimeout(function () {
+      if (!root.isConnected) return;
+      set('ok');
+      live.textContent = T.ok;
+      t2 = setTimeout(function () {
+        if (!root.isConnected) return;
+        b.classList.add('is-grow');
+        set('idle');
+        b.style.setProperty('--w', full + 'px');
+        t3 = setTimeout(function () { if (root.isConnected) b.classList.remove('is-grow'); }, rm ? 0 : 700);
+      }, rm ? 600 : 1000);
+    }, rm ? 400 : 1350);
+  });
+  measure();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (root.isConnected) measure(); });
+})();
+</script>

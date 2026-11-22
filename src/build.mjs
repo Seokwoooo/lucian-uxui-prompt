@@ -1,6 +1,6 @@
 // lucianLabs UI 요소 갤러리 빌드
 // 실행: node prompt-uxui/src/build.mjs
-// 입력: src/tokens.css, src/elements/NNN-slug.html (요소 400개: 001~200 인터페이스, 201~400 애니메이션), src/gallery/{index.html,gallery.css,gallery.js,i18n-core.js}
+// 입력: src/tokens.css, src/order.json(컬렉션 안 완성도 순), src/popular.json(전체 보여 주는 순서), src/elements/NNN-slug.html (요소 400개: 001~200 인터페이스, 201~400 애니메이션), src/gallery/{index.html,gallery.css,gallery.js,i18n-core.js}
 // 요소 파일 머리: <!-- @meta {...} --> 필수, <!-- @demo [...] --> 자동 재생 시연, <!-- @en {...} --> 영어 제목·설명·번역 목록
 // 출력: prompt-uxui/prompt-uxui-lab/index.html (단일 파일, 모든 코드를 인라인으로 포함)
 import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -11,7 +11,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 const elDir = join(here, 'elements');
 const galDir = join(here, 'gallery');
 const outDir = join(here, '..', 'prompt-uxui-lab');
-const outFile = join(outDir, 'index.html');
+// UX_OUT으로 출력 파일을 바꿀 수 있습니다(여럿이 동시에 점검할 때 서로의 결과를 덮지 않게)
+const outFile = process.env.UX_OUT || join(outDir, 'index.html');
 
 // 분류와 기본 색(타일 빛 번짐). 요소 @meta의 hue, hue2가 있으면 그 값을 씁니다
 const CATEGORIES = {
@@ -46,9 +47,9 @@ const CATEGORIES = {
 };
 const ALIAS = { '메뉴·내비': '메뉴·탭', '탭': '메뉴·탭' };
 const SHAPES = ['square', 'tall'];
-const EXPECTED = 400;
-// 컬렉션: 1은 처음 공개한 인터페이스 200개, 2는 새로 더한 애니메이션 200개입니다
-const setOf = (id) => (+id > 200 ? 2 : 1);
+const EXPECTED = 450;
+// 컬렉션: 1은 처음 공개한 인터페이스 200개, 2는 애니메이션 200개, 3은 사이트 필수 요소 50개(401~, 갤러리에서 NEW로 표시)입니다
+const setOf = (id) => (+id > 400 ? 3 : +id > 200 ? 2 : 1);
 
 const errors = [];
 const warns = [];
@@ -183,6 +184,26 @@ for (const [set, list] of Object.entries(orderSrc)) {
   if (!process.env.UX_PARTIAL) items.filter((x) => String(x.set) === set && !seen.has(x.id)).forEach((x) => errors.push(`order.json: ${x.id}가 순서에 빠졌습니다`));
 }
 
+// 갤러리 '전체'의 순서(popular.json): 웹사이트에서 많이 쓰는 요소부터 놓습니다(쿠키 동의, 헤더, 히어로, 요금제, FAQ…).
+// 모든 요소가 한 번씩 있어야 합니다. 컬렉션 보기도 이 순서를 따르고, 분류 알약도 흔한 분류가 앞에 옵니다
+{
+  const popSrc = JSON.parse(readFileSync(join(here, 'popular.json'), 'utf8'));
+  const pop = popSrc.order;
+  // 분류 알약 차례(ci)도 여기서 정합니다
+  const cats = popSrc.categories || [];
+  Object.keys(CATEGORIES).filter((c) => !cats.includes(c)).forEach((c) => errors.push(`popular.json: 분류 "${c}"가 categories에 없습니다`));
+  items.forEach((it) => { it.ci = cats.indexOf(it.category); });
+  const seen = new Set();
+  pop.forEach((id, n) => {
+    if (seen.has(id)) errors.push(`popular.json: ${id}가 두 번 있습니다`);
+    seen.add(id);
+    const it = items.find((x) => x.id === id);
+    if (!it) { if (!process.env.UX_PARTIAL) errors.push(`popular.json: 없는 요소 ${id}`); return; }
+    it.pop = n;
+  });
+  if (!process.env.UX_PARTIAL) items.filter((x) => !seen.has(x.id)).forEach((x) => errors.push(`popular.json: ${x.id}가 순서에 빠졌습니다`));
+}
+
 // UX_PARTIAL=1 이면 작성 중인 부분 빌드를 허용합니다. 최종 빌드에서는 반드시 400개여야 합니다.
 if (!process.env.UX_PARTIAL && items.length !== EXPECTED) errors.push(`요소 ${items.length}개 (목표 ${EXPECTED})`);
 if (warns.length) console.warn('참고:\n' + warns.map((w) => ' - ' + w).join('\n'));
@@ -193,7 +214,14 @@ if (errors.length) {
 
 const tokens = readFileSync(join(here, 'tokens.css'), 'utf8');
 const galleryHtml = readFileSync(join(galDir, 'index.html'), 'utf8');
-const galleryCss = readFileSync(join(galDir, 'gallery.css'), 'utf8');
+const galleryBaseCss = readFileSync(join(galDir, 'gallery.css'), 'utf8');
+// 카드별 라이트·다크: tokens.css의 라이트(:root)와 다크(:root[data-theme="dark"]) 값을 무대(.g-stage)에도 걸어 둡니다.
+// 무대에 data-theme을 붙이면 그 안의 요소만 반대 테마 토큰을 물려받습니다
+const tokenBlock = (re) => { const m = tokens.match(re); if (!m) { console.error('빌드 중단: tokens.css에서 테마 블록을 찾지 못했습니다'); process.exit(1); } return m[1].trim(); };
+const stageThemes = '\n/* 카드별 테마 토큰(빌드가 tokens.css에서 만듭니다) */\n' +
+  '.g-stage[data-theme="light"]{' + tokenBlock(/^:root\{([^}]*)\}/m) + '}\n' +
+  '.g-stage[data-theme="dark"]{' + tokenBlock(/^:root\[data-theme="dark"\]\{([^}]*)\}/m) + '}\n';
+const galleryCss = galleryBaseCss + stageThemes;
 const galleryJs = readFileSync(join(galDir, 'gallery.js'), 'utf8').replace('/*@I18N_CORE@*/', () => coreSrc);
 
 // JSON을 <script> 안에 넣을 때 </script> 종료 방지
@@ -201,9 +229,9 @@ const data = JSON.stringify({ tokens, items }).replace(/<\//g, '<\\/');
 
 // 스크립트가 꺼져도 목록이 보이도록 타일의 제목 구조를 미리 HTML로 넣습니다. 스크립트가 켜지면 다시 그립니다
 const escH = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const byShow = (a, b) => (b.set - a.set) || ((a.rank ?? 1e9) - (b.rank ?? 1e9)) || a.id.localeCompare(b.id);
+const byShow = (a, b) => ((a.pop ?? 1e9) - (b.pop ?? 1e9)) || (b.set - a.set) || ((a.rank ?? 1e9) - (b.rank ?? 1e9)) || a.id.localeCompare(b.id);
 const staticTiles = items.slice().sort(byShow).map((it) =>
-  `<article class="g-tile" style="--h:${it.hue};--h2:${it.hue2}"><p class="g-cap"><b>${it.id}</b><span>${escH(it.title)}</span></p></article>`).join('');
+  `<article class="g-tile${it.shape === 'tall' ? ' is-tall' : ''}"><div class="g-stage"></div><div class="g-info"><div class="g-cap"><p class="g-cap-t"><b>${it.id}</b><span>${escH(it.title)}</span></p><p class="g-cap-s">${escH(it.category)}</p></div></div></article>`).join('');
 
 const page = galleryHtml
   .replace('<!--@GRID_TILES@-->', () => staticTiles)

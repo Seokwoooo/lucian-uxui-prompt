@@ -21,23 +21,23 @@
 ]} -->
 <style>
 .u191{position:relative;width:340px;height:372px;padding:16px;box-sizing:border-box;border-radius:28px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);font-variant-numeric:tabular-nums}
-.u191-ap{position:relative;height:184px;border-radius:14px;background:#fff;box-shadow:0 0 0 1px var(--ux-line-2),0 10px 20px -14px rgba(0,0,0,.35);overflow:hidden;color:#212529}
-.u191-cr{display:flex;align-items:center;gap:5px;height:24px;padding:0 10px;background:#F1F3F5;border-bottom:1px solid #E9ECEF}
+.u191-ap{position:relative;height:184px;border-radius:14px;background:#fff;background:light-dark(#fff,#1B1D27);box-shadow:0 0 0 1px var(--ux-line-2),0 10px 20px -14px rgba(0,0,0,.35);overflow:hidden;color:#212529;color:light-dark(#212529,#ECEEF3)}
+.u191-cr{display:flex;align-items:center;gap:5px;height:24px;padding:0 10px;background:#F1F3F5;background:light-dark(#F1F3F5,#242631);border-bottom:1px solid #E9ECEF;border-bottom:1px solid light-dark(#E9ECEF,#2E313C)}
 .u191-cr i{width:7px;height:7px;border-radius:50%;background:#FA5252}.u191-cr i:nth-child(2){background:#FCC419}.u191-cr i:nth-child(3){background:#51CF66}
-.u191-cr span{margin-left:8px;flex:1;height:14px;border-radius:7px;background:#fff;font:600 9px/14px ui-monospace,SFMono-Regular,Menlo,monospace;color:#868E96;padding-left:8px}
+.u191-cr span{margin-left:8px;flex:1;height:14px;border-radius:7px;background:#fff;background:light-dark(#fff,#16171F);font:600 9px/14px ui-monospace,SFMono-Regular,Menlo,monospace;color:#868E96;color:light-dark(#868E96,#8A909E);padding-left:8px}
 .u191-ap h4{position:absolute;left:16px;top:32px;margin:0;font-size:13px;font-weight:850}
-.u191-f{position:absolute;left:16px;width:276px;height:26px;border-radius:7px;box-shadow:inset 0 0 0 1.5px #DEE2E6;display:flex;align-items:center;padding:0 9px;font-size:11.5px;transition:box-shadow .2s}
-.u191-f small{width:40px;flex:none;color:#868E96;font-weight:700}
+.u191-f{position:absolute;left:16px;width:276px;height:26px;border-radius:7px;box-shadow:inset 0 0 0 1.5px #DEE2E6;box-shadow:inset 0 0 0 1.5px light-dark(#DEE2E6,#363946);display:flex;align-items:center;padding:0 9px;font-size:11.5px;transition:box-shadow .2s}
+.u191-f small{width:40px;flex:none;color:#868E96;color:light-dark(#868E96,#8A909E);font-weight:700}
 .u191-f b{font-weight:600}
 .u191-f.on{box-shadow:inset 0 0 0 2px #E8590C}
 .u191-f.on b::after{content:"";display:inline-block;width:1.5px;height:12px;margin-left:1px;vertical-align:-2px;background:#E8590C;animation:u191-blink 1s steps(1) infinite}
 @keyframes u191-blink{50%{opacity:0}}
 .u191-ck{position:absolute;left:16px;top:130px;display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:650}
-.u191-ck i{width:15px;height:15px;border-radius:4px;box-shadow:inset 0 0 0 1.5px #ADB5BD;display:grid;place-items:center;transition:background-color .2s,box-shadow .2s}
+.u191-ck i{width:15px;height:15px;border-radius:4px;box-shadow:inset 0 0 0 1.5px #ADB5BD;box-shadow:inset 0 0 0 1.5px light-dark(#ADB5BD,#5F6472);display:grid;place-items:center;transition:background-color .2s,box-shadow .2s}
 .u191-ck.on i{background:#E8590C;box-shadow:none}
 .u191-ck i::after{content:"";width:7px;height:4px;border:solid #fff;border-width:0 0 2px 2px;transform:rotate(-45deg) translate(1px,-1px) scale(0);transition:transform .25s var(--ux-spring)}
 .u191-ck.on i::after{transform:rotate(-45deg) translate(1px,-1px) scale(1)}
-.u191-go{position:absolute;right:16px;top:124px;width:92px;height:28px;border-radius:8px;background:#212529;color:#fff;font-size:11.5px;font-weight:800;display:grid;place-items:center;transition:transform .15s}
+.u191-go{position:absolute;right:16px;top:124px;width:92px;height:28px;border-radius:8px;background:#212529;background:light-dark(#212529,#ECEEF3);color:#fff;color:light-dark(#fff,#16151B);font-size:11.5px;font-weight:800;display:grid;place-items:center;transition:transform .15s}
 .u191-go.press{transform:scale(.93)}
 .u191-ok{position:absolute;left:50%;bottom:10px;transform:translate(-50%,20px);padding:6px 12px;border-radius:999px;background:#2B8A3E;color:#fff;font-size:11px;font-weight:800;opacity:0;transition:opacity .3s,transform .4s var(--ux-spring)}
 .u191-ok.on{opacity:1;transform:translate(-50%,0)}

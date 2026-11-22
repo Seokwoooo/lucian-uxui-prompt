@@ -1,0 +1,167 @@
+<!-- Lucian UX/UI Prompt #444 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#444 -->
+<!--
+Element: Checkout steps
+ID: 444 · Category: Commerce & Pricing · Tags: stepper, checkout, progress, wizard, breadcrumb, mobile, order-flow
+What it does: Order steps running Cart → Shipping → Payment → Done. Finished steps get a check, the current one is outlined, and the line between them fills as you move on. Tap a finished step to go back to it, and the content below slides in the matching direction. At the bottom, the same progress is shown condensed for narrow screens.
+How to use it: Move through the steps with the button below, and tap a checked step to go back
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#444
+-->
+<style>
+.u444{position:relative;width:340px;height:362px;padding:18px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u444 svg{display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.u444-nav{position:relative;display:block;margin:0 -4px}
+.u444-st{display:flex;justify-content:space-between;margin:0;padding:0;list-style:none}
+.u444-ln{position:absolute;left:39px;right:39px;top:13px;height:2px;border-radius:1px;background:var(--ux-line-2)}
+.u444-ln i{display:block;height:100%;border-radius:inherit;background:var(--ux-accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .55s var(--ux-ease)}
+.u444-s{position:relative;z-index:1;width:78px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.u444-dot{position:relative;width:28px;height:28px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--ux-surface);box-shadow:inset 0 0 0 1.5px var(--ux-line-2),0 0 0 4px var(--ux-surface);font-size:12px;font-weight:700;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;transition:background-color .3s,box-shadow .3s,color .3s,transform .25s var(--ux-spring)}
+.u444-dot svg{width:13px;height:13px;stroke-width:3}
+.u444-dot svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s var(--ux-ease) .15s}
+.u444-s.is-done .u444-dot{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 4px var(--ux-surface);color:var(--ux-accent-ink);cursor:pointer}
+.u444-s.is-done .u444-dot svg path{stroke-dashoffset:0}
+.u444-s.is-done .u444-dot:hover{transform:scale(1.08)}
+.u444-s.is-cur .u444-dot{box-shadow:inset 0 0 0 2px var(--ux-accent),0 0 0 4px var(--ux-surface),0 0 0 7px var(--ux-accent-soft);color:var(--ux-accent)}
+.u444-dot:disabled{cursor:default}
+.u444 .u444-dot:focus-visible{outline:2px solid var(--ux-accent);outline-offset:5px}
+.u444-s span{font-size:11.5px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap;transition:color .3s}
+.u444-s.is-done span{color:var(--ux-ink-2)}
+.u444-s.is-cur span{color:var(--ux-ink);font-weight:700}
+.u444-bx{position:relative;height:200px;margin-top:16px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);overflow:hidden}
+.u444-pn{position:absolute;inset:0;display:flex;flex-direction:column;padding:14px}
+.u444-pn.is-in-r{animation:u444-inr .38s var(--ux-ease)}
+.u444-pn.is-in-l{animation:u444-inl .38s var(--ux-ease)}
+@keyframes u444-inr{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes u444-inl{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+.u444-row{display:flex;align-items:center;gap:10px;height:42px}
+.u444-th{flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u444-th i{width:9px;height:18px;border-radius:2px 2px 3px 3px;background:#9DB4A0}
+.u444-th i.mug{width:14px;height:13px;border-radius:2px 2px 4px 4px;background:#E9E2D2;box-shadow:4px 0 0 -1px transparent,inset 0 0 0 1px rgba(0,0,0,.08)}
+.u444-tx{flex:1;min-width:0}
+.u444-tx b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u444-tx small{display:block;font-size:11px;color:var(--ux-ink-3)}
+.u444-pr{font-size:12.5px;font-weight:650;font-variant-numeric:tabular-nums}
+.u444-kv{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:9px;border-top:1px solid var(--ux-line);font-size:12px;color:var(--ux-ink-2);font-variant-numeric:tabular-nums}
+.u444-kv b{font-size:14px;font-weight:700;color:var(--ux-ink)}
+.u444-ad{padding:10px 12px;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u444-ad div{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.u444-ad em{font-style:normal;padding:1px 6px;border-radius:5px;background:var(--ux-accent-soft);font-size:10.5px;font-weight:650;color:var(--ux-accent)}
+.u444-ad b{display:block;margin-top:5px;font-size:12.5px;font-weight:600}
+.u444-ad small{display:block;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3)}
+.u444-ad a{font-size:11.5px;font-weight:600;color:var(--ux-ink-2);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--ux-line-2)}
+.u444-nt{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:var(--ux-ink-3)}
+.u444-nt span:last-child{color:var(--ux-ink);font-weight:600}
+.u444-pm{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u444-pm i{flex:none;width:40px;height:24px;border-radius:6px;display:grid;place-items:center;background:#0064FF;color:#fff;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:-.02em}
+.u444-pm span{flex:1;font-size:12.5px;font-weight:600}
+.u444-pm small{font-size:11px;color:var(--ux-danger);font-weight:600}
+.u444-dn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.u444-dn>span{width:44px;height:44px;margin-bottom:10px;border-radius:50%;display:grid;place-items:center;background:var(--ux-mint);color:var(--ux-surface);animation:u444-pop .5s var(--ux-spring)}
+.u444-dn>span svg{width:22px;height:22px;stroke-width:2.8}
+@keyframes u444-pop{from{transform:scale(.3);opacity:0}}
+.u444-dn b{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.u444-dn small{margin-top:3px;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u444-next{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;height:40px;margin-top:auto;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:650;font-variant-numeric:tabular-nums;transition:opacity .15s,transform .2s var(--ux-spring)}
+.u444-next:hover{opacity:.9}
+.u444-next:active{transform:scale(.98)}
+.u444-next svg{width:15px;height:15px;stroke-width:2.2;transition:transform .2s var(--ux-spring)}
+.u444-next:hover svg{transform:translateX(2px)}
+.u444-next i{width:14px;height:14px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u444-spin .7s linear infinite}
+@keyframes u444-spin{to{transform:rotate(360deg)}}
+.u444-mb{margin-top:14px;padding:10px 12px;border-radius:12px;box-shadow:inset 0 0 0 1px var(--ux-line-2);border:1px dashed transparent}
+.u444-mh{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
+.u444-mh em{font-style:normal;padding:1px 6px;border-radius:5px;background:var(--ux-surface-2);font-size:10px;font-weight:650;color:var(--ux-ink-3)}
+.u444-mh small{margin-left:auto;font-size:11px;font-weight:500;color:var(--ux-ink-3)}
+.u444-sg{display:flex;gap:4px}
+.u444-sg i{flex:1;height:4px;border-radius:2px;background:var(--ux-line-2);overflow:hidden}
+.u444-sg i::after{content:"";display:block;height:100%;background:var(--ux-accent);transform-origin:0 50%;transform:scaleX(0);transition:transform .45s var(--ux-ease)}
+.u444-sg i.is-on::after{transform:none}
+.u444-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u444">
+  <nav class="u444-nav" aria-label="Checkout steps"><span class="u444-ln" aria-hidden="true"><i></i></span><ol class="u444-st"></ol></nav>
+  <div class="u444-bx"></div>
+  <div class="u444-mb" aria-hidden="true"><div class="u444-mh"><em>Compact</em><span></span><small></small></div><div class="u444-sg"><i></i><i></i><i></i><i></i></div></div>
+  <p class="u444-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var st = q('.u444-st'), ln = q('.u444-ln'), bx = q('.u444-bx'), mh = q('.u444-mh span'), mn = q('.u444-mh small'), segs = root.querySelectorAll('.u444-sg i'), live = q('.u444-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var STEPS = ['Cart', 'Shipping', 'Payment', 'Done'];
+  var T = { back: 'Back to step {n}: {s}', where: 'Step {a} of {b}, {s}', next: 'Next: {s}', last: 'Final step', done: 'completed', cur: 'current step',
+    i1: 'Stainless tumbler', o1: 'Sage · 1', i2: 'Ceramic mug', o2: 'Ivory · 2', sub: 'Subtotal', toShip: 'Enter shipping',
+    who: 'Seoyeon Han · 010-2481-3579', addr: '3F, 113 Seongsu-iro, Seongdong-gu, Seoul', def: 'Default address', change: 'Change', req: 'Delivery note', reqV: 'Leave it at the door', toPay: 'Continue to payment',
+    pm: 'Payment method', toss: 'Toss Pay', tossDc: 'First-payment discount', total: 'Total', pay: 'Pay {p}', paying: 'Processing…', ok: 'Order placed', okSub: 'Order {n} · Arrives tomorrow', again: 'Keep shopping' };
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9.5"/></svg>';
+  var ARROW = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var cur = 0, busy = false;
+  STEPS.forEach(function (s, i) {
+    var li = document.createElement('li');
+    li.className = 'u444-s';
+    li.innerHTML = '<button type="button" class="u444-dot"><b>' + (i + 1) + '</b></button><span aria-hidden="true"></span>';
+    li.querySelector('span').textContent = s;
+    st.appendChild(li);
+  });
+  var S = st.querySelectorAll('.u444-s');
+  function panel(i) {
+    if (i === 0) return '<div class="u444-row"><span class="u444-th"><i></i></span><span class="u444-tx"><b>' + T.i1 + '</b><small>' + T.o1 + '</small></span><span class="u444-pr">₩26,900</span></div>' +
+      '<div class="u444-row"><span class="u444-th"><i class="mug"></i></span><span class="u444-tx"><b>' + T.i2 + '</b><small>' + T.o2 + '</small></span><span class="u444-pr">₩24,000</span></div>' +
+      '<div class="u444-kv"><span>' + T.sub + '</span><b>₩50,900</b></div><button type="button" class="u444-next">' + T.toShip + ARROW + '</button>';
+    if (i === 1) return '<div class="u444-ad"><div><em>' + T.def + '</em><a href="#addr">' + T.change + '</a></div><b>' + T.who + '</b><small>' + T.addr + '</small></div>' +
+      '<div class="u444-nt"><span>' + T.req + '</span><span>' + T.reqV + '</span></div><button type="button" class="u444-next">' + T.toPay + ARROW + '</button>';
+    if (i === 2) return '<div class="u444-pm"><i aria-hidden="true">toss</i><span>' + T.toss + '</span><small>−₩3,000</small></div>' +
+      '<div class="u444-nt"><span>' + T.tossDc + '</span><span>−₩3,000</span></div><div class="u444-kv"><span>' + T.total + '</span><b>₩47,900</b></div>' +
+      '<button type="button" class="u444-next">' + T.pay.replace('{p}', '₩47,900') + '</button>';
+    return '<div class="u444-dn"><span>' + CHECK + '</span><b>' + T.ok + '</b><small>' + T.okSub.replace('{n}', '20261123-00481') + '</small></div><button type="button" class="u444-next">' + T.again + '</button>';
+  }
+  function go(i, focusNext) {
+    var dir = i > cur ? 1 : i < cur ? -1 : 0;
+    cur = i;
+    S.forEach(function (li, k) {
+      var done = k < cur || cur === 3, isCur = k === cur && cur < 3, b = li.querySelector('.u444-dot');
+      li.classList.toggle('is-done', done);
+      li.classList.toggle('is-cur', isCur);
+      b.innerHTML = done ? CHECK : '<b>' + (k + 1) + '</b>';
+      b.disabled = !done || cur === 3;
+      b.setAttribute('aria-label', done ? T.back.replace('{n}', k + 1).replace('{s}', STEPS[k]) : STEPS[k] + (isCur ? ', ' + T.cur : ''));
+      if (isCur) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    ln.style.setProperty('--p', (cur / 3).toFixed(3));
+    var pn = document.createElement('div');
+    pn.className = 'u444-pn' + (dir && !rm ? (dir > 0 ? ' is-in-r' : ' is-in-l') : '');
+    pn.innerHTML = panel(cur);
+    bx.innerHTML = '';
+    bx.appendChild(pn);
+    mh.textContent = T.where.replace('{a}', cur + 1).replace('{b}', 4).replace('{s}', STEPS[cur]);
+    mn.textContent = cur < 3 ? T.next.replace('{s}', STEPS[cur + 1]) : T.last;
+    segs.forEach(function (sg, k) { sg.classList.toggle('is-on', k <= cur); });
+    live.textContent = mh.textContent;
+    if (focusNext) pn.querySelector('.u444-next').focus({ preventScroll: true });
+  }
+  bx.addEventListener('click', function (e) {
+    if (e.target.closest('a')) { e.preventDefault(); return; }
+    var b = e.target.closest('.u444-next');
+    if (!b || busy) return;
+    var kb = e.detail === 0;
+    if (cur === 3) { go(0, kb); return; }
+    if (cur === 2) {
+      busy = true;
+      b.setAttribute('aria-disabled', 'true');
+      b.innerHTML = '<i aria-hidden="true"></i>' + T.paying;
+      setTimeout(function () { if (!root.isConnected) return; busy = false; go(3, kb); }, rm ? 200 : 1000);
+      return;
+    }
+    go(cur + 1, kb);
+  });
+  st.addEventListener('click', function (e) {
+    var b = e.target.closest('.u444-dot');
+    if (!b || b.disabled || busy) return;
+    go(Array.prototype.indexOf.call(S, b.parentNode), true);
+  });
+  go(0, false);
+})();
+</script>

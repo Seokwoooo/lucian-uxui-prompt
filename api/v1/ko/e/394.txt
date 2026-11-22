@@ -9,7 +9,7 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#394
 -->
 <style>
-.u394{position:relative;width:340px;height:330px;border-radius:28px;background:var(--ux-ink);box-shadow:0 30px 60px -36px var(--ux-shadow-strong);overflow:hidden;color:var(--ux-page)}
+.u394{--fg:var(--ux-page);--fg:light-dark(var(--ux-page),var(--ux-ink));position:relative;width:340px;height:330px;border-radius:28px;background:var(--ux-ink);background:light-dark(var(--ux-ink),var(--ux-surface-2));box-shadow:0 30px 60px -36px var(--ux-shadow-strong);box-shadow:0 0 0 1px light-dark(transparent,var(--ux-line)),0 30px 60px -36px var(--ux-shadow-strong);overflow:hidden;color:var(--ux-page);color:var(--fg)}
 .u394-sc{position:absolute;inset:0;overflow-y:auto;scrollbar-width:none;outline:none}
 .u394-sc::-webkit-scrollbar{display:none}
 .u394-run{height:2400px}
@@ -17,8 +17,8 @@ Live demo: https://lucianlabs.dev/uxui-prompt/#394
 .u394-row{display:flex;white-space:nowrap;will-change:transform}
 .u394-row span{flex:none;padding-right:.3em;font-size:52px;line-height:1.05;font-weight:900;letter-spacing:-.04em}
 .u394-row:nth-child(2) span{font-size:30px;font-weight:800;color:var(--ux-accent);letter-spacing:-.03em}
-.u394-row:nth-child(3) span{color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--ux-page) 70%,transparent)}
-.u394-hint{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:11.5px;font-weight:750;color:color-mix(in srgb,var(--ux-page) 50%,transparent)}
+.u394-row:nth-child(3) span{color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--fg) 70%,transparent)}
+.u394-hint{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:11.5px;font-weight:750;color:color-mix(in srgb,var(--fg) 50%,transparent)}
 </style>
 <div class="ux u394">
   <div class="u394-sc" tabindex="0" aria-label="움직이는 문구 띠, 스크롤로 속도 조절"><div class="u394-run"><div class="u394-st" aria-hidden="true"></div></div></div>

@@ -1,0 +1,161 @@
+<!-- Lucian UX/UI Prompt #409 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#409 -->
+<!--
+Element: 쿠키 배너
+ID: 409 · Category: 폼·입력 · Tags: cookie, consent, gdpr, illustration, bite, morph
+What it does: 작은 쿠키 동의 카드입니다. 노릇하게 구운 초코칩 쿠키가 카드 위에 걸터앉아 가끔 살짝 흔들립니다. ‘허용’을 누르면 쿠키를 한 입 베어 물어 부스러기가 굴러떨어지고, 잠시 뒤 카드가 ‘고마워요’ 알약으로 줄어들며 베어 문 쿠키가 그 아이콘이 된 채 떠오릅니다. ‘필수만’을 누르면 쿠키가 부스러기만큼 작아지고 카드가 조용히 접혀 들어갑니다.
+How to use it: 허용과 필수만을 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#409
+-->
+<style>
+.u409{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u409-wrap{position:relative;margin-top:46px;transition:transform .6s var(--ux-ease),opacity .4s}
+.u409-wrap.is-in{animation:u409-in .7s var(--ux-spring) both}
+@keyframes u409-in{from{opacity:0;transform:translateY(16px) scale(.94)}}
+.u409-card{--w:300px;position:relative;width:var(--w);padding:54px 16px 16px;border-radius:22px;text-align:center;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 46px -24px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);overflow:hidden;transition:width .6s var(--ux-spring),height .6s var(--ux-spring),padding .5s var(--ux-ease),border-radius .5s}
+.u409-main{transition:opacity .18s}
+.u409-t{display:block;font-size:15px;font-weight:650;letter-spacing:-.02em;white-space:nowrap}
+.u409-s{display:block;margin-top:4px;font-size:12.5px;color:var(--ux-ink-3);white-space:nowrap}
+.u409-act{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.u409-act button{height:38px;border:0;border-radius:11px;font-size:13px;font-weight:600;white-space:nowrap;transition:transform .4s var(--ux-spring),background .2s,opacity .2s}
+.u409-act button:hover{transform:translateY(-1px)}
+.u409-act button:active{transform:scale(.95,.92);transition-duration:.1s}
+.u409 .u409-act button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u409-ess{background:var(--ux-surface-2);color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u409-ess:hover{background:var(--ux-surface-3)}
+.u409-ok{background:var(--ux-ink);color:var(--ux-surface)}
+.u409-ok:hover{opacity:.9}
+.u409-pill{position:absolute;inset:0;display:flex;align-items:center;padding-left:42px;font-size:13px;font-weight:650;white-space:nowrap;opacity:0;transform:translateX(-6px);pointer-events:none;transition:opacity .25s,transform .5s var(--ux-spring)}
+.u409.is-pill .u409-main,.u409.is-dot .u409-main{opacity:0}
+.u409.is-pill .u409-pill{opacity:1;transform:none;transition-delay:.22s}
+.u409-ck{--tx:0px;--ty:0px;--sc:1;--rt:0deg;position:absolute;z-index:2;left:50%;top:0;width:88px;height:88px;margin:-44px 0 0 -44px;transform:translate(var(--tx),var(--ty)) scale(var(--sc)) rotate(var(--rt));transition:transform .65s var(--ux-spring)}
+.u409-ck>svg{position:absolute;inset:0;width:88px;height:88px;overflow:visible;--cs:rgba(150,80,20,.3);--cs:light-dark(rgba(150,80,20,.3),rgba(0,0,0,.6));filter:drop-shadow(0 6px 7px var(--cs));transform-origin:50% 56%;animation:u409-wob 3.6s ease-in-out infinite 1.2s}
+@keyframes u409-wob{0%,62%,100%{transform:rotate(0)}68%{transform:rotate(-5deg) scale(1.02)}76%{transform:rotate(4deg)}84%{transform:rotate(-2deg)}92%{transform:rotate(1deg)}}
+.u409-wrap.is-in .u409-ck>svg{animation:u409-pop .65s var(--ux-spring) .12s both}
+@keyframes u409-pop{from{transform:scale(.4) rotate(-30deg);opacity:0}}
+.u409 .bt circle{transform-box:fill-box;transform-origin:center;transform:scale(0);transition:transform .34s cubic-bezier(.3,1.6,.5,1)}
+.u409 .bt circle:nth-child(2){transition-delay:.06s}
+.u409 .bt circle:nth-child(3){transition-delay:.11s}
+.u409 .ed{opacity:0;transition:opacity .2s .14s}
+.u409.is-bite .bt circle{transform:scale(1)}
+.u409.is-bite .ed{opacity:1}
+.u409.is-bite .u409-ck>svg{animation:u409-chomp .5s var(--ux-ease)}
+@keyframes u409-chomp{30%{transform:scale(.9) rotate(-6deg)}65%{transform:scale(1.03) rotate(2deg)}}
+.u409.is-tiny .u409-ck>svg{animation:none}
+.u409-crs{position:absolute;z-index:3;left:50%;top:0;width:88px;height:88px;margin:-44px 0 0 -44px;pointer-events:none}
+.u409-cr{position:absolute;width:var(--s);height:var(--s);opacity:0;pointer-events:none}
+.u409-cr svg{display:block;width:100%;height:100%}
+.u409-wrap.is-fly{transform:translateY(-30px) scale(.96);opacity:0;transition:transform .7s cubic-bezier(.4,0,.2,1),opacity .5s .12s}
+.u409-wrap.is-tuck{transform:translateY(18px) scale(.75);opacity:0;transition:transform .55s cubic-bezier(.5,0,.75,0),opacity .4s .1s}
+.u409-wrap.is-reset,.u409-wrap.is-reset *{transition:none!important}
+.u409-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u409">
+  <div class="u409-wrap">
+    <section class="u409-card" aria-label="쿠키 동의">
+      <div class="u409-main">
+        <b class="u409-t">쿠키를 써도 될까요?</b>
+        <span class="u409-s">더 나은 경험을 위해서만 써요.</span>
+        <div class="u409-act"><button type="button" class="u409-ess">필수만</button><button type="button" class="u409-ok">허용</button></div>
+      </div>
+      <div class="u409-pill" aria-hidden="true"><span>고마워요</span></div>
+    </section>
+    <span class="u409-ck" aria-hidden="true"></span>
+    <span class="u409-crs" aria-hidden="true"></span>
+  </div>
+  <p class="u409-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { all: '모든 쿠키를 허용했어요', ess: '필수 쿠키만 사용해요' };
+  var wrap = root.querySelector('.u409-wrap'), card = root.querySelector('.u409-card'), main = root.querySelector('.u409-main');
+  var ck = root.querySelector('.u409-ck'), pillTx = root.querySelector('.u409-pill span'), live = root.querySelector('.u409-live');
+  var uid = 'u409' + Math.random().toString(36).slice(2, 7), gen = 0;
+  // 쿠키 그림: 노릇한 반죽(방사형 그라데이션), 가장자리 음영, 결과 갈라짐, 초코칩과 그 위 하이라이트. 오른쪽 위 원 세 개가 커지면 한 입 베어 문 자리가 되고, 그 가장자리에 밝은 속살이 드러납니다
+  var DOUGH = 'M32 5C40 4.6 47.5 8 52.6 13.6C57.8 19.3 60 26 59.4 33.2C58.8 41 55.6 47.6 49.6 52.8C44 57.6 37.6 59.6 30.6 59.2C23 58.8 16.4 55.6 11.6 49.8C6.8 44 4.8 37.4 5.2 30.4C5.6 23.4 8.6 16.8 13.8 11.8C19 6.9 25.2 5.3 32 5Z';
+  var CHIPS = ['M19.5 19.8c1.6-1.4 4.4-1.2 5.6.5 1.1 1.6.6 4-1 5.1-1.7 1.1-4.3.8-5.3-.9-.9-1.5-.6-3.4.7-4.7z', 'M37.6 15.4c1.2-.9 3.2-.8 4.1.4 1 1.3.5 3.2-.9 3.9-1.3.7-3.1.4-3.8-.8-.6-1.1-.4-2.6.6-3.5z', 'M41.4 33.6c1.9-1.3 4.7-.7 5.5 1.3.8 1.9-.3 4.1-2.3 4.6-1.8.5-3.9-.4-4.4-2.1-.4-1.4.1-2.9 1.2-3.8z', 'M24.2 37.9c1.4-1.5 4-1.6 5.3-.2 1.3 1.4 1 3.8-.6 4.8-1.6 1-4 .6-4.9-.9-.7-1.2-.6-2.7.2-3.7z', 'M12.3 30.2c.9-.9 2.6-.9 3.4.1.8 1 .5 2.6-.6 3.2-1.1.6-2.6.3-3.1-.7-.4-.8-.3-1.9.3-2.6z', 'M33 49.4c1-.8 2.7-.6 3.4.5.6 1-.1 2.5-1.2 2.9-1.1.4-2.5-.2-2.8-1.2-.2-.8.1-1.6.6-2.2z', 'M49.2 24.1c.7-.6 1.9-.5 2.4.3.5.8.1 1.9-.8 2.2-.8.3-1.8-.1-2-.9-.1-.6.1-1.2.4-1.6z', 'M31.2 26.6c.9-.7 2.3-.6 2.9.3.6.9.2 2.2-.8 2.6-.9.4-2.2.1-2.6-.8-.3-.7-.1-1.6.5-2.1z'];
+  var BITE = [[55, 9, 10], [60.5, 21, 7.2], [45.5, 3, 7]];
+  function cookie(id) {
+    var chips = CHIPS.map(function (d) { return '<path d="' + d + '" fill="#4A2817"/>'; }).join('');
+    var hi = CHIPS.map(function (d) { var m = d.match(/^M([\d.]+) ([\d.]+)/); return '<ellipse cx="' + (+m[1] + 1.6) + '" cy="' + (+m[2] - .1) + '" rx="1.2" ry=".7" fill="#8A5634" opacity=".75"/>'; }).join('');
+    var specks = [[16, 18], [27, 13], [46, 22], [21, 47], [44, 46], [37, 39], [14, 40], [50, 40], [28, 32], [39, 9]].map(function (p, k) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + (k % 3 ? .55 : .8) + '" fill="#A8642C" opacity=".45"/>'; }).join('');
+    var bite = BITE.map(function (c) { return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '" fill="#000"/>'; }).join('');
+    var edge = BITE.map(function (c) { return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '" fill="none" stroke="#F8DDA6" stroke-width="2.4"/>'; }).join('');
+    return '<svg viewBox="0 0 64 64"><defs>' +
+      '<radialGradient id="' + id + 'd" cx="38%" cy="32%" r="72%"><stop offset="0" stop-color="#F5CF8E"/><stop offset=".55" stop-color="#E2A95E"/><stop offset="1" stop-color="#BC7A3A"/></radialGradient>' +
+      '<radialGradient id="' + id + 'h" cx="34%" cy="28%" r="40%"><stop offset="0" stop-color="#FFF6E0" stop-opacity=".55"/><stop offset="1" stop-color="#FFF6E0" stop-opacity="0"/></radialGradient>' +
+      '<mask id="' + id + 'm" maskUnits="userSpaceOnUse" x="-10" y="-10" width="84" height="84"><rect x="-10" y="-10" width="84" height="84" fill="#fff"/><g class="bt">' + bite + '</g></mask>' +
+      '<clipPath id="' + id + 'c"><path d="' + DOUGH + '"/></clipPath></defs>' +
+      '<g mask="url(#' + id + 'm)">' +
+      '<path d="' + DOUGH + '" fill="url(#' + id + 'd)"/>' +
+      '<g clip-path="url(#' + id + 'c)"><path d="' + DOUGH + '" fill="none" stroke="#9E5E26" stroke-opacity=".35" stroke-width="3"/>' +
+      '<path d="M16.5 27.6l2-.9 1.6.5 1.9-.8M35.6 21.4l1.5 1.2.4 1.7M28.4 46.4l1.8-.5 1.3.8 1.7-.4M47.6 30.4l-.5 1.8.6 1.6" fill="none" stroke="#A9682F" stroke-opacity=".45" stroke-width=".8" stroke-linecap="round" stroke-linejoin="round"/>' +
+      specks + '<ellipse cx="25" cy="20" rx="17" ry="13" fill="url(#' + id + 'h)"/>' + chips + hi +
+      '<g class="ed">' + edge + '</g></g></g></svg>';
+  }
+  // 부스러기: 베어 문 자리에서 튀어 올랐다가 구르며 카드 위로 떨어집니다. [x, y, 크기, 가로 이동, 세로 이동, 회전]
+  var CR = [[64, 13, 10, 18, 118, 230], [73, 23, 8, 34, 104, -180], [58, 6, 9, -10, 128, 260], [79, 31, 7, 42, 92, -140], [68, 10, 8, 6, 136, 200], [56, 19, 7, -22, 112, -230]];
+  var CRUMB = '<svg viewBox="0 0 8 8"><path d="M1 3.1 3.1.9l3 .7 1.1 2.9-2.4 2.6L1.3 6z" fill="#DFA45B"/><path d="M4.8 7.1 7.2 4.5l-1.1-2.9-1.9 2.6z" fill="#B87436" opacity=".75"/><path d="M2.6 2.4h1.6" stroke="#F8DDA6" stroke-width=".7" stroke-linecap="round"/></svg>';
+  // 부스러기는 쿠키와 따로 두어, 쿠키가 알약 아이콘으로 줄어드는 동안에도 끝까지 떨어집니다
+  ck.innerHTML = cookie(uid);
+  var crs = root.querySelector('.u409-crs');
+  crs.innerHTML = CR.map(function (c) { return '<i class="u409-cr" style="left:' + c[0] + 'px;top:' + c[1] + 'px;--s:' + c[2] + 'px">' + CRUMB + '</i>'; }).join('');
+  var crumbs = [].slice.call(crs.querySelectorAll('.u409-cr'));
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  function dropCrumbs() {
+    if (rm || !crumbs[0].animate) return;
+    crumbs.forEach(function (c, k) {
+      var p = CR[k];
+      c.animate([
+        { opacity: 1, transform: 'translate(0,0) rotate(0deg)', easing: 'cubic-bezier(.2,.6,.4,1)' },
+        { opacity: 1, transform: 'translate(' + (p[3] * .25) + 'px,-7px) rotate(' + (p[5] * .2) + 'deg)', offset: .18, easing: 'cubic-bezier(.45,0,.85,.55)' },
+        { opacity: 1, offset: .86 },
+        { opacity: 0, transform: 'translate(' + p[3] + 'px,' + p[4] + 'px) rotate(' + p[5] + 'deg)' }
+      ], { duration: 1020 + k * 40, delay: 15 + k * 25, fill: 'both' });
+    });
+  }
+  function setCk(tx, ty, sc, rt) { ck.style.setProperty('--tx', tx + 'px'); ck.style.setProperty('--ty', ty + 'px'); ck.style.setProperty('--sc', sc); ck.style.setProperty('--rt', (rt || 0) + 'deg'); }
+  // 카드를 알약(또는 점)으로 줄이고, 쿠키는 그 아이콘 자리로 옮깁니다. 높이 전환이 되도록 지금 높이를 먼저 숫자로 고정합니다
+  function shrink(dot) {
+    var w = dot ? 40 : Math.round(pillTx.offsetWidth + 60);
+    card.style.height = card.offsetHeight + 'px'; void card.offsetWidth;
+    root.classList.add(dot ? 'is-dot' : 'is-pill');
+    card.style.setProperty('--w', w + 'px'); card.style.height = '40px'; card.style.padding = '0';
+    if (dot) setCk(0, 20, .2, -30); else setCk(-w / 2 + 24, 20, .24, -10);
+  }
+  function comeBack() {
+    // 되돌리는 순간에는 전환을 꺼서 알약 글자나 폭 변화가 비치지 않게 하고, 등장 애니메이션만 보여 줍니다
+    wrap.className = 'u409-wrap is-reset'; card.style.cssText = ''; ck.style.cssText = '';
+    root.classList.remove('is-bite', 'is-tiny', 'is-pill', 'is-dot');
+    crumbs.forEach(function (c) { if (c.getAnimations) c.getAnimations().forEach(function (a) { a.cancel(); }); });
+    void wrap.offsetWidth; wrap.classList.remove('is-reset'); wrap.classList.add('is-in');
+    main.inert = false;
+    // 등장이 끝나면 다시 살짝 흔들리기 시작합니다
+    later(function () { wrap.classList.remove('is-in'); }, rm ? 0 : 900);
+  }
+  function busy() { return main.inert; }
+  // 허용: 한 입 → 부스러기 → (베어 문 쿠키를 잠깐 보여 준 뒤) 알약 ‘고마워요’ → 떠오름 → 다시 등장
+  root.querySelector('.u409-ok').addEventListener('click', function () {
+    if (busy()) return;
+    gen += 1; main.inert = true; live.textContent = T.all;
+    wrap.classList.remove('is-in');
+    root.classList.add('is-bite'); dropCrumbs();
+    later(function () { shrink(false); }, rm ? 300 : 1250);
+    later(function () { wrap.classList.add('is-fly'); }, rm ? 1000 : 2450);
+    later(comeBack, rm ? 1600 : 3150);
+  });
+  // 필수만: 쿠키가 부스러기만큼 작아지고, 카드는 작은 점이 되어 접혀 들어갑니다
+  root.querySelector('.u409-ess').addEventListener('click', function () {
+    if (busy()) return;
+    gen += 1; main.inert = true; live.textContent = T.ess;
+    wrap.classList.remove('is-in');
+    root.classList.add('is-tiny'); setCk(0, 0, .2, -30);
+    later(function () { shrink(true); }, rm ? 200 : 560);
+    later(function () { wrap.classList.add('is-tuck'); }, rm ? 900 : 1550);
+    later(comeBack, rm ? 1500 : 2350);
+  });
+})();
+</script>

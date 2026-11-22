@@ -2,32 +2,35 @@
 
 # Lucian UX/UI Prompt
 
-![Lucian UX/UI Prompt: 400 interactive UI elements](.github/cover.png)
+![Lucian UX/UI Prompt: 450 interactive UI elements](.github/cover.png)
 
-400 interactive UI elements you can try live, then take into your project as an AI prompt or as working code: 200 interface parts, from buttons and charts to workflow screens, and 200 website sections and animations, from heroes and pricing to scroll and text motion. Every element supports light and dark themes, pointer, touch and keyboard input, and reduced motion. No dependencies.
+450 interactive UI elements you can try live, then take into your project as an AI prompt or as working code: 50 site essentials every website needs (Google and social sign-in, cookie banner, header, pricing, FAQ, checkout…), 200 website sections and animations, and 200 interface parts, from buttons and charts to workflow screens. Every element supports light and dark themes, pointer, touch and keyboard input, and reduced motion. No dependencies.
 
 **Live gallery: [lucianlabs.dev/uxui-prompt](https://lucianlabs.dev/uxui-prompt/)**
 
 ## What's inside
 
-The library is split into two collections by element number.
+All 450 elements live in one library, grouped into 27 categories. Element numbers tell you where they came from:
 
-| Collection | Numbers | Categories |
+| Numbers | What they are | Examples |
 | --- | --- | --- |
-| **Animation**: website sections and motion (new) | 201–400 | Text Motion · Hero & Backgrounds · Navigation · Scroll Motion · Sections & Content · Social Proof · Commerce & Pricing · Forms & Input · App Screens · Site Builder Tools · Cursor & Hover · Promos & Rewards · Data Motion |
-| **Interface**: UI parts and work screens | 001–200 | Buttons · Toggles & Pickers · Inputs & Search · Menus & Tabs · Cards & Content · Sign-in & Sign-up · Alerts & Feedback · Loading & Progress · Empty & Error States · Widgets & Charts · Layout, Schedule & Design · Document & Data Editing · Analytics & Data · Workflow & Systems |
+| 401–450 | **Site essentials** (new): production-ready defaults | Google sign-in · social sign-in (Kakao, Naver, Apple, Google) · email sign-in · sign-up · cookie banner and preferences · terms consent · header · footer · hero · pricing · FAQ · toast · confirm modal · date picker · file upload · product card · mini cart · Korean payment methods · coupon |
+| 201–400 | Website sections and motion | Text Motion · Hero & Backgrounds · Navigation · Scroll Motion · Sections & Content · Social Proof · Commerce & Pricing · Forms & Input · App Screens · Site Builder Tools · Cursor & Hover · Promos & Rewards · Data Motion |
+| 001–200 | Interface parts and work screens | Buttons · Toggles & Pickers · Inputs & Search · Menus & Tabs · Cards & Content · Sign-in & Sign-up · Alerts & Feedback · Loading & Progress · Empty & Error States · Widgets & Charts · Layout, Schedule & Design · Document & Data Editing · Analytics & Data · Workflow & Systems |
 
-In the gallery, **All** shows the Animation collection first, then Interface. Switch collections at the top, narrow down by category, or search in English or Korean.
+In the gallery, **All** starts with the 50 site essentials, then what websites use most (cookie consent, headers, heroes, CTAs, FAQ, pricing, testimonials, footers), then forms and commerce parts, app screens, promos, charts, showcase effects and specialist tools. The order lives in [`src/popular.json`](src/popular.json). Narrow down with the category pills, keep favourites under **Saved** in the sidebar, or use the search bar at the bottom in English or Korean.
 
 ## How to use
 
-1. Open the gallery and try an element. Each one plays a short demo when it scrolls into view, and you can take over at any time. Open a tile, or press **Reels**, to flip through elements full screen.
-2. Press **Copy prompt**. The prompt contains the element's full working code plus porting instructions.
-3. Paste it into your AI coding tool (Claude Code, Cursor, Codex, …), fill in `[Insertion point]` (and `[Replacement target]` if you are replacing something), and send.
+1. Open the gallery and try an element. Each one plays a short demo when it scrolls into view, and you can take over at any time. Press the expand icon on a card, or **Reels**, to flip through elements full screen.
+2. Press **Claude** or **Codex** under the card. The button turns into **Copied**: the prompt contains the element's full working code plus porting instructions.
+3. Paste it into your AI coding tool (Claude Code, Codex, Cursor, …), fill in `[Insertion point]` (and `[Replacement target]` if you are replacing something), and send.
 
 The agent first checks your framework, styling and theming setup, then ports the element into a component, maps the `--ux-*` color tokens to your theme variables, and reports what it changed and what it could not check.
 
-If you'd rather port it yourself, **Copy code** gives you the raw HTML, CSS and JS, and **Download code** saves a standalone HTML file with a theme toggle.
+If you'd rather port it yourself, **Copy code** on the card gives you the raw HTML, CSS and JS. Press the card's name to read the prompt and code first, or **Download code** to save a standalone HTML file with a theme toggle.
+
+The bookmark on a card saves it under **Saved** in the sidebar (kept in your browser, no account). The sun and moon button switches just that card between light and dark.
 
 To link to a specific element, add its number: `https://lucianlabs.dev/uxui-prompt/#001`.
 
@@ -56,7 +59,7 @@ The build checks every element and writes the whole gallery into one self-contai
 
 ## Element format
 
-Each element is a single file, `src/elements/NNN-slug.html`. Numbers `001`–`200` belong to the Interface collection and `201` and up to the Animation collection.
+Each element is a single file, `src/elements/NNN-slug.html`. Numbers `001`–`200` are interface parts, `201`–`400` website sections and motion, and `401`–`450` site essentials.
 
 ```html
 <!-- @meta {"title":"…","category":"버튼","summary":"…","hint":"…","shape":"square","tags":["button"]} -->

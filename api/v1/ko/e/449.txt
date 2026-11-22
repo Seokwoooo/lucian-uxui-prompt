@@ -1,0 +1,146 @@
+<!-- Lucian UX/UI Prompt #449 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#449 -->
+<!--
+Element: 페이지 번호
+ID: 449 · Category: 메뉴·탭 · Tags: pagination, table, pager, rows-per-page, keyboard, data
+What it does: 주문 표 아래에 붙는 실무형 페이지 번호입니다. 이전·다음 버튼과 현재 페이지 주변만 보여 주는 말줄임 번호, 페이지당 개수 선택, ‘총 1,284건 중 21–40’ 요약을 갖췄습니다. 첫 페이지와 끝 페이지에서는 이전·다음이 꺼지고, 말줄임을 누르면 5페이지씩 건너뛰며, 화살표 키로도 넘길 수 있습니다.
+How to use it: 번호와 다음 버튼을 눌러 보고, 페이지당 개수를 50으로 바꿔 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#449
+-->
+<style>
+.u449{position:relative;width:340px;padding:18px 0 0;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
+.u449-hd{display:flex;align-items:baseline;justify-content:space-between;padding:0 18px 12px}
+.u449-hd b{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.u449-hd span{font-size:11.5px;color:var(--ux-ink-3)}
+.u449-tb{border-top:1px solid var(--ux-line)}
+.u449-row{display:grid;grid-template-columns:88px 1fr 78px 70px;align-items:center;gap:8px;height:36px;padding:0 18px;font-size:12px}
+.u449-th{height:30px;background:var(--ux-surface-2);border-bottom:1px solid var(--ux-line);font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u449-th span:nth-child(3),.u449-row .am{text-align:right}
+.u449-body{height:180px;overflow:auto;scrollbar-width:thin;transition:opacity .18s,transform .25s var(--ux-ease)}
+.u449-body.is-swap{opacity:0;transform:translateY(4px)}
+.u449-body .u449-row+.u449-row{border-top:1px solid var(--ux-line)}
+.u449-row .no{font:500 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:0;color:var(--ux-ink-2)}
+.u449-row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u449-row .am{font-variant-numeric:tabular-nums;font-weight:500}
+.u449-chip{justify-self:start;height:20px;padding:0 7px;display:inline-flex;align-items:center;gap:5px;border-radius:6px;font-size:10.5px;font-weight:600;white-space:nowrap;background:var(--ux-surface-2);color:var(--ux-ink-2)}
+.u449-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.u449-chip.pay{color:var(--ux-accent-2);background:color-mix(in srgb,var(--ux-accent-2) 12%,transparent)}
+.u449-chip.ship{color:var(--ux-warn);background:color-mix(in srgb,var(--ux-warn) 12%,transparent)}
+.u449-chip.done{color:var(--ux-mint);background:color-mix(in srgb,var(--ux-mint) 12%,transparent)}
+.u449-chip.off{color:var(--ux-ink-3)}
+.u449-ft{padding:10px 14px 14px;border-top:1px solid var(--ux-line)}
+.u449-meta{display:flex;align-items:center;justify-content:space-between;padding:0 4px;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u449-meta b{font-weight:600;color:var(--ux-ink)}
+.u449-meta label{display:flex;align-items:center;gap:6px}
+.u449-sel{position:relative}
+.u449-sel select{height:26px;padding:0 22px 0 8px;border:0;border-radius:7px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:600;color:var(--ux-ink);-webkit-appearance:none;appearance:none;cursor:pointer}
+.u449-sel select:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u449 .u449-sel select:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u449-sel svg{position:absolute;right:7px;top:50%;width:10px;height:10px;margin-top:-5px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.u449-nav{display:flex;align-items:center;justify-content:center;gap:3px;margin-top:10px}
+.u449-nav button{min-width:30px;height:30px;padding:0 4px;display:grid;place-items:center;border:0;border-radius:8px;background:none;font-size:12.5px;font-weight:500;color:var(--ux-ink-2);font-variant-numeric:tabular-nums;transition:background .15s,color .15s,transform .2s var(--ux-ease)}
+.u449-nav button:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u449-nav button:active:not(:disabled){transform:scale(.94)}
+.u449 .u449-nav button:focus-visible{outline-offset:1px}
+.u449-nav button:disabled{opacity:.3;cursor:not-allowed}
+.u449-nav button[aria-current="page"]{background:var(--ux-ink);color:var(--ux-surface);font-weight:600}
+.u449-nav svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u449-el{color:var(--ux-ink-3)!important;letter-spacing:.06em}
+.u449-el:hover:not(:disabled){letter-spacing:0}
+.u449-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u449">
+  <div class="u449-hd"><b>주문 내역</b><span>최근 30일</span></div>
+  <div class="u449-tb" role="table">
+    <div class="u449-row u449-th" role="row"><span role="columnheader">주문번호</span><span role="columnheader">고객</span><span role="columnheader">금액</span><span role="columnheader">상태</span></div>
+    <div class="u449-body" role="rowgroup" tabindex="0"></div>
+  </div>
+  <div class="u449-ft">
+    <div class="u449-meta"><span class="u449-sum"></span><label>페이지당<span class="u449-sel"><select aria-label="페이지당 개수"><option>10</option><option selected>20</option><option>50</option><option>100</option></select><svg viewBox="0 0 10 10" aria-hidden="true"><path d="M2.5 4 5 6.5 7.5 4"/></svg></span></label></div>
+    <nav class="u449-nav" aria-label="페이지 이동"></nav>
+  </div>
+  <p class="u449-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = {
+    sum: function (a, b, t) { return '총 ' + t + '건 중 <b>' + a + '–' + b + '</b>'; },
+    prev: '이전 페이지',
+    next: '다음 페이지',
+    page: function (n) { return n + '페이지'; },
+    jumpF: '5페이지 뒤로 건너뛰기',
+    jumpB: '5페이지 앞으로 건너뛰기',
+    now: function (n, t) { return t + '페이지 중 ' + n + '페이지'; }
+  };
+  var NAMES = ['김서연', '이준호', '박지은', '최민호', '정하나', '한지우', '윤유서', '강도윤', '오세린', '서지훈'];
+  var ST = [['결제 완료', 'pay'], ['배송 중', 'ship'], ['배송 완료', 'done'], ['배송 완료', 'done'], ['취소', 'off']];
+  var TOTAL = 1284, size = 20, page = 1, swapT = 0;
+  var body = root.querySelector('.u449-body'), sum = root.querySelector('.u449-sum'), nav = root.querySelector('.u449-nav'), sel = root.querySelector('select'), live = root.querySelector('.u449-live');
+  var fmt = function (n) { return n.toLocaleString('en-US'); };
+  function pages() { return Math.ceil(TOTAL / size); }
+  // 현재 페이지 주변만 남기고 나머지는 말줄임으로 접습니다: 1 … 4 5 6 … 65
+  function slots(cur, last) {
+    if (last <= 7) return Array.from({ length: last }, function (_, i) { return i + 1; });
+    if (cur <= 4) return [1, 2, 3, 4, 5, 'R', last];
+    if (cur >= last - 3) return [1, 'L', last - 4, last - 3, last - 2, last - 1, last];
+    return [1, 'L', cur - 1, cur, cur + 1, 'R', last];
+  }
+  function rows() {
+    var a = (page - 1) * size, b = Math.min(TOTAL, a + size), h = '';
+    for (var i = a; i < b; i++) {
+      // 줄마다 고정된 값(해시)으로 그럴듯한 데이터를 만듭니다
+      var hsh = Math.imul(i + 17, 2654435761) >>> 0, s = ST[(hsh >>> 9) % ST.length], amt = ((hsh >>> 3) % 2400 + 90) * 100;
+      h += '<div class="u449-row" role="row"><span class="no" role="cell">#' + (20261284 - i) + '</span><span class="nm" role="cell">' + NAMES[(hsh >>> 5) % NAMES.length] + '</span><span class="am" role="cell">₩' + fmt(amt) + '</span><span role="cell"><span class="u449-chip ' + s[1] + '">' + s[0] + '</span></span></div>';
+    }
+    body.innerHTML = h; body.scrollTop = 0;
+    sum.innerHTML = T.sum(fmt(a + 1), fmt(b), fmt(TOTAL));
+  }
+  function btn(cls, label, html, go, dis) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = cls; b.innerHTML = html;
+    if (label) b.setAttribute('aria-label', label);
+    b.disabled = !!dis;
+    b.addEventListener('click', function () { to(go, true); });
+    nav.appendChild(b); return b;
+  }
+  function draw() {
+    var last = pages(), had = nav.contains(document.activeElement);
+    nav.innerHTML = '';
+    btn('u449-prev', T.prev, '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M8.5 3 4.5 7l4 4"/></svg>', page - 1, page === 1);
+    slots(page, last).forEach(function (s) {
+      if (s === 'L' || s === 'R') { var j = btn('u449-el', s === 'L' ? T.jumpB : T.jumpF, '…', s === 'L' ? Math.max(1, page - 5) : Math.min(last, page + 5)); j.title = j.getAttribute('aria-label'); return; }
+      var b = btn('u449-n', T.page(s), String(s), s);
+      if (s === page) b.setAttribute('aria-current', 'page');
+    });
+    btn('u449-next', T.next, '<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5.5 3l4 4-4 4"/></svg>', page + 1, page === last);
+    if (had) { var c = nav.querySelector('[aria-current]'); if (c) c.focus({ preventScroll: true }); }
+  }
+  // 페이지를 바꾸면 표가 살짝 바뀌는 느낌만 주고 내용을 갈아 끼웁니다
+  function to(n, announce) {
+    var last = pages();
+    n = Math.max(1, Math.min(last, n));
+    if (n === page && body.childElementCount) { draw(); return; }
+    page = n;
+    clearTimeout(swapT);
+    body.classList.add('is-swap');
+    swapT = setTimeout(function () { if (!root.isConnected) return; rows(); body.classList.remove('is-swap'); }, rm ? 0 : 140);
+    draw();
+    if (announce) live.textContent = T.now(page, last);
+  }
+  nav.addEventListener('keydown', function (e) {
+    var d = { ArrowLeft: page - 1, ArrowRight: page + 1, Home: 1, End: pages() }[e.key];
+    if (d == null) return;
+    e.preventDefault(); to(d, true);
+  });
+  // 페이지당 개수를 바꾸면 보던 첫 줄이 들어 있는 페이지로 갑니다
+  sel.addEventListener('change', function () {
+    var first = (page - 1) * size;
+    size = +sel.value;
+    page = 0; to(Math.floor(first / size) + 1, true);
+  });
+  rows(); draw();
+})();
+</script>

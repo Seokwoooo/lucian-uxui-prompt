@@ -35,7 +35,15 @@
     copy: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"/><path d="M16 8V6.5A2.5 2.5 0 0 0 13.5 4h-7A2.5 2.5 0 0 0 4 6.5v7A2.5 2.5 0 0 0 6.5 16H8"/></svg>',
     code: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></svg>',
     check: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>',
-    hand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5A5.5 5.5 0 0 1 12.5 20h-1a5 5 0 0 1-4-2l-2.6-3.6a1.4 1.4 0 0 1 2.2-1.7L9 14"/></svg>'
+    hand: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10m0-1.5a1.5 1.5 0 0 1 3 0V11m0-1a1.5 1.5 0 0 1 3 0v4.5A5.5 5.5 0 0 1 12.5 20h-1a5 5 0 0 1-4-2l-2.6-3.6a1.4 1.4 0 0 1 2.2-1.7L9 14"/></svg>',
+    // 카드 버튼: Claude 로고, OpenAI(Codex) 로고, 코드(꺾쇠), 복사됨(체크). 로고는 호환 표시로만 씁니다(모양: Simple Icons, CC0)
+    claude: '<svg class="g-icn g-logo-claude" viewBox="0 0 24 24" aria-hidden="true"><path d="m4.7144 15.9555 4.7174-2.6471.079-.2307-.079-.1275h-.2307l-.7893-.0486-2.6956-.0729-2.3375-.0971-2.2646-.1214-.5707-.1215-.5343-.7042.0546-.3522.4797-.3218.686.0608 1.5179.1032 2.2767.1578 1.6514.0972 2.4468.255h.3886l.0546-.1579-.1336-.0971-.1032-.0972L6.973 9.8356l-2.55-1.6879-1.3356-.9714-.7225-.4918-.3643-.4614-.1578-1.0078.6557-.7225.8803.0607.2246.0607.8925.686 1.9064 1.4754 2.4893 1.8336.3643.3035.1457-.1032.0182-.0728-.164-.2733-1.3539-2.4467-1.445-2.4893-.6435-1.032-.17-.6194c-.0607-.255-.1032-.4674-.1032-.7285L6.287.1335 6.6997 0l.9957.1336.419.3642.6192 1.4147 1.0018 2.2282 1.5543 3.0296.4553.8985.2429.8318.091.255h.1579v-.1457l.1275-1.706.2368-2.0947.2307-2.6957.0789-.7589.3764-.9107.7468-.4918.5828.2793.4797.686-.0668.4433-.2853 1.8517-.5586 2.9021-.3643 1.9429h.2125l.2429-.2429.9835-1.3053 1.6514-2.0643.7286-.8196.85-.9046.5464-.4311h1.0321l.759 1.1293-.34 1.1657-1.0625 1.3478-.8804 1.1414-1.2628 1.7-.7893 1.36.0729.1093.1882-.0183 2.8535-.607 1.5421-.2794 1.8396-.3157.8318.3886.091.3946-.3278.8075-1.967.4857-2.3072.4614-3.4364.8136-.0425.0304.0486.0607 1.5482.1457.6618.0364h1.621l3.0175.2247.7892.522.4736.6376-.079.4857-1.2142.6193-1.6393-.3886-3.825-.9107-1.3113-.3279h-.1822v.1093l1.0929 1.0686 2.0035 1.8092 2.5075 2.3314.1275.5768-.3218.4554-.34-.0486-2.2039-1.6575-.85-.7468-1.9246-1.621h-.1275v.17l.4432.6496 2.3436 3.5214.1214 1.0807-.17.3521-.6071.2125-.6679-.1214-1.3721-1.9246L14.38 17.959l-1.1414-1.9428-.1397.079-.674 7.2552-.3156.3703-.7286.2793-.6071-.4614-.3218-.7468.3218-1.4753.3886-1.9246.3157-1.53.2853-1.9004.17-.6314-.0121-.0425-.1397.0182-1.4328 1.9672-2.1796 2.9446-1.7243 1.8456-.4128.164-.7164-.3704.0667-.6618.4008-.5889 2.386-3.0357 1.4389-1.882.929-1.0868-.0062-.1579h-.0546l-6.3385 4.1164-1.1293.1457-.4857-.4554.0608-.7467.2307-.2429 1.9064-1.3114Z"/></svg>',
+    codex: '<svg class="g-icn g-logo-codex" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729zm-9.022 12.6081a4.4755 4.4755 0 0 1-2.8764-1.0408l.1419-.0804 4.7783-2.7582a.7948.7948 0 0 0 .3927-.6813v-6.7369l2.02 1.1686a.071.071 0 0 1 .038.052v5.5826a4.504 4.504 0 0 1-4.4945 4.4944zm-9.6607-4.1254a4.4708 4.4708 0 0 1-.5346-3.0137l.142.0852 4.783 2.7582a.7712.7712 0 0 0 .7806 0l5.8428-3.3685v2.3324a.0804.0804 0 0 1-.0332.0615L9.74 19.9502a4.4992 4.4992 0 0 1-6.1408-1.6464zM2.3408 7.8956a4.485 4.485 0 0 1 2.3655-1.9728V11.6a.7664.7664 0 0 0 .3879.6765l5.8144 3.3543-2.0201 1.1685a.0757.0757 0 0 1-.071 0l-4.8303-2.7865A4.504 4.504 0 0 1 2.3408 7.872zm16.5963 3.8558L13.1038 8.364 15.1192 7.2a.0757.0757 0 0 1 .071 0l4.8303 2.7913a4.4944 4.4944 0 0 1-.6765 8.1042v-5.6772a.79.79 0 0 0-.407-.667zm2.0107-3.0231l-.142-.0852-4.7735-2.7818a.7759.7759 0 0 0-.7854 0L9.409 9.2297V6.8974a.0662.0662 0 0 1 .0284-.0615l4.8303-2.7866a4.4992 4.4992 0 0 1 6.6802 4.66zM8.3065 12.863l-2.02-1.1638a.0804.0804 0 0 1-.038-.0567V6.0742a4.4992 4.4992 0 0 1 7.3757-3.4537l-.142.0805L8.704 5.459a.7948.7948 0 0 0-.3927.6813zm1.0976-2.3654l2.602-1.4998 2.6069 1.4998v2.9994l-2.5974 1.4997-2.6067-1.4997Z"/></svg>',
+    codeTag: '<svg class="g-icn" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.6 5.5l-3.2 13"/></svg>',
+    ok: '<svg class="g-ok" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.2 4.2L19 7"/></svg>',
+    mark: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10a1 1 0 0 1 1 1v14l-6-3.8-6 3.8v-14a1 1 0 0 1 1-1z"/></svg>',
+    sun: '<svg class="g-tt-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.6"/><path d="M12 3.5v1.8M12 18.7v1.8M3.5 12h1.8M18.7 12h1.8M6 6l1.3 1.3M16.7 16.7L18 18M6 18l1.3-1.3M16.7 7.3L18 6"/></svg>',
+    moon: '<svg class="g-tt-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14.2A7.5 7.5 0 0 1 9.8 5a7.5 7.5 0 1 0 9.2 9.2z"/></svg>'
   };
   // 창이 열려 있는 동안 뒤쪽 움직임을 멈추는 표시입니다(:has 선택자는 요소를 붙일 때마다 다시 검사돼 무거워서 클래스로 둡니다)
   function markDialogs() { body.classList.toggle('has-dlg', !!$('dialog[open]')); }
@@ -56,13 +64,31 @@
   var T = {
     ko: {
       docTitle: 'Lucian UX/UI Prompt',
-      docDesc: '바로 눌러 볼 수 있는 UX/UI 요소 400개. 인터페이스 200개와 웹사이트를 만들 때 바로 쓰는 애니메이션 200개를 다크·라이트 테마, 실제 코드, 적용 프롬프트와 함께 제공합니다.',
+      docDesc: '실제로 돌아가는 UX/UI 요소 450개. 카드에서 Claude·Codex용 프롬프트나 코드를 바로 복사해 프로젝트에 넣으세요.',
       skip: '요소 목록으로 건너뛰기',
       brand: 'Lucian UX/UI Prompt, 맨 위로',
       guideBtn: '적용 방법',
       langGroup: '언어',
       h1: 'Lucian UX/UI Prompt', w1: 'Lucian', w2: 'UX/UI', w3: 'Prompt',
-      intro: '버튼과 차트부터 업무 화면까지 인터페이스 200개, 그리고 새로 더한 히어로·가격표·장바구니·폼·대시보드처럼 웹사이트를 만들 때 바로 쓰는 애니메이션 200개. 화면에 보이면 스스로 움직이고, 직접 누르면 바로 써 볼 수 있어요. 마음에 들면 프롬프트나 코드로 그대로 가져가세요.',
+      intro: '실제로 돌아가는 UI 요소 450개. 마음에 드는 카드에서 Claude나 Codex를 누르고 붙여넣으면, 내 프로젝트에 맞게 만들어 줍니다.',
+      side: '사이드바', menuOpen: '메뉴 열기', menuClose: '메뉴 닫기',
+      browseH: '둘러보기', collH: '컬렉션', takeH: '가져가기', setSaved: '저장됨',
+      installT: '스킬로 설치하기', installS: 'Claude Code·Codex가 번호만으로 요소를 꺼내 씁니다.',
+      searchGo: '맨 위로', searchClear: '검색 지우기', searchTry: '찾아보기: ', catsPrev: '앞쪽 분류 보기', catsNext: '뒤쪽 분류 보기',
+      searchEx: ['가격표', '로그인', '차트', '토글', '장바구니', '히어로', '로딩', '캘린더', '파일 업로드', '알림'],
+      qN: function (n) { return n + '개'; },
+      cbCode: '코드 복사', cbCopied: '복사됨',
+      aClaude: function (t) { return t + ', Claude용 프롬프트 복사'; },
+      aCodex: function (t) { return t + ', Codex용 프롬프트 복사'; },
+      aCode: function (t) { return t + ', 코드 복사'; },
+      aSave: function (t) { return t + ' 저장'; },
+      aPrompt: function (t) { return t + ', 프롬프트와 코드 보기'; },
+      cardToLight: '이 카드를 라이트로 보기', cardToDark: '이 카드를 다크로 보기',
+      tClaude: '프롬프트를 복사했어요. Claude에 붙여넣으세요', tCodex: '프롬프트를 복사했어요. Codex에 붙여넣으세요',
+      tSaveOn: '저장했어요. 왼쪽 ‘저장됨’에 모여요', tSaveOff: '저장에서 뺐어요',
+      savedEmptyT: '아직 저장한 요소가 없어요', savedEmptyS: '카드의 북마크를 누르면 여기에 모입니다. 이 브라우저에만 저장돼요.', savedEmptyB: '전체 보기',
+      refClaude: function (id) { return '[참고] lucian-uxui 스킬이 설치돼 있으면 Claude Code에서 "/lucian-uxui ' + id + '번 요소 넣어줘"처럼 번호로 같은 요소를 부를 수 있습니다.'; },
+      refCodex: function (id) { return '[참고] lucian-uxui 스킬이 설치돼 있으면 Codex에서 "$lucian-uxui ' + id + '번 요소 넣어줘"처럼 번호로 같은 요소를 부를 수 있습니다.'; },
       sets: '컬렉션', setAll: '전체', setNew: '애니메이션', setOld: '인터페이스', newBadge: '새로 추가',
       count: function (n) { return '<b id="count">' + n + '</b>개'; },
       metaTheme: '다크 · 라이트', metaCode: '코드 포함',
@@ -90,9 +116,9 @@
       skillAskId: function (id) { return 'lucian-uxui 스킬로 ' + id + '번 요소 넣어줘'; },
       guideSteps: [
         '<b>보고, 직접 눌러 보세요.</b> 요소는 화면에 보이면 스스로 조작 시연을 반복합니다. 요소를 직접 누르거나 키보드로 들어가면 시연이 멈추고, 손을 떼고 잠시 지나면 처음부터 다시 시작합니다.',
-        '<b>프롬프트 복사</b>에는 요소의 실행 코드 전체와 적용 지침이 들어 있습니다. 프로젝트의 AI 도구에 붙여넣고 삽입 위치만 채우면 됩니다.',
-        '<b>코드 파일 받기</b>는 같은 요소를 단독 HTML로 저장합니다. 라이트·다크 토큰이 함께 들어 있어 바로 열어 볼 수 있습니다.',
-        '언어·테마·자동 재생은 위쪽 버튼에서 바꿀 수 있고, 고른 값은 다음 방문에도 유지됩니다.'
+        '카드 아래 <b>Claude</b>·<b>Codex</b> 버튼은 실행 코드 전체와 적용 지침이 든 프롬프트를 복사합니다. 프로젝트의 AI 도구에 붙여넣고 넣을 자리만 알려 주면 됩니다. <b>코드 복사</b>는 요소 코드만 복사합니다.',
+        '카드 이름을 누르면 프롬프트와 코드를 열어 보고, <b>코드 파일 받기</b>로 단독 HTML을 저장할 수 있습니다. 라이트·다크 토큰이 함께 들어 있어 바로 열립니다.',
+        '북마크로 저장한 요소는 왼쪽 <b>저장됨</b>에 모입니다(이 브라우저에만 저장). 카드 오른쪽 위 해·달 버튼은 그 카드만 라이트·다크로 바꿉니다. 언어·테마는 왼쪽 아래에서 바꾸고, 고른 값은 다음 방문에도 유지됩니다.'
       ],
       guideNote: '개발 메모 · 요소마다 <code>.ux</code>와 <code>.uNNN</code> 접두사 안에서만 스타일과 스크립트가 동작합니다. 색은 <code>--ux-*</code> 토큰을 쓰므로 프로젝트 테마 변수에 연결하면 됩니다.',
       open: function (t) { return t + ' 크게 보기'; },
@@ -103,13 +129,31 @@
     },
     en: {
       docTitle: 'Lucian UX/UI Prompt',
-      docDesc: '400 UX/UI elements you can try right away: 200 interfaces plus 200 new animations for building websites, with dark and light themes, working code and a ready-to-use prompt.',
+      docDesc: '450 working UX/UI elements. Copy a prompt for Claude or Codex, or the code, straight from each card.',
       skip: 'Skip to the elements',
       brand: 'Lucian UX/UI Prompt, back to top',
       guideBtn: 'How to use',
       langGroup: 'Language',
       h1: 'Lucian UX/UI Prompt', w1: 'Lucian', w2: 'UX/UI', w3: 'Prompt',
-      intro: '200 interfaces, from buttons and charts to workflow screens, plus 200 new animated pieces you reach for when building a website: heroes, pricing, carts, forms and dashboards. Each one plays itself when it scrolls into view, and you can take over with a tap. Take the ones you like as a prompt or as code.',
+      intro: '450 UI elements, running live. Press Claude or Codex on a card, paste it into your agent, and it builds the element into your project.',
+      side: 'Sidebar', menuOpen: 'Open menu', menuClose: 'Close menu',
+      browseH: 'Browse', collH: 'Collections', takeH: 'Take it', setSaved: 'Saved',
+      installT: 'Install the skill', installS: 'Claude Code and Codex pull any element by its number.',
+      searchGo: 'Back to top', searchClear: 'Clear search', searchTry: 'Try: ', catsPrev: 'Show earlier categories', catsNext: 'Show more categories',
+      searchEx: ['pricing', 'login', 'chart', 'toggle', 'cart', 'hero', 'loading', 'calendar', 'file upload', 'toast'],
+      qN: function (n) { return n + ' found'; },
+      cbCode: 'Copy code', cbCopied: 'Copied',
+      aClaude: function (t) { return 'Copy a prompt for Claude to add ' + t; },
+      aCodex: function (t) { return 'Copy a prompt for Codex to add ' + t; },
+      aCode: function (t) { return 'Copy the code for ' + t; },
+      aSave: function (t) { return 'Save ' + t; },
+      aPrompt: function (t) { return t + ', view the prompt and code'; },
+      cardToLight: 'Show this card in light mode', cardToDark: 'Show this card in dark mode',
+      tClaude: 'Prompt copied. Paste it into Claude', tCodex: 'Prompt copied. Paste it into Codex',
+      tSaveOn: 'Saved. Find it under Saved on the left', tSaveOff: 'Removed from Saved',
+      savedEmptyT: 'Nothing saved yet', savedEmptyS: 'Press the bookmark on a card and it shows up here. Saved in this browser only.', savedEmptyB: 'Show all',
+      refClaude: function (id) { return '[Note] If the lucian-uxui skill is installed, Claude Code can bring in the same element by number: "/lucian-uxui add element #' + id + '".'; },
+      refCodex: function (id) { return '[Note] If the lucian-uxui skill is installed, Codex can bring in the same element by number: "$lucian-uxui add element #' + id + '".'; },
       sets: 'Collection', setAll: 'All', setNew: 'Animation', setOld: 'Interface', newBadge: 'New',
       count: function (n) { return '<b id="count">' + n + '</b> elements'; },
       metaTheme: 'Dark · Light', metaCode: 'Code included',
@@ -137,9 +181,9 @@
       skillAskId: function (id) { return 'Use the lucian-uxui skill to add element #' + id; },
       guideSteps: [
         '<b>Watch, then try it.</b> Each element plays a short demo on a loop while it is on screen. Tap it or tab into it and the demo stops so you can use it yourself; leave it for a moment and it starts over.',
-        '<b>Copy prompt</b> gives you the element’s full working code plus instructions. Paste it into your project’s AI tool and fill in where it should go.',
-        '<b>Download code</b> saves the same element as a standalone HTML file, with light and dark tokens included, so it opens as is.',
-        'Language, theme and autoplay can be changed with the buttons at the top, and your choices are remembered next time.'
+        'The <b>Claude</b> and <b>Codex</b> buttons under each card copy a prompt with the element’s full working code and instructions. Paste it into your project’s AI tool and say where it should go. <b>Copy code</b> copies just the element code.',
+        'Press a card’s name to read the prompt and code, or use <b>Download code</b> to save a standalone HTML file with light and dark tokens included.',
+        'Bookmarked elements gather under <b>Saved</b> on the left (kept in this browser only). The sun and moon button on a card switches just that card between light and dark. Language and theme live at the bottom left, and your choices are remembered next time.'
       ],
       guideNote: 'Dev note · Each element keeps its styles and scripts inside the <code>.ux</code> and <code>.uNNN</code> prefixes. Colors use <code>--ux-*</code> tokens, so you can map them to your project’s theme variables.',
       open: function (t) { return 'Open ' + t; },
@@ -172,11 +216,16 @@
     b.classList.toggle('is-dark', dark);
     b.setAttribute('aria-label', dark ? t('toLight') : t('toDark'));
     $('.g-hud-theme').setAttribute('aria-label', dark ? t('toLight') : t('toDark'));
+    $$('.g-tile', document.getElementById('grid')).forEach(syncCardTheme);
   }
   // 누른 버튼 자리에서 원이 퍼지며 테마가 바뀝니다. 요소를 다시 만들지 않으므로 입력값과 진행 상태가 유지됩니다
   function toggleTheme(fromEl) {
     var next = isDark() ? 'light' : 'dark';
-    var apply = function () { root.setAttribute('data-theme', next); syncTheme(); };
+    var apply = function () {
+      root.setAttribute('data-theme', next);
+      $$('.g-tile[data-stage]').forEach(function (tl) { tl.removeAttribute('data-stage'); $('.g-stage', tl).removeAttribute('data-theme'); });
+      syncTheme();
+    };
     store.set(THEME_KEY, next);
     if (!document.startViewTransition || reduce.matches) { apply(); return; }
     var r = fromEl ? fromEl.getBoundingClientRect() : { left: innerWidth / 2, top: 0, width: 0, height: 0 };
@@ -740,20 +789,30 @@
   /* ---------- 분류·검색 상태 ---------- */
   // 컬렉션: 'all'(새 애니메이션 200개를 먼저, 이어서 인터페이스 200개), '2'(애니메이션), '1'(인터페이스)
   var SET_KEY = 'ux-gallery-set';
-  var activeSet = (function () { var s = store.get(SET_KEY); return s === '1' || s === '2' ? s : 'all'; })();
-  var inSet = function (it) { return activeSet === 'all' || String(it.set || 1) === activeSet; };
-  // 전체 순서: 새로 더한 컬렉션을 먼저 보여 주고, 같은 컬렉션 안에서는 정해 둔 순서(rank), 없으면 번호 순입니다
+  // 컬렉션(애니메이션·인터페이스) 구분은 없앴습니다. 둘러보기는 '전체'와 '저장됨'만 있습니다
+  var activeSet = 'all';
+  // 저장: 로그인 없이 이 브라우저에 요소 번호를 모아 둡니다. 'saved'는 저장한 요소만 보는 컬렉션입니다
+  var SAVED_KEY = 'ux-gallery-saved';
+  var saved = (function () {
+    try { var a = JSON.parse(store.get(SAVED_KEY) || '[]'); return new Set(Array.isArray(a) ? a.filter(function (id) { return typeof id === 'string'; }) : []); } catch (e) { return new Set(); }
+  })();
+  function persistSaved() { store.set(SAVED_KEY, JSON.stringify(Array.from(saved))); }
+  var inSet = function (it) { return activeSet === 'all' || (activeSet === 'saved' ? saved.has(it.id) : String(it.set || 1) === activeSet); };
+  // 전체 순서: 웹사이트에서 많이 쓰는 요소부터(빌드가 popular.json으로 정한 pop). 없으면 예전처럼 새 컬렉션 먼저, 정해 둔 순서(rank), 번호 순입니다
   var rankOf = function (i) { return ITEMS[i].rank == null ? 1e9 : ITEMS[i].rank; };
-  var ORDER = ITEMS.map(function (_, i) { return i; }).sort(function (a, b) { return ((ITEMS[b].set || 1) - (ITEMS[a].set || 1)) || (rankOf(a) - rankOf(b)) || (a - b); });
+  var popOf = function (i) { return ITEMS[i].pop == null ? 1e9 : ITEMS[i].pop; };
+  var ORDER = ITEMS.map(function (_, i) { return i; }).sort(function (a, b) { return (popOf(a) - popOf(b)) || ((ITEMS[b].set || 1) - (ITEMS[a].set || 1)) || (rankOf(a) - rankOf(b)) || (a - b); });
+  // 분류 알약도 흔한 분류가 앞에 옵니다(빌드가 popular.json의 categories로 정한 차례 ci)
   var CATS = [];
-  // 분류 칩은 순위나 번호와 상관없이 컬렉션 순서, 그 안에서는 빌드에 적어 둔 분류 차례(ci)로 늘어놓습니다
-  ITEMS.map(function (_, i) { return i; }).sort(function (a, b) { return ((ITEMS[b].set || 1) - (ITEMS[a].set || 1)) || ((ITEMS[a].ci == null ? 99 : ITEMS[a].ci) - (ITEMS[b].ci == null ? 99 : ITEMS[b].ci)) || (a - b); }).forEach(function (i) { var c = ITEMS[i].category; if (CATS.indexOf(c) < 0) CATS.push(c); });
+  ITEMS.forEach(function (it) { if (CATS.indexOf(it.category) < 0) CATS.push(it.category); });
+  var ciOf = function (c) { var it = ITEMS.find(function (x) { return x.category === c; }); return it && it.ci != null && it.ci >= 0 ? it.ci : 99; };
+  CATS.sort(function (a, b) { return ciOf(a) - ciOf(b); });
   var activeCat = '전체';
   var query = '';
   // 한국어·영어 어느 쪽으로 찾아도 걸리도록 두 언어를 함께 넣어 둡니다
   var HAY = ITEMS.map(function (it) {
     var en = it.en || {};
-    return [it.id, it.title, it.summary, it.category, CAT_EN[it.category] || '', it.tags.join(' '), en.title || '', en.summary || '', it.set === 2 ? 'new 애니메이션 animation' : ''].join(' ').toLowerCase();
+    return [it.id, it.title, it.summary, it.category, CAT_EN[it.category] || '', it.tags.join(' '), en.title || '', en.summary || '', it.set === 3 ? 'new 신규 새로운 필수 essential' : ''].join(' ').toLowerCase();
   });
   var visible = [];
   function computeVisible() {
@@ -769,7 +828,11 @@
   /* ---------- 타일 그리드: 3열(모바일 2열), 다섯 칸마다 긴 타일 하나 ---------- */
   var grid = $('#grid');
   var more = $('#more');
-  var cols = mobileQ.matches ? 2 : 3;
+  // 본문 폭에 맞춰 1~4열로 놓습니다(카드 최소 폭 340px)
+  function colsOf() { var w = grid.clientWidth || innerWidth - 300; return Math.max(1, Math.min(4, Math.floor((w + 12) / 352))); }
+  var cols = colsOf();
+  function applyCols() { grid.style.setProperty('--cols', cols); grid.setAttribute('data-cols', String(cols)); }
+  applyCols();
   // 요소마다 한 번씩만 놓습니다. 끝까지 내려가도 앞에서 본 요소를 다시 이어 붙이지 않습니다
   var stream, buffer, groupN, placed, done;
   function resetStream() { stream = { pos: 0 }; buffer = []; groupN = 0; placed = 0; done = false; }
@@ -795,9 +858,25 @@
     return out;
   }
   function tileText(el, it) {
-    var c = loc(it);
-    $('.g-cap span', el).textContent = c.title;
-    $('.g-exp', el).setAttribute('aria-label', T[lang].open(c.title));
+    var c = loc(it), L = T[lang];
+    $('.g-cap-t span', el).textContent = c.title;
+    $('.g-cap-t', el).setAttribute('aria-label', it.id + ' ' + L.aPrompt(c.title));
+    $('.g-cap-s', el).textContent = c.category + ' · ' + it.id;
+    $('.g-exp', el).setAttribute('aria-label', L.open(c.title));
+    $('.g-save', el).setAttribute('aria-label', L.aSave(c.title));
+    $$('.g-cb', el).forEach(function (b) {
+      var k = b.dataset.act;
+      b.setAttribute('aria-label', k === 'claude' ? L.aClaude(c.title) : k === 'codex' ? L.aCodex(c.title) : L.aCode(c.title));
+      $('span', b).textContent = b.classList.contains('is-copied') ? L.cbCopied : cbLabel(k);
+    });
+    syncCardTheme(el);
+  }
+  function cbLabel(k) { return k === 'claude' ? 'Claude' : k === 'codex' ? 'Codex' : t('cbCode'); }
+  // 카드 무대의 실제 테마(카드별 설정이 없으면 전체 테마)
+  function stageTheme(tl) { return tl.getAttribute('data-stage') || (isDark() ? 'dark' : 'light'); }
+  function syncCardTheme(tl) {
+    var b = $('.g-tt', tl);
+    if (b) b.setAttribute('aria-label', stageTheme(tl) === 'dark' ? t('cardToLight') : t('cardToDark'));
   }
   function makeTile(slot, delay) {
     var it = ITEMS[slot.e.i];
@@ -808,11 +887,19 @@
     el.style.setProperty('--h2', it.hue2);
     el.style.setProperty('--d', delay + 'ms');
     el.id = 'tile-' + it.id;
+    // 무대(.g-stage)는 카드 바로 아래 자식으로 둡니다. 마운트·지연 로딩이 stage.parentNode.dataset.idx로 요소를 찾습니다
+    var on = saved.has(it.id);
     el.innerHTML =
-      '<button class="g-open" type="button" tabindex="-1" aria-hidden="true" data-open="' + slot.e.i + '"></button>' +
       '<div class="g-stage"><div class="g-fit' + (it.fluid ? ' is-fluid' : '') + '"></div></div>' +
-      '<p class="g-cap"><b>' + it.id + '</b>' + (it.set === 2 ? '<em class="g-new" aria-hidden="true">NEW</em>' : '') + '<span></span></p>' +
-      '<button class="g-exp" type="button" data-open="' + slot.e.i + '">' + ICON.open + '</button>';
+      '<div class="g-tile-top">' + (it.set === 3 ? '<em class="g-new" aria-hidden="true">NEW</em>' : '') +
+        '<span class="g-tile-tools"><button class="g-ic g-exp" type="button" data-open="' + slot.e.i + '">' + ICON.open + '</button>' +
+        '<button class="g-ic g-tt" type="button" data-act="theme">' + ICON.sun + ICON.moon + '</button></span></div>' +
+      '<div class="g-info"><div class="g-cap"><button class="g-cap-t" type="button" data-act="prompt"><span></span></button><p class="g-cap-s"></p></div>' +
+        '<button class="g-ic g-save" type="button" data-act="save" aria-pressed="' + on + '">' + ICON.mark + '</button></div>' +
+      '<div class="g-acts">' +
+        '<button class="g-cb" type="button" data-act="claude">' + ICON.claude + ICON.ok + '<span></span></button>' +
+        '<button class="g-cb" type="button" data-act="codex">' + ICON.codex + ICON.ok + '<span></span></button>' +
+        '<button class="g-cb" type="button" data-act="code">' + ICON.codeTag + ICON.ok + '<span></span></button></div>';
     tileText(el, it);
     bindTakeover(el);
     el.addEventListener('animationend', function () { el.classList.remove('is-new'); }, { once: true });
@@ -881,8 +968,12 @@
     $$('.g-stage', frag).forEach(function (st) { watchStage(st); tileRO.observe(st); });
     grid.appendChild(frag);
     // 화면 아래에서 미리 붙는 타일은 떠오르는 등장 효과 없이 바로 제자리에 둡니다(빠르게 내려와도 비어 보이지 않게)
-    fresh.forEach(function (tl) { if (tl.getBoundingClientRect().top > innerHeight) tl.classList.remove('is-new'); });
+    fresh.forEach(function (tl) {
+      if (tl.getBoundingClientRect().top > innerHeight) { tl.classList.remove('is-new'); if (REVEAL) tl.classList.add('is-reveal'); }
+    });
   }
+  // 스크롤에 묶는 등장 효과를 쓸 수 있는 브라우저인지(모션 줄이기면 쓰지 않습니다)
+  var REVEAL = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) && !reduce.matches;
   function fillIfNeeded() {
     if (body.dataset.view !== 'grid') return;
     var guard = 0;
@@ -901,20 +992,105 @@
     grid.innerHTML = '';
     $('#count').textContent = visible.length;
     $('#empty').hidden = visible.length !== 0;
+    syncEmpty();
+    if (typeof syncSearchUi === 'function') syncSearchUi();
     reelDirty = true;
     if (visible.length) appendGroups(3);
     fillIfNeeded();
   }
-  mobileQ.addEventListener && mobileQ.addEventListener('change', function () {
-    cols = mobileQ.matches ? 2 : 3;
-    rebuildGrid();
-  });
+  function syncEmpty() {
+    var sv = activeSet === 'saved' && !saved.size;
+    $('#empty-t').textContent = t(sv ? 'savedEmptyT' : 'emptyT');
+    $('#empty-s').textContent = t(sv ? 'savedEmptyS' : 'emptyS');
+    $('#empty-reset').textContent = t(sv ? 'savedEmptyB' : 'emptyB');
+  }
+  // 본문 폭이 바뀌어 열 수가 달라지면 다시 놓습니다
+  var colsT = 0;
+  new ResizeObserver(function () {
+    clearTimeout(colsT);
+    colsT = setTimeout(function () { var n = colsOf(); if (n !== cols) { cols = n; applyCols(); rebuildGrid(); } }, 120);
+  }).observe(grid);
 
   grid.addEventListener('click', function (e) {
-    // 요소도 data-open을 쓸 수 있으므로 갤러리 버튼만 봅니다
-    var b = e.target.closest('.g-open, .g-exp');
-    if (b && !b.closest('.ux')) openReel(+b.dataset.open, b.closest('.g-tile'));
+    // 요소도 data-open, data-act를 쓸 수 있으므로 요소 바깥의 갤러리 버튼만 봅니다
+    var b = e.target.closest('.g-exp, [data-act]');
+    if (!b || b.closest('.ux')) return;
+    var tl = b.closest('.g-tile');
+    if (!tl) return;
+    var i = +tl.dataset.idx;
+    if (b.classList.contains('g-exp')) { openReel(i, tl); return; }
+    var act = b.dataset.act;
+    if (act === 'prompt') openPrompt(i);
+    else if (act === 'save') toggleSave(ITEMS[i], b);
+    else if (act === 'theme') toggleCardTheme(tl);
+    else if (act === 'claude' || act === 'codex' || act === 'code') cardCopy(i, act, b);
   });
+  // 카드만 반대 테마로 봅니다. 전체 테마와 같아지면 카드 설정을 풉니다
+  function toggleCardTheme(tl) {
+    var next = stageTheme(tl) === 'dark' ? 'light' : 'dark', st = $('.g-stage', tl);
+    if (next === (isDark() ? 'dark' : 'light')) { tl.removeAttribute('data-stage'); st.removeAttribute('data-theme'); }
+    else { tl.setAttribute('data-stage', next); st.setAttribute('data-theme', next); }
+    syncCardTheme(tl);
+  }
+  function toggleSave(it, b) {
+    var on = !saved.has(it.id);
+    if (on) saved.add(it.id); else saved.delete(it.id);
+    persistSaved();
+    $$('.g-save', grid).forEach(function (x) { if (+x.closest('.g-tile').dataset.idx === ITEMS.indexOf(it)) x.setAttribute('aria-pressed', String(on)); });
+    b.classList.remove('is-pop'); void b.offsetWidth; if (on) b.classList.add('is-pop');
+    syncSets();
+    toast(t(on ? 'tSaveOn' : 'tSaveOff'));
+    if (activeSet === 'saved' && !on) { renderCats(); rebuildGrid(); }
+  }
+  // Claude·Codex: 코드 전체가 든 프롬프트 + 스킬로 부르는 법 한 줄. 코드: 요소 코드만
+  function cardText(it, kind) {
+    if (kind === 'code') return codeOf(it);
+    return promptOf(it) + '\n' + T[lang][kind === 'claude' ? 'refClaude' : 'refCodex'](it.id) + '\n';
+  }
+  function copiedState(b) {
+    var sp = $('span', b);
+    b.classList.add('is-copied');
+    sp.textContent = t('cbCopied');
+    clearTimeout(b._ct);
+    b._ct = setTimeout(function () { b.classList.remove('is-copied'); sp.textContent = cbLabel(b.dataset.act); }, 1800);
+  }
+  function cardCopy(i, kind, b) {
+    var it = ITEMS[i];
+    var settled = false;
+    var done = function (ok) {
+      if (settled) return;
+      settled = true;
+      clearTimeout(b._bt);
+      b.classList.remove('is-busy');
+      if (ok) { copiedState(b); toast(kind === 'code' ? t('tCodeCopied') : t(kind === 'claude' ? 'tClaude' : 'tCodex')); return; }
+      // 복사할 수 없는 환경이면 같은 글을 창에 띄워 직접 복사하게 합니다
+      openPrompt(i);
+      if (kind === 'code' && typeof ITEMS[i].html === 'string') setTab('code');
+      toast(t('tCopyIn'));
+    };
+    if (typeof it.html === 'string') { copyText(cardText(it, kind)).then(done); return; }
+    // 사이트판은 요소 코드를 나중에 받습니다. 받아 온 뒤 복사하되, 누른 동작 안에서 복사가 시작되게 합니다(Safari)
+    if (typeof ensureItem !== 'function') { done(false); return; }
+    b.classList.add('is-busy');
+    var text = ensureItem(it, true).then(function () { return cardText(it, kind); });
+    var tried = false;
+    var later = function () {
+      if (tried || settled) return;
+      tried = true;
+      text.then(copyText).then(done, function () { done(false); });
+    };
+    // 브라우저가 쓰기를 끝내지 않고 붙잡아 두면(사용자 동작이 아닌 클릭 등) 5초 뒤 다른 방법으로 넘어갑니다
+    clearTimeout(b._bt);
+    b._bt = setTimeout(function () { if (!settled) { later(); setTimeout(function () { done(false); }, 2500); } }, 5000);
+    if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write && window.isSecureContext) {
+      try {
+        navigator.clipboard.write([new ClipboardItem({ 'text/plain': text.then(function (s) { return new Blob([s], { type: 'text/plain' }); }) })])
+          .then(function () { done(true); }, later);
+        return;
+      } catch (e) { /* 아래 방법으로 이어 갑니다 */ }
+    }
+    later();
+  }
 
   /* ---------- 분류 칩: 고른 칩 뒤로 알약이 미끄러집니다 ---------- */
   var cats = $('#cats');
@@ -923,6 +1099,8 @@
     $$('.g-cat', cats).forEach(function (b) { b.remove(); });
     var pool = ITEMS.filter(inSet);
     var list = CATS.filter(function (c) { return pool.some(function (it) { return it.category === c; }); });
+    if (activeCat !== '전체' && list.indexOf(activeCat) < 0) activeCat = '전체';
+    requestAnimationFrame(function () { cats.scrollLeft = 0; syncCatsNav(); });
     cats.insertAdjacentHTML('beforeend', ['전체'].concat(list).map(function (c) {
       var n = c === '전체' ? pool.length : pool.filter(function (it) { return it.category === c; }).length;
       return '<button class="g-cat" type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === activeCat) + '">' + esc(catLabel(c)) + '<i>' + n + '</i></button>';
@@ -930,7 +1108,7 @@
   }
   function movePill(animate) {
     var b = $('.g-cat[aria-pressed="true"]', cats);
-    if (!b) return;
+    if (!b || !pill) return;
     if (!animate) cats.classList.add('no-anim');
     pill.style.setProperty('--x', b.offsetLeft + 'px');
     pill.style.setProperty('--w', b.offsetWidth + 'px');
@@ -951,7 +1129,7 @@
   var setPill = $('.g-sets-pill', sets);
   function moveSetPill(animate) {
     var b = $('.g-set[aria-pressed="true"]', sets);
-    if (!b) return;
+    if (!b || !setPill) return;
     if (!animate) sets.classList.add('no-anim');
     setPill.style.setProperty('--x', b.offsetLeft + 'px');
     setPill.style.setProperty('--w', b.offsetWidth + 'px');
@@ -961,13 +1139,13 @@
     $$('.g-set', sets).forEach(function (b) {
       var v = b.dataset.set;
       b.setAttribute('aria-pressed', String(v === activeSet));
-      $('i', b).textContent = v === 'all' ? ITEMS.length : ITEMS.filter(function (it) { return String(it.set || 1) === v; }).length;
+      $('i', b).textContent = v === 'all' ? ITEMS.length : v === 'saved' ? saved.size : ITEMS.filter(function (it) { return String(it.set || 1) === v; }).length;
     });
   }
   function setSet(v, animate) {
     if (v === activeSet) return;
     activeSet = v;
-    store.set(SET_KEY, v);
+    store.set(SET_KEY, v === 'saved' ? 'all' : v);
     activeCat = '전체';
     syncSets();
     moveSetPill(animate !== false);
@@ -978,64 +1156,115 @@
   }
   sets.addEventListener('click', function (e) {
     var b = e.target.closest('[data-set]');
-    if (b) setSet(b.dataset.set);
+    if (!b) return;
+    setSet(b.dataset.set);
+    setSide(false);
   });
   window.addEventListener('resize', function () { moveSetPill(false); });
   function scrollToGridTop() {
     var bar = $('#bar');
-    var top = bar.getBoundingClientRect().top + scrollY;
+    var top = bar.getBoundingClientRect().top + scrollY - (narrowQ.matches ? 84 : 16);
     if (scrollY > top) window.scrollTo({ top: top, behavior: 'auto' });
   }
   window.addEventListener('resize', function () { movePill(false); });
+  // 알약 줄이 넘치면 양 끝에 넘기기 버튼을 보입니다
+  var catsNav = $$('.g-cats-nav');
+  function syncCatsNav() {
+    var max = cats.scrollWidth - cats.clientWidth;
+    catsNav[0].hidden = cats.scrollLeft <= 4;
+    catsNav[1].hidden = max <= 4 || cats.scrollLeft >= max - 4;
+  }
+  cats.addEventListener('scroll', syncCatsNav, { passive: true });
+  window.addEventListener('resize', syncCatsNav);
+  catsNav.forEach(function (b) {
+    b.addEventListener('click', function () { cats.scrollBy({ left: +b.dataset.dir * cats.clientWidth * 0.7, behavior: reduce.matches ? 'auto' : 'smooth' }); });
+  });
 
-  /* ---------- 검색: 아이콘이 입력창으로 펼쳐집니다 ---------- */
+  /* ---------- 검색: 아래 가운데 떠 있는 입력창. 비어 있으면 예시 검색어가 쳐졌다 지워집니다 ---------- */
   var search = $('#search');
   var q = $('#q');
-  var searchBtn = $('#search-btn');
-  function openSearch() {
-    search.classList.add('is-open');
-    searchBtn.setAttribute('aria-expanded', 'true');
-    q.tabIndex = 0;
-    q.focus();
+  var qGo = $('#q-go');
+  var qN = $('#q-n');
+  function syncSearchUi() {
+    var has = !!q.value.trim();
+    search.classList.toggle('has-q', has);
+    qGo.setAttribute('aria-label', has ? t('searchClear') : t('searchGo'));
+    qN.textContent = query ? T[lang].qN(visible.length) : '';
   }
-  function closeSearch() {
-    search.classList.remove('is-open');
-    searchBtn.setAttribute('aria-expanded', 'false');
-    q.tabIndex = -1;
-  }
-  searchBtn.addEventListener('click', function () {
-    if (search.classList.contains('is-open')) { q.focus(); return; }
-    openSearch();
-  });
   var qT = 0;
   q.addEventListener('input', function () {
+    search.classList.toggle('has-q', !!q.value.trim());
     clearTimeout(qT);
     qT = setTimeout(function () {
       query = q.value.trim().toLowerCase();
-      search.classList.toggle('has-q', !!query);
       rebuildGrid();
       scrollToGridTop();
     }, 120);
   });
+  function clearSearch() { clearTimeout(qT); q.value = ''; query = ''; rebuildGrid(); }
   q.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') { e.preventDefault(); if (q.value) { q.value = ''; q.dispatchEvent(new Event('input')); } else { closeSearch(); searchBtn.focus(); } }
-    if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); var first = $('.g-tile .g-exp', grid); if (first) first.focus(); }
+    if (e.key === 'Escape') { e.preventDefault(); if (q.value) clearSearch(); else q.blur(); }
+    if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) {
+      e.preventDefault();
+      var first = $('.g-tile .g-cap-t', grid);
+      if (first) { first.focus({ preventScroll: true }); first.closest('.g-tile').scrollIntoView({ block: 'center', behavior: reduce.matches ? 'auto' : 'smooth' }); }
+    }
   });
-  q.addEventListener('blur', function () { setTimeout(function () { if (!q.value && document.activeElement !== q) closeSearch(); }, 120); });
+  qGo.addEventListener('click', function () {
+    if (q.value.trim()) { clearSearch(); q.focus(); return; }
+    window.scrollTo({ top: 0, behavior: reduce.matches ? 'auto' : 'smooth' });
+  });
+  // 예시 검색어: 한 글자씩 쳤다가 잠시 두고 지운 뒤 다음 낱말로 넘어갑니다(한 바퀴 약 3초)
+  var phT = 0, phI = 0;
+  function phStop() { clearTimeout(phT); phT = 0; }
+  function phRun() {
+    phStop();
+    if (reduce.matches || q.value || document.activeElement === q || document.hidden || body.dataset.view !== 'grid') { q.placeholder = t('searchPh'); return; }
+    var list = T[lang].searchEx, word = list[phI++ % list.length], pre = t('searchTry'), k = 0, dir = 1;
+    (function step() {
+      q.placeholder = pre + word.slice(0, k);
+      if (dir > 0) { if (k < word.length) { k += 1; phT = setTimeout(step, 75); } else { dir = -1; phT = setTimeout(step, 1500); } }
+      else if (k > 0) { k -= 1; phT = setTimeout(step, 35); }
+      else phT = setTimeout(phRun, 380);
+    })();
+  }
+  q.addEventListener('focus', function () { phStop(); q.placeholder = t('searchPh'); });
+  q.addEventListener('blur', function () { phStop(); phT = setTimeout(phRun, 700); });
+  document.addEventListener('visibilitychange', function () { if (document.hidden) phStop(); else if (!phT) phRun(); });
   $('#empty-reset').addEventListener('click', function () {
-    q.value = ''; query = ''; search.classList.remove('has-q'); closeSearch();
-    if (activeSet !== 'all') { activeSet = 'all'; store.set(SET_KEY, 'all'); syncSets(); moveSetPill(true); renderCats(); }
+    q.value = ''; query = '';
+    if (activeSet !== 'all') { activeSet = 'all'; store.set(SET_KEY, 'all'); syncSets(); moveSetPill(true); }
     activeCat = '전체';
-    $$('.g-cat', cats).forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.cat === '전체')); });
-    movePill(true);
+    renderCats();
     rebuildGrid();
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === '/' && body.dataset.view === 'grid' && !e.target.closest('input, textarea, select, [contenteditable], .ux') && !$('dialog[open]')) {
       e.preventDefault();
-      openSearch();
+      q.focus();
     }
   });
+
+  /* ---------- 좁은 화면: 사이드바를 서랍처럼 엽니다 ---------- */
+  var narrowQ = window.matchMedia('(max-width: 960px)');
+  var sideBtn = $('#side-open');
+  function setSide(open) {
+    if (open && !narrowQ.matches) return;
+    var was = body.classList.contains('side-open');
+    if (was === open) return;
+    body.classList.toggle('side-open', open);
+    sideBtn.setAttribute('aria-expanded', String(open));
+    if (open) { var f = $('.g-set[aria-pressed="true"]', sets) || $('#side-close'); f.focus({ preventScroll: true }); }
+    else if ($('#side').contains(document.activeElement)) sideBtn.focus({ preventScroll: true });
+  }
+  sideBtn.addEventListener('click', function () { setSide(true); });
+  $('#side-close').addEventListener('click', function () { setSide(false); });
+  $('#scrim').addEventListener('click', function () { setSide(false); });
+  // 서랍 안의 링크·버튼(스킬, 적용 방법)을 누르면 서랍을 닫고 진행합니다
+  $('.g-head-r').addEventListener('click', function (e) { if (e.target.closest('a, button')) setSide(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && body.classList.contains('side-open')) { e.preventDefault(); setSide(false); } });
+  var onNarrow = function () { if (!narrowQ.matches) setSide(false); };
+  if (narrowQ.addEventListener) narrowQ.addEventListener('change', onNarrow); else if (narrowQ.addListener) narrowQ.addListener(onNarrow);
 
   /* ---------- 도구줄이 위에 붙으면 아랫선을 보입니다 ---------- */
   var sentinel = document.createElement('div');
@@ -1271,7 +1500,7 @@
     var c = loc(it);
     s.setAttribute('aria-label', it.id + ' ' + c.title);
     $('.g-slide-meta', s).innerHTML =
-      '<p class="g-slide-kick"><b>' + it.id + '</b> · ' + esc(c.category) + (it.set === 2 ? ' <em class="g-new">NEW</em>' : '') + '</p>' +
+      '<p class="g-slide-kick"><b>' + it.id + '</b> · ' + esc(c.category) + (it.set === 3 ? ' <em class="g-new">NEW</em>' : '') + '</p>' +
       '<h2 class="g-slide-t">' + esc(c.title) + '</h2>' +
       '<p class="g-slide-s">' + esc(c.summary) + '</p>' +
       (c.hint ? '<p class="g-slide-hint">' + ICON.hand + '<span>' + esc(c.hint) + '</span></p>' : '');
@@ -1496,6 +1725,8 @@
     if (on && lp) { lp.style.setProperty('--x', on.offsetLeft + 'px'); lp.style.setProperty('--w', on.offsetWidth + 'px'); }
     syncTheme();
     syncAutoBtn();
+    syncEmpty();
+    syncSearchUi();
   }
   function setLang(next) {
     if (next !== 'ko' && next !== 'en') return;
@@ -1527,6 +1758,7 @@
       } else reelDirty = true;
     }
     if (dlgPrompt.open) openPrompt(prIdx);
+    phRun();
   }
   $$('.g-lang-b').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang); }); });
 
@@ -1539,6 +1771,7 @@
   movePill(false);
   moveSetPill(false);
   root.classList.remove('i18n-wait');
+  setTimeout(phRun, 900);
   requestAnimationFrame(function () { $('.g-head').classList.add('is-ready'); applyStatic(); moveSetPill(false); });
   var m0 = /^#(\d{3})$/.exec(location.hash);
   if (m0) {

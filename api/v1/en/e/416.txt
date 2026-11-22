@@ -1,0 +1,118 @@
+<!-- Lucian UX/UI Prompt #416 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#416 -->
+<!--
+Element: Tabs
+ID: 416 · Category: Menus & Tabs · Tags: tabs, tablist, underline, indicator, badge, keyboard, aria
+What it does: Underline tabs with count badges. Pick a tab and the underline slides to match its width, while a soft background follows whichever tab the pointer is over. The list below glides in from the direction you moved, and the left and right arrows, Home and End work too.
+How to use it: Press the tabs. With a keyboard, focus a tab and use the left and right arrows, Home and End
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#416
+-->
+<style>
+.u416{position:relative;width:340px;height:340px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
+.u416-top{display:flex;align-items:center;gap:8px;height:30px;margin:16px 16px 8px}
+.u416-pj{width:22px;height:22px;flex:none;border-radius:7px;background:linear-gradient(135deg,#FF9F43,#FF6B8B);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u416-top h3{flex:1;margin:0;font-size:14px;font-weight:800;letter-spacing:-.03em}
+.u416-new{display:flex;align-items:center;gap:4px;height:26px;padding:0 9px 0 7px;border:0;border-radius:8px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:10.5px;font-weight:700;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
+.u416-new:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
+.u416-new svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+
+.u416-tl{position:relative;display:flex;gap:2px;padding:0 10px;box-shadow:inset 0 -1px 0 var(--ux-line)}
+.u416-hv{position:absolute;left:0;top:4px;height:28px;width:var(--hw,0);border-radius:8px;background:var(--ux-surface-2);opacity:0;transform:translateX(var(--hx,0));transition:transform .3s var(--ux-ease),width .3s var(--ux-ease),opacity .2s;pointer-events:none}
+.u416-tl.is-hv .u416-hv{opacity:1}
+.u416-ind{position:absolute;left:0;bottom:0;height:2px;width:var(--iw,0);border-radius:2px 2px 0 0;background:var(--ux-ink);transform:translateX(var(--ix,0));transition:transform .5s cubic-bezier(.3,1.25,.45,1),width .5s cubic-bezier(.3,1.25,.45,1)}
+.u416-tab{position:relative;display:flex;align-items:center;gap:5px;height:36px;padding:0 8px;border:0;border-radius:8px;background:none;font-size:12px;font-weight:600;color:var(--ux-ink-3);white-space:nowrap;transition:color .2s}
+.u416-tab:hover{color:var(--ux-ink-2)}
+.u416-tab[aria-selected="true"]{color:var(--ux-ink)}
+.u416-tab:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-4px}
+.u416-tab em{display:grid;place-items:center;min-width:17px;height:16px;padding:0 5px;border-radius:99px;background:var(--ux-surface-3);font-style:normal;font-size:9.5px;font-weight:750;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;transition:background-color .25s,color .25s}
+.u416-tab[aria-selected="true"] em{background:var(--ux-accent-soft);color:var(--ux-accent)}
+
+.u416-pv{position:relative;flex:1;overflow:hidden}
+.u416-pn{position:absolute;inset:0;padding:4px 8px 0;opacity:0;visibility:hidden;transform:translateX(calc(var(--d,1) * 14px));transition:opacity .2s,transform .3s var(--ux-ease),visibility 0s .3s}
+.u416-pn.is-on{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ux-ease) .06s,transform .5s cubic-bezier(.25,1,.35,1) .04s,visibility 0s}
+.u416-pn:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px;border-radius:12px}
+.u416-pn ul{margin:0;padding:0;list-style:none}
+.u416-it{display:flex;align-items:center;gap:10px;height:48px;padding:0 8px;border-radius:10px;transition:background-color .15s}
+.u416-it:hover{background:var(--ux-surface-2)}
+.u416-st{width:14px;height:14px;flex:none}
+.u416-tx{flex:1;min-width:0}
+.u416-tx b{display:block;font-size:12px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}
+.u416-tx small{display:block;margin-top:2px;font-size:10px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u416-av{display:grid;place-items:center;width:22px;height:22px;flex:none;border-radius:50%;font-size:10px;font-weight:800;color:#fff;box-shadow:0 0 0 2px var(--ux-surface)}
+.u416-ft{display:flex;align-items:center;justify-content:space-between;margin:4px 8px 0;padding-top:9px;border-top:1px solid var(--ux-line);font-size:10.5px;color:var(--ux-ink-3)}
+.u416-ft a{color:var(--ux-ink-2);font-weight:700;text-decoration:none;border-radius:4px}
+.u416-ft a:hover{color:var(--ux-ink)}
+.u416-ft a:focus-visible,.u416-new:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u416-pn,.u416-ind,.u416-hv{transition:none!important}}
+</style>
+<div class="ux u416">
+  <div class="u416-top"><span class="u416-pj" aria-hidden="true"></span><h3>Mobile app 2.0</h3><button class="u416-new" type="button"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2.5v7M2.5 6h7"/></svg>New issue</button></div>
+  <div class="u416-tl" role="tablist" aria-label="Issue status">
+    <span class="u416-hv" aria-hidden="true"></span>
+    <button class="u416-tab" type="button" role="tab" aria-selected="true">All<em>12</em></button>
+    <button class="u416-tab" type="button" role="tab" aria-selected="false" tabindex="-1">In progress<em>5</em></button>
+    <button class="u416-tab" type="button" role="tab" aria-selected="false" tabindex="-1">Review<em>3</em></button>
+    <button class="u416-tab" type="button" role="tab" aria-selected="false" tabindex="-1">Done<em>4</em></button>
+    <span class="u416-ind" aria-hidden="true"></span>
+  </div>
+  <div class="u416-pv"></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var tl = root.querySelector('.u416-tl'), hv = root.querySelector('.u416-hv'), ind = root.querySelector('.u416-ind'), pv = root.querySelector('.u416-pv');
+  var tabs = Array.prototype.slice.call(root.querySelectorAll('.u416-tab'));
+  var uid = 'u416-' + Math.random().toString(36).slice(2, 7);
+  var C = ['#7B61FF', '#F97316', '#0EA5E9', '#14B8A6'];
+  var ST = {
+    p: ['In progress', '<svg class="u416-st" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="#E8A317" stroke-width="1.6"/><path d="M7 3.5a3.5 3.5 0 0 1 0 7z" fill="#E8A317"/></svg>'],
+    r: ['In review', '<svg class="u416-st" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5" fill="none" stroke="#8B7BFF" stroke-width="1.6"/><path d="M7 3.5a3.5 3.5 0 1 1-3.03 1.75L7 7z" fill="#8B7BFF"/></svg>'],
+    d: ['Done', '<svg class="u416-st" viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="6.2" fill="#22A06B"/><path d="M4.4 7.2 6.2 9l3.4-3.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>']
+  };
+  var P = [['Fix checkout error', 148, '1h ago', 'M', 0, 'p'], ['Polish onboarding copy', 145, '3h ago', 'S', 1, 'p'], ['Rework notification settings', 139, 'Yesterday', 'J', 2, 'p'], ['Resizable widgets', 136, '2d ago', 'H', 3, 'p']];
+  var R = [['Tidy dark mode colors', 151, '30m ago', 'H', 3, 'r'], ['Speed up search', 147, '2h ago', 'M', 0, 'r'], ['Add accessibility labels', 140, 'Yesterday', 'S', 1, 'r']];
+  var D = [['Replace app icon', 137, 'Yesterday', 'J', 2, 'd'], ['Fix sign-in error text', 133, '2d ago', 'H', 3, 'd'], ['Profile photo upload', 129, '3d ago', 'M', 0, 'd'], ['Tidy push copy', 126, '4d ago', 'S', 1, 'd']];
+  var LISTS = [[R[0], P[0], D[0], P[1]], P, R, D];
+  var cur = 0;
+  var pns = LISTS.map(function (list, i) {
+    var p = document.createElement('div');
+    p.className = 'u416-pn' + (i === 0 ? ' is-on' : '');
+    p.setAttribute('role', 'tabpanel'); p.tabIndex = 0;
+    p.id = uid + '-p' + i; tabs[i].id = uid + '-t' + i;
+    p.setAttribute('aria-labelledby', tabs[i].id); tabs[i].setAttribute('aria-controls', p.id);
+    var n = tabs[i].querySelector('em').textContent;
+    p.innerHTML = '<ul>' + list.map(function (r) {
+      return '<li class="u416-it">' + ST[r[5]][1] + '<span class="u416-tx"><b></b><small>HARU-' + r[1] + ' · ' + ST[r[5]][0] + ' · ' + r[2] + '</small></span><span class="u416-av" aria-hidden="true" style="background:' + C[r[4]] + '"></span></li>';
+    }).join('') + '</ul><div class="u416-ft"><span>' + n + ' issues' + '</span><a href="#">' + 'View all' + ' →</a></div>';
+    Array.prototype.forEach.call(p.querySelectorAll('.u416-it'), function (li, k) { li.querySelector('b').textContent = list[k][0]; li.querySelector('.u416-av').textContent = list[k][3]; });
+    p.querySelector('a').addEventListener('click', function (e) { e.preventDefault(); });
+    pv.appendChild(p);
+    return p;
+  });
+  function place(el, x, w, px, pw) { el.style.setProperty(px, x + 'px'); el.style.setProperty(pw, w + 'px'); }
+  function sync() { var t = tabs[cur]; place(ind, t.offsetLeft + 8, t.offsetWidth - 16, '--ix', '--iw'); }
+  function select(i, focus) {
+    if (i === cur) { if (focus) tabs[i].focus({ preventScroll: true }); return; }
+    var d = i > cur ? 1 : -1, old = pns[cur], nw = pns[i];
+    old.style.setProperty('--d', -d); old.classList.remove('is-on');
+    nw.style.transition = 'none'; nw.style.setProperty('--d', d); void nw.offsetWidth; nw.style.transition = '';
+    nw.classList.add('is-on');
+    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    cur = i; sync();
+    if (focus) tabs[i].focus({ preventScroll: true });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener('click', function () { select(i); });
+    t.addEventListener('pointerenter', function () { place(hv, t.offsetLeft, t.offsetWidth, '--hx', '--hw'); tl.classList.add('is-hv'); });
+  });
+  tl.addEventListener('pointerleave', function () { tl.classList.remove('is-hv'); });
+  tl.addEventListener('keydown', function (e) {
+    var n = tabs.length, to = e.key === 'ArrowRight' ? cur + 1 : e.key === 'ArrowLeft' ? cur - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+    if (to === null) return;
+    e.preventDefault(); select((to + n) % n, true);
+  });
+  ind.style.transition = 'none'; sync(); void ind.offsetWidth; ind.style.transition = '';
+  if (window.ResizeObserver) new ResizeObserver(function () { if (root.isConnected) sync(); }).observe(tabs[0]);
+})();
+</script>

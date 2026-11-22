@@ -9,19 +9,19 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#325
 -->
 <style>
-.u325{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#EEF0F6;box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
+.u325{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:#EEF0F6;background:light-dark(#EEF0F6,#0B0C12);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
 .u325-st{position:absolute;inset:0;--x:-200px;--y:-200px;--r:0px;cursor:none;touch-action:none}
 .u325-code,.u325-ui{position:absolute;left:40px;top:28px;width:260px;height:284px;border-radius:22px}
 .u325-code{background:#0D1117;font:600 9.6px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;color:#C9D1D9;padding:18px 18px;white-space:pre;overflow:hidden;box-shadow:inset 0 0 0 1px #30363D}
 .u325-code .t{color:#7EE787}.u325-code .a{color:#79C0FF}.u325-code .s{color:#A5D6FF}.u325-code .c{color:#8B949E}.u325-code .p{color:#FFA657}
-.u325-ui{background:#fff;padding:22px 22px 20px;box-shadow:0 20px 40px -24px rgba(30,40,80,.35);display:flex;flex-direction:column;-webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0,transparent 96%,#000 100%);mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0,transparent 96%,#000 100%);color:#1A1D2E}
-.u325-ui small{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:#5B4CF0}
+.u325-ui{background:var(--ux-surface);padding:22px 22px 20px;box-shadow:0 20px 40px -24px rgba(30,40,80,.35);box-shadow:0 20px 40px -24px light-dark(rgba(30,40,80,.35),rgba(0,0,0,.7)),inset 0 0 0 1px light-dark(transparent,rgba(255,255,255,.08));display:flex;flex-direction:column;-webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0,transparent 96%,#000 100%);mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),transparent 0,transparent 96%,#000 100%);color:#1A1D2E;color:light-dark(#1A1D2E,#EEF0F8)}
+.u325-ui small{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:#5B4CF0;color:light-dark(#5B4CF0,#A99DFF)}
 .u325-ui h4{margin:4px 0 2px;font-size:22px;font-weight:850;letter-spacing:-.02em}
-.u325-ui p{margin:0;font-size:11.5px;color:#6B7088;font-weight:600}
+.u325-ui p{margin:0;font-size:11.5px;color:#6B7088;color:light-dark(#6B7088,#979CB2);font-weight:600}
 .u325-pr{margin:12px 0 10px;font-size:30px;font-weight:900;letter-spacing:-.03em}
-.u325-pr span{font-size:12px;font-weight:700;color:#6B7088}
+.u325-pr span{font-size:12px;font-weight:700;color:#6B7088;color:light-dark(#6B7088,#979CB2)}
 .u325-ui ul{list-style:none;margin:0 0 auto;padding:0;display:flex;flex-direction:column;gap:6px;font-size:11.5px;font-weight:650}
-.u325-ui li::before{content:"✓";color:#5B4CF0;font-weight:900;margin-right:6px}
+.u325-ui li::before{content:"✓";color:#5B4CF0;color:light-dark(#5B4CF0,#A99DFF);font-weight:900;margin-right:6px}
 .u325-bt{height:38px;border-radius:12px;background:#5B4CF0;color:#fff;display:grid;place-items:center;font-size:13px;font-weight:800}
 .u325-ring{position:absolute;left:0;top:0;width:calc(var(--r) * 2);height:calc(var(--r) * 2);margin:calc(var(--r) * -1) 0 0 calc(var(--r) * -1);border-radius:50%;box-shadow:0 0 0 2px #7EE787,0 0 18px rgba(126,231,135,.55);pointer-events:none;transform:translate(var(--x),var(--y));opacity:var(--ro,0);transition:opacity .2s}
 .u325-ring::after{content:"</>";position:absolute;right:-6px;top:4px;padding:1px 5px;border-radius:999px;background:#7EE787;color:#0D1117;font:800 9px/1.4 ui-monospace,Menlo,monospace}

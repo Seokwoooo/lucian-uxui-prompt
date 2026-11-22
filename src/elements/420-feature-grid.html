@@ -1,0 +1,81 @@
+<!-- @meta {"title":"기능 그리드","category":"섹션·콘텐츠","summary":"섹션 라벨과 헤드라인 아래에 기능 여섯 개가 2열 3행으로 놓인 소개 섹션입니다. 칸에 포인터나 초점을 두면 칸이 살짝 떠오르고 아이콘마다 다른 작은 움직임이 나옵니다. 새로 나온 기능에는 새 기능 태그가 붙고, 맨 아래에 모든 기능 보기 링크가 있습니다.","hint":"기능 칸 위로 포인터를 옮겨 아이콘의 움직임을 보세요","shape":"tall","hue":"#8B5CF6","hue2":"#0EA5E9","tags":["features","grid","section","landing","hover","icons"]} -->
+<!-- @demo [["wait",700],["hover",".u420-t",0,{"after":650}],["hover",".u420-t",1,{"after":650}],["hover",".u420-t",2,{"after":650}],["hover",".u420-t",3,{"after":650}],["hover",".u420-t",4,{"after":650}],["hover",".u420-t",5,{"after":650}],["hover",".u420-all",0,{"after":800}],["leave",500],["reset"]] -->
+<!-- @en {"title":"Feature grid","summary":"A features section with a label, a headline and six features in a two-by-three grid. Hover or focus a tile and it lifts slightly while its icon plays its own small motion. A New tag marks the latest feature, and a See all features link closes the section.","hint":"Move the pointer across the tiles to see each icon move","map":[
+  [">기능<", ">Features<"],
+  [">팀에 필요한 건<br>모두 들어 있어요<", ">Everything your<br>team needs<"],
+  [">문서부터 회의, 일정까지 도구를 오갈 필요가 없어요.<", ">Docs, meetings and schedules — no more tool hopping.<"],
+  [">실시간 공동 편집<", ">Live co-editing<"],
+  [">여럿이 같은 문서를 동시에 고쳐요<", ">Edit the same doc together, at once<"],
+  [">AI 회의록<", ">AI notes<"],
+  [">새 기능<", ">New<"],
+  [">회의가 끝나면 요약과 할 일이 정리돼요<", ">Summary and tasks, ready after the call<"],
+  [">자동화 규칙<", ">Automations<"],
+  [">반복 업무는 규칙 하나로 끝내요<", ">One rule replaces the busywork<"],
+  [">팀 캘린더<", ">Team calendar<"],
+  [">일정과 마감을 한 화면에서 봐요<", ">Plans and deadlines on one screen<"],
+  [">인사이트<", ">Insights<"],
+  [">팀의 속도와 병목을 숫자로 확인해요<", ">See your team’s pace and bottlenecks<"],
+  [">엔터프라이즈 보안<", ">Enterprise security<"],
+  [">SSO, 감사 로그, 데이터 암호화<", ">SSO, audit logs and encryption<"],
+  [">모든 기능 보기<", ">See all features<"]
+]} -->
+<style>
+.u420{position:relative;width:340px;height:560px;padding:24px 16px 18px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
+.u420-lb{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;height:22px;margin:0 4px;padding:0 9px 0 7px;border-radius:99px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:10.5px;font-weight:750}
+.u420-lb svg{width:11px;height:11px;fill:currentColor}
+.u420 h2{margin:12px 4px 0;font-size:22px;line-height:1.24;font-weight:850;letter-spacing:-.045em}
+.u420-sub{margin:8px 4px 0;font-size:11.5px;line-height:1.55;color:var(--ux-ink-3)}
+.u420-gr{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:8px;margin:16px 0 0;padding:0;list-style:none}
+.u420-t{position:relative;display:flex;flex-direction:column;height:100%;padding:12px 12px 11px;border-radius:14px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink);text-decoration:none;transition:transform .4s var(--ux-spring),box-shadow .3s var(--ux-ease),background-color .3s}
+.u420-t:hover,.u420-t:focus-visible{transform:translateY(-3px);background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 14px 28px -16px var(--ux-shadow-strong)}
+.u420-t:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u420-ic{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow);color:var(--ux-accent);transition:background-color .3s,box-shadow .3s}
+.u420-t:hover .u420-ic,.u420-t:focus-visible .u420-ic{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 30%,transparent)}
+.u420-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.u420-ic svg *{transform-box:fill-box;transform-origin:center}
+.u420-t b{display:flex;align-items:center;flex-wrap:wrap;gap:3px 6px;margin-top:11px;font-size:12.5px;font-weight:750;letter-spacing:-.02em}
+.u420-t em{font-style:normal;height:17px;padding:0 6px;border-radius:99px;background:linear-gradient(135deg,#7B61FF,#3D8BFF);color:#fff;font-size:9px;font-weight:800;line-height:17px;white-space:nowrap}
+.u420-t small{display:block;margin-top:4px;font-size:10.5px;line-height:1.45;color:var(--ux-ink-3)}
+/* 아이콘마다 다른 작은 움직임 */
+.u420-t .p1,.u420-t .p2{transition:transform .45s var(--ux-spring)}
+.u420-t:hover .k1 .p1,.u420-t:focus-visible .k1 .p1{transform:translate(-2px,1px)}
+.u420-t:hover .k1 .p2,.u420-t:focus-visible .k1 .p2{transform:translate(2px,-1px)}
+.u420-t:hover .k2 .p1,.u420-t:focus-visible .k2 .p1{transform:rotate(90deg) scale(1.15)}
+.u420-t:hover .k2 .p2,.u420-t:focus-visible .k2 .p2{transform:scale(1.5);opacity:.6}
+.u420-t:hover .k3 .p1,.u420-t:focus-visible .k3 .p1{animation:u420-zap .5s var(--ux-ease)}
+@keyframes u420-zap{0%,100%{transform:none}30%{transform:translateY(-2px) scale(1.08)}55%{transform:translateY(1px)}}
+.u420-t:hover .k4 .p1,.u420-t:focus-visible .k4 .p1{transform:translateX(5px)}
+.u420-t .k5 .p1,.u420-t .k5 .p2,.u420-t .k5 .p3{transform-origin:50% 100%;transition:transform .45s var(--ux-spring)}
+.u420-t:hover .k5 .p1,.u420-t:focus-visible .k5 .p1{animation:u420-bar .6s var(--ux-ease)}
+.u420-t:hover .k5 .p2,.u420-t:focus-visible .k5 .p2{animation:u420-bar .6s var(--ux-ease) .08s}
+.u420-t:hover .k5 .p3,.u420-t:focus-visible .k5 .p3{animation:u420-bar .6s var(--ux-ease) .16s}
+@keyframes u420-bar{0%{transform:scaleY(1)}35%{transform:scaleY(.35)}100%{transform:scaleY(1)}}
+.u420-t:hover .k6 .p1,.u420-t:focus-visible .k6 .p1{animation:u420-lock .6s var(--ux-ease)}
+@keyframes u420-lock{0%,100%{transform:none}40%{transform:translateY(-2.5px)}70%{transform:translateY(.5px)}}
+.u420-all{display:inline-flex;align-items:center;gap:4px;align-self:center;height:32px;margin-top:10px;padding:0 12px;border-radius:9px;font-size:12px;font-weight:700;color:var(--ux-ink);text-decoration:none;transition:background-color .15s}
+.u420-all:hover{background:var(--ux-surface-2)}
+.u420-all i{font-style:normal;transition:transform .3s var(--ux-spring)}
+.u420-all:hover i{transform:translateX(3px)}
+.u420-all:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.u420-t,.u420-t *{animation:none!important;transition:none!important}}
+</style>
+<section class="ux u420">
+  <span class="u420-lb"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 .8c.3 2.6 1.6 3.9 4.2 4.2v.1C7.6 5.4 6.3 6.7 6 9.3h-.1C5.6 6.7 4.3 5.4 1.7 5.1V5C4.3 4.7 5.6 3.4 5.9.8z"/></svg>기능</span>
+  <h2>팀에 필요한 건<br>모두 들어 있어요</h2>
+  <p class="u420-sub">문서부터 회의, 일정까지 도구를 오갈 필요가 없어요.</p>
+  <ul class="u420-gr">
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k1" viewBox="0 0 18 18"><g class="p1"><path d="M3 3.5 7.6 14l1.3-4.4 4.4-1.3z"/></g><g class="p2"><circle cx="13.5" cy="13.5" r="2.2"/></g></svg></span><b>실시간 공동 편집</b><small>여럿이 같은 문서를 동시에 고쳐요</small></a></li>
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k2" viewBox="0 0 18 18"><path class="p1" d="M8 2.5c.4 3.4 2.1 5.1 5.5 5.5-3.4.4-5.1 2.1-5.5 5.5-.4-3.4-2.1-5.1-5.5-5.5 3.4-.4 5.1-2.1 5.5-5.5z"/><circle class="p2" cx="14" cy="13.5" r="1.4"/></svg></span><b>AI 회의록<em>새 기능</em></b><small>회의가 끝나면 요약과 할 일이 정리돼요</small></a></li>
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k3" viewBox="0 0 18 18"><path class="p1" d="M10 2 4.5 10h4L7.8 16l5.7-8h-4z"/></svg></span><b>자동화 규칙</b><small>반복 업무는 규칙 하나로 끝내요</small></a></li>
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k4" viewBox="0 0 18 18"><rect x="2.5" y="3.5" width="13" height="12" rx="2.2"/><path d="M2.5 7.5h13M6 2v3M12 2v3"/><circle class="p1" cx="6" cy="11.5" r="1.3" fill="currentColor" stroke="none"/></svg></span><b>팀 캘린더</b><small>일정과 마감을 한 화면에서 봐요</small></a></li>
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k5" viewBox="0 0 18 18"><path d="M2.5 15.5h13"/><path class="p1" d="M5 13V9"/><path class="p2" d="M9 13V4.5"/><path class="p3" d="M13 13V7"/></svg></span><b>인사이트</b><small>팀의 속도와 병목을 숫자로 확인해요</small></a></li>
+    <li><a class="u420-t" href="#"><span class="u420-ic" aria-hidden="true"><svg class="k6" viewBox="0 0 18 18"><rect x="3.5" y="8" width="11" height="7.5" rx="2"/><path class="p1" d="M6 8V6a3 3 0 0 1 6 0v2"/><path d="M9 11v1.5"/></svg></span><b>엔터프라이즈 보안</b><small>SSO, 감사 로그, 데이터 암호화</small></a></li>
+  </ul>
+  <a class="u420-all" href="#">모든 기능 보기<i aria-hidden="true">→</i></a>
+</section>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
+})();
+</script>

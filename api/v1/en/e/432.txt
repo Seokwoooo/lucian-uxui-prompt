@@ -1,0 +1,199 @@
+<!-- Lucian UX/UI Prompt #432 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#432 -->
+<!--
+Element: File upload
+ID: 432 · Category: Inputs & Search · Tags: file-upload, dropzone, drag-and-drop, progress, retry, validation, attachments
+What it does: Drag files in or pick them with Browse and they join the list with a type icon while progress fills. The drop area lights up as you drag over it, a finished file shows a check, and a dropped connection shows an error with a Retry button. Allowed formats and the 10 MB limit are stated up front, and files that don’t fit are caught right away.
+How to use it: Drag a file in or press Browse. A failed file can pick up again with Retry
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#432
+-->
+<style>
+.u432{position:relative;width:340px;height:364px;padding:20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u432 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u432-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px}
+.u432-hd b{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.u432-hd small{font-size:12px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u432-dz{position:relative;height:104px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--ux-surface-2);cursor:pointer;transition:background-color .2s var(--ux-ease)}
+.u432-dz::before{content:"";position:absolute;inset:0;border-radius:inherit;border:1.5px dashed var(--ux-line-2);pointer-events:none;transition:border-color .2s var(--ux-ease)}
+.u432-dz:hover::before{border-color:color-mix(in srgb,var(--ux-ink) 32%,transparent)}
+.u432-dz>span{width:34px;height:34px;margin-bottom:4px;border-radius:10px;display:grid;place-items:center;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line),0 2px 6px -3px var(--ux-shadow);color:var(--ux-ink-2);transition:transform .35s var(--ux-spring),color .2s,background-color .2s}
+.u432-dz>span svg{width:17px;height:17px}
+.u432-dz p{margin:0;font-size:13px;font-weight:500;color:var(--ux-ink-2)}
+.u432-dz small{font-size:11.5px;color:var(--ux-ink-3)}
+.u432-br{padding:0;border:0;background:none;font-weight:650;color:var(--ux-accent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--ux-accent) 40%,transparent);text-underline-offset:3px}
+.u432-br:hover{text-decoration-color:var(--ux-accent)}
+.u432-br:focus-visible{outline-offset:2px;border-radius:3px}
+.u432-dz .u432-on{display:none;color:var(--ux-accent);font-weight:650}
+.u432-dz.is-drag{background:var(--ux-accent-soft)}
+.u432-dz.is-drag::before{border-style:solid;border-color:var(--ux-accent)}
+.u432-dz.is-drag>span{transform:translateY(-3px) scale(1.06);color:var(--ux-accent)}
+.u432-dz.is-drag .u432-off{display:none}
+.u432-dz.is-drag .u432-on{display:block}
+.u432-file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.u432-ls{height:172px;margin-top:12px;overflow-y:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:8px;scrollbar-width:none}
+.u432-ls::-webkit-scrollbar{display:none}
+.u432-none{margin:auto;font-size:12px;color:var(--ux-ink-3)}
+.u432-row{position:relative;flex:none;display:flex;align-items:center;gap:11px;height:52px;padding:0 8px 0 12px;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);overflow:hidden;animation:u432-in .32s var(--ux-ease);transition:box-shadow .2s}
+@keyframes u432-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.u432-row[data-st="err"]{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-danger) 38%,transparent);background:color-mix(in srgb,var(--ux-danger) 5%,var(--ux-surface))}
+.u432-ty{position:relative;flex:none;width:26px;height:32px;border-radius:4px 9px 4px 4px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u432-ty::before{content:"";position:absolute;right:0;top:0;width:8px;height:8px;border-radius:0 0 0 3px;background:var(--ux-surface-3)}
+.u432-ty i{position:absolute;left:-5px;bottom:5px;padding:1px 3px;border-radius:3px;background:var(--c,#8A8F98);font-style:normal;font-size:7.5px;font-weight:800;line-height:1.2;letter-spacing:.02em;color:#fff}
+.u432-md{flex:1;min-width:0}
+.u432-nm{display:block;font-size:13px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u432-st{display:flex;align-items:center;gap:4px;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.u432-st em{font-style:normal}
+.u432-st svg{flex:none;width:13px;height:13px;stroke-width:2.4;display:none}
+.u432-row[data-st="done"] .u432-st svg.ok{display:block;color:var(--ux-mint)}
+.u432-row[data-st="err"] .u432-st{color:var(--ux-danger)}
+.u432-row[data-st="err"] .u432-st svg.no{display:block}
+.u432-bar{position:absolute;left:12px;right:12px;bottom:0;height:2px;border-radius:2px;background:var(--ux-line);opacity:0;transition:opacity .3s}
+.u432-bar i{display:block;height:100%;border-radius:inherit;background:var(--ux-accent);transform-origin:0 50%;transform:scaleX(var(--p,0));transition:transform .18s linear}
+.u432-row[data-st="up"] .u432-bar{opacity:1}
+.u432-retry{flex:none;display:none;align-items:center;gap:5px;height:28px;padding:0 9px;border:0;border-radius:8px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:11.5px;font-weight:650;color:var(--ux-ink);transition:background-color .15s,transform .2s var(--ux-spring)}
+.u432-retry svg{width:12px;height:12px;stroke-width:2.2}
+.u432-retry:hover{background:var(--ux-surface-2)}
+.u432-retry:active{transform:scale(.95)}
+.u432-row[data-st="err"][data-retry] .u432-retry{display:inline-flex}
+.u432-rm{flex:none;width:28px;height:28px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s}
+.u432-rm:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u432-rm svg{width:13px;height:13px;stroke-width:2.2}
+.u432-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u432">
+  <div class="u432-hd"><b>Attachments</b><small></small></div>
+  <div class="u432-dz">
+    <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15V4.5M7.5 9 12 4.5 16.5 9"/><path d="M4.5 14.5v3a2.5 2.5 0 0 0 2.5 2.5h10a2.5 2.5 0 0 0 2.5-2.5v-3"/></svg></span>
+    <p class="u432-off">Drag files here or <button type="button" class="u432-br">browse</button></p>
+    <p class="u432-on" aria-hidden="true">Drop to upload right away</p>
+    <small>PDF, PNG, JPG, DOCX · up to 10 MB each</small>
+    <input class="u432-file" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.docx" tabindex="-1" aria-hidden="true">
+  </div>
+  <div class="u432-ls" role="list" aria-label="Attached files"></div>
+  <p class="u432-none" hidden>No files yet</p>
+  <p class="u432-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var dz = q('.u432-dz'), br = q('.u432-br'), fileIn = q('.u432-file'), ls = q('.u432-ls'), none = q('.u432-none'), cnt = q('.u432-hd small'), live = q('.u432-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { count: '{n} files', one: '1 file', done: 'Done', net: 'Upload interrupted', size: 'Over the 10 MB limit', type: 'Format not supported', retry: 'Retry', remove: 'Remove {n}', up: 'Uploading {n}', ok: '{n} uploaded', bad: '{n}: {e}' };
+  var MAX = 10 * 1024 * 1024;
+  var EXT = { pdf: '#E5484D', png: '#8E4EC6', jpg: '#0090FF', jpeg: '#0090FF', docx: '#2B63D9' };
+  var ICON = {
+    ok: '<svg class="ok" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+    no: '<svg class="no" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg>',
+    retry: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9"/></svg>',
+    x: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>'
+  };
+  var items = [];
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function fmt(b) { return b < 1024 * 1024 ? Math.max(1, Math.round(b / 1024)) + 'KB' : (b / 1048576).toFixed(1) + 'MB'; }
+  function extOf(n) { var m = /\.([a-z0-9]+)$/i.exec(n); return m ? m[1].toLowerCase() : ''; }
+
+  function count() {
+    cnt.textContent = items.length === 1 ? T.one : items.length ? T.count.replace('{n}', items.length) : '';
+    none.hidden = !!items.length;
+    ls.hidden = !items.length;
+  }
+  function paint(it) {
+    var r = it.row;
+    r.dataset.st = it.st;
+    if (it.retry) r.dataset.retry = ''; else r.removeAttribute('data-retry');
+    var em = r.querySelector('.u432-st em');
+    if (it.st === 'up') em.textContent = fmt(it.size * it.p) + ' / ' + fmt(it.size) + ' · ' + Math.floor(it.p * 100) + '%';
+    else if (it.st === 'done') em.textContent = fmt(it.size) + ' · ' + T.done;
+    else em.textContent = T[it.err];
+    r.querySelector('.u432-bar i').style.setProperty('--p', it.p.toFixed(3));
+  }
+  function add(name, size, opt) {
+    opt = opt || {};
+    var ext = extOf(name);
+    var it = { name: name, size: size, ext: ext, p: opt.p || 0, st: 'up', err: '', retry: false };
+    if (!EXT[ext]) { it.st = 'err'; it.err = 'type'; }
+    else if (size > MAX) { it.st = 'err'; it.err = 'size'; }
+    else if (opt.fail) { it.st = 'err'; it.err = 'net'; it.retry = true; }
+    else if (opt.done) { it.st = 'done'; it.p = 1; }
+    var r = document.createElement('div');
+    r.className = 'u432-row';
+    r.setAttribute('role', 'listitem');
+    r.innerHTML = '<span class="u432-ty" aria-hidden="true"><i></i></span><div class="u432-md"><b class="u432-nm"></b><span class="u432-st">' + ICON.ok + ICON.no + '<em></em></span></div>' +
+      '<button type="button" class="u432-retry">' + ICON.retry + '<span></span></button><button type="button" class="u432-rm">' + ICON.x + '</button><span class="u432-bar" aria-hidden="true"><i></i></span>';
+    r.querySelector('.u432-ty i').textContent = (ext || '?').slice(0, 4).toUpperCase();
+    if (EXT[ext]) r.querySelector('.u432-ty').style.setProperty('--c', EXT[ext]);
+    r.querySelector('.u432-nm').textContent = name;
+    r.querySelector('.u432-nm').title = name;
+    r.querySelector('.u432-retry span').textContent = T.retry;
+    r.querySelector('.u432-rm').setAttribute('aria-label', T.remove.replace('{n}', name));
+    if (opt.noAnim) r.style.animation = 'none';
+    it.row = r;
+    items.push(it);
+    ls.appendChild(r);
+    paint(it);
+    count();
+    if (it.st === 'up') start(it);
+    else if (!opt.quiet) live.textContent = T.bad.replace('{n}', name).replace('{e}', T[it.err]);
+    if (!opt.noAnim) ls.scrollTop = ls.scrollHeight;
+    return it;
+  }
+  function start(it) {
+    it.st = 'up'; it.err = ''; it.retry = false;
+    paint(it);
+    live.textContent = T.up.replace('{n}', it.name);
+    var per = 0.045 * Math.max(0.6, Math.min(1.2, 3e6 / Math.max(it.size, 1)));
+    clearTimeout(it.t);
+    (function tick() {
+      if (!root.isConnected || items.indexOf(it) < 0) return;
+      it.p = Math.min(1, it.p + per * (0.55 + Math.random() * 0.9));
+      if (it.p >= 1) {
+        it.st = 'done';
+        live.textContent = T.ok.replace('{n}', it.name);
+        paint(it);
+        return;
+      }
+      paint(it);
+      it.t = setTimeout(tick, rm ? 16 : 90);
+    })();
+  }
+  function remove(it) {
+    var i = items.indexOf(it);
+    if (i < 0) return;
+    items.splice(i, 1);
+    clearTimeout(it.t);
+    var r = it.row, next = items[i] || items[i - 1];
+    var finish = function () { r.remove(); count(); };
+    if (rm || !r.animate) finish();
+    else r.animate([{ opacity: 1, height: '52px', marginBottom: '0px' }, { opacity: 0, height: '0px', marginBottom: '-8px' }], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' }).onfinish = finish;
+    if (r.contains(document.activeElement)) (next ? next.row.querySelector('.u432-rm') : br).focus({ preventScroll: true });
+  }
+  ls.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var row = b.closest('.u432-row'), it = items.filter(function (x) { return x.row === row; })[0];
+    if (!it) return;
+    if (b.classList.contains('u432-rm')) remove(it);
+    else if (b.classList.contains('u432-retry')) { it.p = Math.max(0, it.p - 0.02); start(it); }
+  });
+  function addList(list) { Array.prototype.forEach.call(list || [], function (f) { add(f.name, f.size); }); }
+  dz.addEventListener('click', function (e) { if (!e.target.closest('.u432-file')) fileIn.click(); });
+  br.addEventListener('click', function (e) { e.stopPropagation(); fileIn.click(); });
+  fileIn.addEventListener('change', function () { addList(fileIn.files); fileIn.value = ''; });
+  var depth = 0;
+  dz.addEventListener('dragenter', function (e) { e.preventDefault(); depth++; dz.classList.add('is-drag'); });
+  dz.addEventListener('dragover', function (e) { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'copy'; });
+  dz.addEventListener('dragleave', function () { depth = Math.max(0, depth - 1); if (!depth) dz.classList.remove('is-drag'); });
+  dz.addEventListener('drop', function (e) {
+    e.preventDefault(); depth = 0; dz.classList.remove('is-drag');
+    if (e.dataTransfer) addList(e.dataTransfer.files);
+  });
+
+  add('brand_guide_v3.pdf', 2516582, { done: true, noAnim: true });
+  add('main_banner@2x.png', 4299161, { p: 0.38, noAnim: true });
+  add('contract_final.docx', 1258291, { p: 0.62, fail: true, noAnim: true, quiet: true });
+  ls.scrollTop = 0;
+  live.textContent = '';
+})();
+</script>

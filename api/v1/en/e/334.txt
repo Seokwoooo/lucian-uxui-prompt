@@ -9,20 +9,20 @@ Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to 
 Live demo: https://lucianlabs.dev/uxui-prompt/#334
 -->
 <style>
-.u334{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,#E8ECF4 0 58%,#D3C3AE 58% 100%);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
-.u334::before{content:"";position:absolute;left:0;right:0;top:58%;height:14px;background:linear-gradient(rgba(0,0,0,.08),transparent)}
-.u334-shadow{position:absolute;left:50%;top:244px;width:250px;height:40px;margin-left:-125px;border-radius:50%;background:radial-gradient(closest-side,rgba(40,30,20,.35),transparent);transition:opacity .3s}
+.u334{position:relative;width:340px;height:340px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,#E8ECF4 0 58%,#D3C3AE 58% 100%);background:linear-gradient(180deg,light-dark(#E8ECF4,#10131B) 0,light-dark(#E8ECF4,#1D2230) 58%,light-dark(#D3C3AE,#3A2E24) 58%,light-dark(#D3C3AE,#1E1813) 100%);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong)}
+.u334::before{content:"";position:absolute;left:0;right:0;top:58%;height:14px;background:linear-gradient(rgba(0,0,0,.08),transparent);background:linear-gradient(light-dark(rgba(0,0,0,.08),rgba(0,0,0,.32)),transparent)}
+.u334-shadow{position:absolute;left:50%;top:244px;width:250px;height:40px;margin-left:-125px;border-radius:50%;background:radial-gradient(closest-side,rgba(40,30,20,.35),transparent);background:radial-gradient(closest-side,light-dark(rgba(40,30,20,.35),rgba(0,0,0,.62)),transparent);transition:opacity .3s}
 .u334-st{position:absolute;left:50%;top:190px;width:0;height:0;perspective:760px;perspective-origin:0 -120px}
 .u334-sc{position:absolute;left:0;top:0;transform-style:preserve-3d;transform:rotateX(62deg)}
 .u334-base,.u334-lid{position:absolute;left:-110px;width:220px;height:146px;transform-style:preserve-3d}
-.u334-base{top:-73px;border-radius:9px;background:linear-gradient(#C9CED8,#B4BAC6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+.u334-base{top:-73px;border-radius:9px;background:linear-gradient(#C9CED8,#B4BAC6);background:linear-gradient(light-dark(#C9CED8,#AFB5C0),light-dark(#B4BAC6,#99A0AC));box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
 .u334-kb{position:absolute;left:16px;right:16px;top:14px;height:72px;border-radius:5px;background:#2A2D35;display:grid;grid-template-columns:repeat(12,1fr);gap:2.4px;padding:4px}
 .u334-kb i{border-radius:2px;background:#3D414B;box-shadow:0 0 calc(var(--bl,0) * 6px) rgba(140,200,255,calc(var(--bl,0) * .9));transition:box-shadow .5s}
-.u334-tp{position:absolute;left:72px;right:72px;top:94px;height:42px;border-radius:6px;background:#BEC4CF;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
-.u334-edge{position:absolute;left:0;right:0;bottom:-8px;height:8px;border-radius:0 0 8px 8px;background:#9298A6;transform-origin:50% 0;transform:rotateX(-90deg)}
+.u334-tp{position:absolute;left:72px;right:72px;top:94px;height:42px;border-radius:6px;background:#BEC4CF;background:light-dark(#BEC4CF,#A5ABB7);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.u334-edge{position:absolute;left:0;right:0;bottom:-8px;height:8px;border-radius:0 0 8px 8px;background:#9298A6;background:light-dark(#9298A6,#7C8290);transform-origin:50% 0;transform:rotateX(-90deg)}
 .u334-lid{top:-73px;transform-origin:50% 0;transform:translateZ(1px) rotateX(calc(var(--a,0) * 1deg))}
 .u334-out,.u334-scr{position:absolute;inset:0;border-radius:9px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.u334-out{background:linear-gradient(160deg,#D4D9E2,#AEB5C2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center}
+.u334-out{background:linear-gradient(160deg,#D4D9E2,#AEB5C2);background:linear-gradient(160deg,light-dark(#D4D9E2,#BAC0CA),light-dark(#AEB5C2,#949BA8));box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center}
 .u334-out svg{width:30px;height:30px;opacity:.55}
 .u334-scr{transform:rotateX(180deg);background:#15171C;padding:7px;box-shadow:inset 0 0 0 1px #000}
 .u334-dsp{position:relative;width:100%;height:100%;border-radius:4px;overflow:hidden;background:#000}

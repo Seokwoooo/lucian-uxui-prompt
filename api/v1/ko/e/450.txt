@@ -1,0 +1,178 @@
+<!-- Lucian UX/UI Prompt #450 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#450 -->
+<!--
+Element: 맨 위로 + 상담 플로팅 버튼
+ID: 450 · Category: 버튼 · Tags: fab, back-to-top, scroll-progress, support, chat, floating
+What it does: 스크롤하는 웹페이지 오른쪽 아래에 떠 있는 버튼 묶음입니다. 조금 내려가면 ‘맨 위로’ 버튼이 나타나고 테두리 링이 읽은 만큼 차오르며, 누르면 부드럽게 맨 위로 올라갑니다. 말풍선 버튼은 운영 시간, 자주 묻는 질문, ‘상담 시작’이 든 작은 상담 창을 엽니다.
+How to use it: 페이지를 아래로 스크롤해 맨 위로 버튼을 띄우고, 말풍선 버튼으로 상담 창을 열어 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#450
+-->
+<style>
+.u450{position:relative;width:340px;height:350px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
+.u450-sc{position:absolute;inset:0;overflow:auto;scrollbar-width:none;overscroll-behavior:contain}
+.u450-sc::-webkit-scrollbar{display:none}
+.u450-bar{position:sticky;top:0;z-index:1;height:44px;display:flex;align-items:center;gap:14px;padding:0 16px;background:color-mix(in srgb,var(--ux-surface) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--ux-line)}
+.u450-logo{display:flex;align-items:center;gap:6px;margin-right:auto;font-size:13px;font-weight:700;letter-spacing:-.02em}
+.u450-logo i{width:16px;height:16px;border-radius:5px;background:var(--ux-ink);position:relative}
+.u450-logo i::after{content:"";position:absolute;left:5px;top:4px;width:3px;height:8px;border-left:2px solid var(--ux-surface);border-bottom:2px solid var(--ux-surface)}
+.u450-bar>span:not(.u450-logo){width:34px;height:7px;border-radius:4px;background:var(--ux-surface-3)}
+.u450-prog{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--ux-accent);transform:scaleX(var(--p,0));transform-origin:left}
+.u450-art{padding:20px 18px 90px}
+.u450-tag{display:inline-flex;height:22px;padding:0 8px;align-items:center;border-radius:6px;background:var(--ux-accent-soft);color:var(--ux-accent);font-size:11px;font-weight:700}
+.u450-art h3{margin:10px 0 0;font-size:19px;font-weight:700;letter-spacing:-.035em;line-height:1.3}
+.u450-art small{display:block;margin-top:6px;font-size:11.5px;color:var(--ux-ink-3)}
+.u450-hero{height:120px;margin-top:16px;border-radius:12px;background:linear-gradient(135deg,var(--ux-surface-2),var(--ux-surface-3));box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u450-art h4{margin:22px 0 10px;font-size:14px;font-weight:700;letter-spacing:-.02em}
+.u450-ln{display:grid;gap:8px}
+.u450-ln i{display:block;height:8px;border-radius:4px;background:var(--ux-surface-2)}
+.u450-stack{position:absolute;z-index:2;right:14px;bottom:14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.u450-top{position:relative;width:40px;height:40px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line),0 8px 20px -8px var(--ux-shadow-strong);color:var(--ux-ink);opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);transition:opacity .25s,transform .4s var(--ux-spring),visibility 0s .4s,background .2s}
+.u450-top.is-show{opacity:1;visibility:visible;transform:none;transition:opacity .25s,transform .4s var(--ux-spring),visibility 0s,background .2s}
+.u450-top:hover{background:var(--ux-surface-2)}
+.u450-top:active{transform:scale(.92)}
+.u450-top>svg.ar{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
+.u450-top:hover>svg.ar{transform:translateY(-2px)}
+.u450-ring{position:absolute;inset:-1px;width:42px;height:42px;transform:rotate(-90deg)}
+.u450-ring circle{fill:none;stroke-width:2}
+.u450-ring .tr{stroke:var(--ux-line)}
+.u450-ring .pr{stroke:var(--ux-accent);stroke-linecap:round;stroke-dasharray:125.7;stroke-dashoffset:calc(125.7 * (1 - var(--p,0)))}
+.u450.is-open .u450-top{opacity:0;visibility:hidden;transform:translateY(10px) scale(.85)}
+.u450-fab{position:relative;width:50px;height:50px;display:grid;place-items:center;padding:0;border:0;border-radius:50%;background:var(--ux-ink);color:var(--ux-surface);box-shadow:0 10px 24px -8px var(--ux-shadow-strong);transition:transform .3s var(--ux-spring),background .2s}
+.u450-fab:hover{transform:translateY(-1px) scale(1.03)}
+.u450-fab:active{transform:scale(.94)}
+.u450 button:focus-visible{outline-offset:3px}
+.u450-fab svg{position:absolute;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s,transform .35s var(--ux-spring)}
+.u450-fab .x{opacity:0;transform:rotate(-90deg) scale(.6)}
+.u450.is-open .u450-fab .ch{opacity:0;transform:rotate(90deg) scale(.6)}
+.u450.is-open .u450-fab .x{opacity:1;transform:none}
+.u450-fab i{position:absolute;right:2px;top:2px;width:11px;height:11px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 2px var(--ux-surface);transition:transform .3s var(--ux-spring)}
+.u450.is-open .u450-fab i{transform:scale(0)}
+.u450-pn{position:absolute;z-index:2;right:14px;bottom:72px;width:268px;padding:12px;border-radius:16px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 20px 44px -16px var(--ux-shadow-strong);transform-origin:bottom right;opacity:0;visibility:hidden;transform:translateY(8px) scale(.96);transition:opacity .18s,transform .3s var(--ux-ease),visibility 0s .3s}
+.u450.is-open .u450-pn{opacity:1;visibility:visible;transform:none;transition:opacity .18s,transform .35s var(--ux-spring),visibility 0s}
+.u450-pn:focus{outline:none}
+.u450-ph{display:flex;align-items:center;gap:10px}
+.u450-ph>i{position:relative;width:32px;height:32px;flex:none;display:grid;place-items:center;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-style:normal;font-size:13px;font-weight:800}
+.u450-ph b{display:block;font-size:13.5px;font-weight:700}
+.u450-ph small{display:flex;align-items:center;gap:5px;margin-top:1px;font-size:11px;color:var(--ux-ink-3)}
+.u450-ph small::before{content:"";width:6px;height:6px;border-radius:50%;background:#22C55E}
+.u450-hr{display:flex;align-items:center;gap:7px;margin-top:8px;padding:7px 10px;border-radius:10px;background:var(--ux-surface-2);font-size:11.5px;color:var(--ux-ink-2)}
+.u450-hr svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round}
+.u450-fq{margin:8px 0 0;padding:0;list-style:none}
+.u450-fq p{margin:0 0 2px;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u450-fq a{display:flex;align-items:center;justify-content:space-between;gap:8px;height:30px;padding:0 6px;margin:0 -6px;border-radius:8px;font-size:12.5px;color:var(--ux-ink);text-decoration:none;transition:background .15s}
+.u450-fq a:hover{background:var(--ux-surface-3)}
+.u450-fq a svg{width:13px;height:13px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u450-cta{position:relative;margin-top:8px;height:36px}
+.u450-start{position:absolute;inset:0;display:grid;place-items:center;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600;transition:opacity .25s,transform .3s var(--ux-ease)}
+.u450-start:hover{opacity:.9}
+.u450-start>span{grid-area:1/1;display:flex;align-items:center;gap:7px;transition:opacity .2s}
+.u450-start .s1{opacity:0}
+.u450-start .s1 i{width:13px;height:13px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u450-spin .75s linear infinite}
+@keyframes u450-spin{to{rotate:360deg}}
+.u450-start.is-busy .s0{opacity:0}
+.u450-start.is-busy .s1{opacity:1}
+.u450-chat{display:none;margin-top:10px}
+.u450-pn.is-chat .u450-fq,.u450-pn.is-chat .u450-hr,.u450-pn.is-chat .u450-cta{display:none}
+.u450-pn.is-chat .u450-chat{display:block;animation:u450-in .4s var(--ux-ease)}
+@keyframes u450-in{from{opacity:0;transform:translateY(6px)}}
+.u450-msg{display:flex;gap:8px;align-items:flex-end}
+.u450-msg>i{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--ux-accent-soft);color:var(--ux-accent);font-style:normal;font-size:9.5px;font-weight:700}
+.u450-msg p{margin:0;padding:9px 11px;border-radius:12px 12px 12px 4px;background:var(--ux-surface-2);font-size:12px;line-height:1.5}
+.u450-in{display:flex;align-items:center;height:36px;margin-top:12px;padding:0 4px 0 12px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u450-in input{flex:1;min-width:0;border:0;background:none;outline:none;font-size:12.5px;color:var(--ux-ink)}
+.u450-in input::placeholder{color:var(--ux-ink-3)}
+.u450 .u450-in input:focus-visible{outline:none}
+.u450-in:focus-within{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u450-in b{width:28px;height:28px;display:grid;place-items:center;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface)}
+.u450-in b svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u450-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u450">
+  <div class="u450-sc" tabindex="0">
+    <div class="u450-bar" aria-hidden="true"><span class="u450-logo"><i></i>lucian</span><span></span><span></span><i class="u450-prog"></i></div>
+    <article class="u450-art">
+      <span class="u450-tag">가이드</span>
+      <h3>처음 쓰는 분을 위한 루시안 사용 가이드</h3>
+      <small>2026.11.20 · 6분 읽기</small>
+      <div class="u450-hero" aria-hidden="true"></div>
+      <h4>1. 워크스페이스 만들기</h4>
+      <div class="u450-ln" aria-hidden="true"><i></i><i style="width:92%"></i><i style="width:84%"></i><i style="width:60%"></i></div>
+      <h4>2. 팀원 초대하기</h4>
+      <div class="u450-ln" aria-hidden="true"><i style="width:96%"></i><i></i><i style="width:72%"></i></div>
+      <div class="u450-hero" aria-hidden="true" style="height:100px"></div>
+      <h4>3. 첫 프로젝트 시작하기</h4>
+      <div class="u450-ln" aria-hidden="true"><i></i><i style="width:88%"></i><i style="width:94%"></i><i style="width:52%"></i></div>
+      <h4>4. 알림 맞추기</h4>
+      <div class="u450-ln" aria-hidden="true"><i style="width:90%"></i><i></i><i style="width:66%"></i></div>
+    </article>
+  </div>
+  <div class="u450-pn" role="dialog" aria-label="고객센터 상담" tabindex="-1">
+    <div class="u450-ph"><i aria-hidden="true">L</i><span><b>루시안 고객센터</b><small>지금 상담 가능 · 보통 3분 안에 답해요</small></span></div>
+    <div class="u450-hr"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="5.5"/><path d="M7 4v3.2l2 1.3"/></svg>평일 10:00–19:00 · 점심 12:30–13:30</div>
+    <div class="u450-fq"><p>자주 묻는 질문</p>
+      <a href="#">주문을 취소하고 싶어요<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
+      <a href="#">배송은 얼마나 걸리나요?<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
+      <a href="#">환불은 언제 들어오나요?<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M5 3l4 4-4 4"/></svg></a>
+    </div>
+    <div class="u450-cta"><button type="button" class="u450-start"><span class="s0">상담 시작</span><span class="s1" aria-hidden="true"><i></i>연결하는 중…</span></button></div>
+    <div class="u450-chat">
+      <div class="u450-msg"><i aria-hidden="true">하늘</i><p>안녕하세요, 루시안 고객센터 김하늘이에요. 무엇을 도와드릴까요?</p></div>
+      <label class="u450-in"><input type="text" placeholder="메시지를 입력하세요" aria-label="메시지"><b aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 11.5V2.5M3 6.5l4-4 4 4"/></svg></b></label>
+    </div>
+  </div>
+  <div class="u450-stack">
+    <button type="button" class="u450-top" aria-label="맨 위로" tabindex="-1"><svg class="u450-ring" viewBox="0 0 42 42" aria-hidden="true"><circle class="tr" cx="21" cy="21" r="20"/><circle class="pr" cx="21" cy="21" r="20"/></svg><svg class="ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></button>
+    <button type="button" class="u450-fab" aria-expanded="false"><svg class="ch" viewBox="0 0 22 22" aria-hidden="true"><path d="M4 10.5c0-3.6 3.1-6.5 7-6.5s7 2.9 7 6.5S14.9 17 11 17c-.9 0-1.7-.1-2.5-.4L4.5 18l1-3.3C4.5 13.6 4 12.1 4 10.5z"/><path d="M8 10.5h.01M11 10.5h.01M14 10.5h.01"/></svg><svg class="x" viewBox="0 0 22 22" aria-hidden="true"><path d="M6.5 6.5l9 9M15.5 6.5l-9 9"/></svg><i aria-hidden="true"></i></button>
+  </div>
+  <p class="u450-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { openL: '상담 창 열기', closeL: '상담 창 닫기', joined: '상담원이 연결됐어요' };
+  var sc = root.querySelector('.u450-sc'), top = root.querySelector('.u450-top'), fab = root.querySelector('.u450-fab'), pn = root.querySelector('.u450-pn');
+  var start = root.querySelector('.u450-start'), live = root.querySelector('.u450-live'), raf = 0, gen = 0;
+  var uid = 'u450' + Math.random().toString(36).slice(2, 8);
+  pn.id = uid + 'p'; fab.setAttribute('aria-controls', pn.id); fab.setAttribute('aria-label', T.openL);
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  // 스크롤: 맨 위로 버튼은 120px 넘게 내려가면 나타나고, 링과 위쪽 막대가 읽은 비율만큼 찹니다
+  function onScroll() {
+    raf = 0;
+    var max = sc.scrollHeight - sc.clientHeight, p = max > 0 ? Math.min(1, sc.scrollTop / max) : 0;
+    root.style.setProperty('--p', p.toFixed(4));
+    var show = sc.scrollTop > 120;
+    if (show !== top.classList.contains('is-show')) { top.classList.toggle('is-show', show); top.tabIndex = show ? 0 : -1; }
+  }
+  sc.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(onScroll); }, { passive: true });
+  top.addEventListener('click', function () {
+    sc.scrollTo({ top: 0, behavior: rm ? 'auto' : 'smooth' });
+    later(function () { sc.focus({ preventScroll: true }); }, rm ? 0 : 500);
+  });
+  function setOpen(on, refocus) {
+    root.classList.toggle('is-open', on);
+    fab.setAttribute('aria-expanded', String(on));
+    fab.setAttribute('aria-label', on ? T.closeL : T.openL);
+    pn.inert = !on;
+    if (on) later(function () { pn.focus({ preventScroll: true }); }, rm ? 0 : 120);
+    else if (refocus) fab.focus({ preventScroll: true });
+  }
+  fab.addEventListener('click', function () { setOpen(!root.classList.contains('is-open')); });
+  pn.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false, true); } });
+  [].slice.call(pn.querySelectorAll('.u450-fq a')).forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
+  // 상담 시작: 연결 중 표시 뒤 상담원 첫 메시지와 입력칸으로 바뀝니다
+  start.addEventListener('click', function () {
+    if (start.classList.contains('is-busy')) return;
+    start.classList.add('is-busy'); start.setAttribute('aria-busy', 'true');
+    later(function () {
+      start.classList.remove('is-busy'); start.removeAttribute('aria-busy');
+      pn.classList.add('is-chat'); live.textContent = T.joined;
+      // 시작 버튼이 사라지므로 초점을 메시지 입력칸으로 옮겨 상담 창 안에 둡니다
+      pn.querySelector('.u450-in input').focus({ preventScroll: true });
+    }, rm ? 300 : 1100);
+  });
+  pn.inert = true;
+  onScroll();
+})();
+</script>

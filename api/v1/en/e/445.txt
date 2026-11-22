@@ -1,0 +1,230 @@
+<!-- Lucian UX/UI Prompt #445 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#445 -->
+<!--
+Element: Apply a coupon
+ID: 445 · Category: Commerce & Pricing · Tags: coupon, promo-code, validation, order-summary, discount, checkout, loading
+What it does: Enter a code and press Apply; after a quick check it explains an unknown code, an expired coupon, or a minimum order not met, each in its own words. A valid code attaches a coupon ticket, a discount line slides into the order summary and the total rolls down. You can also pick from “3 coupons you own” below, where coupons that don’t qualify are locked with the reason.
+How to use it: Try SUMMER2026 or any code to see the errors, then apply WELCOME10. You can also switch by tapping an owned coupon
+Footprint: fixed size, tall
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#445
+-->
+<style>
+.u445{position:relative;width:340px;height:562px;padding:20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u445 svg{display:block;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.u445-hd{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.u445-hd b{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.u445-hd span{padding:2px 8px;border-radius:999px;background:var(--ux-accent-soft);font-size:11px;font-weight:650;color:var(--ux-accent)}
+.u445-fr{position:relative;height:44px}
+.u445-fd,.u445-chip{position:absolute;inset:0;transition:opacity .2s var(--ux-ease),transform .3s var(--ux-spring)}
+.u445-fd{display:flex;gap:8px}
+.u445-in{flex:1;min-width:0;height:44px;padding:0 12px;border:0;border-radius:11px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13.5px;font-weight:600;letter-spacing:.04em;color:var(--ux-ink);outline:none;transition:box-shadow .18s}
+.u445-in::placeholder{font-weight:500;letter-spacing:0;color:var(--ux-ink-3);opacity:1}
+.u445-in:focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u445-fd.is-err .u445-in{box-shadow:inset 0 0 0 1px var(--ux-danger)}
+.u445-fd.is-err .u445-in:focus{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
+.u445 .u445-in:focus-visible{outline:none}
+.u445-ap{flex:none;width:68px;height:44px;border:0;border-radius:11px;display:grid;place-items:center;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:650;transition:opacity .15s,transform .2s var(--ux-spring)}
+.u445-ap:hover:not(:disabled){opacity:.88}
+.u445-ap:active:not(:disabled){transform:scale(.96)}
+.u445-ap:disabled{opacity:.28;cursor:not-allowed}
+.u445-ap i{width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u445-spin .7s linear infinite}
+@keyframes u445-spin{to{transform:rotate(360deg)}}
+.u445-fd.is-shake{animation:u445-shake .38s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u445-shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.u445-chip{display:flex;align-items:center;gap:10px;padding:0 6px 0 12px;border-radius:11px;background:color-mix(in srgb,var(--ux-mint) 10%,var(--ux-surface));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-mint) 45%,transparent);opacity:0;transform:scale(.96);pointer-events:none}
+.u445.is-on .u445-chip{opacity:1;transform:none;pointer-events:auto}
+.u445.is-on .u445-fd{opacity:0;transform:scale(.98);pointer-events:none}
+.u445-chip>svg{flex:none;width:18px;height:18px;stroke-width:1.9;color:var(--ux-mint)}
+.u445-chip div{flex:1;min-width:0}
+.u445-chip b{display:block;font-size:12.5px;font-weight:700;letter-spacing:.03em}
+.u445-chip small{display:block;font-size:11px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u445-chip em{flex:none;font-style:normal;font-size:13px;font-weight:700;color:var(--ux-danger);font-variant-numeric:tabular-nums}
+.u445-x{flex:none;width:28px;height:28px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s}
+.u445-x:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u445-x svg{width:13px;height:13px;stroke-width:2.2}
+.u445-msg{display:flex;align-items:flex-start;gap:5px;min-height:34px;margin:7px 0 0;padding-left:2px;font-size:12px;line-height:1.4;color:var(--ux-ink-3)}
+.u445-msg svg{flex:none;width:14px;height:14px;margin-top:1px;stroke-width:2;display:none}
+.u445-msg.is-err{color:var(--ux-danger)}
+.u445-msg.is-ok{color:var(--ux-mint)}
+.u445-msg.is-err svg.e,.u445-msg.is-ok svg.o{display:block}
+.u445-msg.is-err span,.u445-msg.is-ok span{animation:u445-msg .25s var(--ux-ease)}
+@keyframes u445-msg{from{opacity:0;transform:translateY(-3px)}}
+.u445-sh{display:flex;align-items:center;justify-content:space-between;margin:4px 0 8px;font-size:12px;font-weight:650;color:var(--ux-ink-2)}
+.u445-sh small{font-size:11.5px;font-weight:500;color:var(--ux-ink-3)}
+.u445-ts{display:flex;flex-direction:column;gap:8px}
+.u445-tk{position:relative;display:flex;align-items:stretch;width:100%;height:58px;padding:0;border:0;border-radius:12px;background:var(--ux-surface-2);text-align:left;-webkit-mask:radial-gradient(circle 7px at 78px 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 7px at 78px 100%,#0000 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle 7px at 78px 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 7px at 78px 100%,#0000 98%,#000) bottom/100% 51% no-repeat;box-shadow:inset 0 0 0 1px var(--ux-line);transition:box-shadow .2s,background-color .2s,transform .2s var(--ux-spring)}
+.u445-tk:hover:not(:disabled){box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u445-tk:active:not(:disabled){transform:scale(.985)}
+.u445-tk[aria-checked="true"]{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u445-tk:disabled{cursor:not-allowed}
+.u445-tv{flex:none;width:78px;display:grid;place-items:center;font-size:16px;font-weight:800;letter-spacing:-.03em;color:var(--ux-accent);font-variant-numeric:tabular-nums}
+.u445-tv.is-sm{font-size:13px}
+.u445-tt{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:0 12px;border-left:1.5px dashed var(--ux-line-2)}
+.u445-tt b{font-size:12.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u445-tt small{margin-top:2px;font-size:11px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u445-tk:disabled .u445-tv,.u445-tk:disabled .u445-tt b{color:var(--ux-ink-3)}
+.u445-tk:disabled .u445-tt small{color:var(--ux-warn)}
+.u445-tc{flex:none;align-self:center;width:20px;height:20px;margin-right:12px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--ux-line-2);transition:background-color .2s,box-shadow .2s}
+.u445-tc svg{width:11px;height:11px;stroke-width:3;stroke:var(--ux-accent-ink);opacity:0;transform:scale(.5);transition:opacity .15s,transform .3s var(--ux-spring)}
+.u445-tk[aria-checked="true"] .u445-tc{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u445-tk[aria-checked="true"] .u445-tc svg{opacity:1;transform:none}
+.u445-tk:disabled .u445-tc{opacity:.4}
+.u445 .u445-tk:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--ux-accent)}
+.u445-sum{position:absolute;left:20px;right:20px;bottom:20px}
+.u445-rows{padding:12px 2px;border-top:1px solid var(--ux-line)}
+.u445-r{display:flex;justify-content:space-between;align-items:center;height:22px;font-size:12.5px;color:var(--ux-ink-2);font-variant-numeric:tabular-nums}
+.u445-dw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ux-ease)}
+.u445-dw>div{min-height:0;overflow:hidden}
+.u445.is-on .u445-dw{grid-template-rows:1fr}
+.u445-dw .u445-r{color:var(--ux-danger);opacity:0;transform:translateY(-4px);transition:opacity .3s var(--ux-ease) .1s,transform .35s var(--ux-ease) .1s}
+.u445.is-on .u445-dw .u445-r{opacity:1;transform:none}
+.u445-r.is-tot{height:30px;margin-top:4px;font-size:13.5px;font-weight:650;color:var(--ux-ink)}
+.u445-r.is-tot b{font-size:17px;font-weight:750;letter-spacing:-.02em}
+.u445-go{width:100%;height:46px;border:0;border-radius:12px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.18);transition:opacity .15s,transform .2s var(--ux-spring)}
+.u445-go:hover{opacity:.92}
+.u445-go:active{transform:scale(.98)}
+.u445 .u445-go:focus-visible,.u445 .u445-ap:focus-visible{outline-offset:3px}
+.u445-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u445">
+  <div class="u445-hd"><b>Coupon</b><span>3 owned</span></div>
+  <div class="u445-fr">
+    <div class="u445-fd"><input class="u445-in" type="text" aria-label="Coupon code" placeholder="Enter coupon code" autocomplete="off" spellcheck="false" autocapitalize="characters" maxlength="16"><button type="button" class="u445-ap" disabled>Apply</button></div>
+    <div class="u445-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1.6a2 2 0 0 0 0 3.8v1.6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1.6a2 2 0 0 0 0-3.8z"/><path d="M14 7v10" stroke-dasharray="2 2"/></svg><div><b></b><small></small></div><em></em><button type="button" class="u445-x" aria-label="Remove coupon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  </div>
+  <p class="u445-msg" aria-live="polite"><svg class="e" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.5M12 16h.01"/></svg><svg class="o" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span></span></p>
+  <div class="u445-sh"><span>Your coupons</span><small></small></div>
+  <div class="u445-ts" role="radiogroup" aria-label="Your coupons"></div>
+  <div class="u445-sum">
+    <div class="u445-rows">
+      <div class="u445-r"><span>Items</span><span>₩48,200</span></div>
+      <div class="u445-r"><span>Shipping</span><span>₩3,000</span></div>
+      <div class="u445-dw"><div><div class="u445-r"><span class="u445-dl"></span><span class="u445-dv"></span></div></div></div>
+      <div class="u445-r is-tot"><span>Total</span><b></b></div>
+    </div>
+    <button type="button" class="u445-go"></button>
+  </div>
+  <p class="u445-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var fd = q('.u445-fd'), input = q('.u445-in'), ap = q('.u445-ap'), chipB = q('.u445-chip b'), chipS = q('.u445-chip small'), chipE = q('.u445-chip em'), x = q('.u445-x'), msg = q('.u445-msg'), msgT = q('.u445-msg span'), cnt = q('.u445-sh small'), ts = q('.u445-ts'), dl = q('.u445-dl'), dv = q('.u445-dv'), tot = q('.u445-r.is-tot b'), go = q('.u445-go'), live = q('.u445-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { hint: 'Codes use letters and numbers, e.g. WELCOME10', bad: 'That code doesn’t exist. Check the spelling.', exp: 'This coupon ended on August 31.', min: 'Valid on orders over {min}. Add {gap} more.', ok: 'Coupon applied.', off: 'Coupon removed.', dc: 'Coupon discount', pay: 'Pay {p}', count: '{n}', gap: 'Add {gap} more to use', checking: 'Checking' };
+  var ITEMS = 48200, SHIP = 3000;
+  var COUPONS = [
+    { code: 'WELCOME10', big: '10%', name: '10% off for new members', cond: 'Up to ₩5,000 · until Dec 31', min: 0, calc: function () { return Math.min(5000, Math.floor(ITEMS * 0.1 / 10) * 10); } },
+    { code: 'FREESHIP', big: 'Free ship', sm: true, name: 'Free shipping coupon', cond: 'Orders over ₩30,000 · until Nov 30', min: 30000, calc: function () { return SHIP; } },
+    { code: 'VIP10000', big: '₩10,000', sm: true, name: '₩10,000 off', cond: 'Orders over ₩100,000', min: 100000, calc: function () { return 10000; } }
+  ];
+  var EXPIRED = ['SUMMER2026', 'CHUSEOK15'];
+  var applied = null, shown = ITEMS + SHIP, animT = 0, busy = false;
+  var CHECK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4 4 9-9.5"/></svg>';
+  function won(n) { return '₩' + Math.round(n).toLocaleString('ko-KR'); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  ts.innerHTML = COUPONS.map(function (c) {
+    var ok = ITEMS >= c.min;
+    return '<button type="button" class="u445-tk" role="radio" aria-checked="false"' + (ok ? '' : ' disabled') + '><span class="u445-tv' + (c.sm ? ' is-sm' : '') + '">' + esc(c.big) + '</span><span class="u445-tt"><b>' + esc(c.name) + '</b><small>' + esc(ok ? c.cond : T.gap.replace('{gap}', won(c.min - ITEMS))) + '</small></span><span class="u445-tc" aria-hidden="true">' + CHECK + '</span></button>';
+  }).join('');
+  var TK = ts.querySelectorAll('.u445-tk');
+  cnt.textContent = T.count.replace('{n}', COUPONS.length);
+
+  function setMsg(kind, text) {
+    msg.classList.toggle('is-err', kind === 'err');
+    msg.classList.toggle('is-ok', kind === 'ok');
+    msgT.textContent = text;
+    fd.classList.toggle('is-err', kind === 'err');
+    input.setAttribute('aria-invalid', kind === 'err' ? 'true' : 'false');
+  }
+  function rollTo(target) {
+    cancelAnimationFrame(animT);
+    var from = shown, t0 = performance.now(), dur = rm ? 0 : 520;
+    (function step(now) {
+      if (!root.isConnected) return;
+      var k = dur ? Math.min(1, (now - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
+      shown = from + (target - from) * e;
+      tot.textContent = won(shown);
+      go.textContent = T.pay.replace('{p}', won(shown));
+      if (k < 1) animT = requestAnimationFrame(step);
+    })(t0);
+  }
+  function apply(c) {
+    applied = c;
+    var off = c ? c.calc() : 0;
+    root.classList.toggle('is-on', !!c);
+    if (c) {
+      chipB.textContent = c.code;
+      chipS.textContent = c.name;
+      chipE.textContent = '−' + won(off);
+      dl.textContent = T.dc + ' · ' + c.code;
+      dv.textContent = '−' + won(off);
+    }
+    TK.forEach(function (b, i) { b.setAttribute('aria-checked', COUPONS[i] === c ? 'true' : 'false'); });
+    rollTo(ITEMS + SHIP - off);
+  }
+  function check() {
+    var code = input.value.trim().toUpperCase();
+    if (!code || busy) return;
+    busy = true;
+    ap.disabled = true;
+    ap.innerHTML = '<i aria-hidden="true"></i>';
+    ap.setAttribute('aria-label', T.checking);
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      busy = false;
+      ap.textContent = ap.dataset.t;
+      ap.removeAttribute('aria-label');
+      ap.disabled = !input.value.trim();
+      var c = COUPONS.filter(function (k) { return k.code === code; })[0];
+      var err = !c ? (EXPIRED.indexOf(code) >= 0 ? T.exp : T.bad) : ITEMS < c.min ? T.min.replace('{min}', won(c.min)).replace('{gap}', won(c.min - ITEMS)) : '';
+      if (err) {
+        setMsg('err', err);
+        fd.classList.remove('is-shake'); void fd.offsetWidth; fd.classList.add('is-shake');
+        input.focus({ preventScroll: true });
+        return;
+      }
+      setMsg('ok', T.ok);
+      apply(c);
+      x.focus({ preventScroll: true });
+    }, rm ? 200 : 750);
+  }
+  ap.dataset.t = ap.textContent;
+  input.addEventListener('input', function () {
+    var up = input.value.toUpperCase().replace(/\s/g, '');
+    if (up !== input.value) input.value = up;
+    if (!busy) ap.disabled = !up;
+    if (msg.classList.contains('is-err')) setMsg('', T.hint);
+  });
+  input.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  ap.addEventListener('click', check);
+  x.addEventListener('click', function () {
+    apply(null);
+    input.value = '';
+    ap.disabled = true;
+    setMsg('', T.off);
+    input.focus({ preventScroll: true });
+  });
+  TK.forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      if (b.disabled) return;
+      var c = COUPONS[i];
+      if (applied === c) { apply(null); setMsg('', T.off); return; }
+      input.value = '';
+      ap.disabled = true;
+      apply(c);
+      setMsg('ok', T.ok);
+    });
+  });
+  ts.addEventListener('keydown', function (e) {
+    var d = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1 : e.key === 'ArrowUp' || e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    var on = Array.prototype.filter.call(TK, function (b) { return !b.disabled; }), i = on.indexOf(document.activeElement);
+    on[(i + d + on.length) % on.length].focus({ preventScroll: true });
+  });
+  setMsg('', T.hint);
+  apply(null);
+})();
+</script>

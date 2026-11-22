@@ -1,0 +1,260 @@
+<!-- Lucian UX/UI Prompt #431 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#431 -->
+<!--
+Element: Date picker
+ID: 431 · Category: Inputs & Search · Tags: date-picker, calendar, popover, booking, quick-picks, keyboard, disabled-dates
+What it does: Press the booking date field and a calendar opens. Today is marked with a dot, past dates can’t be picked, and changing months slides the calendar sideways. Pick instantly with Today, Tomorrow or Next week, and once a date is set the times you can book that day appear.
+How to use it: Press Tomorrow, or go to next month and pick a date. Inside the calendar, arrow keys, PageUp/PageDown and Enter work too
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#431
+-->
+<style>
+.u431{position:relative;width:340px;height:394px;padding:18px 20px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u431 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u431-tr{display:flex;align-items:center;gap:12px;width:100%;height:52px;padding:0 14px 0 10px;border:0;border-radius:12px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-line);text-align:left;transition:box-shadow .18s var(--ux-ease)}
+.u431-tr:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent),0 1px 2px var(--ux-line)}
+.u431.is-open .u431-tr,.u431 .u431-tr:focus-visible{outline:none;box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u431-ti{flex:none;width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-2)}
+.u431-ti svg{width:16px;height:16px}
+.u431-tt{flex:1;min-width:0}
+.u431-tt small{display:block;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u431-tt b{display:block;margin-top:1px;font-size:14px;font-weight:600;letter-spacing:-.015em}
+.u431-tr.is-empty .u431-tt b{font-weight:500;color:var(--ux-ink-3)}
+.u431-tr>svg{flex:none;width:16px;height:16px;color:var(--ux-ink-3);transition:transform .25s var(--ux-ease)}
+.u431.is-open .u431-tr>svg{transform:rotate(180deg)}
+.u431-tm{margin-top:20px}
+.u431-tm>p{margin:0 0 10px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
+.u431-sl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.u431-slot{height:38px;border:0;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:box-shadow .15s,background-color .15s,transform .2s var(--ux-spring)}
+.u431-slot:hover:not(:disabled){background:var(--ux-surface-2)}
+.u431-slot:active:not(:disabled){transform:scale(.96)}
+.u431-slot[aria-checked="true"]{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1.5px var(--ux-accent);color:var(--ux-accent)}
+.u431-slot:disabled{background:var(--ux-surface-2);box-shadow:none;color:var(--ux-ink-3);text-decoration:line-through;text-decoration-color:var(--ux-line-2);cursor:not-allowed}
+.u431-note{margin:10px 0 0;font-size:11.5px;color:var(--ux-ink-3)}
+.u431-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:150px;border-radius:12px;border:1.5px dashed var(--ux-line-2);font-size:12px;color:var(--ux-ink-3);text-align:center}
+.u431-ph svg{width:20px;height:20px}
+.u431-go{position:absolute;left:20px;right:20px;bottom:20px;height:42px;border:0;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600;transition:opacity .15s,transform .2s var(--ux-spring)}
+.u431-go:hover:not(:disabled){opacity:.88}
+.u431-go:active:not(:disabled){transform:scale(.98)}
+.u431-go:disabled{opacity:.3;cursor:not-allowed}
+.u431-pop{position:absolute;z-index:3;left:20px;right:20px;top:76px;padding:10px 10px 8px;border-radius:14px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 22px 44px -18px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);opacity:0;visibility:hidden;transform:translateY(-6px) scale(.985);transform-origin:50% 0;transition:opacity .14s var(--ux-ease),transform .18s var(--ux-ease),visibility 0s linear .18s}
+.u431.is-open .u431-pop{opacity:1;visibility:visible;transform:none;transition:opacity .16s var(--ux-ease),transform .3s var(--ux-spring),visibility 0s}
+.u431-qp{display:flex;gap:6px;padding:0 2px 10px;margin-bottom:6px;border-bottom:1px solid var(--ux-line)}
+.u431-qp button{height:28px;padding:0 11px;border:0;border-radius:8px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);font-size:12px;font-weight:600;color:var(--ux-ink-2);transition:background-color .15s,color .15s,box-shadow .15s}
+.u431-qp button:hover{color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u431-qp button[aria-pressed="true"]{background:var(--ux-accent-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-accent) 40%,transparent);color:var(--ux-accent)}
+.u431-hd{display:flex;align-items:center;justify-content:space-between;height:30px;padding:0 2px 0 6px}
+.u431-hd b{font-size:13.5px;font-weight:700;letter-spacing:-.015em;font-variant-numeric:tabular-nums}
+.u431-nav{display:flex;gap:2px}
+.u431-nav button{width:28px;height:28px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
+.u431-nav button:hover:not(:disabled){background:var(--ux-surface-2);color:var(--ux-ink)}
+.u431-nav button:disabled{opacity:.3;cursor:default}
+.u431-nav svg{width:15px;height:15px;stroke-width:2}
+.u431-wk,.u431-row{display:grid;grid-template-columns:repeat(7,1fr)}
+.u431-wk span{height:22px;display:grid;place-items:center;font-size:11px;font-weight:600;color:var(--ux-ink-3)}
+.u431-wk span:first-child{color:color-mix(in srgb,var(--ux-danger) 75%,var(--ux-ink-3))}
+.u431-wk span:last-child{color:color-mix(in srgb,var(--ux-accent-2) 75%,var(--ux-ink-3))}
+.u431-gw{overflow:hidden}
+.u431-g.is-l{animation:u431-l .32s var(--ux-ease)}
+.u431-g.is-r{animation:u431-r .32s var(--ux-ease)}
+@keyframes u431-l{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:none}}
+@keyframes u431-r{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
+.u431-row>span{height:31px;display:grid;place-items:center}
+.u431-d{position:relative;width:36px;height:29px;padding:0;border:0;border-radius:8px;background:none;font-size:13px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ux-ink);transition:background-color .12s,color .12s,transform .2s var(--ux-spring)}
+.u431-row>span:first-child .u431-d{color:var(--ux-danger)}
+.u431-row>span:last-child .u431-d{color:var(--ux-accent-2)}
+.u431-d:hover:not(:disabled){background:var(--ux-surface-2)}
+.u431-d:active:not(:disabled){transform:scale(.92)}
+.u431-d[aria-current="date"]{font-weight:700}
+.u431-d[aria-current="date"]::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--ux-accent)}
+.u431 .u431-row>span .u431-d[aria-pressed="true"]{background:var(--ux-accent);color:var(--ux-accent-ink);font-weight:650}
+.u431-d[aria-pressed="true"]::after{background:var(--ux-accent-ink)}
+.u431 .u431-row>span .u431-d:disabled{color:var(--ux-ink-3);opacity:.55;cursor:default}
+.u431 .u431-d:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u431-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u431 is-open">
+  <button type="button" class="u431-tr is-empty" aria-haspopup="dialog" aria-expanded="true">
+    <span class="u431-ti"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+    <span class="u431-tt"><small>Booking date</small><b></b></span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+  </button>
+  <div class="u431-tm">
+    <p>Available times</p>
+    <div class="u431-ph"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Pick a date to see open times</div>
+    <div class="u431-sl" role="radiogroup" aria-label="Booking time" hidden></div>
+    <p class="u431-note" hidden>Dimmed times are fully booked</p>
+  </div>
+  <button type="button" class="u431-go" disabled></button>
+  <div class="u431-pop" role="dialog" aria-label="Choose a date">
+    <div class="u431-qp" role="group" aria-label="Quick picks"><button type="button" aria-pressed="false" data-add="0">Today</button><button type="button" aria-pressed="false" data-add="1">Tomorrow</button><button type="button" aria-pressed="false" data-add="7">Next week</button></div>
+    <div class="u431-hd">
+      <b aria-live="polite"></b>
+      <div class="u431-nav"><button type="button" aria-label="Previous month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button><button type="button" aria-label="Next month"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button></div>
+    </div>
+    <div class="u431-wk" aria-hidden="true"></div>
+    <div class="u431-gw"><div class="u431-g" role="grid"></div></div>
+  </div>
+  <p class="u431-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var tr = q('.u431-tr'), trv = q('.u431-tt b'), pop = q('.u431-pop'), qp = q('.u431-qp'), hdT = q('.u431-hd b'), navs = root.querySelectorAll('.u431-nav button'), wk = q('.u431-wk'), grid = q('.u431-g'), ph = q('.u431-ph'), sl = q('.u431-sl'), note = q('.u431-note'), go = q('.u431-go'), live = q('.u431-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { ph: 'Select a date', book: 'Book', bookAt: 'Book for {t}', fmt: '{w}, {M} {d}', head: '{M} {y}', aria: '{W}, {M} {d}, {y}', today: ', today' };
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var WD = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  var WDF = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var WDS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var SLOTS = ['09:30', '10:00', '11:00', '13:30', '14:30', '15:00', '16:30', '17:00', '18:00'];
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var last = new Date(today.getFullYear(), today.getMonth() + 3, 0);
+  var view = new Date(today.getFullYear(), today.getMonth(), 1);
+  var sel = null, fd = new Date(today), slot = -1;
+  wk.innerHTML = WD.map(function (w) { return '<span>' + w + '</span>'; }).join('');
+
+  function key(d) { return d.getFullYear() * 10000 + d.getMonth() * 100 + d.getDate(); }
+  function same(a, b) { return !!a && !!b && key(a) === key(b); }
+  function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+  function ok(d) { return key(d) >= key(today) && key(d) <= key(last); }
+  function fill(t, d) { return t.replace('{y}', d.getFullYear()).replace('{M}', MON[d.getMonth()]).replace('{d}', d.getDate()).replace('{w}', WDS[d.getDay()]).replace('{W}', WDF[d.getDay()]); }
+
+  var shown = -1;
+  function renderGrid(dir) {
+    var y = view.getFullYear(), m = view.getMonth();
+    if (shown !== y * 12 + m) {
+      shown = y * 12 + m;
+      var off = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate();
+      var html = '';
+      for (var r = 0; r < 6; r++) {
+        html += '<div class="u431-row" role="row">';
+        for (var c = 0; c < 7; c++) {
+          var day = r * 7 + c - off + 1;
+          if (day < 1 || day > n) { html += '<span role="gridcell"></span>'; continue; }
+          var d = new Date(y, m, day), isT = same(d, today);
+          html += '<span role="gridcell"><button type="button" class="u431-d" data-day="' + day + '"' + (isT ? ' aria-current="date"' : '') +
+            ' aria-label="' + fill(T.aria, d) + (isT ? T.today : '') + '"' + (ok(d) ? '' : ' disabled') + '>' + day + '</button></span>';
+        }
+        html += '</div>';
+      }
+      grid.innerHTML = html;
+      hdT.textContent = fill(T.head, view);
+      navs[0].disabled = y * 12 + m <= today.getFullYear() * 12 + today.getMonth();
+      navs[1].disabled = y * 12 + m >= last.getFullYear() * 12 + last.getMonth();
+      grid.classList.remove('is-l', 'is-r');
+      if (dir && !rm) { void grid.offsetWidth; grid.classList.add(dir > 0 ? 'is-l' : 'is-r'); }
+    }
+    Array.prototype.forEach.call(grid.querySelectorAll('.u431-d'), function (b) {
+      var d = new Date(y, m, +b.dataset.day), isS = same(d, sel);
+      b.setAttribute('aria-pressed', isS ? 'true' : 'false');
+      b.parentNode.setAttribute('aria-selected', isS ? 'true' : 'false');
+      b.tabIndex = same(d, fd) ? 0 : -1;
+    });
+    Array.prototype.forEach.call(qp.children, function (b) { b.setAttribute('aria-pressed', same(sel, addDays(today, +b.dataset.add)) ? 'true' : 'false'); });
+  }
+  function shiftMonth(n) {
+    var nv = new Date(view.getFullYear(), view.getMonth() + n, 1);
+    if (key(nv) < key(new Date(today.getFullYear(), today.getMonth(), 1)) || key(nv) > key(last)) return false;
+    view = nv;
+    renderGrid(n);
+    return true;
+  }
+  function renderSlots() {
+    ph.hidden = !!sel;
+    sl.hidden = note.hidden = !sel;
+    if (!sel) { go.disabled = true; go.textContent = T.book; return; }
+    var seed = sel.getDate() * 7 + sel.getMonth() * 3;
+    sl.innerHTML = SLOTS.map(function (t, i) {
+      var full = (seed * 13 + i * 29 + i * i * 7) % 9 < 3;
+      return '<button type="button" class="u431-slot" role="radio" aria-checked="' + (i === slot) + '"' + (full ? ' disabled' : '') + '>' + t + '</button>';
+    }).join('');
+    go.disabled = slot < 0;
+    go.textContent = slot < 0 ? T.book : T.bookAt.replace('{t}', fill(T.fmt, sel) + ' ' + SLOTS[slot]);
+  }
+  function syncTrigger() {
+    tr.classList.toggle('is-empty', !sel);
+    trv.textContent = sel ? fill(T.fmt, sel) : T.ph;
+  }
+  function focusDay() {
+    var b = grid.querySelector('[data-day="' + fd.getDate() + '"]');
+    if (b) b.focus({ preventScroll: true });
+  }
+  function setOpen(v, focus) {
+    root.classList.toggle('is-open', v);
+    tr.setAttribute('aria-expanded', v ? 'true' : 'false');
+    if (v) {
+      fd = sel ? new Date(sel) : new Date(today);
+      view = new Date(fd.getFullYear(), fd.getMonth(), 1);
+      renderGrid(0);
+      if (focus) focusDay();
+    } else if (focus) tr.focus({ preventScroll: true });
+  }
+  var closeT = 0;
+  function pick(d, focus) {
+    if (!ok(d)) return;
+    sel = new Date(d); fd = new Date(d); slot = -1;
+    if (sel.getMonth() !== view.getMonth() || sel.getFullYear() !== view.getFullYear()) { view = new Date(sel.getFullYear(), sel.getMonth(), 1); }
+    renderGrid(0);
+    syncTrigger();
+    renderSlots();
+    live.textContent = fill(T.aria, sel);
+    clearTimeout(closeT);
+    closeT = setTimeout(function () { if (root.isConnected) setOpen(false, focus); }, rm ? 0 : 220);
+  }
+
+  tr.addEventListener('click', function () { setOpen(!root.classList.contains('is-open'), true); });
+  tr.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); setOpen(true, true); } });
+  navs[0].addEventListener('click', function () { shiftMonth(-1); });
+  navs[1].addEventListener('click', function () { shiftMonth(1); });
+  qp.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) pick(addDays(today, +b.dataset.add), e.detail === 0); });
+  grid.addEventListener('click', function (e) {
+    var b = e.target.closest('.u431-d');
+    if (b && !b.disabled) pick(new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), e.detail === 0);
+  });
+  grid.addEventListener('keydown', function (e) {
+    var b = e.target.closest('.u431-d');
+    if (!b) return;
+    var cur = new Date(view.getFullYear(), view.getMonth(), +b.dataset.day), nd = null;
+    if (e.key === 'ArrowRight') nd = addDays(cur, 1);
+    else if (e.key === 'ArrowLeft') nd = addDays(cur, -1);
+    else if (e.key === 'ArrowDown') nd = addDays(cur, 7);
+    else if (e.key === 'ArrowUp') nd = addDays(cur, -7);
+    else if (e.key === 'Home') nd = addDays(cur, -cur.getDay());
+    else if (e.key === 'End') nd = addDays(cur, 6 - cur.getDay());
+    else if (e.key === 'PageDown' || e.key === 'PageUp') {
+      var dm = e.key === 'PageDown' ? 1 : -1;
+      nd = new Date(cur.getFullYear(), cur.getMonth() + dm, Math.min(cur.getDate(), new Date(cur.getFullYear(), cur.getMonth() + dm + 1, 0).getDate()));
+    } else return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (key(nd) < key(today)) nd = new Date(today);
+    if (key(nd) > key(last)) nd = new Date(last);
+    var dir = (nd.getFullYear() * 12 + nd.getMonth()) - (view.getFullYear() * 12 + view.getMonth());
+    fd = nd;
+    if (dir) view = new Date(nd.getFullYear(), nd.getMonth(), 1);
+    renderGrid(dir);
+    focusDay();
+  });
+  sl.addEventListener('click', function (e) {
+    var b = e.target.closest('.u431-slot');
+    if (!b || b.disabled) return;
+    slot = Array.prototype.indexOf.call(sl.children, b);
+    renderSlots();
+  });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && root.classList.contains('is-open')) { e.preventDefault(); e.stopPropagation(); setOpen(false, true); }
+  });
+  root.addEventListener('pointerdown', function (e) {
+    if (root.classList.contains('is-open') && !e.target.closest('.u431-pop, .u431-tr')) setOpen(false);
+  });
+  root.addEventListener('focusout', function (e) {
+    if (root.classList.contains('is-open') && e.relatedTarget && !pop.contains(e.relatedTarget) && e.relatedTarget !== tr) setOpen(false);
+  });
+  syncTrigger();
+  renderGrid(0);
+  renderSlots();
+})();
+</script>

@@ -1,0 +1,215 @@
+<!-- Lucian UX/UI Prompt #404 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#404 -->
+<!--
+Element: Sign-up form
+ID: 404 · Category: Sign-in & Sign-up · Tags: sign-up, register, form, password-rules, strength-meter, validation
+What it does: A sign-up form with name, email, password and confirm password. As you type the password, the 8+ characters, number and symbol rules tick off one by one and a strength bar fills; the confirm field tells you right away whether it matches. The sign-up button only turns on when every field is valid, then moves on to a verify-your-email screen.
+How to use it: Type a password one character at a time and watch the rules and strength change
+Footprint: fixed size, tall
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#404
+-->
+<style>
+.u404{position:relative;width:340px;padding:24px 22px 20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
+.u404-form{margin:0;transition:opacity .3s,transform .45s var(--ux-ease)}
+.u404-hd{margin:0 0 20px}
+.u404-hd b{display:block;font-size:20px;font-weight:700;letter-spacing:-.035em}
+.u404-hd span{display:block;margin-top:4px;font-size:12.5px;color:var(--ux-ink-3)}
+.u404-f+.u404-f{margin-top:12px}
+.u404-f label{display:block;margin-bottom:6px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
+.u404-bx{position:relative;height:40px;display:flex;align-items:center;border-radius:10px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s}
+.u404-bx:hover{box-shadow:inset 0 0 0 1px var(--ux-ink-3)}
+.u404-bx:focus-within,.u404-bx.is-f{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u404-bx.is-err{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 16%,transparent)}
+.u404-in{flex:1;min-width:0;height:100%;padding:0 12px;border:0;background:none;outline:none;font-size:13.5px;color:var(--ux-ink)}
+.u404-in::placeholder{color:var(--ux-ink-3)}
+.u404 .u404-in:focus-visible{outline:none}
+.u404-in[type="password"]{letter-spacing:.12em}
+.u404-ok{flex:none;width:18px;height:18px;margin-right:11px;opacity:0;transform:scale(.6);transition:opacity .2s,transform .35s var(--ux-spring)}
+.u404-ok circle{fill:var(--ux-mint)}
+.u404-ok path{fill:none;stroke:var(--ux-surface);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u404-bx.is-ok .u404-ok{opacity:1;transform:none}
+.u404-eye{flex:none;width:34px;height:34px;margin-right:3px;display:grid;place-items:center;border:0;border-radius:8px;background:none;color:var(--ux-ink-3);transition:color .2s,background .2s}
+.u404-eye:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u404 .u404-eye:focus-visible{outline-offset:-2px}
+.u404-eye svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u404-eye .sl{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .3s var(--ux-ease)}
+.u404-eye[aria-pressed="true"] .sl{stroke-dashoffset:0}
+.u404-msg{min-height:22px;margin:0;padding-top:6px;font-size:11.5px;font-weight:500;color:var(--ux-danger);opacity:0;transform:translateY(-3px);transition:opacity .2s,transform .3s var(--ux-ease)}
+.u404-msg.is-on{opacity:1;transform:none}
+.u404-msg.is-good{color:var(--ux-mint)}
+.u404-st{height:16px;display:flex;align-items:center;gap:10px;margin-top:10px}
+.u404-bars{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.u404-bars i{height:4px;border-radius:2px;background:var(--ux-surface-3);overflow:hidden;position:relative}
+.u404-bars i::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--c,var(--ux-ink-3));transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ux-ease),background .3s}
+.u404-bars i.is-on::after{transform:none}
+.u404-st em{width:56px;flex:none;text-align:right;font-style:normal;font-size:11.5px;font-weight:600;color:var(--c,var(--ux-ink-3));transition:color .3s}
+.u404[data-lv="1"]{--c:var(--ux-danger)}
+.u404[data-lv="2"]{--c:var(--ux-warn)}
+.u404[data-lv="3"],.u404[data-lv="4"]{--c:var(--ux-mint)}
+.u404-rules{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.u404-rules li{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ux-ink-3);transition:color .25s}
+.u404-rules svg{flex:none;width:16px;height:16px}
+.u404-rules circle{fill:none;stroke:var(--ux-line-2);stroke-width:1.5;transition:fill .25s,stroke .25s}
+.u404-rules path{fill:none;stroke:var(--ux-surface);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:12;stroke-dashoffset:12;transition:stroke-dashoffset .3s var(--ux-ease) .05s}
+.u404-rules li.is-ok{color:var(--ux-ink)}
+.u404-rules li.is-ok circle{fill:var(--ux-mint);stroke:var(--ux-mint)}
+.u404-rules li.is-ok path{stroke-dashoffset:0}
+.u404-rules li.is-ok svg{animation:u404-pop .35s var(--ux-spring)}
+@keyframes u404-pop{50%{transform:scale(1.18)}}
+.u404-pw{margin-bottom:14px}
+.u404-mt{flex:none;width:18px;height:18px;margin-right:11px;opacity:0;transform:scale(.6);transition:opacity .2s,transform .35s var(--ux-spring)}
+.u404-mt circle{fill:var(--ux-mint)}
+.u404-mt path{fill:none;stroke:var(--ux-surface);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u404-bx.is-ok .u404-mt{opacity:1;transform:none}
+.u404-sub{position:relative;width:100%;height:42px;margin-top:6px;display:grid;place-items:center;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:600;transition:background .3s,color .3s,transform .2s var(--ux-ease),opacity .2s}
+.u404-sub:hover:not(:disabled){opacity:.9}
+.u404-sub:active:not(:disabled){transform:scale(.985)}
+.u404-sub:disabled{background:var(--ux-surface-3);color:var(--ux-ink-3);cursor:not-allowed}
+.u404 .u404-sub:focus-visible{outline-offset:2px}
+.u404-sub>span{grid-area:1/1;display:flex;align-items:center;gap:8px;transition:opacity .2s,transform .3s var(--ux-ease)}
+.u404-sub .s1{opacity:0;transform:translateY(8px)}
+.u404-sub .s1 i{width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u404-spin .75s linear infinite}
+@keyframes u404-spin{to{rotate:360deg}}
+.u404-sub.is-busy .s0{opacity:0;transform:translateY(-8px)}
+.u404-sub.is-busy .s1{opacity:1;transform:none}
+.u404-ft{margin:14px 0 0;text-align:center;font-size:12px;color:var(--ux-ink-3)}
+.u404-ft a{margin-left:4px;font-weight:600;color:var(--ux-accent);text-decoration:none;border-radius:4px}
+.u404-ft a:hover{text-decoration:underline;text-underline-offset:2px}
+.u404-done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;text-align:center;opacity:0;visibility:hidden;transform:translateY(16px);transition:opacity .35s,transform .5s var(--ux-ease),visibility 0s .5s}
+.u404.is-done .u404-form{opacity:0;transform:translateY(-16px);pointer-events:none}
+.u404.is-done .u404-done{opacity:1;visibility:visible;transform:none;transition-delay:.12s,.12s,0s}
+.u404-mail{position:relative;width:64px;height:64px;display:grid;place-items:center;border-radius:20px;background:var(--ux-accent-soft);color:var(--ux-accent)}
+.u404-mail svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.u404-mail i{position:absolute;right:-5px;top:-5px;width:20px;height:20px;border-radius:50%;background:var(--ux-mint);box-shadow:0 0 0 3px var(--ux-surface);transform:scale(0);transition:transform .4s var(--ux-spring) .45s}
+.u404-mail i::after{content:"";position:absolute;left:7px;top:4px;width:4px;height:8px;border:solid var(--ux-surface);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.u404.is-done .u404-mail i{transform:none}
+.u404-done b{margin-top:20px;font-size:19px;font-weight:700;letter-spacing:-.03em}
+.u404-to{margin-top:8px;padding:4px 10px;border-radius:999px;background:var(--ux-surface-2);font-size:12.5px;font-weight:600;color:var(--ux-ink)}
+.u404-done p{margin:10px 0 0;font-size:12.5px;line-height:1.55;color:var(--ux-ink-3)}
+.u404-back{margin-top:22px;height:38px;padding:0 22px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:600}
+.u404-back:hover{opacity:.9}
+.u404-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+<div class="ux u404">
+  <form class="u404-form" novalidate>
+    <div class="u404-hd"><b>Create your account</b><span>Just a few details and you're in</span></div>
+    <div class="u404-f"><label>Name</label><div class="u404-bx"><input class="u404-in" type="text" autocomplete="name" placeholder="Seoyeon Kim"></div></div>
+    <div class="u404-f"><label>Email</label><div class="u404-bx"><input class="u404-in" type="email" autocomplete="email" placeholder="name@example.com" spellcheck="false"><svg class="u404-ok" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.3l2.5 2.4 5-5.2"/></svg></div><p class="u404-msg" aria-live="polite"></p></div>
+    <div class="u404-f u404-pw"><label>Password</label><div class="u404-bx"><input class="u404-in" type="password" autocomplete="new-password"><button type="button" class="u404-eye" aria-label="Show password" aria-pressed="false"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M1.8 9s2.6-5 7.2-5 7.2 5 7.2 5-2.6 5-7.2 5-7.2-5-7.2-5z"/><circle cx="9" cy="9" r="2.3"/><path class="sl" d="M3 2.8l12 12.4"/></svg></button></div>
+      <div class="u404-st"><div class="u404-bars" role="meter" aria-label="Password strength" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><i></i><i></i><i></i><i></i></div><em></em></div>
+      <ul class="u404-rules">
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7"/><path d="M5 8.2l2 2 4-4.2"/></svg><span>At least 8 characters</span></li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7"/><path d="M5 8.2l2 2 4-4.2"/></svg><span>Includes a number</span></li>
+        <li><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7"/><path d="M5 8.2l2 2 4-4.2"/></svg><span>Includes a symbol</span></li>
+      </ul>
+    </div>
+    <div class="u404-f"><label>Confirm password</label><div class="u404-bx"><input class="u404-in" type="password" autocomplete="new-password"><svg class="u404-mt" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="9"/><path d="M5.2 9.3l2.5 2.4 5-5.2"/></svg></div><p class="u404-msg" aria-live="polite"></p></div>
+    <button type="submit" class="u404-sub" disabled><span class="s0">Sign up</span><span class="s1" aria-hidden="true"><i></i>Signing up…</span></button>
+    <p class="u404-ft">Already have an account?<a href="#">Sign in</a></p>
+  </form>
+  <div class="u404-done" aria-hidden="true">
+    <div class="u404-mail"><svg viewBox="0 0 30 30" aria-hidden="true"><rect x="3.5" y="6.5" width="23" height="17" rx="3.5"/><path d="M4.5 8.5 15 16l10.5-7.5"/></svg><i></i></div>
+    <b>Check your inbox</b>
+    <span class="u404-to"></span>
+    <p>Open the verification link to finish signing up.</p>
+    <button type="button" class="u404-back" tabindex="-1">Done</button>
+  </div>
+  <p class="u404-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LV = ['', 'Weak', 'Fair', 'Strong', 'Very strong'];
+  var T = { bad: 'Check the email format', same: 'Passwords match', diff: 'Passwords don’t match', sent: 'Signed up. Check your verification email' };
+  var form = root.querySelector('.u404-form'), ins = root.querySelectorAll('.u404-in');
+  var nm = ins[0], em = ins[1], pw = ins[2], cf = ins[3];
+  var bxs = [].slice.call(root.querySelectorAll('.u404-bx')), msgs = root.querySelectorAll('.u404-msg');
+  var eye = root.querySelector('.u404-eye'), bars = [].slice.call(root.querySelectorAll('.u404-bars i')), meter = root.querySelector('.u404-bars'), lvl = root.querySelector('.u404-st em');
+  var rules = [].slice.call(root.querySelectorAll('.u404-rules li')), sub = root.querySelector('.u404-sub'), live = root.querySelector('.u404-live');
+  var done = root.querySelector('.u404-done'), back = root.querySelector('.u404-back'), to = root.querySelector('.u404-to');
+  var uid = 'u404' + Math.random().toString(36).slice(2, 8);
+  var MAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  var CHECK = [function (v) { return v.length >= 8; }, function (v) { return /\d/.test(v); }, function (v) { return /[^A-Za-z0-9\s]/.test(v); }];
+  [].slice.call(root.querySelectorAll('.u404-f > label')).forEach(function (l, k) { ins[k].id = uid + k; l.htmlFor = ins[k].id; });
+  msgs[0].id = uid + 'm0'; msgs[1].id = uid + 'm1';
+  em.setAttribute('aria-describedby', msgs[0].id); cf.setAttribute('aria-describedby', msgs[1].id);
+  rules.forEach(function (r, k) { r.id = uid + 'r' + k; });
+  pw.setAttribute('aria-describedby', rules.map(function (r) { return r.id; }).join(' '));
+  function later(fn, ms) { setTimeout(function () { if (root.isConnected) fn(); }, ms); }
+  function say(p, text, good) { p.textContent = text || ''; p.classList.toggle('is-on', !!text); p.classList.toggle('is-good', !!good); }
+  root.addEventListener('pointerdown', function (e) { bxs.forEach(function (b) { b.classList.toggle('is-f', b.contains(e.target) && !eye.contains(e.target)); }); });
+  ins.forEach(function (i, k) { i.addEventListener('blur', function () { bxs[k].classList.remove('is-f'); }); });
+  function score(v) {
+    if (!v) return 0;
+    var s = (v.length >= 8) + /\d/.test(v) + /[^A-Za-z0-9\s]/.test(v) + (v.length >= 12 || (/[a-z]/.test(v) && /[A-Z]/.test(v)));
+    return Math.max(1, s);
+  }
+  function emailState(final) {
+    var v = em.value.trim(), ok = MAIL.test(v);
+    bxs[1].classList.toggle('is-ok', ok);
+    if (ok || !v) { bxs[1].classList.remove('is-err'); em.removeAttribute('aria-invalid'); say(msgs[0], ''); }
+    else if (final) { bxs[1].classList.add('is-err'); em.setAttribute('aria-invalid', 'true'); say(msgs[0], T.bad); }
+    return ok;
+  }
+  function matchState(final) {
+    var a = pw.value, b = cf.value, same = !!b && a === b, wrong = !!b && (final ? a !== b : a.indexOf(b) !== 0);
+    bxs[3].classList.toggle('is-ok', same);
+    bxs[3].classList.toggle('is-err', wrong);
+    if (wrong) cf.setAttribute('aria-invalid', 'true'); else cf.removeAttribute('aria-invalid');
+    say(msgs[1], same ? T.same : wrong ? T.diff : '', same);
+    return same;
+  }
+  function sync() {
+    var v = pw.value, lv = score(v), all = true;
+    rules.forEach(function (r, k) {
+      var ok = CHECK[k](v);
+      if (ok !== r.classList.contains('is-ok')) r.classList.toggle('is-ok', ok);
+      all = all && ok;
+    });
+    root.setAttribute('data-lv', lv);
+    bars.forEach(function (b, k) { b.classList.toggle('is-on', k < lv); });
+    meter.setAttribute('aria-valuenow', lv);
+    meter.setAttribute('aria-valuetext', LV[lv] || '');
+    lvl.textContent = LV[lv];
+    var okMail = emailState(false), okMatch = matchState(false);
+    sub.disabled = !(nm.value.trim() && okMail && all && okMatch);
+  }
+  nm.addEventListener('input', sync);
+  em.addEventListener('input', sync);
+  em.addEventListener('blur', function () { emailState(true); });
+  pw.addEventListener('input', sync);
+  cf.addEventListener('input', sync);
+  cf.addEventListener('blur', function () { if (cf.value) matchState(true); });
+  eye.addEventListener('click', function () {
+    var show = eye.getAttribute('aria-pressed') !== 'true';
+    eye.setAttribute('aria-pressed', String(show));
+    pw.type = show ? 'text' : 'password';
+  });
+  root.querySelector('.u404-ft a').addEventListener('click', function (e) { e.preventDefault(); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (sub.disabled || sub.classList.contains('is-busy')) return;
+    bxs.forEach(function (b) { b.classList.remove('is-f'); });
+    sub.classList.add('is-busy'); sub.setAttribute('aria-busy', 'true');
+    later(function () {
+      sub.classList.remove('is-busy'); sub.removeAttribute('aria-busy');
+      to.textContent = em.value.trim();
+      root.classList.add('is-done');
+      form.inert = true; done.removeAttribute('aria-hidden'); back.tabIndex = 0;
+      live.textContent = T.sent;
+      back.focus({ preventScroll: true });
+    }, rm ? 300 : 1100);
+  });
+  back.addEventListener('click', function () {
+    form.reset(); pw.type = 'password'; eye.setAttribute('aria-pressed', 'false');
+    bxs.forEach(function (b) { b.classList.remove('is-ok', 'is-err'); });
+    say(msgs[0], ''); say(msgs[1], '');
+    sync();
+    root.classList.remove('is-done');
+    form.inert = false; done.setAttribute('aria-hidden', 'true'); back.tabIndex = -1;
+    nm.focus({ preventScroll: true });
+  });
+  sync();
+})();
+</script>

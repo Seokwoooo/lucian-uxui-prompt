@@ -1,0 +1,143 @@
+<!-- Lucian UX/UI Prompt #414 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#414 -->
+<!--
+Element: Announcement bar
+ID: 414 · Category: Navigation · Tags: announcement, banner, top-bar, dismiss, rotating, marquee
+What it does: A slim announcement bar sits above the header, and three notices roll upward every few seconds. A little bar shows the time until the next one, and it pauses while hovered or focused. Press close and the bar folds away smoothly as the header slides up, with a brief notice that lets you undo.
+How to use it: Hover the notice to pause it, press a bar to jump to another notice, then press close
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#414
+-->
+<style>
+.u414{position:relative;width:340px;height:340px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;display:flex;flex-direction:column}
+
+.u414-bar{display:grid;grid-template-rows:1fr;flex:none;transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1)}
+.u414.is-gone .u414-bar{grid-template-rows:0fr}
+.u414-bar>div{min-height:0;overflow:hidden}
+.u414-in{position:relative;display:flex;align-items:center;gap:8px;height:36px;padding:0 6px 0 12px;background:#16151B;background:light-dark(#16151B,#211F33);color:#fff;color:light-dark(#FFFFFF,#F1EEFF);transition:opacity .3s}
+.u414-in::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(139,123,255,.7),rgba(61,139,255,.7),transparent);opacity:.9}
+.u414.is-gone .u414-in{opacity:0}
+.u414-new{flex:none;display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.u414-new svg{width:11px;height:11px;fill:#fff}
+.u414-msgs{position:relative;flex:1;min-width:0;height:36px;overflow:hidden}
+.u414-m{position:absolute;inset:0;display:flex;align-items:center;gap:6px;color:inherit;text-decoration:none;font-size:11px;font-weight:600;white-space:nowrap;letter-spacing:-.01em;transform:translateY(100%);opacity:0;transition:transform .55s cubic-bezier(.3,1.1,.4,1),opacity .35s}
+.u414-m.is-on{transform:none;opacity:1}
+.u414-m.is-out{transform:translateY(-100%);opacity:0}
+.u414-m b{display:inline-flex;align-items:center;gap:3px;font-weight:700;color:#C9BFFF}
+.u414-m b i{font-style:normal;transition:transform .3s var(--ux-spring)}
+.u414-m:hover b{text-decoration:underline;text-underline-offset:2px}
+.u414-m:hover b i{transform:translateX(2px)}
+.u414-m span{overflow:hidden;text-overflow:ellipsis}
+.u414-dots{flex:none;display:flex;gap:3px}
+.u414-dot{position:relative;width:10px;height:16px;padding:0;border:0;background:none}
+.u414-dot::before{content:"";position:absolute;left:0;right:0;top:7px;height:2px;border-radius:2px;background:rgba(255,255,255,.22);transition:background-color .2s}
+.u414-dot:hover::before{background:rgba(255,255,255,.4)}
+.u414-dot i{position:absolute;left:0;top:7px;height:2px;width:0;border-radius:2px;background:#fff}
+.u414-dot.is-done i{width:100%;opacity:.55}
+.u414-dot.is-on i{animation:u414-fill 4.2s linear forwards}
+.u414-bar:hover .u414-dot.is-on i,.u414-bar:focus-within .u414-dot.is-on i,.u414.is-hold .u414-dot.is-on i{animation-play-state:paused}
+@keyframes u414-fill{from{width:0}to{width:100%}}
+.u414-x{flex:none;display:grid;place-items:center;width:26px;height:26px;border:0;border-radius:7px;background:none;color:rgba(255,255,255,.7);transition:background-color .15s,color .15s}
+.u414-x:hover{background:rgba(255,255,255,.12);color:#fff}
+.u414-x:active{transform:scale(.92)}
+.u414-x svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.u414-in :focus-visible{outline:2px solid #B7A4FF;outline-offset:-1px;border-radius:5px}
+
+.u414-hd{display:flex;align-items:center;gap:6px;flex:none;height:46px;padding:0 12px 0 16px;box-shadow:0 1px 0 var(--ux-line)}
+.u414-logo{display:flex;align-items:center;gap:6px;margin-right:8px;color:var(--ux-ink);text-decoration:none;font-size:13.5px;font-weight:800;letter-spacing:-.03em;border-radius:6px}
+.u414-mk{display:grid;place-items:center;width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.u414-mk svg{width:12px;height:12px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round}
+.u414-nav{display:flex;margin:0;padding:0;list-style:none}
+.u414-nav a{display:block;padding:5px 7px;border-radius:7px;font-size:11.5px;font-weight:580;color:var(--ux-ink-2);text-decoration:none;white-space:nowrap;transition:color .15s,background-color .15s}
+.u414-nav a:hover{color:var(--ux-ink);background:var(--ux-surface-2)}
+.u414-cta{display:flex;align-items:center;height:28px;margin-left:auto;padding:0 11px;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:700;text-decoration:none;white-space:nowrap;transition:opacity .2s,transform .25s var(--ux-spring)}
+.u414-cta:hover{opacity:.88}
+.u414-cta:active{transform:scale(.96)}
+.u414-hd a:focus-visible,.u414-undo:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+
+.u414-pg{flex:1;padding:22px 18px 0;overflow:hidden}
+.u414-pg h2{margin:0;font-size:21px;line-height:1.24;font-weight:800;letter-spacing:-.045em}
+.u414-pg i{display:block;height:8px;margin-top:10px;border-radius:4px;background:var(--ux-surface-2)}
+.u414-pg .im{height:120px;margin-top:18px;border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,#7B61FF 22%,var(--ux-surface-2)),color-mix(in srgb,#3D8BFF 18%,var(--ux-surface-2)));box-shadow:inset 0 0 0 1px var(--ux-line)}
+
+.u414-toast{position:absolute;left:50%;bottom:14px;display:flex;align-items:center;gap:10px;height:36px;padding:0 6px 0 14px;border-radius:11px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:600;white-space:nowrap;box-shadow:0 12px 28px -10px var(--ux-shadow-strong);transform:translate(-50%,calc(100% + 20px));opacity:0;visibility:hidden;transition:transform .45s cubic-bezier(.3,1.3,.5,1),opacity .25s,visibility 0s .45s}
+.u414.is-toast .u414-toast{transform:translate(-50%,0);opacity:1;visibility:visible;transition:transform .5s cubic-bezier(.3,1.3,.5,1),opacity .25s,visibility 0s}
+.u414-undo{height:26px;padding:0 10px;border:0;border-radius:7px;background:color-mix(in srgb,var(--ux-surface) 16%,transparent);color:inherit;font-size:11px;font-weight:750;transition:background-color .15s}
+.u414-undo:hover{background:color-mix(in srgb,var(--ux-surface) 26%,transparent)}
+@media (prefers-reduced-motion:reduce){.u414-bar,.u414-m,.u414-toast{transition:none!important}}
+</style>
+<div class="ux u414">
+  <div class="u414-bar" role="region" aria-label="Announcements"><div><div class="u414-in">
+    <span class="u414-new" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M6 .8c.3 2.6 1.6 3.9 4.2 4.2v.1C7.6 5.4 6.3 6.7 6 9.3h-.1C5.6 6.7 4.3 5.4 1.7 5.1V5C4.3 4.7 5.6 3.4 5.9.8zM10 8.2c.1.9.6 1.4 1.5 1.5-.9.1-1.4.6-1.5 1.5-.1-.9-.6-1.4-1.5-1.5.9-.1 1.4-.6 1.5-1.5z"/></svg></span>
+    <div class="u414-msgs">
+      <a class="u414-m is-on" href="#"><span>New: AI meeting notes</span><b>Learn more<i aria-hidden="true">→</i></b></a>
+      <a class="u414-m" href="#"><span>30% off yearly plans</span><b>See pricing<i aria-hidden="true">→</i></b></a>
+      <a class="u414-m" href="#"><span>Live webinar on Dec 4</span><b>Register<i aria-hidden="true">→</i></b></a>
+    </div>
+    <div class="u414-dots" role="group" aria-label="Choose a notice"></div>
+    <button class="u414-x" type="button" aria-label="Dismiss announcement"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3 3 9"/></svg></button>
+  </div></div></div>
+  <header class="u414-hd">
+    <a class="u414-logo" href="#" aria-label="Haru home"><span class="u414-mk" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M2.6 7.6a3.4 3.4 0 0 1 6.8 0"/><path d="M1.6 9.8h8.8"/></svg></span>Haru</a>
+    <nav aria-label="Main"><ul class="u414-nav"><li><a href="#">Product</a></li><li><a href="#">Pricing</a></li><li><a href="#">Blog</a></li></ul></nav>
+    <a class="u414-cta" href="#">Sign up</a>
+  </header>
+  <main class="u414-pg" aria-hidden="true">
+    <h2>All your work,<br>on one screen</h2>
+    <i style="width:80%;margin-top:14px"></i><i style="width:58%"></i>
+    <div class="im"></div>
+  </main>
+  <div class="u414-toast" role="status"><span>Announcement hidden</span><button class="u414-undo" type="button" tabindex="-1">Undo</button></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ms = Array.prototype.slice.call(root.querySelectorAll('.u414-m'));
+  var dotsBox = root.querySelector('.u414-dots'), x = root.querySelector('.u414-x'), undo = root.querySelector('.u414-undo');
+  var bar = root.querySelector('.u414-bar');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var n = ms.length, cur = 0, tToast = 0;
+  var dots = ms.map(function (m, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'u414-dot'; b.innerHTML = '<i></i>';
+    b.setAttribute('aria-label', 'Notice ' + (i + 1) + ' of ' + n);
+    b.addEventListener('click', function () { show(i); });
+    b.querySelector('i').addEventListener('animationend', function () { if (!rm && root.isConnected && i === cur) show((cur + 1) % n); });
+    dotsBox.appendChild(b);
+    return b;
+  });
+  function show(i) {
+    ms.forEach(function (m, k) {
+      m.classList.toggle('is-out', k === cur && k !== i);
+      m.classList.toggle('is-on', k === i);
+      m.tabIndex = k === i ? 0 : -1;
+      m.setAttribute('aria-hidden', String(k !== i));
+    });
+    var prev = cur;
+    cur = i;
+    setTimeout(function () { if (ms[prev] && prev !== cur) ms[prev].classList.remove('is-out'); }, 600);
+    dots.forEach(function (d, k) {
+      d.classList.remove('is-on');
+      d.classList.toggle('is-done', k < i);
+      d.setAttribute('aria-current', k === i ? 'true' : 'false');
+    });
+    void dots[i].offsetWidth;
+    if (!rm) dots[i].classList.add('is-on'); else dots[i].classList.add('is-done');
+  }
+  function gone(v) {
+    root.classList.toggle('is-gone', v);
+    bar.inert = v;
+    clearTimeout(tToast);
+    root.classList.toggle('is-toast', v);
+    undo.tabIndex = v ? 0 : -1;
+    if (v) {
+      undo.focus({ preventScroll: true });
+      tToast = setTimeout(function () { if (root.isConnected) { root.classList.remove('is-toast'); undo.tabIndex = -1; } }, 5000);
+    }
+  }
+  x.addEventListener('click', function () { gone(true); });
+  undo.addEventListener('click', function () { gone(false); show(0); x.focus({ preventScroll: true }); });
+  root.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); }); });
+  show(0);
+})();
+</script>

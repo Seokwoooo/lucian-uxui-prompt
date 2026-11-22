@@ -1,0 +1,160 @@
+<!-- Lucian UX/UI Prompt #436 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#436 -->
+<!--
+Element: Delete confirmation modal
+ID: 436 · Category: Alerts & Feedback · Tags: modal, dialog, confirm, destructive, focus-trap, loading, alert-dialog
+What it does: A dialog that asks once more before an action that can’t be undone. The page behind dims as the dialog eases in, and focus lands first on the safe Cancel button and stays inside the dialog. Esc or a click outside closes it; pressing Delete turns the button into a progress state before moving on to the result.
+How to use it: Close it with Cancel or Esc, then reopen with Delete project and go through with it. Tab stays inside the dialog
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#436
+-->
+<style>
+.u436{position:relative;width:340px;height:360px;border-radius:22px;overflow:hidden;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u436 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u436-pg{height:100%}
+.u436-top{display:flex;align-items:center;gap:8px;height:44px;padding:0 16px;border-bottom:1px solid var(--ux-line);font-size:12.5px;color:var(--ux-ink-3)}
+.u436-pj{width:18px;height:18px;border-radius:6px;background:linear-gradient(135deg,#F59E0B,#EF4444)}
+.u436-top b{font-weight:650;color:var(--ux-ink)}
+.u436-top svg{width:12px;height:12px;color:var(--ux-line-2);stroke-width:2.2}
+.u436-ct{padding:14px 16px}
+.u436-ct h4{margin:0 0 8px;font-size:11.5px;font-weight:600;color:var(--ux-ink-3)}
+.u436-fl{margin-bottom:10px}
+.u436-fl label{display:block;margin-bottom:5px;font-size:12px;font-weight:600;color:var(--ux-ink-2)}
+.u436-fl span{display:flex;align-items:center;height:34px;padding:0 11px;border-radius:9px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;color:var(--ux-ink)}
+.u436-dz{margin-top:14px;padding:13px 14px;border-radius:12px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-danger) 32%,transparent);background:color-mix(in srgb,var(--ux-danger) 4%,var(--ux-surface))}
+.u436-dz b{display:block;font-size:13px;font-weight:650}
+.u436-dz p{margin:3px 0 10px;font-size:12px;line-height:1.45;color:var(--ux-ink-3)}
+.u436-open{height:30px;padding:0 11px;border:0;border-radius:8px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-danger) 45%,transparent);font-size:12px;font-weight:650;color:var(--ux-danger);transition:background-color .15s,transform .2s var(--ux-spring)}
+.u436-open:hover{background:color-mix(in srgb,var(--ux-danger) 9%,var(--ux-surface))}
+.u436-open:active{transform:scale(.96)}
+.u436-gone{height:calc(100% - 44px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 28px 12px;text-align:center;animation:u436-up .4s var(--ux-ease)}
+.u436-gone>span{width:44px;height:44px;margin-bottom:12px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--ux-mint) 16%,transparent);color:var(--ux-mint)}
+.u436-gone>span svg{width:20px;height:20px;stroke-width:2.4}
+.u436-gone b{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.u436-gone p{margin:4px 0 16px;font-size:12.5px;color:var(--ux-ink-3)}
+.u436-back{height:34px;padding:0 14px;border:0;border-radius:9px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;font-weight:600;color:var(--ux-ink);transition:background-color .15s}
+.u436-back:hover{background:var(--ux-surface-2)}
+@keyframes u436-up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.u436-ov{position:absolute;inset:0;z-index:5;display:grid;place-items:center;padding:20px;background:rgba(22,21,27,.34);background:light-dark(rgba(22,21,27,.34),rgba(0,0,0,.58));-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);opacity:0;visibility:hidden;transition:opacity .2s var(--ux-ease),visibility 0s linear .2s}
+.u436.is-open .u436-ov{opacity:1;visibility:visible;transition:opacity .22s var(--ux-ease),visibility 0s}
+.u436-dlg{width:100%;padding:20px;border-radius:16px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 30px 60px -20px var(--ux-shadow-strong),0 4px 12px -4px var(--ux-shadow);outline:none;transform:translateY(10px) scale(.96);opacity:0;transition:transform .18s var(--ux-ease),opacity .15s var(--ux-ease)}
+.u436.is-open .u436-dlg{transform:none;opacity:1;transition:transform .38s var(--ux-spring),opacity .2s var(--ux-ease)}
+.u436-ic{width:40px;height:40px;margin-bottom:14px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--ux-danger) 13%,transparent);color:var(--ux-danger)}
+.u436-ic svg{width:19px;height:19px;stroke-width:2}
+.u436-dlg h3{margin:0;font-size:16px;font-weight:700;letter-spacing:-.02em}
+.u436-dlg p{margin:6px 0 18px;font-size:13px;line-height:1.55;color:var(--ux-ink-2)}
+.u436-bs{display:flex;gap:8px}
+.u436-bs button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:40px;border:0;border-radius:10px;font-size:13px;font-weight:650;transition:background-color .15s,opacity .15s,transform .2s var(--ux-spring),box-shadow .15s}
+.u436-bs button:active:not([aria-disabled="true"]){transform:scale(.97)}
+.u436-no{background:transparent;box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink)}
+.u436-no:hover:not([aria-disabled="true"]){background:color-mix(in srgb,var(--ux-ink) 6%,transparent)}
+.u436-ok{background:#D9304A;background:light-dark(#D9304A,#E5484D);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.12)}
+.u436-ok:hover:not([aria-disabled="true"]){background:#C2253E;background:light-dark(#C2253E,#EC5D61)}
+.u436 .u436-ok:focus-visible{outline:2px solid #D9304A;outline:2px solid light-dark(#D9304A,#FF8A93);outline-offset:2px}
+.u436-bs button[aria-disabled="true"]{cursor:default}
+.u436-no[aria-disabled="true"]{opacity:.5}
+.u436-sp{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:u436-spin .7s linear infinite}
+@keyframes u436-spin{to{transform:rotate(360deg)}}
+.u436-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u436 is-open">
+  <div class="u436-pg" inert>
+    <div class="u436-top"><i class="u436-pj" aria-hidden="true"></i><b>Spring campaign landing</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg><span>Settings</span></div>
+    <div class="u436-ct">
+      <h4>General</h4>
+      <div class="u436-fl"><label>Project name</label><span>Spring campaign landing</span></div>
+      <div class="u436-fl"><label>Domain</label><span>spring.lucian.app</span></div>
+      <div class="u436-dz">
+        <b>Danger zone</b>
+        <p>Removes 3 deployments and 128 files. This can’t be undone.</p>
+        <button type="button" class="u436-open" aria-haspopup="dialog">Delete project</button>
+      </div>
+    </div>
+    <div class="u436-gone" hidden>
+      <span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+      <b>Project deleted</b>
+      <p>Your other 2 projects are untouched.</p>
+      <button type="button" class="u436-back">Back to projects</button>
+    </div>
+  </div>
+  <div class="u436-ov">
+    <div class="u436-dlg" role="alertdialog" aria-modal="true" tabindex="-1">
+      <div class="u436-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l.9 12a2 2 0 0 0 2 1.8h5.2a2 2 0 0 0 2-1.8l.9-12M10 11v5.5M14 11v5.5"/></svg></div>
+      <h3>Delete this project?</h3>
+      <p>“Spring campaign landing” will be deleted along with 3 deployments and 128 files. You can’t undo this.</p>
+      <div class="u436-bs"><button type="button" class="u436-no">Cancel</button><button type="button" class="u436-ok"></button></div>
+    </div>
+  </div>
+  <p class="u436-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var pg = q('.u436-pg'), ct = q('.u436-ct'), gone = q('.u436-gone'), open = q('.u436-open'), back = q('.u436-back'), ov = q('.u436-ov'), dlg = q('.u436-dlg'), no = q('.u436-no'), ok = q('.u436-ok'), live = q('.u436-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { del: 'Delete', busy: 'Deleting…', done: 'Project deleted' };
+  var uid = 'u436' + Math.random().toString(36).slice(2, 7);
+  dlg.querySelector('h3').id = uid + 't';
+  dlg.querySelector('p').id = uid + 'd';
+  dlg.setAttribute('aria-labelledby', uid + 't');
+  dlg.setAttribute('aria-describedby', uid + 'd');
+  var busy = false, lastFocus = null, timer = 0;
+  ok.textContent = T.del;
+
+  function isOpen() { return root.classList.contains('is-open'); }
+  function setOpen(v, focus) {
+    if (busy && !v) return;
+    root.classList.toggle('is-open', v);
+    if (v) pg.setAttribute('inert', ''); else pg.removeAttribute('inert');
+    ov.setAttribute('aria-hidden', v ? 'false' : 'true');
+    if (v) {
+      if (focus) { lastFocus = document.activeElement; no.focus({ preventScroll: true }); }
+    } else if (focus) {
+      (lastFocus && lastFocus.isConnected && root.contains(lastFocus) ? lastFocus : open).focus({ preventScroll: true });
+    }
+  }
+  function finish() {
+    busy = false;
+    ok.removeAttribute('aria-disabled'); no.removeAttribute('aria-disabled');
+    ok.removeAttribute('aria-busy');
+    ok.textContent = T.del;
+    ct.hidden = true;
+    gone.hidden = false;
+    live.textContent = T.done;
+    lastFocus = back;
+    setOpen(false, document.activeElement && dlg.contains(document.activeElement));
+  }
+  open.addEventListener('click', function () { setOpen(true, true); lastFocus = open; });
+  no.addEventListener('click', function () { setOpen(false, true); });
+  ok.addEventListener('click', function () {
+    if (busy) return;
+    busy = true;
+    ok.setAttribute('aria-disabled', 'true'); no.setAttribute('aria-disabled', 'true');
+    ok.setAttribute('aria-busy', 'true');
+    ok.innerHTML = '<i class="u436-sp" aria-hidden="true"></i>';
+    ok.appendChild(document.createTextNode(T.busy));
+    live.textContent = T.busy;
+    clearTimeout(timer);
+    timer = setTimeout(function () { if (root.isConnected) finish(); }, rm ? 300 : 1500);
+  });
+  back.addEventListener('click', function () {
+    gone.hidden = true;
+    ct.hidden = false;
+    open.focus({ preventScroll: true });
+  });
+  ov.addEventListener('click', function (e) { if (e.target === ov) setOpen(false, true); });
+  root.addEventListener('keydown', function (e) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false, true); return; }
+    if (e.key === 'Tab') {
+      var f = dlg.querySelectorAll('button');
+      if (!f.length) { e.preventDefault(); dlg.focus({ preventScroll: true }); return; }
+      var first = f[0], last = f[f.length - 1], a = document.activeElement;
+      if (e.shiftKey && (a === first || !dlg.contains(a))) { e.preventDefault(); last.focus({ preventScroll: true }); }
+      else if (!e.shiftKey && (a === last || !dlg.contains(a))) { e.preventDefault(); first.focus({ preventScroll: true }); }
+    }
+  });
+  setOpen(true, false);
+})();
+</script>

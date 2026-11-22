@@ -1,0 +1,213 @@
+<!-- Lucian UX/UI Prompt #408 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#408 -->
+<!--
+Element: 아바타 계정 메뉴
+ID: 408 · Category: 메뉴·탭 · Tags: account-menu, avatar, dropdown, workspace-switcher, keyboard, menu
+What it does: 앱 헤더의 아바타를 누르면 계정 메뉴가 열립니다. 이름과 이메일, 워크스페이스 전환, 프로필·설정과 단축키 표시, 테마 선택, 빨간색 로그아웃까지 담았고, 워크스페이스 줄은 메뉴 안에서 목록으로 넘어갑니다. 화살표 키로 항목을 옮기고 Esc로 닫습니다.
+How to use it: 아바타를 눌러 메뉴를 열고, 화살표 키로 움직이거나 워크스페이스를 바꿔 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#408
+-->
+<style>
+.u408{position:relative;width:340px;height:350px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 24px 48px -30px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden;overflow:clip}
+.u408-bar{height:52px;display:flex;align-items:center;gap:6px;padding:0 10px 0 16px;border-bottom:1px solid var(--ux-line)}
+.u408-org{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0;font-size:13px;font-weight:600}
+.u408-org i{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:6px;background:var(--wc,#6A57F2);color:#FFFFFF;font-style:normal;font-size:11px;font-weight:800;transition:background .3s}
+.u408-org span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u408-ib{position:relative;width:32px;height:32px;display:grid;place-items:center;border:0;border-radius:9px;background:none;color:var(--ux-ink-2);transition:background .2s,color .2s}
+.u408-ib:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u408-ib svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u408-ib b{position:absolute;right:7px;top:7px;width:7px;height:7px;border-radius:50%;background:var(--ux-danger);box-shadow:0 0 0 2px var(--ux-surface)}
+.u408-av{position:relative;width:34px;height:34px;margin-left:4px;padding:0;border:0;border-radius:50%;background:none;transition:box-shadow .2s}
+.u408-av:hover,.u408-av[aria-expanded="true"]{box-shadow:0 0 0 3px var(--ux-accent-soft)}
+.u408 .u408-av:focus-visible{outline-offset:2px}
+.u408-face{width:100%;height:100%;display:grid;place-items:center;border-radius:50%;background:linear-gradient(135deg,#8B7BFF,#3D8BFF);color:#FFFFFF;font-size:13px;font-weight:700}
+.u408-dot{position:absolute;right:-1px;bottom:-1px;width:10px;height:10px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 2px var(--ux-surface)}
+.u408-pg{padding:18px 16px 0}
+.u408-ph{display:flex;align-items:flex-end;justify-content:space-between}
+.u408-ph b{display:block;font-size:17px;font-weight:700;letter-spacing:-.03em}
+.u408-ph small{display:block;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3)}
+.u408-ph em{height:28px;padding:0 10px;display:flex;align-items:center;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface);font-style:normal;font-size:11.5px;font-weight:600}
+.u408-rows{margin:14px 0 0;padding:0;list-style:none}
+.u408-rows li{display:flex;align-items:center;gap:10px;height:46px;border-top:1px solid var(--ux-line);font-size:12.5px}
+.u408-rows li i{width:26px;height:26px;flex:none;border-radius:7px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u408-rows li span{flex:1;font-weight:500}
+.u408-rows li small{font-size:11px;color:var(--ux-ink-3)}
+.u408-menu{position:absolute;top:50px;right:10px;width:256px;padding:6px;border-radius:14px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 40px -14px var(--ux-shadow-strong);transform-origin:top right;opacity:0;visibility:hidden;transform:translateY(-4px) scale(.97);transition:opacity .15s,transform .2s var(--ux-ease),visibility 0s .2s;overflow:hidden}
+.u408.is-open .u408-menu{opacity:1;visibility:visible;transform:none;transition:opacity .15s,transform .25s var(--ux-ease),visibility 0s}
+.u408-view{transition:transform .3s var(--ux-ease),opacity .2s}
+.u408-v2{position:absolute;left:6px;right:6px;top:6px;transform:translateX(30px);opacity:0;visibility:hidden}
+.u408-menu.is-ws .u408-v1{transform:translateX(-30px);opacity:0;visibility:hidden}
+.u408-menu.is-ws .u408-v2{transform:none;opacity:1;visibility:visible}
+.u408-me{display:flex;align-items:center;gap:10px;padding:8px 8px 10px}
+.u408-me .u408-face{width:36px;height:36px;flex:none;font-size:14px}
+.u408-me span{flex:1;min-width:0}
+.u408-me b{display:block;font-size:13px;font-weight:600}
+.u408-me small{display:block;margin-top:1px;font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u408-me em{height:19px;padding:0 6px;display:flex;align-items:center;border-radius:5px;background:var(--ux-accent-soft);color:var(--ux-accent);font-style:normal;font-size:10px;font-weight:700}
+.u408-sep{height:1px;margin:4px 2px;background:var(--ux-line)}
+.u408-it{width:100%;height:34px;display:flex;align-items:center;gap:10px;padding:0 8px;border:0;border-radius:8px;background:none;text-align:left;font-size:13px;color:var(--ux-ink);transition:background .12s}
+.u408-it>svg{width:16px;height:16px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u408-it>span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u408-it kbd{font:500 10.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.04em;color:var(--ux-ink-3)}
+.u408-it.is-act,.u408 .u408-it:focus-visible{background:var(--ux-surface-3);outline:none}
+.u408-ws{height:44px}
+.u408-ws i{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:7px;background:var(--wc,#6A57F2);color:#FFFFFF;font-style:normal;font-size:12px;font-weight:800;transition:background .3s}
+.u408-ws span b{display:block;font-size:13px;font-weight:600}
+.u408-ws span small{display:block;font-size:11px;color:var(--ux-ink-3)}
+.u408-out,.u408-out>svg{color:var(--ux-danger)!important;stroke:var(--ux-danger)!important}
+.u408-out.is-act,.u408 .u408-out:focus-visible{background:color-mix(in srgb,var(--ux-danger) 10%,transparent)}
+.u408-th{display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 4px 0 8px;font-size:13px}
+.u408-th>span{display:flex;align-items:center;gap:10px}
+.u408-th>span svg{width:16px;height:16px;fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.u408-seg{position:relative;display:grid;grid-template-columns:repeat(3,28px);padding:2px;border-radius:8px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u408-seg::before{content:"";position:absolute;top:2px;left:2px;width:28px;height:24px;border-radius:6px;background:#FFFFFF;background:light-dark(#FFFFFF,var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow);transform:translateX(calc(var(--k,0) * 28px));transition:transform .3s var(--ux-ease)}
+.u408-tm{position:relative;z-index:1;width:28px;height:24px;display:grid;place-items:center;border:0;border-radius:6px;background:none;color:var(--ux-ink-3);transition:color .2s}
+.u408-tm[aria-checked="true"]{color:var(--ux-ink)}
+.u408-tm.is-act,.u408 .u408-tm:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-1px}
+.u408-tm svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.u408-v2h{display:flex;align-items:center;gap:4px;height:36px;padding:0 4px;font-size:12px;font-weight:600;color:var(--ux-ink-3)}
+.u408-back{width:28px!important;height:28px!important;padding:0!important;justify-content:center}
+.u408-wi i{width:24px;height:24px;flex:none;display:grid;place-items:center;border-radius:7px;color:#FFFFFF;font-style:normal;font-size:11px;font-weight:800}
+.u408-wi{height:42px}
+.u408-wi span b{display:block;font-size:13px;font-weight:500}
+.u408-wi span small{display:block;font-size:11px;color:var(--ux-ink-3)}
+.u408-wi .ck{width:16px;height:16px;fill:none;stroke:var(--ux-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.u408-wi[aria-checked="true"] .ck{opacity:1}
+.u408-toast{position:absolute;left:50%;bottom:14px;max-width:300px;padding:9px 14px;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:12px;font-weight:500;white-space:nowrap;box-shadow:0 12px 28px -12px var(--ux-shadow-strong);opacity:0;transform:translate(-50%,10px);pointer-events:none;transition:opacity .2s,transform .35s var(--ux-spring)}
+.u408-toast.is-on{opacity:1;transform:translate(-50%,0)}
+</style>
+<div class="ux u408">
+  <div class="u408-bar">
+    <span class="u408-org"><i aria-hidden="true">L</i><span>Lucian Labs</span></span>
+    <button type="button" class="u408-ib" aria-label="검색"><svg viewBox="0 0 18 18" aria-hidden="true"><circle cx="8" cy="8" r="5"/><path d="M12 12l3.5 3.5"/></svg></button>
+    <button type="button" class="u408-ib" aria-label="알림"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4.5 12.5V8a4.5 4.5 0 0 1 9 0v4.5l1.2 1.5H3.3zM7.3 15.5a1.8 1.8 0 0 0 3.4 0"/></svg><b></b></button>
+    <button type="button" class="u408-av" aria-haspopup="menu" aria-expanded="false" aria-label="계정 메뉴"><span class="u408-face" aria-hidden="true">서</span><span class="u408-dot" aria-hidden="true"></span></button>
+  </div>
+  <div class="u408-pg" aria-hidden="true">
+    <div class="u408-ph"><span><b>프로젝트</b><small>최근 수정순</small></span><em>새 프로젝트</em></div>
+    <ul class="u408-rows">
+      <li><i></i><span>2026 가을 리브랜딩</span><small>2시간 전</small></li>
+      <li><i></i><span>결제 화면 개선</span><small>어제</small></li>
+      <li><i></i><span>고객 인터뷰 정리</span><small>3일 전</small></li>
+      <li><i></i><span>온보딩 가이드 v2</span><small>지난주</small></li>
+    </ul>
+  </div>
+  <div class="u408-menu" role="menu" aria-label="계정 메뉴">
+    <div class="u408-view u408-v1">
+      <div class="u408-me" role="none"><span class="u408-face" aria-hidden="true">서</span><span><b>김서연</b><small>seoyeon@lucian.kr</small></span><em>Pro</em></div>
+      <div class="u408-sep" role="separator"></div>
+      <button type="button" class="u408-it u408-ws" role="menuitem" aria-haspopup="menu"><i aria-hidden="true">L</i><span><b class="u408-wn">Lucian Labs</b><small>워크스페이스 · 12명</small></span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg></button>
+      <div class="u408-sep" role="separator"></div>
+      <button type="button" class="u408-it" role="menuitem" data-t="프로필을 열었어요"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="5.5" r="2.8"/><path d="M2.8 14c.6-2.8 2.6-4.3 5.2-4.3s4.6 1.5 5.2 4.3"/></svg><span>프로필</span><kbd>⌘P</kbd></button>
+      <button type="button" class="u408-it" role="menuitem" data-t="설정을 열었어요"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.8v1.6M8 12.6v1.6M14.2 8h-1.6M3.4 8H1.8M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1M12.4 12.4l-1.1-1.1M4.7 4.7 3.6 3.6"/></svg><span>설정</span><kbd>⌘,</kbd></button>
+      <div class="u408-th" role="group" aria-labelledby=""><span><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2a5.8 5.8 0 1 0 0 11.6z"/><circle cx="8" cy="8" r="5.8"/></svg><b class="u408-tl" style="font-weight:400">테마</b></span>
+        <div class="u408-seg" style="--k:2">
+          <button type="button" class="u408-tm" role="menuitemradio" aria-checked="false" aria-label="라이트"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="7" cy="7" r="2.6"/><path d="M7 1v1.4M7 11.6V13M13 7h-1.4M2.4 7H1M11.2 2.8l-1 1M3.8 10.2l-1 1M11.2 11.2l-1-1M3.8 3.8l-1-1"/></svg></button>
+          <button type="button" class="u408-tm" role="menuitemradio" aria-checked="false" aria-label="다크"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M11.8 8.6A5 5 0 0 1 5.4 2.2a5 5 0 1 0 6.4 6.4z"/></svg></button>
+          <button type="button" class="u408-tm" role="menuitemradio" aria-checked="true" aria-label="시스템"><svg viewBox="0 0 14 14" aria-hidden="true"><rect x="1.5" y="2.5" width="11" height="7.5" rx="1.3"/><path d="M5 12.5h4"/></svg></button>
+        </div>
+      </div>
+      <div class="u408-sep" role="separator"></div>
+      <button type="button" class="u408-it u408-out" role="menuitem" data-t="로그아웃했어요"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 2.5H3.5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1H6M10.5 11l3-3-3-3M13.5 8H6"/></svg><span>로그아웃</span><kbd>⇧⌘Q</kbd></button>
+    </div>
+    <div class="u408-view u408-v2" role="none">
+      <div class="u408-v2h" role="none"><button type="button" class="u408-it u408-back" role="menuitem" aria-label="뒤로"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 4 6 8l4 4"/></svg></button>워크스페이스</div>
+      <button type="button" class="u408-it u408-wi" role="menuitemradio" aria-checked="true" data-c="#6A57F2" data-n="Lucian Labs"><i aria-hidden="true" style="background:#6A57F2">L</i><span><b>Lucian Labs</b><small>12명</small></span><svg class="ck" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></button>
+      <button type="button" class="u408-it u408-wi" role="menuitemradio" aria-checked="false" data-c="#0EA5E9" data-n="개인 공간"><i aria-hidden="true" style="background:#0EA5E9">개</i><span><b>개인 공간</b><small>나만 보기</small></span><svg class="ck" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></button>
+      <button type="button" class="u408-it u408-wi" role="menuitemradio" aria-checked="false" data-c="#F59E0B" data-n="Nano Studio"><i aria-hidden="true" style="background:#F59E0B">N</i><span><b>Nano Studio</b><small>4명</small></span><svg class="ck" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-6.5"/></svg></button>
+      <div class="u408-sep" role="separator"></div>
+      <button type="button" class="u408-it" role="menuitem" data-t="새 워크스페이스 만들기를 열었어요"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg><span>새 워크스페이스</span></button>
+    </div>
+  </div>
+  <div class="u408-toast" role="status"></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { switched: '워크스페이스를 바꿨어요: ' };
+  var av = root.querySelector('.u408-av'), menu = root.querySelector('.u408-menu'), v1 = root.querySelector('.u408-v1'), v2 = root.querySelector('.u408-v2');
+  var seg = root.querySelector('.u408-seg'), tms = [].slice.call(root.querySelectorAll('.u408-tm')), toast = root.querySelector('.u408-toast');
+  var ws = root.querySelector('.u408-ws'), wis = [].slice.call(root.querySelectorAll('.u408-wi'));
+  var act = -1, tt = 0, gen = 0;
+  // 테마 묶음에 접근 가능한 이름을 붙입니다
+  var tl = root.querySelector('.u408-tl'); tl.id = 'u408' + Math.random().toString(36).slice(2, 8); root.querySelector('.u408-th').setAttribute('aria-labelledby', tl.id);
+  function items() { return [].slice.call((menu.classList.contains('is-ws') ? v2 : v1).querySelectorAll('[role^="menuitem"]')); }
+  // 현재 항목: 키보드·마우스 모두 같은 표시(is-act)를 쓰고, 가능하면 실제 초점도 옮깁니다
+  function setAct(k, focus) {
+    var list = items();
+    if (!list.length) return;
+    act = (k + list.length) % list.length;
+    [].slice.call(menu.querySelectorAll('.is-act')).forEach(function (x) { x.classList.remove('is-act'); });
+    list[act].classList.add('is-act');
+    if (focus !== false) list[act].focus({ preventScroll: true });
+  }
+  function open() {
+    if (root.classList.contains('is-open')) return;
+    gen += 1;
+    menu.classList.remove('is-ws'); v1.inert = false; v2.inert = true;
+    root.classList.add('is-open'); av.setAttribute('aria-expanded', 'true');
+    items().forEach(function (x) { x.tabIndex = -1; });
+    setAct(0);
+  }
+  function close(refocus) {
+    root.classList.remove('is-open'); av.setAttribute('aria-expanded', 'false');
+    [].slice.call(menu.querySelectorAll('.is-act')).forEach(function (x) { x.classList.remove('is-act'); });
+    act = -1;
+    if (refocus !== false) av.focus({ preventScroll: true });
+  }
+  function drill(on) {
+    menu.classList.toggle('is-ws', on);
+    v1.inert = on; v2.inert = !on;
+    items().forEach(function (x) { x.tabIndex = -1; });
+    setAct(on ? Math.max(1, wis.findIndex(function (w) { return w.getAttribute('aria-checked') === 'true'; }) + 1) : 0);
+  }
+  function say(text) {
+    toast.textContent = text; toast.classList.add('is-on');
+    clearTimeout(tt); tt = setTimeout(function () { if (root.isConnected) toast.classList.remove('is-on'); }, 2000);
+  }
+  av.addEventListener('click', function () { if (root.classList.contains('is-open')) close(); else open(); });
+  av.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); if (e.key === 'ArrowUp') setAct(-1); } });
+  menu.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowDown') { e.preventDefault(); setAct(act + 1); }
+    else if (k === 'ArrowUp') { e.preventDefault(); setAct(act - 1); }
+    else if (k === 'Home') { e.preventDefault(); setAct(0); }
+    else if (k === 'End') { e.preventDefault(); setAct(-1); }
+    else if (k === 'ArrowRight' && items()[act] === ws) { e.preventDefault(); drill(true); }
+    else if (k === 'ArrowLeft' && menu.classList.contains('is-ws')) { e.preventDefault(); drill(false); setAct(items().indexOf(ws)); }
+    else if (k === 'Escape') { e.preventDefault(); e.stopPropagation(); if (menu.classList.contains('is-ws')) { drill(false); setAct(items().indexOf(ws)); } else close(); }
+    else if (k === 'Tab') close(false);
+    else if ((k === 'Enter' || k === ' ') && items()[act]) { e.preventDefault(); items()[act].click(); }
+  });
+  menu.addEventListener('pointermove', function (e) { var it = e.target.closest && e.target.closest('[role^="menuitem"]'); if (it) { var i = items().indexOf(it); if (i >= 0 && i !== act) setAct(i, false); } });
+  // 항목 실행: 메뉴를 닫고 결과를 짧게 알려 줍니다
+  [].slice.call(menu.querySelectorAll('[data-t]')).forEach(function (b) { b.addEventListener('click', function () { close(); say(b.getAttribute('data-t')); }); });
+  ws.addEventListener('click', function () { drill(true); });
+  root.querySelector('.u408-back').addEventListener('click', function () { drill(false); setAct(items().indexOf(ws)); });
+  wis.forEach(function (w) {
+    w.addEventListener('click', function () {
+      wis.forEach(function (o) { o.setAttribute('aria-checked', String(o === w)); });
+      var c = w.getAttribute('data-c'), n = w.getAttribute('data-n');
+      root.style.setProperty('--wc', c);
+      root.querySelector('.u408-org span').textContent = n;
+      root.querySelector('.u408-org i').textContent = w.querySelector('i').textContent;
+      ws.querySelector('i').textContent = w.querySelector('i').textContent;
+      root.querySelector('.u408-wn').textContent = n;
+      ws.querySelector('small').textContent = ws.querySelector('small').textContent.split(' · ')[0] + ' · ' + w.querySelector('small').textContent;
+      close(); say(T.switched + n);
+    });
+  });
+  tms.forEach(function (t, k) {
+    t.addEventListener('click', function () {
+      tms.forEach(function (o) { o.setAttribute('aria-checked', String(o === t)); });
+      seg.style.setProperty('--k', k);
+      setAct(items().indexOf(t), false);
+    });
+  });
+  // 바깥을 누르면 닫습니다
+  root.addEventListener('pointerdown', function (e) { if (root.classList.contains('is-open') && !menu.contains(e.target) && !av.contains(e.target)) close(false); });
+  v2.inert = true;
+})();
+</script>

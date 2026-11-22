@@ -1,0 +1,299 @@
+<!-- Lucian UX/UI Prompt #417 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#417 -->
+<!--
+Element: 대시보드 사이드바
+ID: 417 · Category: 내비게이션 · Tags: sidebar, dashboard, app-shell, collapsible, rail, tooltip, workspace-switcher
+What it does: 워크스페이스 전환, 검색, 섹션별 메뉴, 배지, 프로필이 있는 앱 사이드바입니다. 메뉴를 고르면 선택 배경이 미끄러져 옮겨 가고, 접기 버튼을 누르면 아이콘만 남은 얇은 레일로 줄어들며 아이콘 자리는 그대로 유지됩니다. 레일에서는 아이콘에 포인터나 초점을 두면 이름과 개수가 말풍선으로 뜹니다.
+How to use it: 메뉴를 눌러 보고, 오른쪽 위 접기 버튼으로 레일을 만든 뒤 아이콘 위에 포인터를 올려 보세요. 맨 위 워크스페이스 이름을 누르면 전환 메뉴가 열립니다
+Footprint: fixed size, tall
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#417
+-->
+<style>
+.u417{position:relative;display:flex;width:340px;height:632px;border-radius:24px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 30px 60px -36px var(--ux-shadow-strong);color:var(--ux-ink);overflow:hidden}
+.u417 a,.u417 button{-webkit-user-select:none;user-select:none}
+/* 사이드바: 폭만 바뀌고 아이콘의 x 위치는 두 상태에서 같습니다 */
+.u417-sb{position:relative;z-index:2;display:flex;flex-direction:column;flex:none;width:228px;padding:10px 0;background:var(--ux-surface-2);box-shadow:1px 0 0 var(--ux-line);transition:width .5s cubic-bezier(.32,1.1,.4,1)}
+.u417.is-rail .u417-sb{width:60px}
+.u417-lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .25s var(--ux-ease) .1s}
+.u417.is-rail .u417-lb{opacity:0;transition-delay:0s;pointer-events:none}
+.u417-ws{display:flex;align-items:center;gap:10px;width:calc(100% - 20px);height:44px;margin:0 10px;padding:0 8px 0 6px;border:0;border-radius:10px;background:none;text-align:left;color:var(--ux-ink);transition:background-color .15s}
+.u417-ws:hover,.u417-ws[aria-expanded="true"]{background:color-mix(in srgb,var(--ux-surface-3) 70%,transparent)}
+.u417-lg{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:8px;background:var(--wc,#7B61FF);color:#fff;font-size:12.5px;font-weight:800;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2),0 1px 2px var(--ux-shadow);transition:background-color .3s}
+.u417-ws .u417-lb{flex:1;min-width:0}
+.u417-ws svg.u417-lb{flex:none}
+.u417-ws b{display:block;font-size:12.5px;font-weight:750;letter-spacing:-.02em;overflow:hidden;text-overflow:ellipsis}
+.u417-ws small{display:block;margin-top:1px;font-size:10px;color:var(--ux-ink-3);overflow:hidden;text-overflow:ellipsis}
+.u417-ws svg{width:14px;height:14px;flex:none;fill:none;stroke:var(--ux-ink-3);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.u417-sr{display:flex;align-items:center;gap:10px;width:calc(100% - 20px);height:32px;margin:8px 10px 10px;padding:0 8px 0 11px;border:0;border-radius:9px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-3);font-size:11.5px;font-weight:550;text-align:left;transition:box-shadow .15s,color .15s}
+.u417-sr:hover{box-shadow:inset 0 0 0 1px var(--ux-line-2);color:var(--ux-ink-2)}
+.u417-sr .u417-lb{flex:1}
+.u417-sr kbd.u417-lb{flex:none}
+.u417-sr kbd{font:600 9.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;padding:3px 5px;border-radius:5px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-3)}
+.u417 svg.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.u417-nav{position:relative;flex:1;min-height:0;padding:0 10px;overflow:hidden}
+.u417-pill{position:absolute;left:10px;right:10px;top:0;height:32px;border-radius:9px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow);transform:translateY(var(--py,0));transition:transform .45s cubic-bezier(.3,1.25,.45,1),opacity .2s}
+.u417-it{position:relative;display:flex;align-items:center;gap:10px;height:32px;padding:0 8px 0 11px;border-radius:9px;color:var(--ux-ink-2);text-decoration:none;font-size:12px;font-weight:580;transition:color .15s,background-color .15s}
+.u417-it:hover{color:var(--ux-ink);background:color-mix(in srgb,var(--ux-surface-3) 55%,transparent)}
+.u417-it[aria-current="page"]{color:var(--ux-ink);background:transparent;font-weight:650}
+.u417-it[aria-current="page"] svg.ic{color:var(--ux-accent)}
+.u417-it .u417-lb{flex:1}
+.u417-it .u417-bd.u417-lb{flex:none}
+.u417-bd{min-width:18px;height:17px;padding:0 5px;border-radius:99px;display:grid;place-items:center;font-size:9.5px;font-weight:750;font-variant-numeric:tabular-nums;background:var(--ux-surface-3);color:var(--ux-ink-3)}
+.u417-bd.ac{background:var(--ux-accent);color:var(--ux-accent-ink)}
+.u417-dot{position:absolute;left:24px;top:6px;width:7px;height:7px;border-radius:50%;background:var(--ux-accent);box-shadow:0 0 0 2px var(--ux-surface-2);opacity:0;transform:scale(.4);transition:opacity .2s,transform .3s var(--ux-spring)}
+.u417.is-rail .u417-dot{opacity:1;transform:none;transition-delay:.15s}
+.u417-sq{display:grid;place-items:center;width:18px;height:18px;flex:none}
+.u417-sq i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.u417-sh{position:relative;display:flex;align-items:center;height:28px;margin-top:12px}
+.u417-sh::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:1px;pointer-events:none;background:var(--ux-line-2);opacity:0;transition:opacity .2s}
+.u417.is-rail .u417-sh::after{opacity:1;transition-delay:.15s}
+.u417-sx{display:flex;align-items:center;gap:4px;flex:1;min-width:0;height:24px;padding:0 6px 0 11px;border:0;border-radius:7px;background:none;font-size:10.5px;font-weight:700;color:var(--ux-ink-3);text-align:left;transition:color .15s}
+.u417-sx:hover{color:var(--ux-ink-2)}
+.u417-sx svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ux-spring)}
+.u417-sx[aria-expanded="false"] svg{transform:rotate(-90deg)}
+.u417-add{display:grid;place-items:center;width:22px;height:22px;margin-right:4px;border:0;border-radius:6px;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s,opacity .2s}
+.u417-add:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
+.u417-add svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.u417.is-rail .u417-sx,.u417.is-rail .u417-add{opacity:0;pointer-events:none}
+.u417-sec{display:grid;grid-template-rows:1fr;transition:grid-template-rows .4s var(--ux-ease)}
+.u417-sec.is-shut{grid-template-rows:0fr}
+.u417-sec>div{min-height:0;overflow:hidden}
+.u417-bt{padding:8px 10px 0;box-shadow:0 -1px 0 var(--ux-line)}
+.u417-me{display:flex;align-items:center;gap:10px;height:46px;margin-top:6px;padding:0 6px;border-radius:10px;transition:background-color .15s}
+.u417-me:hover{background:color-mix(in srgb,var(--ux-surface-3) 55%,transparent)}
+.u417-av{position:relative;display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;background:linear-gradient(135deg,#FFB86B,#FF6B8B);color:#fff;font-size:11.5px;font-weight:800}
+.u417-av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 2px var(--ux-surface-2)}
+.u417-me .u417-lb{flex:1;min-width:0}
+.u417-me .u417-mo.u417-lb{flex:none}
+.u417-me b{display:block;font-size:12px;font-weight:700}
+.u417-me small{display:block;font-size:10px;color:var(--ux-ink-3);overflow:hidden;text-overflow:ellipsis}
+.u417-mo{display:grid;place-items:center;width:24px;height:24px;flex:none;border:0;border-radius:7px;background:none;color:var(--ux-ink-3)}
+.u417-mo:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
+.u417-mo svg{width:14px;height:14px;fill:currentColor}
+.u417 a:focus-visible,.u417 button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+/* 레일 말풍선 */
+.u417-tip{position:absolute;left:64px;top:0;z-index:6;display:flex;align-items:center;gap:6px;height:28px;padding:0 9px;border-radius:8px;background:var(--ux-ink);color:var(--ux-surface);font-size:11px;font-weight:650;white-space:nowrap;box-shadow:0 8px 20px -8px var(--ux-shadow-strong);opacity:0;transform:translate(-4px,var(--ty,0)) scale(.96);transform-origin:0 50%;transition:opacity .12s,transform .12s;pointer-events:none}
+.u417-tip.is-on{opacity:1;transform:translate(0,var(--ty,0));transition:opacity .15s var(--ux-ease),transform .3s var(--ux-spring)}
+.u417-tip.is-warm{transition:opacity .1s,transform .18s var(--ux-ease)}
+.u417-tip::before{content:"";position:absolute;left:-3px;top:50%;width:8px;height:8px;margin-top:-4px;border-radius:2px;background:inherit;transform:rotate(45deg)}
+.u417-tip em{font-style:normal;padding:1px 5px;border-radius:99px;background:color-mix(in srgb,var(--ux-surface) 18%,transparent);font-size:9.5px;font-weight:750}
+.u417-tip em:empty{display:none}
+/* 워크스페이스 메뉴 */
+.u417-wm{position:absolute;left:10px;top:58px;z-index:7;width:208px;padding:5px;border-radius:12px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line-2),0 20px 44px -16px var(--ux-shadow-strong);opacity:0;visibility:hidden;transform:translateY(-4px) scale(.97);transform-origin:20px 0;transition:opacity .14s,transform .18s,visibility 0s .18s}
+.u417.is-wm .u417-wm{opacity:1;visibility:visible;transform:none;transition:opacity .18s var(--ux-ease),transform .38s cubic-bezier(.25,1.35,.45,1),visibility 0s}
+.u417-wo{display:flex;align-items:center;gap:9px;width:100%;height:40px;padding:0 8px 0 6px;border:0;border-radius:8px;background:none;text-align:left;color:var(--ux-ink);transition:background-color .15s}
+.u417-wo:hover,.u417-wo.is-cur{background:var(--ux-surface-2)}
+.u417-wo.is-cur{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u417-wo i{display:grid;place-items:center;width:24px;height:24px;flex:none;border-radius:7px;color:#fff;font-style:normal;font-size:11px;font-weight:800}
+.u417-wo span{flex:1;min-width:0}
+.u417-wo b{display:block;font-size:11.5px;font-weight:700}
+.u417-wo small{display:block;font-size:9.5px;color:var(--ux-ink-3)}
+.u417-wo svg{width:14px;height:14px;fill:none;stroke:var(--ux-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.u417-wo[aria-checked="true"] svg{opacity:1}
+.u417-wm hr{height:1px;margin:4px 2px;border:0;background:var(--ux-line)}
+.u417-wn{display:flex;align-items:center;gap:9px;width:100%;height:34px;padding:0 8px 0 10px;border:0;border-radius:8px;background:none;font-size:11.5px;font-weight:600;color:var(--ux-ink-2);text-align:left}
+.u417-wn:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u417-wn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+/* 본문 조각 */
+.u417-mn{flex:1;min-width:0;display:flex;flex-direction:column}
+.u417-tb{display:flex;align-items:center;gap:8px;height:52px;padding:0 10px;box-shadow:0 1px 0 var(--ux-line);flex:none}
+.u417-tg{display:grid;place-items:center;width:30px;height:30px;flex:none;border:0;border-radius:8px;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s}
+.u417-tg:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u417-tg:active{transform:scale(.94)}
+.u417-tg svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.u417-tg path.bar{transition:transform .45s var(--ux-spring)}
+.u417.is-rail .u417-tg path.bar{transform:translateX(-2.5px)}
+.u417-tb b{font-size:12.5px;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u417-bd2{flex:1;min-height:0;padding:16px 14px;overflow:hidden}
+.u417-bd2 h4{margin:0;font-size:14px;font-weight:800;letter-spacing:-.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u417-kp{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(112px,100%),1fr));gap:8px;margin-top:12px}
+.u417-kp div{min-width:0;padding:11px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u417-kp small{display:block;font-size:10px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u417-kp b{display:block;margin-top:4px;font-size:19px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.u417-ch{margin-top:10px;padding:11px;border-radius:12px;background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u417-ch small{display:block;font-size:10px;color:var(--ux-ink-3);white-space:nowrap}
+.u417-ch div{display:flex;align-items:flex-end;gap:5px;height:90px;margin-top:10px;overflow:hidden}
+.u417-ch i{flex:1 0 12px;max-width:22px;border-radius:4px 4px 2px 2px;background:color-mix(in srgb,var(--ux-accent) 30%,transparent)}
+.u417-ch i:nth-child(5){background:var(--ux-accent)}
+@media (prefers-reduced-motion:reduce){.u417-sb,.u417-pill,.u417-sec,.u417-tip,.u417-wm,.u417-lb{transition:none!important}}
+</style>
+<div class="ux u417">
+  <aside class="u417-sb" aria-label="사이드바">
+    <button class="u417-ws" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="워크스페이스 전환"><span class="u417-lg" aria-hidden="true">H</span><span class="u417-lb"><b>Haru 디자인</b><small>프로 · 멤버 12명</small></span><svg viewBox="0 0 14 14" aria-hidden="true" class="u417-lb"><path d="m4.5 5.5 2.5-2.5 2.5 2.5M4.5 8.5 7 11l2.5-2.5"/></svg></button>
+    <div class="u417-wm" role="menu" aria-label="워크스페이스">
+      <hr><button class="u417-wn" type="button" role="menuitem" tabindex="-1"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 3v8M3 7h8"/></svg>워크스페이스 만들기</button>
+    </div>
+    <button class="u417-sr" type="button"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><circle cx="8" cy="8" r="4.8"/><path d="m11.6 11.6 3.2 3.2"/></svg><span class="u417-lb">검색</span><kbd class="u417-lb" aria-hidden="true">⌘K</kbd></button>
+    <nav class="u417-nav">
+      <span class="u417-pill" aria-hidden="true"></span>
+      <a class="u417-it" href="#" aria-current="page"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 8.2 9 3.2l6 5V15h-3.8v-3.8H6.8V15H3z"/></svg><span class="u417-lb">홈</span></a>
+      <a class="u417-it" href="#" data-n="3"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><path d="M2.6 10.4 4.7 4h8.6l2.1 6.4V14a1 1 0 0 1-1 1H3.6a1 1 0 0 1-1-1z"/><path d="M2.6 10.4h3.7l.9 1.8h3.6l.9-1.8h3.7"/></svg><span class="u417-lb">받은 편지함</span><span class="u417-bd ac u417-lb">3</span><i class="u417-dot" aria-hidden="true"></i></a>
+      <a class="u417-it" href="#" data-n="12"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6.2"/><path d="m6.4 9.2 1.8 1.8 3.5-3.7"/></svg><span class="u417-lb">내 작업</span><span class="u417-bd u417-lb">12</span></a>
+      <a class="u417-it" href="#"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><rect x="2.8" y="3.8" width="12.4" height="11.4" rx="2"/><path d="M2.8 7.5h12.4M6.2 2.5v2.6M11.8 2.5v2.6"/></svg><span class="u417-lb">일정</span></a>
+      <div class="u417-sh"><button class="u417-sx" type="button" aria-expanded="true"><span class="u417-lb">프로젝트</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3.5 4.8 2.5 2.5 2.5-2.5"/></svg></button><button class="u417-add" type="button" aria-label="프로젝트 추가"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2.5v7M2.5 6h7"/></svg></button></div>
+      <div class="u417-sec"><div>
+        <a class="u417-it" href="#"><span class="u417-sq" aria-hidden="true"><i style="--c:#7B61FF"></i></span><span class="u417-lb">웹사이트 개편</span></a>
+        <a class="u417-it" href="#" data-n="2"><span class="u417-sq" aria-hidden="true"><i style="--c:#F97316"></i></span><span class="u417-lb">모바일 앱 2.0</span><span class="u417-bd u417-lb">2</span></a>
+        <a class="u417-it" href="#"><span class="u417-sq" aria-hidden="true"><i style="--c:#14B8A6"></i></span><span class="u417-lb">브랜드 가이드</span></a>
+      </div></div>
+      <div class="u417-sh"><button class="u417-sx" type="button" aria-expanded="true"><span class="u417-lb">즐겨찾기</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m3.5 4.8 2.5 2.5 2.5-2.5"/></svg></button></div>
+      <div class="u417-sec"><div>
+        <a class="u417-it" href="#"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 2.8h5.2L13 5.6v9.6H5z"/><path d="M10 3v2.8h2.8M7.2 9h3.6M7.2 11.6h2.4"/></svg><span class="u417-lb">주간 회의록</span></a>
+        <a class="u417-it" href="#"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4.5h1.6M4 9h1.6M4 13.5h1.6M8 4.5h6M8 9h6M8 13.5h4"/></svg><span class="u417-lb">출시 체크리스트</span></a>
+      </div></div>
+    </nav>
+    <div class="u417-bt">
+      <a class="u417-it" href="#"><svg class="ic" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="2.3"/><path d="M9 2.6v1.8M9 13.6v1.8M2.6 9h1.8M13.6 9h1.8M4.5 4.5l1.3 1.3M12.2 12.2l1.3 1.3M4.5 13.5l1.3-1.3M12.2 5.8l1.3-1.3"/></svg><span class="u417-lb">설정</span></a>
+      <div class="u417-me"><span class="u417-av" aria-hidden="true">김</span><span class="u417-lb"><b>김서연</b><small>seoyeon@haru.app</small></span><button class="u417-mo u417-lb" type="button" aria-label="계정 메뉴"><svg viewBox="0 0 14 14" aria-hidden="true"><circle cx="3" cy="7" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="11" cy="7" r="1.2"/></svg></button></div>
+    </div>
+  </aside>
+  <div class="u417-tip" aria-hidden="true"><span></span><em></em></div>
+  <div class="u417-mn">
+    <div class="u417-tb"><button class="u417-tg" type="button" aria-expanded="true" aria-label="사이드바 접기"><svg viewBox="0 0 18 18" aria-hidden="true"><rect x="2.5" y="3.5" width="13" height="11" rx="2.2"/><path class="bar" d="M7.2 3.8v10.4"/></svg></button><b>홈</b></div>
+    <div class="u417-bd2" aria-hidden="true">
+      <h4>좋은 아침이에요</h4>
+      <div class="u417-kp"><div><small>진행 중</small><b>18</b></div><div><small>이번 주 완료</small><b>42</b></div><div><small>검토 대기</small><b>5</b></div><div><small>받은 편지함</small><b>3</b></div></div>
+      <div class="u417-ch"><small>팀 활동</small><div><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:76%"></i><i style="height:92%"></i><i style="height:58%"></i><i style="height:70%"></i><i style="height:44%"></i><i style="height:66%"></i><i style="height:80%"></i></div></div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var sb = root.querySelector('.u417-sb'), nav = root.querySelector('.u417-nav'), pill = root.querySelector('.u417-pill');
+  var tg = root.querySelector('.u417-tg'), tip = root.querySelector('.u417-tip'), title = root.querySelector('.u417-tb b');
+  var ws = root.querySelector('.u417-ws'), wm = root.querySelector('.u417-wm');
+  var its = Array.prototype.slice.call(root.querySelectorAll('.u417-it'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u417-' + Math.random().toString(36).slice(2, 7);
+  var rail = false, active = its[0], tipT = 0, warmT = 0, warm = false, wOpen = false, wCur = -1;
+  var WS = [['Haru 디자인', '프로 · 멤버 12명', '#7B61FF'], ['개인 공간', '무료 · 나만 보기', '#14B8A6'], ['마케팅 TF', '팀 · 멤버 5명', '#F97316']];
+  var wsi = 0;
+  sb.id = uid + '-sb'; tg.setAttribute('aria-controls', sb.id);
+  // 선택 배경은 하나의 알약이 활성 항목 자리로 미끄러집니다
+  function sync(instant) {
+    var shut = active.closest('.u417-sec.is-shut');
+    var inNav = nav.contains(active);
+    pill.style.opacity = inNav && !shut ? '1' : '0';
+    if (!inNav) return;
+    if (instant) pill.style.transition = 'none';
+    pill.style.setProperty('--py', active.offsetTop + 'px');
+    if (instant) { void pill.offsetWidth; pill.style.transition = ''; }
+  }
+  function follow(ms) { var t0 = Date.now(); (function f() { sync(true); if (Date.now() - t0 < ms && root.isConnected) requestAnimationFrame(f); })(); }
+  its.forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (active) active.removeAttribute('aria-current');
+      active = a; a.setAttribute('aria-current', 'page');
+      title.textContent = a.querySelector('.u417-lb').textContent;
+      sync();
+      if (!nav.contains(a)) pill.style.opacity = '0';
+    });
+    a.addEventListener('pointerenter', function () { showTip(a); });
+    a.addEventListener('pointerleave', hideTip);
+    a.addEventListener('focus', function () { showTip(a, true); });
+    a.addEventListener('blur', hideTip);
+    a.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      var vis = its.filter(function (x) { return !x.closest('.u417-sec.is-shut'); });
+      var i = vis.indexOf(a) + (e.key === 'ArrowDown' ? 1 : -1);
+      if (vis[i]) { e.preventDefault(); vis[i].focus(); }
+    });
+  });
+  // 레일 말풍선: 처음엔 잠깐 기다렸다 뜨고, 이어서 옮기면 바로 따라옵니다
+  function showTip(a, now) {
+    if (!rail) return;
+    clearTimeout(tipT); clearTimeout(warmT);
+    var go = function () {
+      var r = root.getBoundingClientRect(), b = a.getBoundingClientRect(), k = r.height / root.offsetHeight || 1;
+      tip.querySelector('span').textContent = a.querySelector('.u417-lb').textContent;
+      tip.querySelector('em').textContent = a.getAttribute('data-n') || '';
+      tip.style.setProperty('--ty', Math.round((b.top - r.top) / k + (b.height / k - 28) / 2) + 'px');
+      tip.classList.toggle('is-warm', warm);
+      tip.classList.add('is-on'); warm = true;
+    };
+    if (warm || now) go(); else tipT = setTimeout(function () { if (root.isConnected) go(); }, 280);
+  }
+  function hideTip() {
+    clearTimeout(tipT);
+    tip.classList.remove('is-on');
+    warmT = setTimeout(function () { warm = false; }, 400);
+  }
+  function setRail(v) {
+    rail = v;
+    hideTip(); warm = false;
+    root.classList.toggle('is-rail', v);
+    tg.setAttribute('aria-expanded', String(!v));
+    tg.setAttribute('aria-label', v ? '사이드바 펼치기' : '사이드바 접기');
+    if (v) wmenu(false);
+  }
+  tg.addEventListener('click', function () { setRail(!rail); });
+  root.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'b' || e.key === 'B')) { e.preventDefault(); setRail(!rail); }
+    if (e.key === 'Escape' && wOpen) { e.preventDefault(); e.stopPropagation(); wmenu(false); ws.focus({ preventScroll: true }); }
+  });
+  root.querySelectorAll('.u417-sx').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var sec = b.parentNode.nextElementSibling, open = b.getAttribute('aria-expanded') !== 'true';
+      b.setAttribute('aria-expanded', String(open));
+      sec.classList.toggle('is-shut', !open);
+      sec.querySelectorAll('a').forEach(function (a) { a.tabIndex = open ? 0 : -1; });
+      follow(rm ? 0 : 480);
+    });
+  });
+  // 워크스페이스 전환 메뉴
+  var opts = WS.map(function (w, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'u417-wo'; b.setAttribute('role', 'menuitemradio'); b.tabIndex = -1;
+    b.innerHTML = '<i aria-hidden="true"></i><span><b></b><small></small></span><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m3.2 7.4 2.4 2.4 5-5.3"/></svg>';
+    b.querySelector('i').textContent = w[0].charAt(0); b.querySelector('i').style.background = w[2];
+    b.querySelector('b').textContent = w[0]; b.querySelector('small').textContent = w[1];
+    b.addEventListener('click', function () { pickWs(i); wmenu(false); ws.focus({ preventScroll: true }); });
+    wm.insertBefore(b, wm.querySelector('hr'));
+    return b;
+  });
+  var mItems = opts.concat([wm.querySelector('.u417-wn')]);
+  function pickWs(i) {
+    wsi = i;
+    var w = WS[i];
+    ws.querySelector('.u417-lg').textContent = w[0].charAt(0);
+    ws.querySelector('.u417-lg').style.setProperty('--wc', w[2]);
+    ws.querySelector('b').textContent = w[0]; ws.querySelector('small').textContent = w[1];
+    opts.forEach(function (o, k) { o.setAttribute('aria-checked', String(k === i)); });
+  }
+  function wmark(i) {
+    wCur = i;
+    mItems.forEach(function (b, k) { b.classList.toggle('is-cur', k === i); });
+    if (i >= 0) mItems[i].focus({ preventScroll: true });
+  }
+  function wmenu(v) {
+    wOpen = v;
+    root.classList.toggle('is-wm', v);
+    ws.setAttribute('aria-expanded', String(v));
+    wm.inert = !v;
+    if (v) wm.style.left = rail ? '64px' : '10px';
+    if (!v) wmark(-1);
+  }
+  ws.addEventListener('click', function () { wmenu(!wOpen); });
+  ws.addEventListener('keydown', function (e) { if (e.key === 'ArrowDown') { e.preventDefault(); wmenu(true); wmark(wsi); } });
+  ws.addEventListener('pointerenter', function () { showTip({ getAttribute: function () { return ''; }, querySelector: function () { return { textContent: WS[wsi][0] }; }, getBoundingClientRect: function () { return ws.getBoundingClientRect(); } }); });
+  ws.addEventListener('pointerleave', hideTip);
+  wm.addEventListener('keydown', function (e) {
+    var n = mItems.length, to = e.key === 'ArrowDown' ? wCur + 1 : e.key === 'ArrowUp' ? wCur - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? n - 1 : null;
+    if (e.key === 'Tab') { wmenu(false); return; }
+    if (to === null) return;
+    e.preventDefault(); wmark((to + n) % n);
+  });
+  wm.addEventListener('pointermove', function () { if (wCur >= 0) wmark(-1); });
+  function outside(e) {
+    if (!root.isConnected) { document.removeEventListener('pointerdown', outside, true); return; }
+    if (wOpen && !wm.contains(e.target) && !ws.contains(e.target)) wmenu(false);
+  }
+  document.addEventListener('pointerdown', outside, true);
+  root.querySelectorAll('.u417-sr, .u417-add, .u417-mo, .u417-wn').forEach(function (b) { b.addEventListener('click', function () { if (b.classList.contains('u417-wn')) wmenu(false); }); });
+  wm.inert = true;
+  pickWs(0);
+  sync(true);
+})();
+</script>

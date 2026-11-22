@@ -1,0 +1,191 @@
+<!-- Lucian UX/UI Prompt #443 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#443 -->
+<!--
+Element: 결제 수단 선택
+ID: 443 · Category: 커머스·가격 · Tags: checkout, payment-method, radio-cards, kakaopay, naverpay, tosspay, installments, korea
+What it does: 국내 결제창에서 흔히 쓰는 결제 수단을 라디오 카드로 늘어놓았습니다. 신용·체크카드, 카카오페이, 네이버페이, 토스페이, 무통장입금 가운데 고른 카드만 펼쳐져 카드사와 할부, 포인트 쓰기, 입금 은행 같은 세부 선택이 나옵니다. 할인이나 포인트가 붙으면 주문 금액과 결제하기 버튼의 금액이 바로 바뀝니다.
+How to use it: 결제 수단을 바꿔 가며 펼쳐지는 내용을 보고, 네이버페이 포인트나 토스페이 할인을 켜 보세요. 방향키로도 고를 수 있습니다
+Footprint: fixed size, tall
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#443
+-->
+<style>
+.u443{position:relative;width:340px;height:664px;padding:20px;border-radius:22px;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u443 svg{display:block}
+.u443-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.u443-top b{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.u443-top small{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;color:var(--ux-ink-3)}
+.u443-top small svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u443-ls{display:flex;flex-direction:column;gap:8px}
+.u443-c{border-radius:14px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:box-shadow .2s var(--ux-ease),background-color .2s}
+.u443-c:hover{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ux-ink) 28%,transparent)}
+.u443-c.is-sel{box-shadow:inset 0 0 0 1.5px var(--ux-accent),0 0 0 3px var(--ux-accent-soft);background:color-mix(in srgb,var(--ux-accent) 3%,var(--ux-surface))}
+.u443-hd{display:flex;align-items:center;gap:11px;min-height:54px;padding:0 14px 0 12px;cursor:pointer}
+.u443-hd input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.u443-rd{flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--ux-line-2);transition:box-shadow .2s,background-color .2s}
+.u443-rd::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--ux-accent-ink);transform:scale(0);transition:transform .3s var(--ux-spring)}
+.u443-c.is-sel .u443-rd{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent)}
+.u443-c.is-sel .u443-rd::after{transform:scale(.8)}
+.u443-hd input:focus-visible~.u443-rd{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u443-mk{flex:none;width:46px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;gap:2px;font-weight:800;letter-spacing:-.03em}
+.u443-mk svg{flex:none}
+.u443-mk.is-gen{background:var(--ux-surface-2);box-shadow:inset 0 0 0 1px var(--ux-line);color:var(--ux-ink-2)}
+.u443-mk.is-gen svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u443-mk.is-kakao{background:#FFEB00;color:#191600;font-size:11px}
+.u443-mk.is-kakao svg{width:13px;height:12px}
+.u443-mk.is-naver{background:#03C75A;color:#fff;font-size:11px}
+.u443-mk.is-naver svg{width:9px;height:9px;margin-right:1px}
+.u443-mk.is-toss{background:#0064FF;color:#fff;font-size:11.5px;letter-spacing:-.02em}
+.u443-tx{flex:1;min-width:0}
+.u443-tx b{display:block;font-size:13.5px;font-weight:650;letter-spacing:-.01em}
+.u443-tx small{display:block;margin-top:1px;font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u443-c.is-sel .u443-tx small.is-perk{color:var(--ux-accent)}
+.u443-ex{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ux-ease)}
+.u443-ex>div{min-height:0;overflow:hidden}
+.u443-c.is-sel .u443-ex{grid-template-rows:1fr}
+.u443-dt{margin:0 14px;padding:12px 0 14px;border-top:1px solid var(--ux-line);font-size:12px;line-height:1.5;color:var(--ux-ink-2)}
+.u443-dt p{margin:0}
+.u443-g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.u443-fl label{display:block;margin-bottom:5px;font-size:11.5px;font-weight:600;color:var(--ux-ink-3)}
+.u443-sel{position:relative;display:block}
+.u443-sel select,.u443-fl input{width:100%;height:36px;padding:0 28px 0 10px;border:0;border-radius:9px;background:var(--ux-surface);box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;color:var(--ux-ink);-webkit-appearance:none;appearance:none;outline:none}
+.u443-fl input{padding-right:10px}
+.u443-sel svg{position:absolute;right:9px;top:11px;width:14px;height:14px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.u443-sel select:focus-visible,.u443-fl input:focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u443 .u443-sel select:focus-visible,.u443 .u443-fl input:focus-visible{outline:none}
+.u443-note{margin:8px 0 0!important;font-size:11.5px;color:var(--ux-ink-3)}
+.u443-pt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;margin-top:10px;padding:0;border:0;background:none;font-size:12.5px;font-weight:600;color:var(--ux-ink);text-align:left}
+.u443-pt i{position:relative;flex:none;width:32px;height:19px;border-radius:999px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background-color .2s}
+.u443-pt i::after{content:"";position:absolute;left:2px;top:2px;width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .3s var(--ux-spring)}
+.u443-pt[aria-checked="true"] i{background:#03C75A}
+.u443-pt[aria-checked="true"] i::after{transform:translateX(13px)}
+.u443 .u443-pt:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px;border-radius:6px}
+.u443-sum{position:absolute;left:20px;right:20px;bottom:20px}
+.u443-rows{padding:12px 2px 12px;border-top:1px solid var(--ux-line)}
+.u443-r{display:flex;justify-content:space-between;align-items:center;height:22px;font-size:12.5px;color:var(--ux-ink-2);font-variant-numeric:tabular-nums}
+.u443-r.is-dc{color:var(--ux-danger);overflow:hidden;animation:u443-row .3s var(--ux-ease)}
+@keyframes u443-row{from{height:0;opacity:0}}
+.u443-r.is-tot{height:28px;margin-top:4px;font-size:13.5px;font-weight:650;color:var(--ux-ink)}
+.u443-r.is-tot b{font-size:17px;font-weight:750;letter-spacing:-.02em}
+.u443-go{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:46px;border:0;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;transition:opacity .15s,transform .2s var(--ux-spring),background-color .25s}
+.u443-go:hover:not([aria-disabled="true"]){opacity:.9}
+.u443-go:active:not([aria-disabled="true"]){transform:scale(.98)}
+.u443-go i{width:15px;height:15px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:u443-spin .7s linear infinite}
+@keyframes u443-spin{to{transform:rotate(360deg)}}
+.u443-go svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.u443-go.is-ok{background:var(--ux-mint);color:var(--ux-accent-ink)}
+.u443 .u443-go:focus-visible{outline-offset:3px}
+.u443-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u443">
+  <div class="u443-top"><b>결제 수단</b><small><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="9.5" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>안전하게 암호화돼요</small></div>
+  <div class="u443-ls" role="radiogroup" aria-label="결제 수단">
+    <div class="u443-c">
+      <label class="u443-hd"><input type="radio" value="card"><span class="u443-rd" aria-hidden="true"></span><span class="u443-mk is-gen" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h4"/></svg></span><span class="u443-tx"><b>신용·체크카드</b><small>할부 최대 12개월</small></span></label>
+      <div class="u443-ex"><div><div class="u443-dt">
+        <div class="u443-g2">
+          <div class="u443-fl"><label>카드사</label><span class="u443-sel"><select><option>현대카드</option><option>삼성카드</option><option>신한카드</option><option>KB국민카드</option><option>하나카드</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></span></div>
+          <div class="u443-fl"><label>할부</label><span class="u443-sel"><select><option>일시불</option><option>2개월 무이자</option><option>3개월 무이자</option><option>6개월</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></span></div>
+        </div>
+        <p class="u443-note">5만 원 이상이면 할부를 고를 수 있어요.</p>
+      </div></div></div>
+    </div>
+    <div class="u443-c">
+      <label class="u443-hd"><input type="radio" value="kakao"><span class="u443-rd" aria-hidden="true"></span><span class="u443-mk is-kakao" aria-hidden="true"><svg viewBox="0 0 14 13"><path d="M7 1C3.7 1 1 3.1 1 5.7c0 1.7 1.1 3.1 2.8 3.9L3.2 12l2.7-1.8c.4.1.7.1 1.1.1 3.3 0 6-2.1 6-4.6S10.3 1 7 1z" fill="#191600"/></svg>pay</span><span class="u443-tx"><b>카카오페이</b><small class="is-perk">카카오페이머니로 결제하면 1% 적립</small></span></label>
+      <div class="u443-ex"><div><div class="u443-dt"><p>카카오톡으로 결제 요청을 보내요. 앱에서 비밀번호만 넣으면 끝나요.</p></div></div></div>
+    </div>
+    <div class="u443-c">
+      <label class="u443-hd"><input type="radio" value="naver"><span class="u443-rd" aria-hidden="true"></span><span class="u443-mk is-naver" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="#fff" d="M16.273 12.845 7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845Z"/></svg>pay</span><span class="u443-tx"><b>네이버페이</b><small class="is-perk">포인트 2,340원 쓸 수 있어요</small></span></label>
+      <div class="u443-ex"><div><div class="u443-dt" style="padding-top:2px"><button type="button" class="u443-pt" role="switch" aria-checked="false">포인트 2,340원 쓰기<i aria-hidden="true"></i></button></div></div></div>
+    </div>
+    <div class="u443-c">
+      <label class="u443-hd"><input type="radio" value="toss"><span class="u443-rd" aria-hidden="true"></span><span class="u443-mk is-toss" aria-hidden="true">toss</span><span class="u443-tx"><b>토스페이</b><small class="is-perk">첫 결제 3,000원 바로 할인</small></span></label>
+      <div class="u443-ex"><div><div class="u443-dt"><p>토스 앱에서 결제를 승인해요. 첫 결제 할인이 자동으로 들어가요.</p></div></div></div>
+    </div>
+    <div class="u443-c">
+      <label class="u443-hd"><input type="radio" value="bank"><span class="u443-rd" aria-hidden="true"></span><span class="u443-mk is-gen" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 9.5 12 5l8 4.5M5 20h14M6.5 11v6M10 11v6M14 11v6M17.5 11v6"/></svg></span><span class="u443-tx"><b>무통장입금</b><small>주문 후 24시간 안에 입금</small></span></label>
+      <div class="u443-ex"><div><div class="u443-dt"><div class="u443-g2">
+        <div class="u443-fl"><label>입금 은행</label><span class="u443-sel"><select><option>국민은행</option><option>신한은행</option><option>우리은행</option><option>카카오뱅크</option></select><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></span></div>
+        <div class="u443-fl"><label>입금자명</label><input type="text" value="한서연" autocomplete="name"></div>
+      </div></div></div></div>
+    </div>
+  </div>
+  <div class="u443-sum">
+    <div class="u443-rows">
+      <div class="u443-r"><span>상품 금액</span><span>₩68,900</span></div>
+      <div class="u443-r"><span>배송비</span><span>무료</span></div>
+      <div class="u443-dcs"></div>
+      <div class="u443-r is-tot"><span>총 결제 금액</span><b></b></div>
+    </div>
+    <button type="button" class="u443-go"></button>
+  </div>
+  <p class="u443-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var cards = root.querySelectorAll('.u443-c'), radios = root.querySelectorAll('.u443-hd input'), pt = q('.u443-pt'), dcs = q('.u443-dcs'), tot = q('.u443-r.is-tot b'), go = q('.u443-go'), live = q('.u443-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { toss: '토스페이 첫 결제 할인', naver: '네이버페이 포인트', pay: '{p} 결제하기', busy: '결제를 요청하는 중…', ok: '결제 요청을 보냈어요' };
+  var BASE = 68900;
+  var uid = 'u443' + Math.random().toString(36).slice(2, 7);
+  radios.forEach(function (r) { r.name = uid + 'pm'; });
+  // 라벨과 입력 연결
+  root.querySelectorAll('.u443-fl').forEach(function (f, i) { var c = f.querySelector('select, input'); c.id = uid + 'f' + i; f.querySelector('label').htmlFor = c.id; });
+  var shown = BASE, animT = 0, busy = false;
+  function won(n) { return '₩' + Math.round(n).toLocaleString('ko-KR'); }
+  function discounts() {
+    var v = radios[[].findIndex.call(radios, function (r) { return r.checked; })];
+    var m = v ? v.value : '', out = [];
+    if (m === 'toss') out.push([T.toss, 3000]);
+    if (m === 'naver' && pt.getAttribute('aria-checked') === 'true') out.push([T.naver, 2340]);
+    return out;
+  }
+  // 금액이 바뀌면 숫자가 굴러가듯 새 금액으로 옮겨 갑니다
+  function setTotal(target) {
+    cancelAnimationFrame(animT);
+    var from = shown, t0 = performance.now(), dur = rm ? 0 : 380;
+    (function step(now) {
+      if (!root.isConnected) return;
+      var k = dur ? Math.min(1, (now - t0) / dur) : 1, e = 1 - Math.pow(1 - k, 3);
+      shown = from + (target - from) * e;
+      tot.textContent = won(shown);
+      if (!busy && !go.classList.contains('is-ok')) go.textContent = T.pay.replace('{p}', won(shown));
+      if (k < 1) animT = requestAnimationFrame(step);
+    })(t0);
+  }
+  function sync() {
+    var sel = -1;
+    radios.forEach(function (r, i) { if (r.checked) sel = i; });
+    cards.forEach(function (c, i) { c.classList.toggle('is-sel', i === sel); c.querySelectorAll('.u443-ex select, .u443-ex input, .u443-ex button').forEach(function (el) { el.tabIndex = i === sel ? 0 : -1; }); });
+    var d = discounts(), keep = dcs.children.length;
+    dcs.innerHTML = d.map(function (x) { return '<div class="u443-r is-dc"><span>' + x[0] + '</span><span>−' + won(x[1]) + '</span></div>'; }).join('');
+    if (keep) Array.prototype.forEach.call(dcs.children, function (r) { r.style.animation = 'none'; });
+    setTotal(BASE - d.reduce(function (a, x) { return a + x[1]; }, 0));
+  }
+  radios.forEach(function (r) { r.addEventListener('change', sync); });
+  pt.addEventListener('click', function () { pt.setAttribute('aria-checked', pt.getAttribute('aria-checked') === 'true' ? 'false' : 'true'); sync(); });
+  go.addEventListener('click', function () {
+    if (busy || go.classList.contains('is-ok')) return;
+    busy = true;
+    go.setAttribute('aria-disabled', 'true');
+    go.innerHTML = '<i aria-hidden="true"></i>' + T.busy;
+    live.textContent = T.busy;
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      busy = false;
+      go.classList.add('is-ok');
+      go.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>' + T.ok;
+      live.textContent = T.ok;
+      setTimeout(function () {
+        if (!root.isConnected) return;
+        go.classList.remove('is-ok');
+        go.removeAttribute('aria-disabled');
+        go.textContent = T.pay.replace('{p}', won(shown));
+      }, rm ? 800 : 1500);
+    }, rm ? 300 : 1100);
+  });
+  radios[0].checked = true;
+  sync();
+})();
+</script>

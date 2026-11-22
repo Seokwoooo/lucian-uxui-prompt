@@ -1,0 +1,202 @@
+<!-- Lucian UX/UI Prompt #437 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#437 -->
+<!--
+Element: 툴팁
+ID: 437 · Category: 알림·피드백 · Tags: tooltip, toolbar, keyboard-shortcut, delay, flip, toggletip, popover
+What it does: 편집기 도구 막대의 버튼에 커서를 올려 0.4초쯤 머무르면 이름과 단축키(⌘B)가 담긴 툴팁이 뜨고, 이웃 버튼으로 옮기면 기다림 없이 바로 따라옵니다. 위에 자리가 없으면 아래로 뒤집히고, 가장자리에서는 화살표만 버튼을 가리킨 채 안쪽으로 밀려납니다. 아래 정보 버튼에는 제목, 설명, 링크가 든 큰 툴팁이 열리고, Esc로 닫힙니다.
+How to use it: 도구 막대 버튼 위로 커서를 천천히 옮겨 보세요. Tab으로 초점을 옮겨도 뜨고, Esc로 닫힙니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#437
+-->
+<style>
+.u437{position:relative;width:340px;height:304px;border-radius:22px;overflow:hidden;background:var(--ux-surface);box-shadow:0 0 0 1px var(--ux-line),0 28px 56px -32px var(--ux-shadow-strong);color:var(--ux-ink);font-size:13px}
+.u437 svg{display:block;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u437-tb{display:flex;align-items:center;gap:2px;height:48px;padding:0 10px;border-bottom:1px solid var(--ux-line)}
+.u437-sep{width:1px;height:18px;margin:0 5px;background:var(--ux-line-2)}
+.u437-sp{flex:1}
+.u437-b{width:30px;height:30px;padding:0;border:0;border-radius:8px;display:grid;place-items:center;background:none;color:var(--ux-ink-2);transition:background-color .15s,color .15s,transform .2s var(--ux-spring)}
+.u437-b svg{width:16px;height:16px}
+.u437-b:hover{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u437-b:active{transform:scale(.92)}
+.u437-b[aria-pressed="true"]{background:var(--ux-accent-soft);color:var(--ux-accent)}
+.u437 .u437-b:focus-visible,.u437 .u437-info:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u437-ed{padding:18px 20px 0}
+.u437-ed small{font-size:11.5px;font-weight:600;color:var(--ux-ink-3)}
+.u437-ed h3{margin:4px 0 8px;font-size:18px;font-weight:700;letter-spacing:-.025em}
+.u437-ed p{margin:0;font-size:13px;line-height:1.65;color:var(--ux-ink-2)}
+.u437-ed b{font-weight:700;color:var(--ux-ink)}
+.u437-ed ul{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.7;color:var(--ux-ink-2)}
+.u437-ed li::marker{color:var(--ux-ink-3)}
+.u437-ft{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:6px;height:42px;padding:0 12px 0 16px;border-top:1px solid var(--ux-line);font-size:12px;color:var(--ux-ink-3)}
+.u437-ft i{width:6px;height:6px;border-radius:50%;background:var(--ux-mint)}
+.u437-info{width:22px;height:22px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s}
+.u437-info:hover,.u437-info[aria-expanded="true"]{background:var(--ux-surface-2);color:var(--ux-ink)}
+.u437-info svg{width:15px;height:15px}
+.u437-ft span:last-child{margin-left:auto;font-variant-numeric:tabular-nums}
+.u437-tip,.u437-rich{position:absolute;left:0;top:0;z-index:5;transform:translate(var(--x,0),var(--y,0));pointer-events:none;visibility:hidden}
+.u437-tip.is-on,.u437-rich.is-on{visibility:visible}
+.u437-tip.is-glide{transition:transform .16s var(--ux-ease)}
+.u437-in{position:relative;opacity:0;transform:translateY(var(--dy,4px)) scale(.96);transform-origin:var(--ax,50%) var(--oy,0);transition:opacity .12s var(--ux-ease),transform .12s var(--ux-ease)}
+.u437-tip.is-on .u437-in,.u437-rich.is-on .u437-in{opacity:1;transform:none;transition:opacity .14s var(--ux-ease),transform .22s var(--ux-spring)}
+.u437-tip[data-side="top"],.u437-rich[data-side="top"]{--dy:4px;--oy:100%}
+.u437-tip[data-side="bottom"],.u437-rich[data-side="bottom"]{--dy:-4px;--oy:0}
+.u437-tip .u437-in{display:flex;align-items:center;gap:8px;height:28px;padding:0 6px 0 9px;border-radius:7px;white-space:nowrap;font-size:12px;font-weight:550;background:#16151B;background:light-dark(var(--ux-ink),var(--ux-surface-3));color:#fff;color:light-dark(var(--ux-surface),var(--ux-ink));box-shadow:0 6px 16px -6px var(--ux-shadow-strong),0 0 0 1px light-dark(transparent,var(--ux-line-2))}
+.u437-tip kbd{display:inline-flex;gap:2px}
+.u437-tip kbd span{min-width:17px;height:17px;padding:0 4px;border-radius:4px;display:grid;place-items:center;background:color-mix(in srgb,currentColor 15%,transparent);font:inherit;font-size:10.5px;font-weight:600;opacity:.85}
+.u437-ar{position:absolute;left:var(--ax,50%);width:8px;height:8px;margin-left:-4px;transform:rotate(45deg);background:inherit;border-radius:1.5px}
+.u437-tip[data-side="top"] .u437-ar,.u437-rich[data-side="top"] .u437-ar{bottom:-3.5px}
+.u437-tip[data-side="bottom"] .u437-ar,.u437-rich[data-side="bottom"] .u437-ar{top:-3.5px}
+.u437-rich{width:236px}
+.u437-rich.is-on{pointer-events:auto}
+.u437-rich .u437-in{padding:12px 14px 12px;border-radius:12px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 16px 36px -14px var(--ux-shadow-strong)}
+.u437-rich .u437-ar{box-shadow:1px 1px 0 var(--ux-line-2)}
+.u437-rich[data-side="bottom"] .u437-ar{box-shadow:-1px -1px 0 var(--ux-line-2)}
+.u437-rich b{display:block;font-size:13px;font-weight:650}
+.u437-rich p{margin:3px 0 8px;font-size:12px;line-height:1.5;color:var(--ux-ink-2)}
+.u437-rich a{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:650;color:var(--ux-accent);text-decoration:none;border-radius:4px}
+.u437-rich a:hover{text-decoration:underline;text-underline-offset:3px}
+.u437-rich a svg{width:12px;height:12px;stroke-width:2.2;transition:transform .2s var(--ux-spring)}
+.u437-rich a:hover svg{transform:translateX(2px)}
+</style>
+<div class="ux u437">
+  <div class="u437-tb" role="toolbar" aria-label="서식">
+    <button type="button" class="u437-b" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h6a3.5 3.5 0 0 1 0 7H7zM7 12h7a3.5 3.5 0 0 1 0 7H7z"/></svg></button>
+    <button type="button" class="u437-b" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5h8M6 19h8M14 5l-4 14"/></svg></button>
+    <button type="button" class="u437-b" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v6a5 5 0 0 0 10 0v-6M5.5 20h13"/></svg></button>
+    <button type="button" class="u437-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7.3l3-3a4 4 0 0 0-5.7-5.6l-1 1"/><path d="M14 10a4 4 0 0 0-5.7-.3l-3 3a4 4 0 0 0 5.7 5.6l1-1"/></svg></button>
+    <i class="u437-sep" aria-hidden="true"></i>
+    <button type="button" class="u437-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6.5h10M10 12h10M10 17.5h10"/><circle cx="5" cy="6.5" r=".6"/><circle cx="5" cy="12" r=".6"/><circle cx="5" cy="17.5" r=".6"/></svg></button>
+    <button type="button" class="u437-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8.5 7-5 5 5 5M15.5 7l5 5-5 5"/></svg></button>
+    <span class="u437-sp"></span>
+    <button type="button" class="u437-b"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.8 7l-4.2 1 1.1-3.9A8 8 0 1 1 20 12z"/><path d="M12 9v6M9 12h6"/></svg></button>
+  </div>
+  <div class="u437-ed">
+    <small>초안 · 마케팅팀</small>
+    <h3>11월 뉴스레터</h3>
+    <p>이번 달에는 <b>다크 모드</b>와 새 검색을 내놓았어요. 가장 많이 받은 질문 세 가지에 답하고, 다음 달 일정도 미리 알려 드려요.</p>
+    <ul><li>다크 모드, 이렇게 켜요</li><li>12월 업데이트 미리 보기</li></ul>
+  </div>
+  <div class="u437-ft">
+    <i aria-hidden="true"></i><span>자동 저장됨</span>
+    <button type="button" class="u437-info" aria-label="자동 저장 안내" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8h.01"/></svg></button>
+    <span>단어 248개</span>
+  </div>
+  <div class="u437-tip" role="tooltip"><div class="u437-in"><span class="u437-tl"></span><kbd></kbd><i class="u437-ar"></i></div></div>
+  <div class="u437-rich"><div class="u437-in"><b>자동 저장이 켜져 있어요</b><p>고칠 때마다 2초 안에 저장되고, 버전은 30일 동안 남아요.</p><a href="#versions">버전 기록 보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><i class="u437-ar"></i></div></div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var btns = root.querySelectorAll('.u437-b'), tip = q('.u437-tip'), tl = q('.u437-tl'), kb = q('.u437-tip kbd'), info = q('.u437-info'), rich = q('.u437-rich'), link = q('.u437-rich a');
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent || '');
+  var MOD = mac ? { mod: '⌘', shift: '⇧', alt: '⌥' } : { mod: 'Ctrl', shift: 'Shift', alt: 'Alt' };
+  // [이름, 단축키]
+  var TIPS = [['굵게', ['mod', 'B']], ['기울임꼴', ['mod', 'I']], ['밑줄', ['mod', 'U']], ['링크', ['mod', 'K']], ['글머리 기호', ['mod', 'shift', '8']], ['코드', ['mod', 'E']], ['댓글 달기', ['mod', 'alt', 'M']]];
+  var uid = 'u437' + Math.random().toString(36).slice(2, 7);
+  tip.id = uid + 't'; rich.id = uid + 'r';
+  info.setAttribute('aria-controls', rich.id);
+  rich.setAttribute('role', 'region');
+  rich.setAttribute('aria-labelledby', uid + 'rb');
+  rich.querySelector('b').id = uid + 'rb';
+  btns.forEach(function (b, i) { b.setAttribute('aria-label', TIPS[i][0]); b.setAttribute('aria-keyshortcuts', TIPS[i][1].map(function (k) { return k === 'mod' ? (mac ? 'Meta' : 'Control') : k === 'shift' ? 'Shift' : k === 'alt' ? 'Alt' : k; }).join('+')); });
+  var OPEN = 400, SKIP = 300;
+  var cur = null, openT = 0, closeT = 0, lastClose = 0, muted = null;
+
+  // 루트 안에서 자리를 잡습니다. 위에 자리가 없으면 아래로 뒤집고, 가장자리에서는 안쪽으로 밀되 화살표는 버튼을 가리킵니다
+  function place(el, btn, pref) {
+    var rr = root.getBoundingClientRect(), br = btn.getBoundingClientRect(), k = rr.width / root.offsetWidth || 1;
+    var bx = (br.left - rr.left) / k, by = (br.top - rr.top) / k, bw = br.width / k, bh = br.height / k;
+    var W = root.offsetWidth, H = root.offsetHeight, tw = el.offsetWidth, th = el.offsetHeight, gap = 7;
+    var side = pref;
+    if (side === 'top' && by - gap - th < 6) side = 'bottom';
+    else if (side === 'bottom' && by + bh + gap + th > H - 6) side = 'top';
+    var x = Math.max(8, Math.min(W - 8 - tw, bx + bw / 2 - tw / 2));
+    var y = side === 'top' ? by - gap - th : by + bh + gap;
+    el.style.setProperty('--x', x.toFixed(1) + 'px');
+    el.style.setProperty('--y', y.toFixed(1) + 'px');
+    el.style.setProperty('--ax', Math.max(12, Math.min(tw - 12, bx + bw / 2 - x)).toFixed(1) + 'px');
+    el.dataset.side = side;
+  }
+  function show(btn, glide) {
+    var i = Array.prototype.indexOf.call(btns, btn), t = TIPS[i];
+    tl.textContent = t[0];
+    kb.innerHTML = t[1].map(function (k) { return '<span>' + (MOD[k] || k) + '</span>'; }).join('');
+    tip.classList.toggle('is-glide', !!glide);
+    place(tip, btn, 'top');
+    if (cur && cur !== btn) cur.removeAttribute('aria-describedby');
+    cur = btn;
+    btn.setAttribute('aria-describedby', tip.id);
+    tip.classList.add('is-on');
+  }
+  function hide() {
+    clearTimeout(openT);
+    if (!cur) return;
+    cur.removeAttribute('aria-describedby');
+    cur = null;
+    tip.classList.remove('is-on', 'is-glide');
+    lastClose = Date.now();
+  }
+  // 처음에는 잠깐 기다렸다가 열고, 이미 떠 있거나 방금 닫혔다면 이웃 버튼으로 바로 옮깁니다
+  function want(btn) {
+    if (btn === muted) return;
+    clearTimeout(closeT); clearTimeout(openT);
+    if (cur === btn) return;
+    if (cur || Date.now() - lastClose < SKIP) show(btn, !!cur);
+    else openT = setTimeout(function () { if (root.isConnected) show(btn, false); }, OPEN);
+  }
+  function unwant(btn) {
+    if (muted === btn) muted = null;
+    clearTimeout(openT);
+    clearTimeout(closeT);
+    closeT = setTimeout(hide, 90);
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') want(b); });
+    b.addEventListener('pointerleave', function () { unwant(b); });
+    b.addEventListener('focus', function () { if (b.matches(':focus-visible')) want(b); });
+    b.addEventListener('blur', function () { unwant(b); });
+    // 누르면 툴팁을 닫고, 커서가 나갔다 들어올 때까지 다시 띄우지 않습니다
+    b.addEventListener('pointerdown', function () { muted = b; hide(); });
+    b.addEventListener('click', function () { if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
+  });
+
+  // 큰 툴팁: 커서를 올리면 열리고, 툴팁 안으로 옮겨도 닫히지 않습니다. 누르면 고정됩니다
+  var rOpenT = 0, rCloseT = 0, pinned = false;
+  function richShow() {
+    clearTimeout(rCloseT);
+    if (rich.classList.contains('is-on')) return;
+    hide();
+    place(rich, info, 'top');
+    rich.classList.add('is-on');
+    info.setAttribute('aria-expanded', 'true');
+  }
+  function richHide() {
+    clearTimeout(rOpenT); clearTimeout(rCloseT);
+    pinned = false;
+    if (!rich.classList.contains('is-on')) return;
+    rich.classList.remove('is-on');
+    info.setAttribute('aria-expanded', 'false');
+  }
+  function richSoon() { clearTimeout(rOpenT); clearTimeout(rCloseT); rOpenT = setTimeout(function () { if (root.isConnected) richShow(); }, OPEN); }
+  function richLater() { clearTimeout(rOpenT); if (pinned) return; clearTimeout(rCloseT); rCloseT = setTimeout(function () { if (root.isConnected) richHide(); }, 160); }
+  info.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') richSoon(); });
+  info.addEventListener('pointerleave', richLater);
+  info.addEventListener('focus', function () { if (info.matches(':focus-visible')) richSoon(); });
+  info.addEventListener('click', function () {
+    if (rich.classList.contains('is-on') && pinned) { richHide(); return; }
+    richShow(); pinned = true;
+  });
+  rich.addEventListener('pointerenter', function () { clearTimeout(rCloseT); });
+  rich.addEventListener('pointerleave', richLater);
+  root.addEventListener('focusout', function (e) {
+    if (rich.classList.contains('is-on') && !(e.relatedTarget && (rich.contains(e.relatedTarget) || e.relatedTarget === info))) richHide();
+  });
+  link.addEventListener('click', function (e) { e.preventDefault(); richHide(); info.focus({ preventScroll: true }); });
+  root.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    if (rich.classList.contains('is-on')) { e.preventDefault(); e.stopPropagation(); var back = rich.contains(document.activeElement); richHide(); if (back) info.focus({ preventScroll: true }); }
+    else if (cur) { e.preventDefault(); e.stopPropagation(); muted = cur; hide(); }
+  });
+})();
+</script>
