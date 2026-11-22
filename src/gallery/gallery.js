@@ -911,7 +911,7 @@
     fitTile(stage, fit);
     attachPlayer(fit, idx, 'tile');
   }
-  // 화면 1.3배(모바일 1.1배) 앞에서 미리 붙여 두고, 2.2배(모바일 1.6배) 넘게 멀어져야 뗍니다(경계에서 붙였다 뗐다 하지 않게 간격을 둡니다).
+  // 화면 2배(모바일 1.5배) 앞에서 미리 붙여 두고, 3.5배(모바일 3배) 넘게 멀어져야 뗍니다(빠르게 스크롤하거나 되돌아가도 비어 보이지 않게).
   // 붙일 때는 화면에 가까운 타일부터 한 프레임에 8ms 안에서만 붙여 스크롤이 끊기지 않게 합니다
   var mountQ = [], qRaf = 0;
   function distOf(st) { var r = st.getBoundingClientRect(); return r.bottom < 0 ? -r.bottom : r.top > innerHeight ? r.top - innerHeight : 0; }
@@ -936,13 +936,13 @@
       st._near = en.isIntersecting;
       if (en.isIntersecting && !st.firstElementChild.firstChild) queueMount(st);
     });
-  }, { rootMargin: mobileQ.matches ? '110% 0px' : '130% 0px' });
+  }, { rootMargin: mobileQ.matches ? '150% 0px' : '200% 0px' });
   var keepIO = new IntersectionObserver(function (entries) {
     entries.forEach(function (en) {
       var fit = en.target.firstElementChild;
       if (!en.isIntersecting && fit.firstChild) unmount(fit);
     });
-  }, { rootMargin: mobileQ.matches ? '160% 0px' : '220% 0px' });
+  }, { rootMargin: mobileQ.matches ? '300% 0px' : '350% 0px' });
   function watchStage(st) { tileIO.observe(st); keepIO.observe(st); }
   function unwatchAll() { tileIO.disconnect(); keepIO.disconnect(); mountQ = []; }
   var tileRO = new ResizeObserver(function (entries) {
@@ -967,13 +967,11 @@
     var fresh = $$('.g-tile', frag);
     $$('.g-stage', frag).forEach(function (st) { watchStage(st); tileRO.observe(st); });
     grid.appendChild(frag);
-    // 화면 아래에서 미리 붙는 타일은 떠오르는 등장 효과 없이 바로 제자리에 둡니다(빠르게 내려와도 비어 보이지 않게)
+    // 화면 아래에서 미리 붙는 타일은 등장 효과 없이 처음부터 또렷하게 둡니다(스크롤하자마자 보이게)
     fresh.forEach(function (tl) {
-      if (tl.getBoundingClientRect().top > innerHeight) { tl.classList.remove('is-new'); if (REVEAL) tl.classList.add('is-reveal'); }
+      if (tl.getBoundingClientRect().top > innerHeight) tl.classList.remove('is-new');
     });
   }
-  // 스크롤에 묶는 등장 효과를 쓸 수 있는 브라우저인지(모션 줄이기면 쓰지 않습니다)
-  var REVEAL = !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) && !reduce.matches;
   function fillIfNeeded() {
     if (body.dataset.view !== 'grid') return;
     var guard = 0;
