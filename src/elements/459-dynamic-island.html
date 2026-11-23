@@ -1,0 +1,324 @@
+<!-- @meta {"title":"다이내믹 아일랜드","category":"알림·피드백","summary":"검은 알약 하나가 실시간 활동을 담습니다. 누르면 스프링처럼 출렁이며 크게 펼쳐지고, 옆으로 밀면 타이머 → 음악 → 걸려 온 전화로 모양을 바꿉니다. 타이머는 실제로 줄어들고, 음악은 이퀄라이저가 춤추며 재생·곡 넘김이 되고, 전화는 받거나 거절할 수 있습니다. 알약 색은 화면 테마와 상관없이 늘 검정입니다.","hint":"알약을 눌러 펼치고, 옆으로 밀어 다른 활동으로 바꿔 보세요","shape":"square","hue":"#FB923C","hue2":"#30D158","tags":["dynamic-island","live-activity","morph","spring","notification","swipe"]} -->
+<!-- @demo [["wait",600],["tap",".u459-tap",0,{"after":1300}],["tap",".u459-tap",0,{"fx":0.5,"fy":0.14,"after":650}],["drag",".u459-i",0,[0.8,0.5],[0.2,0.5],320,{"after":750}],["tap",".u459-tap",0,{"after":1500}],["reset"]] -->
+<!-- @en {"title":"Dynamic Island","summary":"A single black pill holds live activities. Tap it and it springs open with a wobble; swipe it sideways and it reshapes into a timer, then music, then an incoming call. The timer really counts down, the equalizer dances while music plays (with play and skip), and the call can be answered or declined. The pill stays black whatever the page theme.","hint":"Tap the pill to expand it, swipe sideways to switch activities","map":[
+  [">타이머<", ">Timer<"],
+  [">휴대전화<", ">mobile<"],
+  [">엄마<", ">Mom<"],
+  [">엄<", ">M<"],
+  [">여름밤<", ">Summer Night<"],
+  [">한결<", ">Hangyeol<"],
+  ["aria-label=\"일시정지\"", "aria-label=\"Pause\""],
+  ["aria-label=\"타이머 끝내기\"", "aria-label=\"End timer\""],
+  ["aria-label=\"이전 곡\"", "aria-label=\"Previous track\""],
+  ["aria-label=\"다음 곡\"", "aria-label=\"Next track\""],
+  ["aria-label=\"거절\"", "aria-label=\"Decline\""],
+  ["aria-label=\"받기\"", "aria-label=\"Accept\""],
+  ["aria-label=\"통화 종료\"", "aria-label=\"End call\""],
+  ["'일시정지'", "'Pause'"],
+  ["'재생'", "'Play'"],
+  ["'계속'", "'Resume'"],
+  ["'타이머 {t}'", "'Timer {t}'"],
+  ["'음악 {s}'", "'Music, {s}'"],
+  ["'엄마에게서 전화가 와요'", "'Incoming call from Mom'"],
+  ["'엄마와 통화 중 {t}'", "'On a call with Mom, {t}'"],
+  ["', 펼침'", "', expanded'"],
+  ["'여름밤'", "'Summer Night'"],
+  ["'한결'", "'Hangyeol'"],
+  ["'파도 소리'", "'Sound of Waves'"],
+  ["'윤슬'", "'Yunseul'"]
+]} -->
+<style>
+.u459{position:relative;width:340px;height:300px}
+.u459-at{position:absolute;left:0;right:0;top:96px;display:flex;justify-content:center;transition:transform .55s cubic-bezier(.3,1.5,.5,1)}
+.u459-at.is-drag{transition:none}
+.u459-i{position:relative;width:206px;height:36px;border-radius:18px;overflow:hidden;background:#000000;color:#FFFFFF;box-shadow:0 0 0 1px rgba(255,255,255,0),0 14px 30px -14px rgba(0,0,0,.45);box-shadow:0 0 0 1px light-dark(rgba(255,255,255,0),rgba(255,255,255,.13)),0 14px 30px -14px light-dark(rgba(0,0,0,.45),rgba(0,0,0,.9));transition:width .58s cubic-bezier(.3,1.32,.5,1),height .58s cubic-bezier(.3,1.32,.5,1),border-radius .58s cubic-bezier(.3,1.2,.5,1),transform .45s cubic-bezier(.34,1.6,.5,1);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.u459-i.is-press{transform:scale(.965);transition-duration:.58s,.58s,.58s,.12s}
+.u459-tap{position:absolute;inset:0;z-index:0;width:100%;padding:0;border:0;border-radius:inherit;background:none;cursor:pointer}
+.u459 .u459-tap:focus-visible{outline:none}
+.u459-i:has(.u459-tap:focus-visible){outline:2px solid var(--ux-accent);outline-offset:3px}
+.u459-v{position:absolute;left:50%;top:0;z-index:1;display:flex;align-items:center;justify-content:space-between;opacity:0;visibility:hidden;filter:blur(6px);transform:translateX(-50%) scale(.9);transform-origin:50% 0;pointer-events:none;transition:opacity .16s var(--ux-ease),filter .16s var(--ux-ease),transform .3s var(--ux-ease),visibility 0s linear .16s}
+.u459-v.is-on{opacity:1;visibility:visible;filter:none;transform:translateX(-50%);transition:opacity .3s var(--ux-ease) .13s,filter .3s var(--ux-ease) .13s,transform .5s cubic-bezier(.3,1.4,.5,1) .1s,visibility 0s}
+.u459-v button{pointer-events:auto}
+.u459-cp{width:206px;height:36px;padding:0 14px 0 8px}
+.u459-xp{width:316px;height:84px;padding:0 20px 0 16px}
+.u459-org{color:#FF9F0A}
+.u459-grn{color:#30D158}
+.u459-tt,.u459-ct{font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:0}
+.u459-cp .u459-tt,.u459-cp .u459-ct{font-size:15px}
+.u459-ring{width:22px;height:22px;transform:rotate(-90deg)}
+.u459-ring circle{fill:none;stroke-width:2.6}
+.u459-ring circle:first-child{stroke:rgba(255,159,10,.28)}
+.u459-ring .fg{stroke:#FF9F0A;stroke-linecap:round;stroke-dasharray:56.55;transition:stroke-dashoffset 1s linear}
+.u459-bs{display:flex;gap:10px}
+.u459-cb{width:48px;height:48px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;transition:transform .4s cubic-bezier(.34,1.6,.5,1),filter .15s}
+.u459-cb:hover{filter:brightness(1.15)}
+.u459-cb:active{transform:scale(.88);transition-duration:.1s}
+.u459-cb svg{width:22px;height:22px}
+.u459-cb.is-org{background:rgba(255,159,10,.24);color:#FF9F0A}
+.u459-cb.is-gry{background:rgba(255,255,255,.17);color:#FFFFFF}
+.u459-cb.is-red{background:#FF453A;color:#FFFFFF}
+.u459-cb.is-grn{background:#30D158;color:#FFFFFF}
+.u459 .u459-cb:focus-visible,.u459 .u459-ctl button:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px}
+.u459-st{fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.u459-fl{fill:currentColor}
+.u459-pp .u459-fl{display:none}
+.u459-pp.is-paused .u459-st{display:none}
+.u459-pp.is-paused .u459-fl{display:block}
+.u459-tr{display:flex;flex-direction:column;align-items:flex-end;gap:0}
+.u459-tr small{font-size:12px;font-weight:600;color:#FF9F0A;opacity:.85}
+.u459-tr b{font-size:38px;font-weight:300;line-height:1.05;letter-spacing:-.01em}
+.u459-art{flex:none;width:23px;height:23px;border-radius:6px;background:radial-gradient(circle at 70% 30%,#FFE6A8 0 13%,rgba(255,230,168,0) 15%),linear-gradient(160deg,#FF9A62,#F2557A 55%,#6B4CF0);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);transition:filter .4s}
+.u459-art.is-b{background:radial-gradient(circle at 30% 28%,#E9FBFF 0 12%,rgba(233,251,255,0) 14%),linear-gradient(170deg,#7FE3F5,#2A8CF0 55%,#1B3FA8)}
+.u459-art.is-lg{width:54px;height:54px;border-radius:13px}
+.u459-eq{flex:none;display:flex;align-items:center;gap:2.5px;height:16px}
+.u459-eq i{width:3px;height:16px;border-radius:2px;background:#FF8FAB;transform-origin:50% 50%;animation:u459-eq .9s ease-in-out infinite alternate}
+.u459-eq i:nth-child(2){animation-duration:.62s;animation-delay:-.3s}
+.u459-eq i:nth-child(3){animation-duration:.78s;animation-delay:-.5s}
+.u459-eq i:nth-child(4){animation-duration:.55s;animation-delay:-.1s}
+@keyframes u459-eq{0%{transform:scaleY(.25)}100%{transform:scaleY(1)}}
+.u459-i.is-paused .u459-eq i{animation-play-state:paused}
+.u459-mx{width:316px;height:160px;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:16px 20px}
+.u459-mt{display:flex;align-items:center;gap:12px;height:54px}
+.u459-mi{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.u459-mi b{font-size:15.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u459-mi small{font-size:13px;color:rgba(255,255,255,.55);white-space:nowrap}
+.u459-mt .u459-eq{height:20px;align-self:flex-start;margin-top:4px}
+.u459-mt .u459-eq i{height:20px}
+.u459-pg{display:flex;align-items:center;gap:10px;margin-top:13px;font-size:11px;font-variant-numeric:tabular-nums;color:rgba(255,255,255,.5)}
+.u459-pg small{width:30px}
+.u459-pg small:last-child{text-align:right}
+.u459-bar{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.u459-bar i{display:block;height:100%;width:var(--u459-p,30%);border-radius:inherit;background:rgba(255,255,255,.88);transition:width 1s linear}
+.u459-ctl{display:flex;align-items:center;justify-content:center;gap:34px;margin-top:9px}
+.u459-ctl button{width:38px;height:34px;padding:0;border:0;border-radius:10px;display:grid;place-items:center;background:none;color:#FFFFFF;transition:transform .4s cubic-bezier(.34,1.6,.5,1),background-color .15s}
+.u459-ctl button:hover{background:rgba(255,255,255,.1)}
+.u459-ctl button:active{transform:scale(.85);transition-duration:.1s}
+.u459-ctl svg{width:24px;height:24px}
+.u459-ctl .is-big svg{width:28px;height:28px}
+.u459-ctl [data-a="prev"] svg{transform:scaleX(-1)}
+.u459-av{flex:none;width:23px;height:23px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#FFFFFF;background:linear-gradient(150deg,#FFB48C,#F2557A)}
+.u459-av.is-lg{width:48px;height:48px;font-size:19px}
+.u459-ph{width:20px;height:20px;fill:#30D158}
+.u459-ph.is-ring{animation:u459-ring 1.6s ease-in-out infinite}
+@keyframes u459-ring{0%,40%,100%{transform:rotate(0)}5%,15%,25%{transform:rotate(-14deg)}10%,20%,30%{transform:rotate(14deg)}}
+.u459-who{display:flex;align-items:center;gap:12px;min-width:0}
+.u459-wt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.u459-wt small{font-size:12.5px;color:rgba(255,255,255,.55)}
+.u459-wt b{font-size:18px;font-weight:650;letter-spacing:-.01em}
+.u459-wt .u459-ct{font-size:13px}
+.u459-dn{transform:rotate(135deg)}
+.u459-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u459">
+  <div class="u459-at">
+    <div class="u459-i">
+      <button type="button" class="u459-tap" aria-expanded="false"></button>
+      <div class="u459-v u459-cp" data-v="tc">
+        <svg class="u459-ring" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle class="fg" cx="12" cy="12" r="9"/></svg>
+        <b class="u459-tt u459-org" aria-hidden="true">4:32</b>
+      </div>
+      <div class="u459-v u459-xp" data-v="te">
+        <div class="u459-bs">
+          <button type="button" class="u459-cb is-org u459-pp" data-a="pause" aria-label="일시정지"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-st" d="M8.5 6v12M15.5 6v12"/><path class="u459-fl" d="M8 5.6v12.8c0 .6.6.9 1.1.6l9.9-6.4c.5-.3.5-.9 0-1.2L9.1 5c-.5-.3-1.1 0-1.1.6Z"/></svg></button>
+          <button type="button" class="u459-cb is-gry" data-a="cancel" aria-label="타이머 끝내기"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-st" d="M7.5 7.5l9 9M16.5 7.5l-9 9"/></svg></button>
+        </div>
+        <div class="u459-tr" aria-hidden="true"><small>타이머</small><b class="u459-tt u459-org">4:32</b></div>
+      </div>
+      <div class="u459-v u459-cp" data-v="mc">
+        <span class="u459-art" aria-hidden="true"></span>
+        <span class="u459-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </div>
+      <div class="u459-v u459-mx" data-v="me">
+        <div class="u459-mt">
+          <span class="u459-art is-lg" aria-hidden="true"></span>
+          <span class="u459-mi"><b class="u459-song">여름밤</b><small class="u459-artist">한결</small></span>
+          <span class="u459-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+        <div class="u459-pg" aria-hidden="true"><small class="u459-p0">1:12</small><span class="u459-bar"><i></i></span><small class="u459-p1">-2:31</small></div>
+        <div class="u459-ctl">
+          <button type="button" data-a="prev" aria-label="이전 곡"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M3.5 6.6v10.8c0 .6.6.9 1.1.6l7.4-5.2v4.6c0 .6.6.9 1.1.6l7.6-5.4c.4-.3.4-.9 0-1.2L13.1 6c-.5-.3-1.1 0-1.1.6v4.6L4.6 6c-.5-.3-1.1 0-1.1.6Z"/></svg></button>
+          <button type="button" data-a="play" class="is-big" aria-label="일시정지"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg></button>
+          <button type="button" data-a="next" aria-label="다음 곡"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M3.5 6.6v10.8c0 .6.6.9 1.1.6l7.4-5.2v4.6c0 .6.6.9 1.1.6l7.6-5.4c.4-.3.4-.9 0-1.2L13.1 6c-.5-.3-1.1 0-1.1.6v4.6L4.6 6c-.5-.3-1.1 0-1.1.6Z"/></svg></button>
+        </div>
+      </div>
+      <div class="u459-v u459-cp" data-v="cc">
+        <span class="u459-av" aria-hidden="true">엄</span>
+        <svg class="u459-ph is-ring" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z"/></svg>
+      </div>
+      <div class="u459-v u459-xp" data-v="ce">
+        <div class="u459-who"><span class="u459-av is-lg" aria-hidden="true">엄</span><span class="u459-wt"><small>휴대전화</small><b>엄마</b></span></div>
+        <div class="u459-bs">
+          <button type="button" class="u459-cb is-red" data-a="decline" aria-label="거절"><svg class="u459-dn" viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z"/></svg></button>
+          <button type="button" class="u459-cb is-grn" data-a="accept" aria-label="받기"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z"/></svg></button>
+        </div>
+      </div>
+      <div class="u459-v u459-cp" data-v="oc">
+        <svg class="u459-ph" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z"/></svg>
+        <b class="u459-ct u459-grn" aria-hidden="true">0:00</b>
+      </div>
+      <div class="u459-v u459-xp" data-v="oe">
+        <div class="u459-who"><span class="u459-av is-lg" aria-hidden="true">엄</span><span class="u459-wt"><b>엄마</b><small class="u459-ct u459-grn">0:00</small></span></div>
+        <div class="u459-bs">
+          <button type="button" class="u459-cb is-red" data-a="end" aria-label="통화 종료"><svg class="u459-dn" viewBox="0 0 24 24" aria-hidden="true"><path class="u459-fl" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1Z"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="u459-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); }, qa = function (s) { return [].slice.call(root.querySelectorAll(s)); };
+  var at = q('.u459-at'), isl = q('.u459-i'), tap = q('.u459-tap'), live = q('.u459-live');
+  var layers = qa('.u459-v'), ring = q('.u459-ring .fg'), bar = q('.u459-bar i');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { pause: '일시정지', play: '재생', resume: '계속', timer: '타이머 {t}', music: '음악 {s}', call: '엄마에게서 전화가 와요', oncall: '엄마와 통화 중 {t}', ex: ', 펼침' };
+  var TRACKS = [['여름밤', '한결', 223], ['파도 소리', '윤슬', 196]];
+  var ACT = ['timer', 'music', 'call'];
+  // 모양별 크기: [폭, 높이, 모서리]
+  var SIZE = { c: [206, 36, 18], te: [316, 84, 42], ce: [316, 84, 42], oe: [316, 84, 42], me: [316, 160, 46] };
+  var act = 0, ex = false, callOn = false;
+  var tS = 272, tRun = true, mS = 72, track = 0, playing = true, cS = 0;
+
+  function fmt(s) { s = Math.max(0, s); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function key() { var a = ACT[act]; return (a === 'call' ? (callOn ? 'o' : 'c') : a.charAt(0)) + (ex ? 'e' : 'c'); }
+  function label() {
+    var a = ACT[act], s = a === 'timer' ? T.timer.replace('{t}', fmt(tS)) : a === 'music' ? T.music.replace('{s}', TRACKS[track][0]) : callOn ? T.oncall.replace('{t}', fmt(cS)) : T.call;
+    return s + (ex ? T.ex : '');
+  }
+  function paintTexts() {
+    qa('.u459-tt').forEach(function (e) { e.textContent = fmt(tS); });
+    qa('.u459-ct').forEach(function (e) { e.textContent = fmt(cS); });
+    ring.style.strokeDashoffset = (56.55 * (1 - tS / 300)).toFixed(2);
+    var len = TRACKS[track][2];
+    q('.u459-p0').textContent = fmt(mS);
+    q('.u459-p1').textContent = '-' + fmt(len - mS);
+    bar.style.setProperty('--u459-p', (mS / len * 100).toFixed(2) + '%');
+  }
+  // 알약 모양: 크기와 모서리가 스프링으로 바뀌고, 지금 모양의 내용만 흐림을 걷어 내며 나타납니다
+  function render(announce) {
+    var k = key(), sz = ex ? SIZE[k] : SIZE.c;
+    layers.forEach(function (l) { l.classList.toggle('is-on', l.dataset.v === k); });
+    isl.style.width = sz[0] + 'px';
+    isl.style.height = sz[1] + 'px';
+    isl.style.borderRadius = sz[2] + 'px';
+    tap.setAttribute('aria-expanded', ex ? 'true' : 'false');
+    tap.setAttribute('aria-label', label());
+    if (announce) live.textContent = label();
+  }
+  function setEx(v) { ex = v; render(true); }
+  function nudge(dir) {
+    if (rm || !at.animate) return;
+    at.animate([{ transform: 'translateX(' + (dir * 14) + 'px)' }, { transform: 'translateX(' + (-dir * 4) + 'px)', offset: .55 }, { transform: 'none' }], { duration: 520, easing: 'ease-out' });
+  }
+  function go(dir, quiet) {
+    act = (act + dir + ACT.length) % ACT.length;
+    ex = false;
+    render(true);
+    if (!quiet) nudge(dir);
+  }
+  function syncPause() {
+    var tp = q('[data-a="pause"]'), mp = q('[data-a="play"]');
+    tp.classList.toggle('is-paused', !tRun);
+    tp.setAttribute('aria-label', tRun ? T.pause : T.resume);
+    isl.classList.toggle('is-paused', !playing);
+    mp.setAttribute('aria-label', playing ? T.pause : T.play);
+    mp.querySelector('path').setAttribute('d', playing ? 'M7 5h3.2v14H7zM13.8 5H17v14h-3.2z' : 'M8 5.6v12.8c0 .6.6.9 1.1.6l9.9-6.4c.5-.3.5-.9 0-1.2L9.1 5c-.5-.3-1.1 0-1.1.6Z');
+  }
+  function setTrack(i) {
+    track = (i + TRACKS.length) % TRACKS.length;
+    mS = 0;
+    var mi = q('.u459-mi');
+    if (!rm && mi.animate) mi.animate([{ opacity: 0, transform: 'translateY(6px)', filter: 'blur(3px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 360, easing: 'cubic-bezier(.3,1.3,.5,1)' });
+    q('.u459-song').textContent = TRACKS[track][0];
+    q('.u459-artist').textContent = TRACKS[track][1];
+    qa('.u459-art').forEach(function (a) { a.classList.toggle('is-b', track === 1); });
+    bar.style.transition = 'none';
+    paintTexts();
+    void bar.offsetWidth;
+    bar.style.transition = '';
+  }
+  var ACTIONS = {
+    pause: function () { tRun = !tRun; syncPause(); },
+    cancel: function () { tS = 300; tRun = true; syncPause(); paintTexts(); go(1, true); },
+    play: function () { playing = !playing; syncPause(); },
+    prev: function () { setTrack(track - 1); },
+    next: function () { setTrack(track + 1); },
+    accept: function () { callOn = true; cS = 0; paintTexts(); ex = false; render(true); },
+    decline: function () { ex = false; act = 0; render(true); },
+    end: function () { callOn = false; ex = false; act = 0; render(true); }
+  };
+  root.addEventListener('click', function (e) {
+    var bt = e.target.closest('.u459-v button');
+    if (!bt || !ACTIONS[bt.dataset.a]) return;
+    var had = document.activeElement === bt;
+    ACTIONS[bt.dataset.a]();
+    // 버튼이 든 모양이 접혀 사라졌으면 초점을 알약으로 돌려줍니다
+    if (had && !bt.closest('.u459-v').classList.contains('is-on')) tap.focus({ preventScroll: true });
+  });
+  var swiped = false;
+  // 누르기는 알약 어디서든(작은 버튼 말고) 받습니다. 밀기 끝에 따라오는 click은 건너뜁니다
+  isl.addEventListener('click', function (e) {
+    if (e.target.closest('.u459-v button')) return;
+    if (swiped) { swiped = false; return; }
+    setEx(!ex);
+  });
+  tap.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); go(e.key === 'ArrowRight' ? 1 : -1); }
+    else if (e.key === 'Escape' && ex) { e.preventDefault(); e.stopPropagation(); setEx(false); }
+  });
+  // 옆으로 밀기: 손가락을 고무줄처럼 따라오다가 충분히 밀면 다음(왼쪽으로 밀 때)이나 이전 활동으로 바뀝니다
+  var down = null;
+  isl.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || e.target.closest('.u459-v button')) return;
+    var k = root.getBoundingClientRect().width / root.offsetWidth || 1;
+    down = { x: e.clientX, k: k, dx: 0, id: e.pointerId, cap: false };
+    isl.classList.add('is-press');
+    at.classList.add('is-drag');
+  });
+  isl.addEventListener('pointermove', function (e) {
+    if (!down) return;
+    down.dx = (e.clientX - down.x) / down.k;
+    var d = down.dx, r = Math.sign(d) * Math.min(48, Math.abs(d) * 0.4);
+    at.style.transform = 'translateX(' + r.toFixed(1) + 'px)';
+    if (Math.abs(d) > 8) {
+      isl.classList.remove('is-press');
+      // 실제로 끌기 시작했을 때만 포인터를 붙잡습니다(그냥 누를 때 click이 알약으로 가로채이지 않게)
+      if (!down.cap) { down.cap = true; try { isl.setPointerCapture(down.id); } catch (er) { /* 시연 포인터는 잡을 수 없어도 됩니다 */ } }
+    }
+  });
+  function up() {
+    if (!down) return;
+    var d = down.dx;
+    down = null;
+    isl.classList.remove('is-press');
+    at.classList.remove('is-drag');
+    at.style.transform = '';
+    if (Math.abs(d) > 36) {
+      swiped = true;
+      setTimeout(function () { swiped = false; }, 0);
+      go(d < 0 ? 1 : -1, true);
+    }
+  }
+  isl.addEventListener('pointerup', up);
+  isl.addEventListener('pointercancel', up);
+  isl.addEventListener('lostpointercapture', up);
+  isl.addEventListener('pointerleave', function () { if (down && !down.cap) up(); });
+  // 1초마다: 타이머는 줄고, 음악과 통화 시간은 늘어납니다
+  var clock = setInterval(function () {
+    if (!root.isConnected) { clearInterval(clock); return; }
+    if (tRun) { tS -= 1; if (tS < 0) tS = 300; }
+    if (playing) { mS += 1; if (mS > TRACKS[track][2]) mS = 0; }
+    if (callOn) cS += 1;
+    paintTexts();
+    tap.setAttribute('aria-label', label());
+  }, 1000);
+  isl.style.transition = 'none';
+  syncPause();
+  paintTexts();
+  render(false);
+  void isl.offsetWidth;
+  isl.style.transition = '';
+})();
+</script>

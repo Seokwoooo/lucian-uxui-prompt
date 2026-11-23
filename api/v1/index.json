@@ -1,9 +1,9 @@
 {
   "name": "Lucian UX/UI Prompt",
   "api": 1,
-  "version": "e541a46912",
-  "updated": "2026-11-22T17:26:27.801Z",
-  "count": 450,
+  "version": "5cf2f84413",
+  "updated": "2026-11-23T07:25:06.732Z",
+  "count": 480,
   "languages": [
     "en",
     "ko"
@@ -17,57 +17,57 @@
     "tokens": "{lang}/tokens.css"
   },
   "catalogs": {
-    "en": "dd4eb394c5",
-    "ko": "55a4e8606e"
+    "en": "b3be7826ba",
+    "ko": "bd97f6318b"
   },
   "categories": [
     {
       "slug": "buttons",
       "en": "Buttons",
       "ko": "버튼",
-      "count": 13
+      "count": 18
     },
     {
       "slug": "toggles-pickers",
       "en": "Toggles & Pickers",
       "ko": "토글·선택",
-      "count": 14
+      "count": 19
     },
     {
       "slug": "inputs-search",
       "en": "Inputs & Search",
       "ko": "입력·검색",
-      "count": 16
+      "count": 20
     },
     {
       "slug": "menus-tabs",
       "en": "Menus & Tabs",
       "ko": "메뉴·탭",
-      "count": 15
+      "count": 16
     },
     {
       "slug": "cards-content",
       "en": "Cards & Content",
       "ko": "카드·콘텐츠",
-      "count": 13
+      "count": 17
     },
     {
       "slug": "sign-in-sign-up",
       "en": "Sign-in & Sign-up",
       "ko": "로그인·가입",
-      "count": 16
+      "count": 17
     },
     {
       "slug": "alerts-feedback",
       "en": "Alerts & Feedback",
       "ko": "알림·피드백",
-      "count": 12
+      "count": 14
     },
     {
       "slug": "loading-progress",
       "en": "Loading & Progress",
       "ko": "로딩·진행",
-      "count": 11
+      "count": 14
     },
     {
       "slug": "empty-error-states",
@@ -79,7 +79,7 @@
       "slug": "widgets-charts",
       "en": "Widgets & Charts",
       "ko": "위젯·차트",
-      "count": 7
+      "count": 8
     },
     {
       "slug": "layout-schedule-design",
@@ -127,7 +127,7 @@
       "slug": "text-motion",
       "en": "Text Motion",
       "ko": "텍스트 모션",
-      "count": 17
+      "count": 18
     },
     {
       "slug": "social-proof",
@@ -145,7 +145,7 @@
       "slug": "forms-input",
       "en": "Forms & Input",
       "ko": "폼·입력",
-      "count": 20
+      "count": 23
     },
     {
       "slug": "hero-backgrounds",

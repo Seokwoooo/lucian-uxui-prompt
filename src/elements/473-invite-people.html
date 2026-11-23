@@ -1,0 +1,269 @@
+<!-- @meta {"title":"사람 초대","category":"폼·입력","summary":"팀원 초대 카드입니다. 이메일을 쓰고 Enter(또는 쉼표)를 누르면 주소가 동그란 이니셜 아바타가 달린 칩으로 톡 튀어나오고, 아래에서 ‘편집 가능’과 ‘보기 전용’ 중 권한을 고릅니다. ‘초대 보내기’를 누르면 칩들이 아바타만 남기고 오그라든 뒤 차례로 포물선을 그리며 위쪽 멤버 아바타 줄로 날아가 끼어들고, 체크 배지가 붙습니다.","hint":"이메일을 쓰고 Enter를 누른 뒤 ‘초대 보내기’를 눌러 보세요","shape":"square","hue":"#22C55E","hue2":"#7B61FF","tags":["invite","email-chips","tag-input","avatar-stack","role-select","flip-animation"]} -->
+<!-- @demo [["wait",700],["type",".u473-in",0,"jiwoo@velora.kr",42],["key",".u473-in",0,"Enter",1,450],["type",".u473-in",0,"sora.kim@velora.kr",40],["key",".u473-in",0,"Enter",1,600],["tap",".u473-go",0,{"after":2900}],["reset"]] -->
+<!-- @en {"title":"Invite people","summary":"A team invite card. Type an email and press Enter (or a comma) and the address pops out as a chip with a round initial avatar; below it you choose Can edit or Can view. Press Send invites and the chips shrink down to their avatars, then arc one after another into the member avatar stack up top, each landing with a check badge.","hint":"Type an email, press Enter, then press Send invites","map":[
+  [">팀원 초대<", ">Invite people<"],
+  ["aria-label=\"초대할 이메일\"", "aria-label=\"Emails to invite\""],
+  ["'이메일 주소 입력'", "'Add email addresses'"],
+  ["aria-label=\"권한\"", "aria-label=\"Permission\""],
+  [">편집 가능<", ">Can edit<"],
+  [">보기 전용<", ">Can view<"],
+  [">초대 보내기<", ">Send invites<"],
+  [">보냈어요<", ">Sent<"],
+  ["aria-label=\"멤버\"", "aria-label=\"Members\""],
+  ["'올바른 이메일 주소가 아니에요'", "'That isn’t a valid email address'"],
+  ["'이미 추가한 주소예요'", "'Already added'"],
+  ["' 빼기'", "' remove'"],
+  ["' 추가함'", "' added'"],
+  ["'명에게 초대를 보냈어요'", "' invites sent'"]
+]} -->
+<style>
+.u473{position:relative;width:340px;height:300px;display:flex;justify-content:center;align-items:flex-start;padding-top:44px}
+.u473-c{position:relative;width:292px;padding:16px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong)}
+.u473-hd{display:flex;align-items:center;justify-content:space-between;height:28px}
+.u473-hd h3{margin:0;font-size:15px;font-weight:750;letter-spacing:-.02em}
+.u473-st{display:flex;flex-direction:row-reverse;align-items:center;margin:0;padding:0;list-style:none}
+.u473-st>*+*{margin-right:-7px}
+.u473-av{flex:none;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--u473-a);color:#FFFFFF;font-size:10px;font-weight:750;line-height:1;letter-spacing:0;user-select:none}
+.u473-st .u473-av{position:relative;width:26px;height:26px;font-size:11px;box-shadow:0 0 0 2px var(--ux-surface);box-shadow:0 0 0 2px light-dark(var(--ux-surface),var(--ux-surface-2))}
+.u473-av.c0{--u473-a:#EE7A6A}.u473-av.c1{--u473-a:#E39B2F}.u473-av.c2{--u473-a:#24A87B}.u473-av.c3{--u473-a:#3B95E3}.u473-av.c4{--u473-a:#8667EE}.u473-av.c5{--u473-a:#DD649F}
+.u473-st .u473-new{opacity:0;transform:scale(.3)}
+.u473-st .u473-new.is-in{opacity:1;transform:none;transition:transform .55s cubic-bezier(.34,1.9,.5,1),opacity .15s}
+.u473-ok{position:absolute;left:-3px;bottom:-4px;width:14px;height:14px;border-radius:50%;background:var(--ux-mint);box-shadow:0 0 0 2px var(--ux-surface);box-shadow:0 0 0 2px light-dark(var(--ux-surface),var(--ux-surface-2));display:grid;place-items:center;transform:scale(0);transition:transform .45s cubic-bezier(.34,1.9,.5,1) .12s,opacity .3s}
+.u473-ok svg{width:9px;height:9px;fill:none;stroke:var(--ux-surface);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.u473-new.is-in .u473-ok{transform:none;transition-delay:.25s}
+.u473-st .u473-new.is-in::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 2px var(--ux-mint);animation:u473-ring .6s var(--ux-ease) forwards;pointer-events:none}
+@keyframes u473-ring{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.6)}}
+.u473-new.is-calm .u473-ok{opacity:0;transform:scale(.4)}
+.u473-more{flex:none;display:grid;place-items:center;min-width:26px;height:26px;padding:0 5px;border-radius:13px;background:var(--ux-surface-3);color:var(--ux-ink-2);font-size:10.5px;font-weight:750;box-shadow:0 0 0 2px var(--ux-surface);box-shadow:0 0 0 2px light-dark(var(--ux-surface),var(--ux-surface-2))}
+/* 입력칸: 칩과 입력이 한 상자 안에서 줄을 바꿔 가며 쌓입니다 */
+.u473-f{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:46px;margin-top:12px;padding:8px;border-radius:12px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface));box-shadow:inset 0 0 0 1px var(--ux-line-2);cursor:text;overflow:hidden;transition:box-shadow .2s}
+.u473-f:focus-within{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u473-f.is-bad{box-shadow:inset 0 0 0 1px var(--ux-danger),0 0 0 3px color-mix(in srgb,var(--ux-danger) 14%,transparent);animation:u473-shake .4s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u473-shake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+.u473-ch{display:inline-flex;align-items:center;gap:6px;max-width:100%;height:28px;padding:0 3px 0 4px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line-2),0 1px 2px var(--ux-shadow);cursor:default;animation:u473-in .5s cubic-bezier(.34,1.7,.5,1) both;transform-origin:14px 50%}
+@keyframes u473-in{from{opacity:0;transform:scale(.5)}}
+.u473-ch.is-bump{animation:u473-bump .45s cubic-bezier(.34,1.7,.5,1)}
+@keyframes u473-bump{40%{transform:scale(1.08)}}
+.u473-em{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;font-weight:550;color:var(--ux-ink);transition:opacity .18s}
+.u473-x{flex:none;display:grid;place-items:center;width:20px;height:20px;padding:0;border:0;border-radius:50%;background:none;color:var(--ux-ink-3);transition:background-color .15s,color .15s,opacity .18s}
+.u473-x:hover{background:var(--ux-surface-3);color:var(--ux-ink)}
+.u473 .u473-x:focus-visible{outline:2px solid var(--ux-accent);outline-offset:0}
+.u473-x svg{width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+.u473-ch.is-go{animation:none;transition:max-width .32s cubic-bezier(.5,0,.3,1),padding .32s,background-color .2s,box-shadow .2s;max-width:28px;padding:0 4px;background:transparent;box-shadow:none}
+.u473-ch.is-go .u473-em,.u473-ch.is-go .u473-x{opacity:0}
+.u473-ch.is-go .u473-av{visibility:hidden}
+.u473-in{flex:1;min-width:110px;height:28px;padding:0 4px;border:0;background:none;font-size:13px;color:var(--ux-ink);outline:none}
+.u473-in::placeholder{color:var(--ux-ink-3)}
+.u473 .u473-in:focus-visible{outline:none}
+.u473-er{height:0;margin:0;overflow:visible;font-size:11px;font-weight:600;color:var(--ux-danger)}
+.u473-er:not(:empty){height:auto;margin-top:6px}
+.u473-ft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px}
+.u473-rl{position:relative;display:flex;align-items:center}
+.u473-rl select{height:34px;padding:0 28px 0 31px;border:0;border-radius:10px;background:transparent;box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:12.5px;font-weight:600;color:var(--ux-ink-2);appearance:none;-webkit-appearance:none;cursor:pointer;transition:background-color .15s,color .15s}
+.u473-rl select:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u473 .u473-rl select:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u473-rl option{color:#16151B;background:#FFFFFF}
+.u473-ri{position:absolute;left:10px;top:50%;width:15px;height:15px;margin-top:-7.5px;pointer-events:none;color:var(--ux-ink-2)}
+.u473-ri svg{position:absolute;inset:0;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s,transform .45s cubic-bezier(.34,1.8,.5,1)}
+.u473-ri .eye{opacity:0;transform:scale(.4) rotate(-30deg)}
+.u473-rl.is-view .u473-ri .pen{opacity:0;transform:scale(.4) rotate(30deg)}
+.u473-rl.is-view .u473-ri .eye{opacity:1;transform:none}
+.u473-cv{position:absolute;right:10px;top:50%;width:10px;height:10px;margin-top:-5px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.u473-go{position:relative;display:grid;height:34px;padding:0 16px;border:0;border-radius:10px;background:var(--ux-accent);color:var(--ux-accent-ink);font-size:13px;font-weight:700;box-shadow:0 8px 18px -10px var(--ux-accent);transition:transform .45s cubic-bezier(.34,1.7,.5,1),background-color .3s,opacity .25s,box-shadow .3s}
+.u473-go:active{transform:scale(.95);transition-duration:.1s}
+.u473-go[aria-disabled="true"]{opacity:.42;box-shadow:none;cursor:default}
+.u473-go[aria-disabled="true"]:active{transform:none}
+.u473-go>span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:5px;transition:opacity .2s,transform .4s cubic-bezier(.34,1.6,.5,1),filter .2s}
+.u473-go>span+span{opacity:0;transform:translateY(8px);filter:blur(3px)}
+.u473-go svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u473-go svg path{stroke-dasharray:18;stroke-dashoffset:18;transition:stroke-dashoffset .35s var(--ux-ease) .15s}
+.u473-go.is-ok{background:var(--ux-mint);box-shadow:0 8px 18px -10px var(--ux-mint);opacity:1}
+.u473-go.is-ok>span:first-child{opacity:0;transform:translateY(-8px);filter:blur(3px)}
+.u473-go.is-ok>span+span{opacity:1;transform:none;filter:none}
+.u473-go.is-ok svg path{stroke-dashoffset:0}
+.u473 .u473-go:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u473-fly{position:absolute;z-index:5;margin:0;pointer-events:none;box-shadow:0 6px 12px -4px var(--ux-shadow-strong)}
+.u473-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u473">
+  <section class="u473-c" aria-labelledby="u473-t">
+    <div class="u473-hd">
+      <h3 id="u473-t">팀원 초대</h3>
+      <ul class="u473-st" aria-label="멤버"><li class="u473-more" hidden></li><li class="u473-av c3">H</li><li class="u473-av c1">Y</li><li class="u473-av c5">D</li></ul>
+    </div>
+    <div class="u473-f">
+      <input class="u473-in" type="text" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" aria-label="초대할 이메일">
+    </div>
+    <p class="u473-er" aria-live="polite"></p>
+    <div class="u473-ft">
+      <div class="u473-rl">
+        <span class="u473-ri" aria-hidden="true"><svg class="pen" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg><svg class="eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <select aria-label="권한"><option value="edit">편집 가능</option><option value="view">보기 전용</option></select>
+        <svg class="u473-cv" viewBox="0 0 10 10" aria-hidden="true"><path d="m2 3.5 3 3 3-3"/></svg>
+      </div>
+      <button type="button" class="u473-go" aria-disabled="true"><span>초대 보내기</span><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>보냈어요</span></button>
+    </div>
+  </section>
+  <p class="u473-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var field = root.querySelector('.u473-f'), input = root.querySelector('.u473-in'), err = root.querySelector('.u473-er');
+  var go = root.querySelector('.u473-go'), stack = root.querySelector('.u473-st'), more = root.querySelector('.u473-more');
+  var sel = root.querySelector('select'), rl = root.querySelector('.u473-rl'), live = root.querySelector('.u473-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { ph: '이메일 주소 입력', bad: '올바른 이메일 주소가 아니에요', dup: '이미 추가한 주소예요', rm: ' 빼기', add: ' 추가함', sent: '명에게 초대를 보냈어요' };
+  var MAXAV = 5, list = [], busy = false, hidden = 0, timers = [];
+  input.placeholder = T.ph;
+  function later(fn, ms) { var t = setTimeout(function () { if (root.isConnected) fn(); }, ms); timers.push(t); return t; }
+  function hash(s) { var h = 7; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+  function avatar(email) {
+    var a = document.createElement('span');
+    a.className = 'u473-av c' + (hash(email.toLowerCase()) % 6);
+    a.textContent = email.charAt(0).toUpperCase();
+    return a;
+  }
+  // 칩이 늘거나 줄어 칸 높이가 바뀌면 그 높이를 부드럽게 따라갑니다
+  function resize(fn) {
+    var h0 = field.offsetHeight;
+    fn();
+    var h1 = field.offsetHeight;
+    if (h0 !== h1 && !rm && field.animate) field.animate([{ height: h0 + 'px' }, { height: h1 + 'px' }], { duration: 420, easing: 'cubic-bezier(.3,1.3,.5,1)' });
+  }
+  function sync() {
+    go.setAttribute('aria-disabled', String(!list.length || busy));
+    input.placeholder = list.length ? '' : T.ph;
+  }
+  function bad(msg) {
+    err.textContent = msg;
+    input.setAttribute('aria-invalid', 'true');
+    field.classList.remove('is-bad'); void field.offsetWidth; field.classList.add('is-bad');
+  }
+  function clearBad() { if (err.textContent) err.textContent = ''; input.removeAttribute('aria-invalid'); field.classList.remove('is-bad'); }
+  function addChip(email) {
+    var ch = document.createElement('span');
+    ch.className = 'u473-ch';
+    ch.title = email;
+    var em = document.createElement('span'); em.className = 'u473-em'; em.textContent = email;
+    var x = document.createElement('button');
+    x.type = 'button'; x.className = 'u473-x'; x.setAttribute('aria-label', email + T.rm);
+    x.innerHTML = '<svg viewBox="0 0 10 10" aria-hidden="true"><path d="m2 2 6 6M8 2 2 8"/></svg>';
+    ch.appendChild(avatar(email)); ch.appendChild(em); ch.appendChild(x);
+    var it = { email: email, el: ch };
+    x.addEventListener('click', function () { removeChip(it); input.focus(); });
+    resize(function () { field.insertBefore(ch, input); });
+    list.push(it);
+    live.textContent = email + T.add;
+    sync();
+  }
+  function removeChip(it) {
+    var i = list.indexOf(it);
+    if (i < 0) return;
+    list.splice(i, 1);
+    resize(function () { it.el.remove(); });
+    sync();
+  }
+  // 쓴 글을 칩으로: 형식이 틀리면 칸이 흔들리고, 이미 있는 주소면 그 칩이 한 번 튑니다
+  function commit(raw) {
+    var parts = String(raw).split(/[\s,;]+/).filter(Boolean), ok = true;
+    parts.forEach(function (s) {
+      if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(s)) { ok = false; return; }
+      var dup = list.filter(function (it) { return it.email.toLowerCase() === s.toLowerCase(); })[0];
+      if (dup) { err.textContent = T.dup; dup.el.classList.remove('is-bump'); void dup.el.offsetWidth; dup.el.classList.add('is-bump'); return; }
+      addChip(s);
+    });
+    if (!ok) { bad(T.bad); return false; }
+    input.value = '';
+    return true;
+  }
+  input.addEventListener('keydown', function (e) {
+    if (e.isComposing || e.keyCode === 229) return;
+    if (e.key === 'Enter' || e.key === ',' || (e.key === 'Tab' && input.value.trim())) {
+      if (!input.value.trim()) { if (e.key === 'Enter' && list.length) { e.preventDefault(); send(); } return; }
+      e.preventDefault();
+      commit(input.value);
+    } else if (e.key === 'Backspace' && !input.value && list.length) {
+      removeChip(list[list.length - 1]);
+    }
+  });
+  input.addEventListener('input', function () {
+    clearBad();
+    // 쉼표나 띄어쓰기를 넣거나 여러 주소를 붙여 넣으면 바로 칩으로 바꿉니다
+    if (/[\s,;]/.test(input.value)) {
+      var v = input.value, tail = /[\s,;]$/.test(v) ? '' : v.split(/[\s,;]+/).pop();
+      var head = tail ? v.slice(0, v.length - tail.length) : v;
+      if (commit(head)) input.value = tail;
+    }
+  });
+  input.addEventListener('blur', function () { if (input.value.trim() && /@/.test(input.value)) commit(input.value); });
+  field.addEventListener('pointerdown', function (e) { if (e.target === field) { e.preventDefault(); input.focus(); } });
+  sel.addEventListener('change', function () { rl.classList.toggle('is-view', sel.value === 'view'); });
+  // 멤버가 많아지면 가장 먼저 있던 아바타부터 ‘+N’으로 접습니다
+  function trim() {
+    var avs = stack.querySelectorAll(':scope > .u473-av');
+    for (var i = 0; i < avs.length - MAXAV; i++) { avs[i].remove(); hidden += 1; }
+    more.hidden = !hidden;
+    more.textContent = '+' + hidden;
+  }
+  go.addEventListener('click', send);
+  function send() {
+    if (busy) return;
+    if (input.value.trim() && !commit(input.value)) return;
+    if (!list.length) { input.focus(); return; }
+    busy = true; sync();
+    var items = list.slice(), n = items.length;
+    list = [];
+    var rr = root.getBoundingClientRect(), sc = rr.width / root.offsetWidth || 1;
+    // 1) 칸마다 아바타 자리를 미리 만들어 둡니다(보이지 않음) → 2) 칩은 아바타만 남기고 오그라들고 → 3) 그 아바타가 포물선을 그리며 자리로 날아갑니다
+    var slots = items.map(function (it, k) {
+      var s = avatar(it.email);
+      s.classList.add('u473-new');
+      // 체크 배지는 마지막으로 내려앉는 아바타 하나에만 붙입니다
+      if (k === n - 1) s.innerHTML += '<i class="u473-ok"><svg viewBox="0 0 12 12"><path d="m3 6.2 2 2 4-4.4"/></svg></i>';
+      stack.appendChild(s);
+      return s;
+    });
+    var landed = 0;
+    items.forEach(function (it, k) {
+      var a = it.el.querySelector('.u473-av'), ar = a.getBoundingClientRect(), sr = slots[k].getBoundingClientRect();
+      var fly = a.cloneNode(true);
+      fly.classList.add('u473-fly');
+      fly.style.left = (ar.left - rr.left) / sc + 'px';
+      fly.style.top = (ar.top - rr.top) / sc + 'px';
+      var dx = (sr.left - ar.left + (sr.width - ar.width) / 2) / sc, dy = (sr.top - ar.top + (sr.height - ar.height) / 2) / sc, s1 = slots[k].offsetWidth / a.offsetWidth;
+      later(function () {
+        root.appendChild(fly);
+        it.el.classList.add('is-go');
+        var done = function () {
+          fly.remove();
+          slots[k].classList.add('is-in');
+          landed += 1;
+          if (landed === n) finish(n, slots);
+        };
+        if (rm || !fly.animate) { done(); return; }
+        var anim = fly.animate([
+          { transform: 'translate(0,0) scale(1)' },
+          { transform: 'translate(0,2px) scale(.9)', offset: 0.18 },
+          { transform: 'translate(' + dx * 0.55 + 'px,' + (dy * 0.55 - 34) + 'px) scale(' + (1 + (s1 - 1) * 0.7) + ')', offset: 0.62 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s1 + ')' }
+        ], { duration: 760, easing: 'cubic-bezier(.45,.05,.35,1)', fill: 'forwards' });
+        anim.onfinish = done;
+      }, rm ? 0 : k * 120 + 60);
+      later(function () { resize(function () { it.el.remove(); }); }, rm ? 0 : k * 120 + 460);
+    });
+  }
+  function finish(n, slots) {
+    go.classList.add('is-ok');
+    live.textContent = n + T.sent;
+    later(function () { slots.forEach(function (s) { s.classList.add('is-calm'); }); }, 1700);
+    later(function () {
+      slots.forEach(function (s) { s.classList.remove('u473-new', 'is-in', 'is-calm'); var b = s.querySelector('.u473-ok'); if (b) b.remove(); });
+      trim();
+      go.classList.remove('is-ok');
+      busy = false; sync();
+    }, 2300);
+  }
+  sync();
+})();
+</script>

@@ -1,0 +1,151 @@
+<!-- Lucian UX/UI Prompt #462 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#462 -->
+<!--
+Element: Slide to confirm
+ID: 462 · Category: Buttons · Tags: slide-to-confirm, swipe-button, payment, drag, spring, success, shimmer
+What it does: A “Slide to pay” track. A soft light sweeps across the label; drag the round thumb and the path behind it fills in while the label fades. Reach the end and the track squishes down into a mint “Paid” pill as a check draws itself. Let go halfway and the thumb springs back, squashing gently against the wall. With a keyboard, press Enter or use the arrow keys.
+How to use it: Slide the thumb all the way to the right. Let go early and it springs back
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#462
+-->
+<style>
+.u462{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u462-tr{--u462-w:280px;position:relative;width:var(--u462-w);height:60px;border-radius:30px;background:var(--ux-surface-2);background:light-dark(#EEECF3,var(--ux-surface-2));box-shadow:inset 0 1px 3px var(--ux-shadow),inset 0 0 0 1px var(--ux-line);transition:width .62s cubic-bezier(.34,1.32,.5,1),background-color .35s var(--ux-ease),box-shadow .35s var(--ux-ease);touch-action:none;user-select:none;-webkit-user-select:none}
+.u462-fill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--u462-x,0px) + 60px);border-radius:inherit;background:color-mix(in srgb,var(--ux-accent) 16%,transparent);opacity:var(--u462-fo,1);pointer-events:none}
+.u462-lb{position:absolute;inset:0;display:grid;place-items:center;padding-left:52px;font-size:15px;font-weight:650;letter-spacing:-.01em;white-space:nowrap;pointer-events:none}
+.u462-sh{color:var(--ux-ink-3);background:linear-gradient(100deg,var(--ux-ink-3) 42%,var(--ux-ink) 50%,var(--ux-ink-3) 58%) 0 0/300% 100% no-repeat;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:u462-sh 2.6s linear infinite;opacity:calc(1 - var(--u462-p,0) * 1.7);transform:translateX(calc(var(--u462-p,0) * 18px));transition:opacity .3s var(--ux-ease)}
+@keyframes u462-sh{0%{background-position:100% 0}70%,100%{background-position:0 0}}
+.u462-ok{padding:0 52px 0 0;color:var(--ux-accent-ink);opacity:0;transform:translateY(6px);filter:blur(3px);transition:opacity .25s var(--ux-ease),transform .45s var(--ux-spring),filter .25s var(--ux-ease)}
+.u462-th{position:absolute;left:4px;top:4px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--ux-accent);color:var(--ux-accent-ink);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 8px 16px -8px var(--ux-accent),0 2px 4px -1px var(--ux-shadow);transform-origin:0 50%;transform:translateX(var(--u462-x,0px)) scale(var(--u462-qx,1),var(--u462-qy,1));cursor:grab;touch-action:none;transition:background-color .35s var(--ux-ease),color .35s var(--ux-ease),box-shadow .35s var(--ux-ease)}
+.u462-th:active{cursor:grabbing}
+.u462 .u462-th:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u462-th svg{position:absolute;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s var(--ux-ease),transform .45s var(--ux-spring)}
+.u462-ar{animation:u462-nd 2.6s var(--ux-ease) infinite}
+.u462-ar path+path{opacity:.45}
+@keyframes u462-nd{0%,55%,100%{transform:translateX(0)}70%{transform:translateX(3px)}}
+.u462-ck{opacity:0;transform:scale(.5) rotate(-20deg)}
+.u462-ck path{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .4s var(--ux-ease) .28s}
+.u462.is-run .u462-th{transition:none}
+.u462.is-done .u462-tr{--u462-w:172px;background:var(--ux-mint);box-shadow:inset 0 0 0 1px transparent,0 12px 26px -14px var(--ux-mint)}
+.u462.is-done .u462-fill{opacity:0;transition:opacity .2s}
+.u462.is-done .u462-sh{opacity:0;transition-duration:.15s}
+.u462.is-done .u462-ok{opacity:1;transform:none;filter:none;transition-delay:.22s}
+.u462.is-done .u462-th{background:rgba(255,255,255,.22);color:var(--ux-accent-ink);box-shadow:none;cursor:default;transition:transform .62s cubic-bezier(.34,1.32,.5,1),background-color .35s var(--ux-ease),color .35s var(--ux-ease),box-shadow .35s var(--ux-ease)}
+.u462.is-done .u462-ar{opacity:0;transform:scale(.5)}
+.u462.is-done .u462-ck{opacity:1;transform:none;transition-delay:.18s}
+.u462.is-done .u462-ck path{stroke-dashoffset:0}
+.u462.is-back .u462-th{transition:transform .62s cubic-bezier(.34,1.32,.5,1),background-color .35s var(--ux-ease),color .35s var(--ux-ease),box-shadow .35s var(--ux-ease)}
+.u462-ring{position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 2px var(--ux-mint);opacity:0;pointer-events:none}
+.u462.is-done .u462-ring{animation:u462-ring .8s var(--ux-ease) .35s}
+@keyframes u462-ring{0%{opacity:.6;transform:scale(1)}100%{opacity:0;transform:scale(1.35,1.9)}}
+.u462-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u462">
+  <div class="u462-tr">
+    <i class="u462-fill"></i>
+    <span class="u462-lb u462-sh" aria-hidden="true">Slide to pay</span>
+    <span class="u462-lb u462-ok" aria-hidden="true">Paid</span>
+    <div class="u462-th" role="slider" tabindex="0" aria-label="Slide to pay" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <svg class="u462-ar" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 6 6 6-6 6"/><path d="m4 7 5 5-5 5" transform="translate(-1 0)"/></svg>
+      <svg class="u462-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="m5.5 12.5 4.5 4.5 8.5-9.5"/></svg>
+    </div>
+    <i class="u462-ring"></i>
+  </div>
+  <p class="u462-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var tr = root.querySelector('.u462-tr'), th = root.querySelector('.u462-th'), live = root.querySelector('.u462-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { done: 'Payment complete' };
+  var W = 280, TH = 52, PAD = 4, MAX = W - TH - PAD * 2, DONE_W = 172;
+  var x = 0, v = 0, target = 0, raf = 0, drag = null, done = false, tBack = 0, tIdle = 0;
+  function paint(xr) {
+    var px = Math.max(0, Math.min(MAX, xr)), q = Math.min(0.16, Math.max(0, -xr) / 36);
+    var p = px / MAX;
+    root.style.setProperty('--u462-x', px.toFixed(2) + 'px');
+    root.style.setProperty('--u462-p', p.toFixed(3));
+    th.style.setProperty('--u462-qx', (1 - q).toFixed(3));
+    th.style.setProperty('--u462-qy', (1 + q * 0.5).toFixed(3));
+    th.setAttribute('aria-valuenow', String(Math.round(p * 100)));
+  }
+  function frame() {
+    raf = 0;
+    if (!root.isConnected) return;
+    for (var i = 0; i < 4; i++) { var a = 260 * (target - x) - 15 * v; v += a / 240; x += v / 240; }
+    paint(x);
+    if (target >= MAX && !drag && !done && x >= MAX - 0.5) { finish(); return; }
+    if (Math.abs(target - x) < 0.05 && Math.abs(v) < 0.05) { x = target; v = 0; paint(x); onRest(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function go(t) {
+    target = t;
+    if (rm) { x = t; v = 0; paint(x); onRest(); return; }
+    if (!raf) raf = requestAnimationFrame(frame);
+  }
+  function onRest() { if (target >= MAX && !done && !drag) finish(); }
+  function finish() {
+    done = true;
+    cancelAnimationFrame(raf); raf = 0;
+    root.classList.remove('is-run');
+    root.classList.add('is-done');
+    x = DONE_W - TH - PAD * 2;
+    paint(x);
+    th.setAttribute('aria-valuetext', 'done');
+    live.textContent = T.done;
+    clearTimeout(tBack);
+    tBack = setTimeout(reset, rm ? 1600 : 2800);
+  }
+  function reset() {
+    if (!root.isConnected) return;
+    done = false;
+    root.classList.remove('is-done');
+    root.classList.add('is-back');
+    x = 0; v = 0; target = 0;
+    paint(0);
+    th.removeAttribute('aria-valuetext');
+    live.textContent = '';
+    setTimeout(function () { if (root.isConnected) root.classList.remove('is-back'); }, rm ? 0 : 700);
+  }
+  th.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || done) return;
+    var r = root.getBoundingClientRect();
+    drag = { x0: e.clientX, b: x, k: root.offsetWidth / (r.width || 1), lx: e.clientX, lt: performance.now(), vel: 0 };
+    cancelAnimationFrame(raf); raf = 0; v = 0;
+    root.classList.add('is-run');
+    clearTimeout(tIdle);
+    try { th.setPointerCapture(e.pointerId); } catch (er) {  }
+  });
+  th.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var now = performance.now(), dt = Math.max(1, now - drag.lt);
+    drag.vel = drag.vel * 0.6 + ((e.clientX - drag.lx) * drag.k / dt) * 0.4;
+    drag.lx = e.clientX; drag.lt = now;
+    var raw = drag.b + (e.clientX - drag.x0) * drag.k;
+    x = raw < 0 ? raw * 0.25 : raw > MAX ? MAX + (raw - MAX) * 0.15 : raw;
+    paint(x);
+    if (raw >= MAX) { drag = null; target = x; go(MAX); }
+  });
+  function up() {
+    if (!drag) return;
+    var fling = drag.vel * 160;
+    drag = null;
+    root.classList.remove('is-run');
+    if (x + fling >= MAX * 0.9) go(MAX); else go(0);
+  }
+  th.addEventListener('pointerup', up);
+  th.addEventListener('pointercancel', up);
+  th.addEventListener('keydown', function (e) {
+    if (done) return;
+    var k = e.key, step = MAX / 4;
+    if (k === 'Enter' || k === ' ' || k === 'End') { e.preventDefault(); go(MAX); return; }
+    if (k === 'ArrowRight' || k === 'ArrowUp') { e.preventDefault(); go(Math.min(MAX, target + step)); }
+    else if (k === 'ArrowLeft' || k === 'ArrowDown' || k === 'Home') { e.preventDefault(); go(k === 'Home' ? 0 : Math.max(0, target - step)); }
+    else return;
+    clearTimeout(tIdle);
+    tIdle = setTimeout(function () { if (root.isConnected && !done && target < MAX) go(0); }, 1600);
+  });
+  paint(0);
+})();
+</script>

@@ -2,23 +2,23 @@
 
 # Lucian UX/UI Prompt
 
-![Lucian UX/UI Prompt: 450 interactive UI elements](.github/cover.png)
+![Lucian UX/UI Prompt: 480 interactive UI elements](.github/cover.png)
 
-450 interactive UI elements you can try live, then take into your project as an AI prompt or as working code: 50 site essentials every website needs (Google and social sign-in, cookie banner, header, pricing, FAQ, checkout…), 200 website sections and animations, and 200 interface parts, from buttons and charts to workflow screens. Every element supports light and dark themes, pointer, touch and keyboard input, and reduced motion. No dependencies.
+480 interactive UI elements you can try live, then take into your project as an AI prompt or as working code: 80 essentials (Google and social sign-in, cookie banner, pricing, FAQ, checkout, plus AI patterns like a prompt box, mention picker and agent steps), 200 website sections and animations, and 200 interface parts, from buttons and charts to workflow screens. Every element supports light and dark themes, pointer, touch and keyboard input, and reduced motion. No dependencies.
 
 **Live gallery: [lucianlabs.dev/uxui-prompt](https://lucianlabs.dev/uxui-prompt/)**
 
 ## What's inside
 
-All 450 elements live in one library, grouped into 27 categories. Element numbers tell you where they came from:
+All 480 elements live in one library, grouped into 27 categories. Element numbers tell you where they came from:
 
 | Numbers | What they are | Examples |
 | --- | --- | --- |
-| 401–450 | **Site essentials** (new): production-ready defaults | Google sign-in · social sign-in (Kakao, Naver, Apple, Google) · email sign-in · sign-up · cookie banner and preferences · terms consent · header · footer · hero · pricing · FAQ · toast · confirm modal · date picker · file upload · product card · mini cart · Korean payment methods · coupon |
+| 401–480 | **Essentials** (new): focused, production-ready components | Google sign-in · social sign-in (Kakao, Naver, Apple, Google) · email sign-in · sign-up · cookie banner and preferences · terms consent · header · footer · hero · pricing · FAQ · toast · confirm modal · date picker · file upload · product card · mini cart · Korean payment methods · coupon · prompt box · mention picker · thinking text · agent steps · tool approval · slide to confirm · signature pad · emoji picker · color picker · PIN keypad |
 | 201–400 | Website sections and motion | Text Motion · Hero & Backgrounds · Navigation · Scroll Motion · Sections & Content · Social Proof · Commerce & Pricing · Forms & Input · App Screens · Site Builder Tools · Cursor & Hover · Promos & Rewards · Data Motion |
 | 001–200 | Interface parts and work screens | Buttons · Toggles & Pickers · Inputs & Search · Menus & Tabs · Cards & Content · Sign-in & Sign-up · Alerts & Feedback · Loading & Progress · Empty & Error States · Widgets & Charts · Layout, Schedule & Design · Document & Data Editing · Analytics & Data · Workflow & Systems |
 
-In the gallery, **All** starts with the 50 site essentials, then what websites use most (cookie consent, headers, heroes, CTAs, FAQ, pricing, testimonials, footers), then forms and commerce parts, app screens, promos, charts, showcase effects and specialist tools. The order lives in [`src/popular.json`](src/popular.json). Narrow down with the category pills, keep favourites under **Saved** in the sidebar, or use the search bar at the bottom in English or Korean.
+In the gallery, **All** starts with the 80 essentials, then what websites use most (cookie consent, headers, heroes, CTAs, FAQ, pricing, testimonials, footers), then forms and commerce parts, app screens, promos, charts, showcase effects and specialist tools. The order lives in [`src/popular.json`](src/popular.json). Narrow down with the category pills, keep favourites under **Saved** in the sidebar, or use the search bar at the bottom in English or Korean.
 
 ## How to use
 
@@ -59,7 +59,7 @@ The build checks every element and writes the whole gallery into one self-contai
 
 ## Element format
 
-Each element is a single file, `src/elements/NNN-slug.html`. Numbers `001`–`200` are interface parts, `201`–`400` website sections and motion, and `401`–`450` site essentials.
+Each element is a single file, `src/elements/NNN-slug.html`. Numbers `001`–`200` are interface parts, `201`–`400` website sections and motion, and `401`–`480` essentials.
 
 ```html
 <!-- @meta {"title":"…","category":"버튼","summary":"…","hint":"…","shape":"square","tags":["button"]} -->

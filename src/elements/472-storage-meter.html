@@ -1,0 +1,121 @@
+<!-- @meta {"title":"저장 공간 미터","category":"위젯·차트","summary":"사진, 앱, 문서, 기타, 남은 공간이 한 줄로 나뉜 저장 공간 막대입니다. 화면에 들어오면 칸들이 차례로 자라며 ‘128GB 중 96.4GB 사용’의 숫자도 함께 올라갑니다. 한 칸이나 범례에 커서를 올리면 그 칸만 통통하게 부풀고 나머지는 흐려지며, 사용량 자리에 그 칸의 이름과 용량, 비율이 올라옵니다.","hint":"막대의 칸이나 아래 범례에 커서를 올려 보세요","shape":"square","hue":"#EAB308","hue2":"#7B61FF","tags":["storage","meter","segmented-bar","legend","hover-detail","count-up"]} -->
+<!-- @demo [["wait",1500],["hover",".u472-s",0,{"after":900}],["hover",".u472-s",1,{"after":750}],["hover",".u472-s",3,{"after":750}],["hover",".u472-s",4,{"after":900}],["leave",500],["reset"]] -->
+<!-- @en {"title":"Storage meter","summary":"A storage bar split into photos, apps, documents, other and free space. When it scrolls into view the segments grow in one after another while the “96.4 GB of 128 GB used” figure counts up. Hover a segment or a legend item and that segment swells while the rest fade back, and the usage line rolls over to show its name, size and share.","hint":"Hover a segment of the bar or the legend below","map":[
+  [">저장 공간<", ">Storage<"],
+  [">128GB 중 <", "><"],
+  [">GB 사용<", ">GB of 128GB used<"],
+  [">사진<", ">Photos<"],
+  [">앱<", ">Apps<"],
+  [">문서<", ">Docs<"],
+  [">기타<", ">Other<"],
+  [">남은 공간<", ">Free<"]
+]} -->
+<style>
+.u472{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u472-c{position:relative;width:296px;padding:18px 16px 16px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong)}
+.u472-hd{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.u472-hd h3{margin:0;font-size:15px;font-weight:750;letter-spacing:-.02em}
+.u472-sw{display:grid;justify-items:end;align-items:center;height:18px;overflow:hidden}
+.u472-sw>p{grid-area:1/1;display:flex;align-items:center;gap:5px;margin:0;font-size:12px;color:var(--ux-ink-2);white-space:nowrap;font-variant-numeric:tabular-nums;transition:opacity .22s var(--ux-ease),transform .45s cubic-bezier(.34,1.5,.5,1),filter .22s}
+.u472-sw b{font-weight:750;color:var(--ux-ink)}
+.u472-sw>.u472-us{display:block}
+.u472-si{opacity:0;transform:translateY(12px);filter:blur(2px)}
+.u472-si i{width:8px;height:8px;border-radius:50%;transition:background-color .2s}
+.u472-si em{font-style:normal;color:var(--ux-ink-3)}
+.u472.is-hl .u472-us{opacity:0;transform:translateY(-12px);filter:blur(2px)}
+.u472.is-hl .u472-si{opacity:1;transform:none;filter:none}
+.u472-si.is-tick{animation:u472-tick .4s cubic-bezier(.34,1.6,.5,1)}
+@keyframes u472-tick{from{transform:translateY(5px)}}
+/* 막대: 칸마다 28px 높이의 손잡이 영역이 있고, 보이는 막대(::before)는 가운데 12px입니다 */
+.u472-bar{position:relative;display:flex;gap:2px;height:28px;margin:12px 0 6px}
+.u472-s{position:relative;flex:none;width:0;height:100%;min-width:0;transition:width .95s cubic-bezier(.22,.9,.24,1),opacity .3s var(--ux-ease);transition-delay:calc(var(--u472-i) * 90ms + 120ms),0s}
+.u472.is-in .u472-s{width:var(--u472-w)}
+.u472-s[data-k="f"]{flex:1;width:auto}
+.u472-s::before{content:"";position:absolute;left:0;right:0;top:50%;height:12px;margin-top:-6px;border-radius:3px;background:var(--u472-c);transition:height .5s cubic-bezier(.34,1.8,.5,1),margin-top .5s cubic-bezier(.34,1.8,.5,1),border-radius .3s,filter .3s}
+.u472-s:first-child::before{border-radius:6px 3px 3px 6px}
+.u472-s[data-k="f"]::before{border-radius:3px 6px 6px 3px}
+.u472.is-hl .u472-s{opacity:.38}
+.u472.is-hl .u472-s.is-on{opacity:1}
+.u472-s.is-on::before{height:22px;margin-top:-11px;border-radius:6px}
+.u472-lg{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0;margin:0 -4px;padding:0;list-style:none}
+.u472-lg button{display:flex;align-items:center;gap:4px;height:26px;padding:0 4px;border:0;border-radius:8px;background:none;font-size:12px;font-weight:550;color:var(--ux-ink-2);transition:background-color .2s,color .2s}
+.u472-lg button:hover,.u472-lg button.is-on{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u472 .u472-lg button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:0}
+.u472-lg i{width:8px;height:8px;border-radius:50%;background:var(--u472-c);transition:transform .4s cubic-bezier(.34,1.8,.5,1)}
+.u472-lg button.is-on i{transform:scale(1.35)}
+.u472-lg .u472-free i{background:none;box-shadow:inset 0 0 0 1.5px var(--ux-ink-3)}
+.u472-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.u472 [data-k="p"]{--u472-c:#F08A24;--u472-c:light-dark(#F08A24,#FFB057)}
+.u472 [data-k="a"]{--u472-c:var(--ux-accent)}
+.u472 [data-k="d"]{--u472-c:#14A895;--u472-c:light-dark(#14A895,#5FE0C8)}
+.u472 [data-k="o"]{--u472-c:#A9A4B4;--u472-c:light-dark(#B3AEBC,#6D6979)}
+.u472 [data-k="f"]{--u472-c:rgba(22,21,27,.08);--u472-c:light-dark(rgba(22,21,27,.08),rgba(255,255,255,.09))}
+</style>
+<div class="ux u472">
+  <section class="u472-c" aria-labelledby="u472-t">
+    <div class="u472-hd"><h3 id="u472-t">저장 공간</h3><div class="u472-sw"><p class="u472-us">128GB 중 <b class="u472-n">96.4</b>GB 사용</p><p class="u472-si" aria-hidden="true"><i></i><span class="u472-tl"></span><b class="u472-tv"></b><em class="u472-tp"></em></p></div></div>
+    <div class="u472-bar" aria-hidden="true">
+      <span class="u472-s" data-k="p" style="--u472-i:0;--u472-w:32.19%"></span><span class="u472-s" data-k="a" style="--u472-i:1;--u472-w:22.34%"></span><span class="u472-s" data-k="d" style="--u472-i:2;--u472-w:7.66%"></span><span class="u472-s" data-k="o" style="--u472-i:3;--u472-w:13.13%"></span><span class="u472-s" data-k="f" style="--u472-i:4"></span>
+    </div>
+    <ul class="u472-lg">
+      <li><button type="button" data-k="p" data-v="41.2GB" data-p="32%"><i></i><span class="u472-nm">사진</span><span class="u472-sr"> 41.2GB</span></button></li>
+      <li><button type="button" data-k="a" data-v="28.6GB" data-p="22%"><i></i><span class="u472-nm">앱</span><span class="u472-sr"> 28.6GB</span></button></li>
+      <li><button type="button" data-k="d" data-v="9.8GB" data-p="8%"><i></i><span class="u472-nm">문서</span><span class="u472-sr"> 9.8GB</span></button></li>
+      <li><button type="button" data-k="o" data-v="16.8GB" data-p="13%"><i></i><span class="u472-nm">기타</span><span class="u472-sr"> 16.8GB</span></button></li>
+      <li><button type="button" class="u472-free" data-k="f" data-v="31.6GB" data-p="25%"><i></i><span class="u472-nm">남은 공간</span><span class="u472-sr"> 31.6GB</span></button></li>
+    </ul>
+  </section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var bar = root.querySelector('.u472-bar'), segs = root.querySelectorAll('.u472-s'), keys = root.querySelectorAll('.u472-lg button');
+  var si = root.querySelector('.u472-si'), dot = si.querySelector('i'), tl = root.querySelector('.u472-tl'), tv = root.querySelector('.u472-tv'), tp = root.querySelector('.u472-tp'), num = root.querySelector('.u472-n');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var USED = 96.4, cur = -1;
+  // 한 칸을 강조: 그 칸만 두툼해지고, 머리줄의 사용량 자리에 그 칸의 이름·용량·비율이 올라옵니다
+  function show(i) {
+    if (i === cur) return;
+    var was = cur;
+    cur = i;
+    segs.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+    keys.forEach(function (b, k) { b.classList.toggle('is-on', k === i); });
+    root.classList.toggle('is-hl', i >= 0);
+    if (i < 0) return;
+    var k = keys[i];
+    dot.style.background = getComputedStyle(segs[i], '::before').backgroundColor;
+    dot.style.boxShadow = k.dataset.k === 'f' ? 'inset 0 0 0 1.5px currentColor' : '';
+    tl.textContent = k.querySelector('.u472-nm').textContent;
+    tv.textContent = k.dataset.v;
+    tp.textContent = '· ' + k.dataset.p;
+    if (was >= 0) { si.classList.remove('is-tick'); void si.offsetWidth; si.classList.add('is-tick'); }
+  }
+  segs.forEach(function (s, k) { s.addEventListener('pointerenter', function () { show(k); }); });
+  bar.addEventListener('pointerleave', function () { if (!root.querySelector('.u472-lg').contains(document.activeElement)) show(-1); });
+  keys.forEach(function (b, k) {
+    b.addEventListener('pointerenter', function () { show(k); });
+    b.addEventListener('pointerleave', function () { if (document.activeElement !== b) show(-1); });
+    b.addEventListener('focus', function () { show(k); });
+    b.addEventListener('blur', function () { show(-1); });
+    b.addEventListener('click', function () { show(k); });
+  });
+  // 화면에 들어오면 칸들이 차례로 자라고, 사용량 숫자가 함께 올라갑니다
+  function play() {
+    root.classList.add('is-in');
+    if (rm) { num.textContent = USED.toFixed(1); return; }
+    var t0 = performance.now(), D = 1250;
+    num.textContent = '0.0';
+    (function step(now) {
+      if (!root.isConnected) return;
+      var k = Math.min(1, Math.max(0, (now - t0 - 120) / D)), e = 1 - Math.pow(1 - k, 3);
+      num.textContent = (USED * e).toFixed(1);
+      if (k < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  num.textContent = '0.0';
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); play(); } }, { threshold: .4 });
+    io.observe(root);
+  } else play();
+})();
+</script>

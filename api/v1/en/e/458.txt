@@ -1,0 +1,110 @@
+<!-- Lucian UX/UI Prompt #458 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#458 -->
+<!--
+Element: AI voice orb
+ID: 458 · Category: Loading & Progress · Tags: ai, voice, orb, assistant, glow, state
+What it does: The glowing orb of a voice assistant. Each tap changes its state: waiting, it breathes slowly; listening, ripples spread outward; thinking, the light inside swirls fast and the orb draws in a little; speaking, it pulses like syllables. The motion carries on smoothly from one state to the next.
+How to use it: Tap the orb to go idle → listening → thinking → speaking
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#458
+-->
+<style>
+.u458{position:relative;width:340px;height:300px}
+.u458-b{position:absolute;left:50%;top:132px;width:132px;height:132px;margin:-66px 0 0 -66px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}
+.u458 .u458-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:14px}
+.u458-b:active{transform:scale(.95)}
+.u458-b{transition:transform .5s cubic-bezier(.34,1.6,.5,1)}
+.u458-b>span{position:absolute;border-radius:50%;pointer-events:none}
+.u458-gw{inset:-38px;background:radial-gradient(closest-side,rgba(123,97,255,.38),rgba(54,170,255,.16) 58%,transparent);background:radial-gradient(closest-side,light-dark(rgba(110,86,255,.30),rgba(140,112,255,.62)),light-dark(rgba(40,150,255,.12),rgba(60,190,255,.26)) 58%,transparent);filter:blur(8px);will-change:transform,opacity}
+.u458-rp{inset:0;opacity:0;transition:opacity .6s var(--ux-ease)}
+.u458-rp i{position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 1.5px rgba(123,97,255,.5);box-shadow:0 0 0 1.5px light-dark(rgba(106,87,242,.45),rgba(183,164,255,.55));opacity:0;animation:u458-rip 2.4s cubic-bezier(.2,.6,.35,1) infinite}
+.u458-rp i:nth-child(2){animation-delay:.8s}
+.u458-rp i:nth-child(3){animation-delay:1.6s}
+@keyframes u458-rip{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.62);opacity:0}}
+.u458[data-s="listen"] .u458-rp{opacity:1}
+.u458-o{inset:0;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 50% 38%,#8C78FF,#5A43EA 56%,#33209E);box-shadow:inset 0 -12px 26px rgba(18,6,80,.5),inset 0 8px 16px rgba(255,255,255,.28),0 22px 40px -18px rgba(70,46,210,.75);will-change:transform}
+.u458-o i{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px;border-radius:50%;filter:blur(14px);opacity:.82;will-change:transform}
+.u458-o i:nth-child(1){background:#22B6FF}
+.u458-o i:nth-child(2){background:#FF4FAE}
+.u458-o i:nth-child(3){background:#45E3B8;width:70px;height:70px;margin:-35px}
+.u458-o i:nth-child(4){background:#3B25C9;opacity:.9}
+.u458-o b{position:absolute;left:17%;top:7%;width:54%;height:34%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.7),rgba(255,255,255,0));pointer-events:none}
+.u458-o::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);pointer-events:none}
+.u458-st{position:absolute;left:0;right:0;top:232px;margin:0;display:grid;justify-items:center;font-size:13.5px;font-weight:500;color:var(--ux-ink-2)}
+.u458-st span{grid-area:1/1;white-space:nowrap}
+</style>
+<div class="ux u458" data-s="idle">
+  <button type="button" class="u458-b" aria-label="Voice assistant">
+    <span class="u458-gw" aria-hidden="true"></span>
+    <span class="u458-rp" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="u458-o" aria-hidden="true"><i></i><i></i><i></i><i></i><b></b></span>
+  </button>
+  <p class="u458-st" role="status"><span>Tap to talk</span></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var b = root.querySelector('.u458-b'), gw = root.querySelector('.u458-gw'), orb = root.querySelector('.u458-o'), st = root.querySelector('.u458-st');
+  var blobs = [].slice.call(orb.querySelectorAll('i'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u458' + Math.random().toString(36).slice(2, 7);
+  st.id = uid;
+  b.setAttribute('aria-describedby', uid);
+  var T = { idle: 'Tap to talk', listen: 'Listening', think: 'Thinking', speak: 'Speaking' };
+  var ORDER = ['idle', 'listen', 'think', 'speak'];
+  var P = {
+    idle: { sp: 0.35, br: 0.03, pu: 0, base: 1, gl: 0.62, rr: 27 },
+    listen: { sp: 0.8, br: 0.012, pu: 0.03, base: 1.05, gl: 0.9, rr: 29 },
+    think: { sp: 3.4, br: 0.008, pu: 0, base: 0.9, gl: 0.5, rr: 36 },
+    speak: { sp: 1.1, br: 0, pu: 0.11, base: 1, gl: 0.95, rr: 28 }
+  };
+  var state = 'idle', cur = {}, ang = 0, last = 0;
+  for (var k in P.idle) cur[k] = P.idle[k];
+  function draw(t, dt) {
+    var tg = P[state], f = rm ? 1 : 1 - Math.exp(-dt * 3);
+    for (var k in tg) cur[k] += (tg[k] - cur[k]) * f;
+    ang += cur.sp * dt;
+    var breathe = Math.sin(t * 1.7) * cur.br;
+    var env = Math.max(0, Math.sin(t * 9.4)) * (0.55 + 0.45 * Math.sin(t * 2.3 + 0.7));
+    var hum = Math.max(0, Math.sin(t * 6.1) * Math.sin(t * 1.9));
+    var pulse = cur.pu * (state === 'listen' ? hum : env);
+    var s = cur.base + breathe + pulse;
+    orb.style.transform = 'scale(' + s.toFixed(4) + ')';
+    gw.style.opacity = Math.min(1, cur.gl + pulse * 2.4).toFixed(3);
+    gw.style.transform = 'scale(' + (s + pulse * 1.6 + breathe).toFixed(4) + ')';
+    blobs.forEach(function (el, i) {
+      var a = ang * (1 + i * 0.22) + i * Math.PI / 2;
+      var r = cur.rr + Math.sin(t * 0.9 + i * 1.4) * 6;
+      var sc = 1 + 0.16 * Math.sin(t * 1.3 + i * 1.7);
+      el.style.transform = 'translate(' + (Math.cos(a) * r).toFixed(2) + 'px,' + (Math.sin(a) * r).toFixed(2) + 'px) scale(' + sc.toFixed(3) + ')';
+    });
+  }
+  function frame(now) {
+    if (!root.isConnected) return;
+    var dt = last ? Math.min(0.05, (now - last) / 1000) : 0.016;
+    last = now;
+    draw(now / 1000, dt);
+    requestAnimationFrame(frame);
+  }
+  function label(s) {
+    var old = st.querySelector('span:last-child'), n = document.createElement('span');
+    n.textContent = T[s];
+    st.appendChild(n);
+    if (rm || !n.animate) { if (old) old.remove(); return; }
+    n.animate([{ opacity: 0, transform: 'translateY(6px)', filter: 'blur(3px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }], { duration: 380, easing: 'cubic-bezier(.3,1.3,.5,1)' });
+    if (old) old.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px)', filter: 'blur(3px)' }], { duration: 220, easing: 'ease-in', fill: 'forwards' }).onfinish = function () { old.remove(); };
+  }
+  function set(s) {
+    state = s;
+    root.dataset.s = s;
+    label(s);
+    if (rm) draw(performance.now() / 1000, 1);
+    if (!rm && orb.animate) orb.animate([{ filter: 'brightness(1.25)' }, { filter: 'brightness(1)' }], { duration: 420, easing: 'ease-out' });
+  }
+  b.addEventListener('click', function () { set(ORDER[(ORDER.indexOf(state) + 1) % ORDER.length]); });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && state !== 'idle') { e.preventDefault(); e.stopPropagation(); set('idle'); }
+  });
+  if (rm) draw(0, 1); else requestAnimationFrame(frame);
+})();
+</script>

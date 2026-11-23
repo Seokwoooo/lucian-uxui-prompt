@@ -47,7 +47,7 @@ const CATEGORIES = {
 };
 const ALIAS = { '메뉴·내비': '메뉴·탭', '탭': '메뉴·탭' };
 const SHAPES = ['square', 'tall'];
-const EXPECTED = 450;
+const EXPECTED = 480;
 // 컬렉션: 1은 처음 공개한 인터페이스 200개, 2는 애니메이션 200개, 3은 사이트 필수 요소 50개(401~, 갤러리에서 NEW로 표시)입니다
 const setOf = (id) => (+id > 400 ? 3 : +id > 200 ? 2 : 1);
 

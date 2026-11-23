@@ -1,0 +1,151 @@
+<!-- @meta {"title":"색상 선택기","category":"토글·선택","summary":"채도·명도 사각형과 색상 막대, HEX 입력칸, 색 견본 네 개로 된 HSV 색상 선택기입니다. 손잡이는 누르면 통통하게 커지고, 다른 곳을 누르거나 견본·HEX로 색을 바꾸면 새 자리로 출렁이며 미끄러집니다. 왼쪽의 미리보기 칩은 고른 색을 바탕으로 글자색을 흰색과 검은색 중 더 잘 읽히는 쪽으로 바꿉니다. 방향키로도 움직입니다.","hint":"사각형과 색상 막대를 끌어 보고, 견본을 눌러 손잡이가 튀어 가는 걸 보세요","shape":"square","hue":"#14B8A6","hue2":"#7B61FF","tags":["color-picker","hsv","slider","hex-input","swatches","spring"]} -->
+<!-- @demo [["wait",600],["drag",".u479-sv",0,[0.3,0.35],[0.82,0.12],800,{"after":400}],["drag",".u479-hue",0,[0.69,0.5],[0.1,0.5],850,{"after":450}],["tap",".u479-sw",3,{"after":1000}],["tap",".u479-sw",0,{"after":1000}],["reset"]] -->
+<!-- @en {"title":"Color picker","summary":"An HSV color picker with a saturation–value square, a hue bar, a HEX field and four swatches. The handles plump up when pressed, and when you click elsewhere or change the color from a swatch or the HEX field they glide to the new spot with a springy overshoot. The preview chip on the left switches its text between white and black, whichever reads better on the chosen color. Arrow keys work too.","hint":"Drag the square and the hue bar, then press a swatch to watch the handles spring over","map":[
+  ["aria-label=\"채도와 명도\"", "aria-label=\"Saturation and brightness\""],
+  ["aria-label=\"색상\"", "aria-label=\"Hue\""],
+  ["aria-label=\"HEX 색상 코드\"", "aria-label=\"HEX color code\""],
+  ["aria-label=\"미리보기\"", "aria-label=\"Preview\""],
+  ["aria-label=\"견본\"", "aria-label=\"Swatches\""],
+  ["'채도 '", "'Saturation '"],
+  ["', 명도 '", "', brightness '"]
+]} -->
+<style>
+.u479{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u479-c{position:relative;width:284px;padding:14px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 22px 44px -26px var(--ux-shadow-strong)}
+.u479-sv{position:relative;height:140px;border-radius:12px;background:linear-gradient(0deg,#000000,rgba(0,0,0,0)),linear-gradient(90deg,#FFFFFF,var(--u479-hc,#4D2EFF));box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);cursor:crosshair;touch-action:none}
+.u479-hue{position:relative;height:14px;margin-top:14px;border-radius:7px;background:linear-gradient(90deg,#FF0000,#FFFF00 16.67%,#00FF00 33.33%,#00FFFF 50%,#0000FF 66.67%,#FF00FF 83.33%,#FF0000);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);cursor:pointer;touch-action:none}
+/* 손잡이: 평소엔 출렁이며 새 자리로 미끄러지고, 끄는 동안은 손가락을 바로 따라옵니다 */
+.u479-h{position:absolute;left:calc(var(--u479-x) * 100%);top:calc(var(--u479-y) * 100%);width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--u479-c);box-shadow:0 0 0 3px #FFFFFF,0 0 0 4px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.35);outline:none;transform:scale(var(--u479-k,1));transition:left .55s cubic-bezier(.34,1.45,.5,1),top .55s cubic-bezier(.34,1.45,.5,1),transform .45s cubic-bezier(.34,1.9,.5,1);cursor:grab}
+.u479-hue .u479-h{top:50%}
+.u479-h.is-press{--u479-k:1.28}
+.u479-h.is-drag{transition:transform .45s cubic-bezier(.34,1.9,.5,1);cursor:grabbing}
+.u479-h:focus-visible{box-shadow:0 0 0 3px #FFFFFF,0 0 0 5px var(--ux-accent),0 4px 10px rgba(0,0,0,.35)}
+.u479-row{display:flex;align-items:center;gap:8px;margin-top:14px;padding-right:2px}
+.u479-pv{flex:none;display:grid;place-items:center;width:44px;height:32px;border-radius:10px;background:var(--u479-c);color:var(--u479-fg,#FFFFFF);font-size:14px;font-weight:800;letter-spacing:-.02em;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transition:color .25s}
+.u479-hx{position:relative;flex:1;min-width:0}
+.u479-hx span{position:absolute;left:9px;top:50%;margin-top:-8px;font-size:13px;line-height:16px;font-weight:600;color:var(--ux-ink-3);pointer-events:none}
+.u479-hx input{width:100%;height:32px;padding:0 4px 0 21px;border:0;border-radius:10px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface));box-shadow:inset 0 0 0 1px var(--ux-line-2);font-size:13px;font-weight:650;letter-spacing:.02em;color:var(--ux-ink);font-variant-numeric:tabular-nums;text-transform:uppercase;outline:none;transition:box-shadow .2s}
+.u479-hx input:focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u479 .u479-hx input:focus-visible{outline:none}
+.u479-hx.is-bad{animation:u479-shake .38s cubic-bezier(.36,.07,.19,.97)}
+.u479-hx.is-bad input{box-shadow:inset 0 0 0 1px var(--ux-danger)}
+@keyframes u479-shake{25%,75%{transform:translateX(-3px)}50%{transform:translateX(3px)}}
+.u479-sws{display:flex;gap:7px;margin:0;padding:0;list-style:none}
+.u479-sw{position:relative;width:21px;height:21px;padding:0;border:0;border-radius:50%;background:var(--u479-s);box-shadow:inset 0 0 0 1px rgba(0,0,0,.1);transition:transform .4s cubic-bezier(.34,1.8,.5,1)}
+.u479-sw:hover{transform:scale(1.15)}
+.u479-sw:active{transform:scale(.9);transition-duration:.1s}
+.u479-sw::after{content:"";position:absolute;inset:-3.5px;border-radius:50%;box-shadow:0 0 0 1.5px var(--u479-s);opacity:0;transform:scale(.7);transition:opacity .2s,transform .4s cubic-bezier(.34,1.8,.5,1)}
+.u479-sw[aria-pressed="true"]::after{opacity:1;transform:none}
+.u479 .u479-sw:focus-visible{outline:2px solid var(--ux-accent);outline-offset:5px}
+</style>
+<div class="ux u479">
+  <section class="u479-c">
+    <div class="u479-sv"><span class="u479-h" role="slider" tabindex="0" aria-label="채도와 명도"></span></div>
+    <div class="u479-hue"><span class="u479-h" role="slider" tabindex="0" aria-label="색상" aria-valuemin="0" aria-valuemax="360"></span></div>
+    <div class="u479-row">
+      <span class="u479-pv" role="img" aria-label="미리보기">Aa</span>
+      <label class="u479-hx"><span aria-hidden="true">#</span><input type="text" maxlength="7" spellcheck="false" autocomplete="off" aria-label="HEX 색상 코드"></label>
+      <ul class="u479-sws" aria-label="견본">
+        <li><button type="button" class="u479-sw" style="--u479-s:#FF5A5F" data-hex="FF5A5F" aria-label="#FF5A5F"></button></li>
+        <li><button type="button" class="u479-sw" style="--u479-s:#FFB020" data-hex="FFB020" aria-label="#FFB020"></button></li>
+        <li><button type="button" class="u479-sw" style="--u479-s:#16C784" data-hex="16C784" aria-label="#16C784"></button></li>
+        <li><button type="button" class="u479-sw" style="--u479-s:#2F80ED" data-hex="2F80ED" aria-label="#2F80ED"></button></li>
+      </ul>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var sv = root.querySelector('.u479-sv'), hue = root.querySelector('.u479-hue');
+  var hs = sv.querySelector('.u479-h'), hh = hue.querySelector('.u479-h'), pv = root.querySelector('.u479-pv');
+  var hxw = root.querySelector('.u479-hx'), hx = hxw.querySelector('input'), sws = [].slice.call(root.querySelectorAll('.u479-sw'));
+  var T = { s: '채도 ', v: ', 명도 ' };
+  var H = 0, S = 0, V = 0;
+  function hsv2rgb(h, s, v) {
+    var f = function (n) { var k = (n + h / 60) % 6; return v - v * s * Math.max(0, Math.min(k, 4 - k, 1)); };
+    return [f(5), f(3), f(1)].map(function (x) { return Math.round(x * 255); });
+  }
+  function rgb2hsv(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn, h = 0;
+    if (d) h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4;
+    return [(h * 60 + 360) % 360, mx ? d / mx : 0, mx];
+  }
+  function hex(rgb) { return rgb.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('').toUpperCase(); }
+  function lum(rgb) { var c = rgb.map(function (x) { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; }
+  // 화면에 반영: 손잡이 자리, 사각형의 순수 색상, 미리보기 칩의 글자색(대비가 큰 쪽), HEX 칸, 견본 표시
+  function draw(fromInput) {
+    var rgb = hsv2rgb(H, S, V), h6 = hex(rgb), c = '#' + h6;
+    root.style.setProperty('--u479-c', c);
+    sv.style.setProperty('--u479-hc', '#' + hex(hsv2rgb(H, 1, 1)));
+    hs.style.setProperty('--u479-x', S.toFixed(4)); hs.style.setProperty('--u479-y', (1 - V).toFixed(4));
+    hh.style.setProperty('--u479-x', (H / 360).toFixed(4));
+    hh.style.setProperty('--u479-c', '#' + hex(hsv2rgb(H, 1, 1)));
+    var L = lum(rgb);
+    pv.style.setProperty('--u479-fg', (L + 0.05) / 0.05 > 1.05 / (L + 0.05) ? '#16151B' : '#FFFFFF');
+    if (!fromInput) hx.value = h6;
+    hs.setAttribute('aria-valuetext', T.s + Math.round(S * 100) + '%' + T.v + Math.round(V * 100) + '%');
+    hh.setAttribute('aria-valuenow', String(Math.round(H)));
+    sws.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.hex === h6)); });
+  }
+  function setHex(h6, fromInput) {
+    var m = /^#?([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(h6);
+    if (!m) return false;
+    var s = m[1].length === 3 ? m[1].replace(/./g, '$&$&') : m[1];
+    var hsv = rgb2hsv(parseInt(s.slice(0, 2), 16), parseInt(s.slice(2, 4), 16), parseInt(s.slice(4, 6), 16));
+    // 회색처럼 색상이 정해지지 않는 색은 색상 손잡이를 그 자리에 둡니다
+    if (hsv[1] > 0 && hsv[2] > 0) H = hsv[0];
+    S = hsv[1]; V = hsv[2];
+    draw(fromInput);
+    return true;
+  }
+  // 끌기: 누른 순간에는 손잡이가 그 자리로 출렁이며 가고, 움직이기 시작하면 바로 따라옵니다
+  function dragger(area, handle, apply) {
+    var on = false, x0 = 0, y0 = 0;
+    function at(e) { var r = area.getBoundingClientRect(); apply(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)), Math.max(0, Math.min(1, (e.clientY - r.top) / r.height))); draw(); }
+    area.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      on = true; x0 = e.clientX; y0 = e.clientY;
+      handle.classList.add('is-press');
+      try { area.setPointerCapture(e.pointerId); } catch (er) { /* 시연 포인터 */ }
+      at(e);
+      handle.focus({ preventScroll: true });
+      e.preventDefault();
+    });
+    area.addEventListener('pointermove', function (e) {
+      if (!on) return;
+      if (Math.abs(e.clientX - x0) + Math.abs(e.clientY - y0) > 3) handle.classList.add('is-drag');
+      at(e);
+    });
+    function end() { if (!on) return; on = false; handle.classList.remove('is-press', 'is-drag'); }
+    area.addEventListener('pointerup', end);
+    area.addEventListener('pointercancel', end);
+    area.addEventListener('lostpointercapture', end);
+  }
+  dragger(sv, hs, function (x, y) { S = x; V = 1 - y; });
+  dragger(hue, hh, function (x) { H = Math.min(359.9, x * 360); });
+  function keys(e, step) {
+    var k = e.shiftKey ? 10 : 1, d = { ArrowLeft: [-k, 0], ArrowRight: [k, 0], ArrowUp: [0, k], ArrowDown: [0, -k] }[e.key];
+    if (!d && e.key !== 'Home' && e.key !== 'End') return null;
+    e.preventDefault();
+    return d || (e.key === 'Home' ? [-1000, -1000] : [1000, 1000]);
+  }
+  hs.addEventListener('keydown', function (e) {
+    var d = keys(e); if (!d) return;
+    S = Math.max(0, Math.min(1, S + d[0] / 100)); V = Math.max(0, Math.min(1, V + d[1] / 100)); draw();
+  });
+  hh.addEventListener('keydown', function (e) {
+    var d = keys(e); if (!d) return;
+    H = Math.max(0, Math.min(359, H + d[0] + d[1])); draw();
+  });
+  hx.addEventListener('input', function () { hxw.classList.remove('is-bad'); if (/^#?[0-9a-f]{6}$/i.test(hx.value.trim())) setHex(hx.value.trim(), true); });
+  function commit() {
+    if (!setHex(hx.value.trim(), false)) { hxw.classList.remove('is-bad'); void hxw.offsetWidth; hxw.classList.add('is-bad'); draw(); }
+  }
+  hx.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); commit(); } });
+  hx.addEventListener('blur', commit);
+  sws.forEach(function (b) { b.addEventListener('click', function () { setHex(b.dataset.hex, false); }); });
+  setHex('6A57F2', false);
+})();
+</script>

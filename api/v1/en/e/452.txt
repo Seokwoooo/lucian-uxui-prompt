@@ -1,0 +1,153 @@
+<!-- Lucian UX/UI Prompt #452 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#452 -->
+<!--
+Element: AI prompt box
+ID: 452 · Category: Inputs & Search · Tags: ai, prompt, chat-input, textarea, auto-grow, send, stop
+What it does: The prompt box of an AI app. As you write, the box grows upward line by line and the send button wakes up. Send and your text flies up, the arrow morphs into a stop square and a thin light runs around the border; when the answer is done it turns back into an arrow. Tap the model pill and the model name rolls over.
+How to use it: Write a question, then press Enter or the send button
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#452
+-->
+<style>
+@property --u452-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+.u452{position:relative;width:340px;height:300px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding-bottom:103px}
+.u452-box{position:relative;width:300px;padding:15px 11px 10px 17px;border-radius:24px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 38px -22px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow);cursor:text;transition:box-shadow .25s var(--ux-ease)}
+.u452-box:focus-within{box-shadow:0 0 0 1px color-mix(in srgb,var(--ux-ink) 30%,transparent),0 18px 38px -22px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow)}
+.u452-glow{position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--u452-a),transparent 0 58%,var(--ux-accent-2) 76%,var(--ux-accent) 88%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:0;pointer-events:none;transition:opacity .45s var(--ux-ease);animation:u452-spin 2.4s linear infinite paused}
+.u452.is-gen .u452-glow{opacity:1;animation-play-state:running}
+@keyframes u452-spin{to{--u452-a:360deg}}
+.u452-ta{display:block;width:100%;height:24px;margin:0;padding:0 6px 0 0;border:0;resize:none;background:none;outline:none;font-size:15px;line-height:24px;letter-spacing:-.01em;color:var(--ux-ink);overflow-y:hidden;scrollbar-width:none;word-break:keep-all;transition:height .34s cubic-bezier(.3,1.25,.5,1)}
+.u452-ta::-webkit-scrollbar{display:none}
+.u452-ta::placeholder{color:var(--ux-ink-3);opacity:1}
+.u452 .u452-ta:focus-visible{outline:none}
+.u452-fly{position:absolute;left:0;top:0;font-size:15px;line-height:24px;letter-spacing:-.01em;color:var(--ux-ink);white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word;pointer-events:none}
+.u452-bar{display:flex;align-items:center;gap:4px;margin:13px 0 0 -6px}
+.u452-add,.u452-md,.u452-send{flex:none;height:34px;padding:0;border:0;display:flex;align-items:center;justify-content:center;transition:background-color .2s var(--ux-ease),color .2s var(--ux-ease),box-shadow .2s,transform .45s var(--ux-spring)}
+.u452-add{width:34px;border-radius:50%;background:none;color:var(--ux-ink-2);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u452-add:hover,.u452-md:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u452-add:active,.u452-md:active{transform:scale(.92);transition-duration:.2s,.2s,.2s,.1s}
+.u452-add svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.u452-md{gap:3px;padding:0 8px 0 11px;border-radius:17px;background:none;color:var(--ux-ink-2);font-size:13px;font-weight:600}
+.u452-mv{position:relative;display:block;height:18px;overflow:hidden;transition:width .45s cubic-bezier(.3,1.3,.5,1)}
+.u452-mv b{position:absolute;left:0;top:0;font-weight:600;line-height:18px;white-space:nowrap;transition:transform .5s cubic-bezier(.3,1.4,.5,1),opacity .25s var(--ux-ease)}
+.u452-mv b.is-in{transform:translateY(100%);opacity:0;transition:none}
+.u452-mv b.is-out{transform:translateY(-100%);opacity:0}
+.u452-md svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.7}
+.u452-send{position:relative;width:34px;margin-left:auto;border-radius:50%;background:var(--ux-ink);color:var(--ux-surface);color:light-dark(var(--ux-surface),var(--ux-page))}
+.u452-send[aria-disabled="true"]{background:var(--ux-surface-3);color:var(--ux-ink-3);cursor:default}
+.u452-send:not([aria-disabled="true"]):active{transform:scale(.88);transition-duration:.2s,.2s,.2s,.1s}
+.u452-send svg,.u452-sq{position:absolute;left:50%;top:50%;transition:transform .5s cubic-bezier(.34,1.6,.5,1),opacity .22s var(--ux-ease)}
+.u452-send svg{width:18px;height:18px;margin:-9px 0 0 -9px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.u452-sq{width:11px;height:11px;margin:-5.5px 0 0 -5.5px;border-radius:3px;background:currentColor;opacity:0;transform:scale(.2) rotate(-90deg)}
+.u452.is-gen .u452-send svg{opacity:0;transform:translateY(-7px) scale(.3)}
+.u452.is-gen .u452-sq{opacity:1;transform:none}
+.u452 .u452-add:focus-visible,.u452 .u452-md:focus-visible,.u452 .u452-send:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u452-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u452">
+  <div class="u452-box">
+    <i class="u452-glow" aria-hidden="true"></i>
+    <textarea class="u452-ta" rows="1" aria-label="Prompt" placeholder="Ask anything" spellcheck="false"></textarea>
+    <div class="u452-bar">
+      <button type="button" class="u452-add" aria-label="Attach files"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+      <button type="button" class="u452-md" aria-label="Model: Nova 2"><span class="u452-mv"><b>Nova 2</b></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+      <button type="button" class="u452-send" aria-label="Send" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5.5M6 11l6-6 6 6"/></svg><i class="u452-sq" aria-hidden="true"></i></button>
+    </div>
+  </div>
+  <p class="u452-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var box = q('.u452-box'), ta = q('.u452-ta'), send = q('.u452-send'), md = q('.u452-md'), mv = q('.u452-mv'), live = q('.u452-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { send: 'Send', stop: 'Stop generating', gen: 'Generating a response', done: 'Response complete', stopped: 'Generation stopped', model: 'Model: ' };
+  var MODELS = ['Nova 2', 'Nova 2 mini'];
+  var LH = 24, MAX = 4 * 24;
+  var gen = false, ready = false, tm = 0, mi = 0;
+
+  function grow() {
+    var h0 = ta.offsetHeight;
+    ta.style.transition = 'none';
+    ta.style.height = '0px';
+    var sh = ta.scrollHeight, h = Math.max(LH, Math.min(MAX, sh));
+    ta.style.height = h0 + 'px';
+    void ta.offsetHeight;
+    ta.style.transition = '';
+    ta.style.height = h + 'px';
+    ta.style.overflowY = sh > MAX ? 'auto' : 'hidden';
+  }
+  function bump(k) {
+    if (rm || !send.animate) return;
+    send.animate([{ transform: 'scale(1)' }, { transform: 'scale(' + k + ')', offset: .35 }, { transform: 'scale(1.06)', offset: .7 }, { transform: 'scale(1)' }], { duration: 460, easing: 'ease-out' });
+  }
+  function sync() {
+    var can = !!ta.value.trim();
+    if (can && !ready && !gen) bump(.86);
+    ready = can;
+    send.setAttribute('aria-disabled', gen || can ? 'false' : 'true');
+    send.setAttribute('aria-label', gen ? T.stop : T.send);
+  }
+  function fly(text) {
+    if (rm) return;
+    var f = document.createElement('div');
+    f.className = 'u452-fly';
+    f.textContent = text;
+    f.style.left = (box.offsetLeft + ta.offsetLeft) + 'px';
+    f.style.top = (box.offsetTop + ta.offsetTop) + 'px';
+    f.style.width = ta.clientWidth + 'px';
+    root.appendChild(f);
+    var a = f.animate([{ opacity: 1, transform: 'none', filter: 'blur(0)' }, { opacity: 0, transform: 'translateY(-22px) scale(.97)', filter: 'blur(3px)' }], { duration: 420, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'forwards' });
+    a.onfinish = function () { f.remove(); };
+  }
+  function finish(stopped) {
+    clearTimeout(tm);
+    if (!gen) return;
+    gen = false;
+    root.classList.remove('is-gen');
+    bump(.9);
+    sync();
+    live.textContent = stopped ? T.stopped : T.done;
+  }
+  function submit() {
+    if (gen) { finish(true); return; }
+    if (!ta.value.trim()) return;
+    fly(ta.value);
+    ta.value = '';
+    grow();
+    gen = true;
+    root.classList.add('is-gen');
+    bump(.82);
+    sync();
+    live.textContent = T.gen;
+    tm = setTimeout(function () { if (root.isConnected) finish(false); }, rm ? 800 : 2600);
+  }
+  ta.addEventListener('input', function () { grow(); sync(); });
+  ta.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); submit(); }
+    else if (e.key === 'Escape' && gen) { e.preventDefault(); e.stopPropagation(); finish(true); }
+  });
+  send.addEventListener('click', submit);
+  box.addEventListener('mousedown', function (e) { if (e.target === box) { e.preventDefault(); ta.focus({ preventScroll: true }); } });
+  function fitModel(b) {
+    b = b || mv.querySelector('b:not(.is-out)');
+    if (b && b.offsetWidth) mv.style.width = b.offsetWidth + 'px';
+  }
+  md.addEventListener('click', function () {
+    mi = (mi + 1) % MODELS.length;
+    var old = mv.querySelector('b:not(.is-out)'), nb = document.createElement('b');
+    nb.textContent = MODELS[mi];
+    nb.className = 'is-in';
+    mv.appendChild(nb);
+    fitModel(nb);
+    void nb.offsetWidth;
+    nb.className = '';
+    if (old) { old.className = 'is-out'; setTimeout(function () { old.remove(); }, rm ? 0 : 500); }
+    md.setAttribute('aria-label', T.model + MODELS[mi]);
+  });
+  fitModel();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (root.isConnected) fitModel(); });
+  sync();
+})();
+</script>

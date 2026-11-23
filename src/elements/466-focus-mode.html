@@ -1,0 +1,121 @@
+<!-- @meta {"title":"집중 모드","category":"토글·선택","summary":"알림 칩 네 개가 둥둥 떠 있는 가운데 집중 모드 카드가 있습니다. 스위치를 켜면 칩들이 하나씩 흐려지며 뒤로 물러나고, 달 아이콘이 있던 동그라미에 링이 차오르며 25:00 타이머가 조용히 줄어들기 시작합니다. 링은 천천히 숨 쉬듯 빛나고, 끄면 시간이 멈추며 칩들이 차례로 통통 튀어 돌아옵니다.","hint":"스위치를 켜고 꺼 보세요","shape":"square","hue":"#7B61FF","hue2":"#14B8A6","tags":["focus-mode","do-not-disturb","switch","timer","ring","notifications","calm"]} -->
+<!-- @demo [["wait",1000],["hover",".u466-sw",0,{"after":300}],["tap",".u466-sw",0,{"after":3100}],["tap",".u466-sw",0,{"after":1500}],["leave",300]] -->
+<!-- @en {"title":"Focus mode","summary":"A focus mode card sits among four floating notification chips. Switch it on and the chips blur and fall back one by one, while a ring fills around the moon icon and a 25:00 timer quietly starts counting down. The ring breathes with a soft glow; switch it off and time stops as the chips bounce back in turn.","hint":"Switch it on and off","map":[
+  [">새 메시지 3<", ">3 new messages<"],
+  [">회의 10분 전<", ">Meeting in 10 min<"],
+  [">배송 출발<", ">Out for delivery<"],
+  [">좋아요 12<", ">12 likes<"],
+  [">집중 모드<", ">Focus mode<"],
+  [">알림을 잠시 멈춰요<", ">Pause alerts<"],
+  ["'알림 4개를 숨겼어요'", "'4 alerts hidden'"],
+  ["'알림을 잠시 멈춰요'", "'Pause alerts'"],
+  ["aria-label=\"알림\"", "aria-label=\"Notifications\""],
+  ["on: '집중 모드를 켰어요. 25분 타이머를 시작해요'", "on: 'Focus mode on. 25-minute timer started'"],
+  ["off: '집중 모드를 껐어요'", "off: 'Focus mode off'"]
+]} -->
+<style>
+.u466{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u466-ch{position:absolute;inset:0;margin:0;padding:0;list-style:none;pointer-events:none}
+.u466-c{position:absolute;display:flex;align-items:center;gap:7px;height:30px;padding:0 12px 0 6px;border-radius:15px;background:var(--ux-surface);background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 8px 18px -10px var(--ux-shadow-strong);font-size:12px;font-weight:600;color:var(--ux-ink-2);white-space:nowrap;transition:opacity .5s var(--ux-ease),filter .5s var(--ux-ease),transform .7s var(--ux-ease);animation:u466-bob 4.2s ease-in-out infinite}
+.u466-c:nth-child(1){left:22px;top:40px}
+.u466-c:nth-child(2){right:18px;top:58px;animation-delay:-1.1s}
+.u466-c:nth-child(3){left:34px;bottom:52px;animation-delay:-2.3s}
+.u466-c:nth-child(4){right:30px;bottom:36px;animation-delay:-3.1s}
+@keyframes u466-bob{50%{translate:0 -4px}}
+.u466-c i{flex:none;width:19px;height:19px;border-radius:50%;display:grid;place-items:center}
+.u466-c svg{width:11px;height:11px;fill:#FFFFFF}
+.u466.is-on .u466-c{opacity:.22;filter:blur(1.6px) grayscale(1);transform:translate(var(--u466-dx),var(--u466-dy)) scale(.9)}
+.u466-c:nth-child(1){--u466-dx:-8px;--u466-dy:-6px}
+.u466-c:nth-child(2){--u466-dx:8px;--u466-dy:-6px;transition-delay:.06s}
+.u466-c:nth-child(3){--u466-dx:-8px;--u466-dy:6px;transition-delay:.12s}
+.u466-c:nth-child(4){--u466-dx:8px;--u466-dy:6px;transition-delay:.18s}
+.u466:not(.is-on) .u466-c{transition:opacity .4s var(--ux-ease),filter .4s var(--ux-ease),transform .6s cubic-bezier(.34,1.7,.5,1)}
+.u466-cd{position:relative;z-index:1;display:flex;align-items:center;gap:12px;width:258px;padding:14px;border-radius:22px;background:var(--ux-surface);background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 44px -22px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);transition:box-shadow .6s var(--ux-ease),transform .5s var(--ux-spring)}
+.u466.is-on .u466-cd{box-shadow:0 0 0 1px color-mix(in srgb,var(--ux-accent) 30%,transparent),0 22px 50px -20px color-mix(in srgb,var(--ux-accent) 45%,transparent),0 2px 6px -2px var(--ux-shadow)}
+.u466-rg{position:relative;flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--ux-accent-soft)}
+.u466.is-on .u466-rg{animation:u466-br 4s ease-in-out infinite}
+@keyframes u466-br{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--ux-accent) 10%,transparent)}}
+.u466-rs{position:absolute;inset:0;width:52px;height:52px;transform:rotate(-90deg)}
+.u466-rg circle{fill:none;stroke-width:3.5;stroke-linecap:round}
+.u466-rg .bg{stroke:color-mix(in srgb,var(--ux-accent) 16%,transparent)}
+.u466-rg .fg{stroke:var(--ux-accent);stroke-dasharray:0 200;transition:stroke-dasharray .9s cubic-bezier(.65,0,.35,1)}
+.u466:not(.is-on) .u466-rg .fg{opacity:0;transition:stroke-dasharray .9s cubic-bezier(.65,0,.35,1),opacity .2s .75s}
+.u466-mn{width:22px;height:22px;fill:var(--ux-accent);transition:opacity .3s var(--ux-ease),transform .5s var(--ux-spring)}
+.u466-tm{position:absolute;font-size:12.5px;font-weight:750;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ux-ink);opacity:0;transform:scale(.6);transition:opacity .3s var(--ux-ease),transform .5s var(--ux-spring)}
+.u466.is-on .u466-mn{opacity:0;transform:scale(.4) rotate(-40deg)}
+.u466.is-on .u466-tm{opacity:1;transform:none;transition-delay:.15s}
+.u466-tx{flex:1;min-width:0}
+.u466-tx b{display:block;font-size:15px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u466-tx span{display:block;margin-top:2px;font-size:12px;color:var(--ux-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .2s var(--ux-ease)}
+.u466-tx span.is-swap{opacity:0}
+.u466-sw{position:relative;flex:none;width:46px;height:28px;padding:0;border:0;border-radius:14px;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line);transition:background-color .3s var(--ux-ease)}
+.u466-sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#FFFFFF;box-shadow:0 2px 5px rgba(0,0,0,.22);transition:transform .45s cubic-bezier(.34,1.6,.5,1),width .2s var(--ux-ease)}
+.u466-sw:active::after{width:27px}
+.u466-sw[aria-checked="true"]{background:var(--ux-accent)}
+.u466-sw[aria-checked="true"]::after{transform:translateX(18px)}
+.u466-sw[aria-checked="true"]:active::after{transform:translateX(13px)}
+.u466 .u466-sw:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u466-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u466">
+  <ul class="u466-ch" aria-label="알림">
+    <li class="u466-c"><i style="background:#22B07D"><svg viewBox="0 0 12 12"><path d="M6 1.5c2.8 0 4.8 1.8 4.8 4.1S8.8 9.7 6 9.7c-.5 0-1-.1-1.4-.2L2.3 10.6l.6-1.9C1.8 7.9 1.2 6.8 1.2 5.6 1.2 3.3 3.2 1.5 6 1.5z"/></svg></i>새 메시지 3</li>
+    <li class="u466-c"><i style="background:#F29A2E"><svg viewBox="0 0 12 12"><path d="M3.4 1.2c.3 0 .6.3.6.6V2.4h4V1.8c0-.3.3-.6.6-.6s.6.3.6.6V2.4h.4c.8 0 1.4.6 1.4 1.4v5.4c0 .8-.6 1.4-1.4 1.4H2.4c-.8 0-1.4-.6-1.4-1.4V3.8c0-.8.6-1.4 1.4-1.4h.4V1.8c0-.3.3-.6.6-.6zM2.2 5v4.2c0 .1.1.2.2.2h7.2c.1 0 .2-.1.2-.2V5z"/></svg></i>회의 10분 전</li>
+    <li class="u466-c"><i style="background:#3D8BFF"><svg viewBox="0 0 12 12"><path d="M5.5 1.1c.3-.1.7-.1 1 0l3.6 1.6c.4.2.6.5.6.9v4.8c0 .4-.2.7-.6.9L6.5 10.9c-.3.1-.7.1-1 0L1.9 9.3c-.4-.2-.6-.5-.6-.9V3.6c0-.4.2-.7.6-.9zM6 2.3 3.1 3.6 6 4.9l2.9-1.3z"/></svg></i>배송 출발</li>
+    <li class="u466-c"><i style="background:#F2557A"><svg viewBox="0 0 12 12"><path d="M6 10.3S1.2 7.6 1.2 4.4c0-1.5 1.1-2.6 2.5-2.6 1 0 1.8.6 2.3 1.4.5-.8 1.3-1.4 2.3-1.4 1.4 0 2.5 1.1 2.5 2.6 0 3.2-4.8 5.9-4.8 5.9z"/></svg></i>좋아요 12</li>
+  </ul>
+  <div class="u466-cd">
+    <span class="u466-rg" aria-hidden="true">
+      <svg class="u466-rs" viewBox="0 0 52 52"><circle class="bg" cx="26" cy="26" r="23"/><circle class="fg" cx="26" cy="26" r="23"/></svg>
+      <svg class="u466-mn" viewBox="0 0 24 24"><path d="M14.6 3.2a8.6 8.6 0 1 0 6.2 13.9 7.2 7.2 0 0 1-6.2-13.9z"/></svg>
+      <b class="u466-tm">25:00</b>
+    </span>
+    <span class="u466-tx"><b id="u466-t">집중 모드</b><span>알림을 잠시 멈춰요</span></span>
+    <button type="button" class="u466-sw" role="switch" aria-checked="false" aria-labelledby="u466-t"></button>
+  </div>
+  <p class="u466-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var sw = root.querySelector('.u466-sw'), fg = root.querySelector('.u466-rg .fg'), tm = root.querySelector('.u466-tm'), sub = root.querySelector('.u466-tx span'), ttl = root.querySelector('.u466-tx b'), live = root.querySelector('.u466-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { on: '집중 모드를 켰어요. 25분 타이머를 시작해요', off: '집중 모드를 껐어요' };
+  var TOTAL = 25 * 60, C = 2 * Math.PI * 23, left = TOTAL, t0 = 0, tick = 0, swapT = 0;
+  // 같은 요소가 여러 번 놓여도 스위치 이름이 제 카드 제목을 가리키게 합니다
+  var uid = 'u466' + Math.random().toString(36).slice(2, 7);
+  ttl.id = uid + 't'; sw.setAttribute('aria-labelledby', uid + 't');
+  function fmt(s) { var m = Math.floor(s / 60), r = s % 60; return (m < 10 ? '0' : '') + m + ':' + (r < 10 ? '0' : '') + r; }
+  function ring(f) { fg.style.strokeDasharray = (C * f).toFixed(2) + ' 200'; }
+  function setSub(s) {
+    clearTimeout(swapT);
+    sub.classList.add('is-swap');
+    swapT = setTimeout(function () { sub.textContent = s; sub.classList.remove('is-swap'); }, rm ? 0 : 200);
+  }
+  // 1초마다 남은 시간을 줄이고 링을 그만큼 비웁니다. 요소가 화면에서 빠지면 멈춥니다
+  function loop() {
+    if (!root.isConnected) { clearInterval(tick); return; }
+    left = Math.max(0, TOTAL - Math.floor((Date.now() - t0) / 1000));
+    tm.textContent = fmt(left);
+    ring(left / TOTAL);
+    if (!left) set(false);
+  }
+  function set(on) {
+    root.classList.toggle('is-on', on);
+    sw.setAttribute('aria-checked', String(on));
+    clearInterval(tick);
+    if (on) {
+      t0 = Date.now(); left = TOTAL;
+      tm.textContent = fmt(TOTAL);
+      ring(1);
+      tick = setInterval(loop, 1000);
+      setSub('알림 4개를 숨겼어요');
+    } else {
+      ring(0);
+      setSub('알림을 잠시 멈춰요');
+    }
+    live.textContent = on ? T.on : T.off;
+  }
+  sw.addEventListener('click', function () { set(sw.getAttribute('aria-checked') !== 'true'); });
+})();
+</script>

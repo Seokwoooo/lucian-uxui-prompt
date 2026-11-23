@@ -1,0 +1,101 @@
+<!-- Lucian UX/UI Prompt #467 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#467 -->
+<!--
+Element: 글자 수 제한
+ID: 467 · Category: 폼·입력 · Tags: textarea, character-count, limit, validation, ring, shake, highlight
+What it does: 40자까지 쓸 수 있는 ‘한 줄 소개’ 입력칸입니다. 글을 쓰면 오른쪽 아래 작은 링이 차오르고, 8자 남으면 링이 커지며 호박색으로 남은 글자 수를 보여 줍니다. 40자를 넘기면 링이 빨개지며 카드가 도리질하듯 흔들리고, 넘친 글자에 빨간 형광펜이 칠해지며 저장 버튼이 잠깁니다. 지우면 다시 차분해집니다.
+How to use it: 40자를 넘겨 써 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#467
+-->
+<style>
+.u467{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u467-cd{position:relative;width:284px;padding:14px 14px 12px 16px;border-radius:20px;background:var(--ux-surface);background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 44px -24px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);transition:box-shadow .3s var(--ux-ease)}
+.u467-cd:focus-within{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--ux-accent) 60%,transparent),0 0 0 5px var(--ux-accent-soft),0 22px 44px -24px var(--ux-shadow-strong)}
+.u467.is-over .u467-cd{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--ux-danger) 70%,transparent),0 0 0 5px color-mix(in srgb,var(--ux-danger) 14%,transparent),0 22px 44px -24px var(--ux-shadow-strong)}
+.u467-cd.is-shake{animation:u467-shake .42s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u467-shake{15%{transform:translateX(-6px)}35%{transform:translateX(5px)}55%{transform:translateX(-3px)}75%{transform:translateX(2px)}}
+.u467-lb{display:block;font-size:12px;font-weight:650;color:var(--ux-ink-2)}
+.u467-fd{position:relative;margin-top:7px;height:66px}
+.u467-ta,.u467-mr{position:absolute;inset:0;margin:0;padding:0 2px 0 0;border:0;font-size:14.5px;line-height:22px;font-weight:500;letter-spacing:-.01em;white-space:pre-wrap;word-break:keep-all;overflow-wrap:break-word;overflow:hidden}
+.u467-mr{color:transparent;pointer-events:none}
+.u467-mr mark{color:transparent;background:color-mix(in srgb,var(--ux-danger) 26%,transparent);border-radius:3px;box-shadow:0 0 0 1px color-mix(in srgb,var(--ux-danger) 26%,transparent);animation:u467-hl .3s var(--ux-ease)}
+@keyframes u467-hl{from{background:transparent;box-shadow:none}}
+.u467-ta{width:100%;background:none;color:var(--ux-ink);resize:none;outline:none;caret-color:var(--ux-accent)}
+.u467 .u467-ta:focus-visible{outline:none}
+.u467-ta::placeholder{color:var(--ux-ink-3)}
+.u467-bt{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:6px;padding-top:10px;border-top:1px solid var(--ux-line)}
+.u467-rg{--u467-c:var(--ux-accent);position:relative;width:30px;height:30px;display:grid;place-items:center;transform:scale(var(--u467-k,.74));transition:transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u467-rg svg{position:absolute;inset:0;width:30px;height:30px;transform:rotate(-90deg)}
+.u467-rg circle{fill:none;stroke-width:3}
+.u467-rg .bg{stroke:color-mix(in srgb,var(--ux-ink) 11%,transparent)}
+.u467-rg .fg{stroke:var(--u467-c);stroke-linecap:round;transition:stroke-dasharray .25s var(--ux-ease),stroke .25s var(--ux-ease)}
+.u467-rg b{font-size:10.5px;font-weight:750;font-variant-numeric:tabular-nums;color:var(--u467-c);opacity:0;transform:scale(.5);transition:opacity .2s var(--ux-ease),transform .35s var(--ux-spring),color .25s var(--ux-ease)}
+.u467.is-warn .u467-rg,.u467.is-over .u467-rg{--u467-k:1}
+.u467.is-warn .u467-rg{--u467-c:var(--ux-warn)}
+.u467.is-over .u467-rg{--u467-c:var(--ux-danger)}
+.u467.is-warn .u467-rg b,.u467.is-over .u467-rg b{opacity:1;transform:none}
+.u467-rg.is-nudge{animation:u467-nudge .3s var(--ux-ease)}
+@keyframes u467-nudge{30%{translate:-3px 0}65%{translate:2px 0}}
+.u467-sv{height:32px;padding:0 15px;border:0;border-radius:10px;background:var(--ux-ink);color:var(--ux-surface);font-size:13px;font-weight:650;transition:background-color .25s var(--ux-ease),color .25s var(--ux-ease),transform .35s var(--ux-spring),opacity .25s}
+.u467-sv:hover:not(:disabled){transform:translateY(-1px)}
+.u467-sv:active:not(:disabled){transform:scale(.95)}
+.u467-sv:disabled{background:var(--ux-surface-3);color:var(--ux-ink-3);cursor:not-allowed}
+.u467 .u467-sv:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u467-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u467">
+  <div class="u467-cd">
+    <label class="u467-lb" for="u467-ta">한 줄 소개</label>
+    <div class="u467-fd">
+      <div class="u467-mr" aria-hidden="true"></div>
+      <textarea class="u467-ta" id="u467-ta" rows="3" spellcheck="false">주말마다 동네 빵집을 찾아다니는 사람</textarea>
+    </div>
+    <div class="u467-bt">
+      <span class="u467-rg" aria-hidden="true"><svg viewBox="0 0 30 30"><circle class="bg" cx="15" cy="15" r="12"/><circle class="fg" cx="15" cy="15" r="12"/></svg><b></b></span>
+      <button type="button" class="u467-sv">저장</button>
+    </div>
+  </div>
+  <p class="u467-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var cd = root.querySelector('.u467-cd'), ta = root.querySelector('.u467-ta'), mr = root.querySelector('.u467-mr'), rg = root.querySelector('.u467-rg'), fg = root.querySelector('.u467-rg .fg'), num = root.querySelector('.u467-rg b'), sv = root.querySelector('.u467-sv'), lb = root.querySelector('.u467-lb'), live = root.querySelector('.u467-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = {
+    left: function (n) { return n + '자 남았어요'; },
+    over: function (n) { return n + '자 넘었어요'; }
+  };
+  var MAX = 40, WARN = 8, C = 2 * Math.PI * 12, state = '', count = 0;
+  // 같은 요소가 여러 번 놓여도 라벨이 제 입력칸을 가리키게 합니다
+  var uid = 'u467' + Math.random().toString(36).slice(2, 7);
+  ta.id = uid; lb.setAttribute('for', uid);
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function again(el, c) { if (rm) return; el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
+  function update(typed) {
+    var chars = Array.from(ta.value), n = chars.length, left = MAX - n;
+    // 넘친 글자는 뒤에 깔린 거울 층에서 형광펜으로 칠합니다(입력칸 글자 자리와 똑같이 줄바꿈됩니다)
+    var head = chars.slice(0, MAX).join(''), tail = chars.slice(MAX).join('');
+    mr.innerHTML = esc(head) + (tail ? '<mark>' + esc(tail) + '</mark>' : '') + '​';
+    mr.scrollTop = ta.scrollTop;
+    fg.style.strokeDasharray = (C * Math.min(1, n / MAX)).toFixed(2) + ' ' + C.toFixed(2);
+    num.textContent = left < 0 ? '−' + (-left) : String(left);
+    var next = left < 0 ? 'over' : left <= WARN ? 'warn' : 'ok';
+    root.classList.toggle('is-warn', next === 'warn');
+    root.classList.toggle('is-over', next === 'over');
+    sv.disabled = n === 0 || left < 0;
+    ta.setAttribute('aria-invalid', String(left < 0));
+    if (typed && next === 'over') {
+      if (state !== 'over') again(cd, 'is-shake');
+      else if (n > count) again(rg, 'is-nudge');
+    }
+    if (next !== state || (next !== 'ok' && typed && (left === 0 || left === WARN || left === -1))) live.textContent = next === 'over' ? T.over(-left) : next === 'warn' ? T.left(left) : '';
+    state = next; count = n;
+  }
+  ta.addEventListener('input', function () { update(true); });
+  ta.addEventListener('scroll', function () { mr.scrollTop = ta.scrollTop; });
+  cd.addEventListener('animationend', function (e) { if (e.target === cd) cd.classList.remove('is-shake'); });
+  update(false);
+})();
+</script>

@@ -1,0 +1,147 @@
+<!-- Lucian UX/UI Prompt #457 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#457 -->
+<!--
+Element: Voice input button
+ID: 457 · Category: Buttons · Tags: voice, microphone, dictation, waveform, morph, button
+What it does: Press the mic button and it stretches into a pill with a waveform that sways with your voice and a recording timer beside a blinking red dot. Press stop and the waveform flattens into a line as the pill shrinks into a chip of the transcribed sentence, its words floating up one by one. The mic at the end of the chip lets you speak again.
+How to use it: Press the mic to record, then press stop
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#457
+-->
+<style>
+.u457{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u457-p{position:relative;width:var(--u457-w,64px);height:var(--u457-h,64px);border-radius:32px;background:var(--ux-accent);box-shadow:0 0 0 0 var(--ux-line-2),0 16px 30px -14px var(--ux-accent),0 3px 8px -3px var(--ux-shadow);transition:width .62s cubic-bezier(.3,1.25,.5,1),height .5s cubic-bezier(.3,1.3,.5,1),background-color .45s var(--ux-ease),box-shadow .45s var(--ux-ease)}
+.u457-p[data-s="done"]{background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 14px 28px -18px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow)}
+.u457-b{position:absolute;right:0;top:0;width:64px;height:64px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,0);color:var(--ux-accent-ink);transition:right .5s cubic-bezier(.3,1.3,.5,1),top .5s cubic-bezier(.3,1.3,.5,1),width .5s cubic-bezier(.3,1.3,.5,1),height .5s cubic-bezier(.3,1.3,.5,1),background-color .35s var(--ux-ease),color .35s var(--ux-ease),transform .45s var(--ux-spring)}
+.u457-b:active{transform:scale(.9);transition-duration:.5s,.5s,.5s,.5s,.35s,.35s,.1s}
+.u457 .u457-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:4px}
+.u457-p[data-s="rec"] .u457-b{right:9px;top:9px;width:46px;height:46px;background:var(--ux-accent-ink);color:var(--ux-accent)}
+.u457-p[data-s="done"] .u457-b{right:7px;top:7px;width:40px;height:40px;background:var(--ux-accent);color:var(--ux-accent-ink)}
+.u457-mic,.u457-sq{position:absolute;left:50%;top:50%;transition:transform .5s cubic-bezier(.34,1.6,.5,1),opacity .22s var(--ux-ease)}
+.u457-mic{width:26px;height:26px;margin:-13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u457-mic rect{fill:currentColor;stroke:none}
+.u457-sq{width:15px;height:15px;margin:-7.5px;border-radius:4px;background:currentColor;opacity:0;transform:scale(.2) rotate(-90deg)}
+.u457-p[data-s="rec"] .u457-mic{opacity:0;transform:scale(.3)}
+.u457-p[data-s="rec"] .u457-sq{opacity:1;transform:none}
+.u457-p[data-s="done"] .u457-mic{transform:scale(.72)}
+.u457-rec{position:absolute;left:20px;top:0;bottom:0;right:66px;display:flex;align-items:center;gap:10px;color:var(--ux-accent-ink);opacity:0;pointer-events:none;transition:opacity .2s var(--ux-ease)}
+.u457-p[data-s="rec"] .u457-rec{opacity:1;transition:opacity .3s var(--ux-ease) .2s}
+.u457-p[data-s="done"] .u457-rec{opacity:0;transition:opacity .35s var(--ux-ease) .15s}
+.u457-dot{flex:none;width:8px;height:8px;border-radius:50%;background:#FF4D5E;box-shadow:0 0 0 3px rgba(255,77,94,.28);animation:u457-blink 1.1s ease-in-out infinite}
+@keyframes u457-blink{50%{opacity:.35}}
+.u457-tm{flex:none;min-width:35px;white-space:nowrap;font-size:14px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:0}
+.u457-wv{flex:1;height:34px;display:flex;align-items:center;justify-content:space-between;transform-origin:50% 50%;transition:transform .45s cubic-bezier(.6,0,.3,1) .12s}
+.u457-wv i{width:3px;height:30px;border-radius:2px;background:currentColor;transform:scaleY(.1)}
+.u457-wv.is-flat i{transition:transform .22s var(--ux-ease)}
+.u457-p[data-s="done"] .u457-wv{transform:scaleX(.05)}
+.u457-tx{position:absolute;left:20px;top:0;bottom:0;margin:0;display:flex;align-items:center;font-size:15px;font-weight:500;letter-spacing:-.015em;color:var(--ux-ink);white-space:nowrap;pointer-events:none}
+.u457-tw{display:block;white-space:pre}
+.u457-tx .u457-tw span{display:inline-block;opacity:0;filter:blur(5px);transform:translateY(6px) scale(.96);transition:opacity .25s var(--ux-ease),filter .25s var(--ux-ease),transform .25s var(--ux-ease)}
+.u457-p[data-s="done"] .u457-tx .u457-tw span{opacity:1;filter:none;transform:none;transition:opacity .35s var(--ux-ease),filter .35s var(--ux-ease),transform .5s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--u457-i) * 75ms + .3s)}
+.u457-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u457">
+  <div class="u457-p" data-s="idle">
+    <div class="u457-rec" aria-hidden="true"><i class="u457-dot"></i><span class="u457-tm">0:00</span><span class="u457-wv"></span></div>
+    <p class="u457-tx" aria-hidden="true"></p>
+    <button type="button" class="u457-b" aria-label="Voice input"><svg class="u457-mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg><i class="u457-sq" aria-hidden="true"></i></button>
+  </div>
+  <p class="u457-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var p = q('.u457-p'), b = q('.u457-b'), tmEl = q('.u457-tm'), wv = q('.u457-wv'), tx = q('.u457-tx'), live = q('.u457-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { idle: 'Voice input', stop: 'Stop recording', again: 'Speak again', rec: 'Listening', got: 'Transcribed: ', cancel: 'Recording canceled' };
+  var SAY = ['Wake me up at 7 tomorrow', 'Tell Mom I’m almost there', 'Suggest something for dinner'];
+  var N = 18, REC_W = 252;
+  wv.innerHTML = new Array(N + 1).join('<i></i>');
+  var bars = [].slice.call(wv.children), lv = bars.map(function () { return 0.1; });
+  var state = 'idle', said = 0, raf = 0, clock = 0, t0 = 0, gen = 0;
+
+  function size(w, h) { p.style.setProperty('--u457-w', w + 'px'); p.style.setProperty('--u457-h', h + 'px'); }
+  function loop(now) {
+    if (!root.isConnected || state !== 'rec') { raf = 0; return; }
+    var t = (now - t0) / 1000;
+    var env = 0.18 + 0.82 * Math.pow(Math.abs(Math.sin(t * 2.4) * Math.sin(t * 3.9 + 1.2)), 0.55);
+    for (var i = 0; i < N; i++) {
+      var mid = 1 - Math.abs(i - (N - 1) / 2) / (N / 2) * 0.5;
+      var n = 0.5 + 0.5 * Math.sin(t * (6.5 + (i % 5) * 1.7) + i * 2.3);
+      var target = 0.1 + 0.9 * env * mid * (0.3 + 0.7 * n);
+      lv[i] += (target - lv[i]) * 0.3;
+      bars[i].style.transform = 'scaleY(' + lv[i].toFixed(3) + ')';
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  function fmt(s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function start() {
+    gen += 1;
+    state = 'rec';
+    p.dataset.s = 'rec';
+    size(REC_W, 64);
+    wv.classList.remove('is-flat');
+    lv = bars.map(function () { return 0.1; });
+    bars.forEach(function (x) { x.style.transform = 'scaleY(.1)'; });
+    t0 = performance.now();
+    tmEl.textContent = '0:00';
+    clearInterval(clock);
+    var g = gen;
+    clock = setInterval(function () {
+      if (!root.isConnected || g !== gen || state !== 'rec') { clearInterval(clock); return; }
+      var s = Math.floor((performance.now() - t0) / 1000);
+      tmEl.textContent = fmt(s);
+      if (s >= 30) stop();
+    }, 250);
+    if (rm) bars.forEach(function (x, i) { x.style.transform = 'scaleY(' + (0.3 + 0.4 * Math.abs(Math.sin(i * 1.3))).toFixed(2) + ')'; });
+    else if (!raf) raf = requestAnimationFrame(loop);
+    b.setAttribute('aria-label', T.stop);
+    live.textContent = T.rec;
+  }
+  function stop() {
+    if (state !== 'rec') return;
+    gen += 1;
+    clearInterval(clock);
+    state = 'flat';
+    wv.classList.add('is-flat');
+    bars.forEach(function (x) { x.style.transform = 'scaleY(.07)'; });
+    var text = SAY[said % SAY.length];
+    said += 1;
+    tx.innerHTML = '<span class="u457-tw"></span>';
+    var tw = tx.firstChild;
+    text.split(' ').forEach(function (w, i) {
+      if (i) tw.appendChild(document.createTextNode(' '));
+      var s = document.createElement('span');
+      s.textContent = w;
+      s.style.setProperty('--u457-i', i);
+      tw.appendChild(s);
+    });
+    var g = gen;
+    setTimeout(function () {
+      if (!root.isConnected || g !== gen) return;
+      state = 'done';
+      p.dataset.s = 'done';
+      size(Math.ceil(20 + tw.offsetWidth + 14 + 40 + 7), 54);
+      b.setAttribute('aria-label', T.again);
+      live.textContent = T.got + text;
+    }, rm ? 0 : 230);
+  }
+  function cancel() {
+    gen += 1;
+    clearInterval(clock);
+    state = 'idle';
+    p.dataset.s = 'idle';
+    size(64, 64);
+    b.setAttribute('aria-label', T.idle);
+    live.textContent = T.cancel;
+  }
+  b.addEventListener('click', function () {
+    if (state === 'rec') stop();
+    else if (state === 'idle' || state === 'done') start();
+  });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && state === 'rec') { e.preventDefault(); e.stopPropagation(); cancel(); }
+  });
+})();
+</script>

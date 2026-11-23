@@ -1,0 +1,159 @@
+<!-- Lucian UX/UI Prompt #480 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#480 -->
+<!--
+Element: PIN keypad
+ID: 480 · Category: Sign-in & Sign-up · Tags: pin, passcode, keypad, shuffle, banking, shake
+What it does: A six-digit PIN keypad like the ones in banking apps. The digits come shuffled each time, and every press pops a dot full. A wrong PIN turns the dots red, shakes them side to side, clears them and reshuffles the keys. The right one draws the six dots together into a single mint circle that becomes a check.
+How to use it: Enter six digits. The demo PIN is 123456
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#480
+-->
+<style>
+.u480{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u480-c{position:relative;width:256px;padding:15px 14px 7px;border-radius:24px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 22px 44px -26px var(--ux-shadow-strong)}
+.u480-t{margin:0;font-size:13.5px;font-weight:700;letter-spacing:-.02em;text-align:center;transition:color .3s}
+.u480-t.is-swap{animation:u480-swap .4s var(--ux-ease)}
+@keyframes u480-swap{0%{opacity:0;transform:translateY(5px)}}
+.u480-dots{position:relative;display:flex;justify-content:center;gap:14px;height:36px;align-items:center;margin:2px 0 0}
+.u480-d{position:relative;width:12px;height:12px;border-radius:50%;background:var(--ux-surface-3);box-shadow:inset 0 0 0 1px var(--ux-line-2);transition:background-color .2s,box-shadow .2s,transform .5s cubic-bezier(.5,0,.2,1),opacity .3s}
+.u480-d.is-on{background:var(--ux-accent);box-shadow:none;animation:u480-pop .42s cubic-bezier(.34,1.9,.5,1)}
+@keyframes u480-pop{0%{transform:scale(.4)}55%{transform:scale(1.45)}100%{transform:scale(1)}}
+.u480-d.is-off{animation:u480-out .25s var(--ux-ease)}
+@keyframes u480-out{from{transform:scale(1.3);background:var(--ux-accent)}}
+.u480-dots.is-bad .u480-d{background:var(--ux-danger);box-shadow:none}
+.u480-dots.is-shake{animation:u480-shake .5s cubic-bezier(.36,.07,.19,.97)}
+@keyframes u480-shake{12%,52%{transform:translateX(-9px)}32%,72%{transform:translateX(9px)}88%{transform:translateX(-3px)}}
+
+.u480-dots.is-ok .u480-d{transform:translateX(var(--u480-tx)) scale(.6);background:var(--ux-mint);opacity:0;transition:transform .38s cubic-bezier(.6,0,.4,1),background-color .2s,opacity .2s .26s}
+.u480-ok{position:absolute;left:50%;top:50%;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:var(--ux-mint);display:grid;place-items:center;transform:scale(0);pointer-events:none}
+.u480-dots.is-ok .u480-ok{animation:u480-ok .55s cubic-bezier(.34,1.8,.5,1) .3s forwards}
+@keyframes u480-ok{0%{transform:scale(.3)}100%{transform:scale(1)}}
+.u480-ok svg{width:20px;height:20px;fill:none;stroke:var(--ux-surface);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.u480-ok path{stroke-dasharray:22;stroke-dashoffset:22}
+.u480-dots.is-ok .u480-ok path{animation:u480-draw .35s var(--ux-ease) .55s forwards}
+@keyframes u480-draw{to{stroke-dashoffset:0}}
+.u480-m{height:15px;margin:0 0 5px;font-size:11.5px;font-weight:650;color:var(--ux-danger);text-align:center;opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .35s cubic-bezier(.34,1.6,.5,1)}
+.u480-m.is-on{opacity:1;transform:none}
+.u480-pad{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:41px;transition:opacity .3s}
+.u480-pad.is-lock{opacity:.4;pointer-events:none}
+.u480-k{position:relative;display:grid;place-items:center;padding:0;border:0;border-radius:14px;background:none;color:var(--ux-ink);font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:0;touch-action:manipulation}
+.u480-k::before{content:"";position:absolute;left:50%;top:50%;width:46px;height:38px;margin:-19px 0 0 -23px;border-radius:14px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));opacity:0;transform:scale(.5);transition:opacity .25s,transform .4s cubic-bezier(.34,1.6,.5,1)}
+.u480-k:hover::before{opacity:.7;transform:scale(.9)}
+.u480-k.is-down::before,.u480-k:active::before{opacity:1;transform:scale(1.06);transition-duration:.08s,.12s}
+.u480-k span{position:relative;display:block;transition:transform .3s cubic-bezier(.34,1.8,.5,1),opacity .18s,filter .18s}
+.u480-k.is-down span,.u480-k:active span{transform:scale(.86)}
+.u480-k.is-mix span{opacity:0;transform:translateY(-8px) scale(.8);filter:blur(3px)}
+.u480 .u480-k:focus-visible{outline:none}
+.u480 .u480-k:focus-visible::before{opacity:1;transform:none;box-shadow:inset 0 0 0 2px var(--ux-accent)}
+.u480-fn{font-size:12.5px;font-weight:650;color:var(--ux-ink-2)}
+.u480-fn svg{position:relative;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u480-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u480">
+  <section class="u480-c">
+    <p class="u480-t">Enter your 6-digit PIN</p>
+    <div class="u480-dots" role="img" aria-label="Digits entered"><i class="u480-d"></i><i class="u480-d"></i><i class="u480-d"></i><i class="u480-d"></i><i class="u480-d"></i><i class="u480-d"></i><span class="u480-ok"><svg viewBox="0 0 24 24"><path d="m5.5 12.5 4.5 4.5 8.5-9.5"/></svg></span></div>
+    <p class="u480-m" aria-live="polite"></p>
+    <div class="u480-pad">
+      <button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button>
+      <button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button>
+      <button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k"><span></span></button>
+      <button type="button" class="u480-k u480-fn" data-act="mix"><span>Shuffle</span></button><button type="button" class="u480-k"><span></span></button><button type="button" class="u480-k u480-fn" data-act="del" aria-label="Delete"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5.5h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-6-6.5Z"/><path d="m11.5 9.5 5 5m0-5-5 5"/></svg></span></button>
+    </div>
+  </section>
+  <p class="u480-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var title = root.querySelector('.u480-t'), dotsEl = root.querySelector('.u480-dots'), dots = [].slice.call(root.querySelectorAll('.u480-d'));
+  var msg = root.querySelector('.u480-m'), pad = root.querySelector('.u480-pad'), live = root.querySelector('.u480-live');
+  var keys = [].slice.call(root.querySelectorAll('.u480-k:not(.u480-fn)'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { title: 'Enter your 6-digit PIN', ok: 'Verified', bad: 'Wrong PIN ', n: ' digits entered' };
+  var PIN = '123456', val = '', tries = 0, busy = false, timers = [];
+  function later(fn, ms) { var t = setTimeout(function () { if (root.isConnected) fn(); }, ms); timers.push(t); return t; }
+  function shuffle(anim) {
+    var d = '0123456789'.split('');
+    for (var i = d.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = d[i]; d[i] = d[j]; d[j] = x; }
+    keys.forEach(function (k, i) {
+      var put = function () { k.dataset.d = d[i]; k.firstChild.textContent = d[i]; k.classList.remove('is-mix'); };
+      if (!anim || rm) { put(); return; }
+      later(function () { k.classList.add('is-mix'); }, i * 22);
+      later(put, i * 22 + 170);
+    });
+  }
+  function paint() {
+    dots.forEach(function (d, i) {
+      var on = i < val.length;
+      if (on && !d.classList.contains('is-on')) { d.classList.remove('is-off'); d.classList.add('is-on'); }
+      if (!on && d.classList.contains('is-on')) { d.classList.remove('is-on'); d.classList.add('is-off'); }
+    });
+    live.textContent = val.length + T.n;
+  }
+  function press(k) { k.classList.add('is-down'); later(function () { k.classList.remove('is-down'); }, 140); }
+  function input(dg) {
+    if (busy || val.length >= 6) return;
+    val += dg;
+    if (val.length === 1) msg.classList.remove('is-on');
+    paint();
+    if (val.length === 6) later(check, rm ? 0 : 260);
+  }
+  function del() { if (busy || !val) return; val = val.slice(0, -1); paint(); }
+  function swapTitle(text) { title.textContent = text; title.classList.remove('is-swap'); void title.offsetWidth; title.classList.add('is-swap'); }
+  function check() {
+    busy = true;
+    if (val === PIN) {
+      var mid = dotsEl.getBoundingClientRect(), sc = mid.width / dotsEl.offsetWidth || 1, cx = mid.left + mid.width / 2;
+      dots.forEach(function (d) { var r = d.getBoundingClientRect(); d.style.setProperty('--u480-tx', (cx - (r.left + r.width / 2)) / sc + 'px'); });
+      dotsEl.classList.add('is-ok');
+      pad.classList.add('is-lock');
+      msg.classList.remove('is-on');
+      title.style.color = 'var(--ux-mint)';
+      swapTitle(T.ok);
+      later(reset, 2400);
+      return;
+    }
+    tries += 1;
+    dotsEl.classList.add('is-bad', 'is-shake');
+    msg.textContent = T.bad + '(' + tries + '/5)';
+    msg.classList.add('is-on');
+    later(function () {
+      dotsEl.classList.remove('is-shake', 'is-bad');
+      val = ''; paint();
+      shuffle(true);
+      later(function () { busy = false; }, rm ? 0 : 400);
+    }, rm ? 300 : 620);
+  }
+  function reset() {
+    val = ''; tries = 0;
+    dots.forEach(function (d) { d.classList.remove('is-on', 'is-off'); });
+    dotsEl.classList.remove('is-ok');
+    pad.classList.remove('is-lock');
+    title.style.color = '';
+    swapTitle(T.title);
+    msg.classList.remove('is-on');
+    shuffle(true);
+    busy = false;
+  }
+  pad.addEventListener('pointerdown', function (e) { var k = e.target.closest('.u480-k'); if (k) press(k); });
+  pad.addEventListener('click', function (e) {
+    var k = e.target.closest('.u480-k');
+    if (!k) return;
+    if (k.dataset.act === 'del') del();
+    else if (k.dataset.act === 'mix') { if (!busy) shuffle(true); }
+    else input(k.dataset.d);
+  });
+  root.addEventListener('keydown', function (e) {
+    if (/^[0-9]$/.test(e.key)) {
+      e.preventDefault();
+      var k = keys.filter(function (x) { return x.dataset.d === e.key; })[0];
+      if (k && !busy) press(k);
+      input(e.key);
+    } else if (e.key === 'Backspace') { e.preventDefault(); press(root.querySelector('[data-act="del"]')); del(); }
+  });
+  shuffle(false);
+  paint();
+  live.textContent = '';
+})();
+</script>

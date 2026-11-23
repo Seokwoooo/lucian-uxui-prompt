@@ -1,0 +1,252 @@
+<!-- @meta {"title":"멘션 피커","category":"입력·검색","summary":"댓글 상자에 @를 치면 그 글자 바로 아래에 멤버 목록이 톡 열리고, 이어서 치는 글자로 바로 걸러집니다. ↑↓로 고르고 Enter를 누르면 이름이 보라색 멘션 칩이 되어 통통 튀어 들어갑니다. 칩 바로 뒤에서 지우기를 누르면 칩이 통째로 지워집니다.","hint":"댓글 상자에 @와 이름 첫 글자를 쳐 보세요","shape":"square","hue":"#3D8BFF","hue2":"#A78BFA","tags":["mention","autocomplete","comment","combobox","chip","keyboard"]} -->
+<!-- @demo [["wait",900],["erase",".u451-ta",0,1,60],["wait",450],["type",".u451-ta",0,"@",100],["wait",700],["type",".u451-ta",0,{"ko":"서","en":"se"},170],["wait",650],["key",".u451-ta",0,"ArrowDown",1,520],["key",".u451-ta",0,"Enter",1,200],["wait",1700],["reset"]] -->
+<!-- @en {"title":"Mention picker","summary":"Type @ in a comment box and a member list pops open right under that character, then filters as you keep typing. Pick with ↑↓ and press Enter: the name drops in as a violet mention chip with a little bounce. Press Backspace right after a chip and the whole chip goes at once.","hint":"Type @ and the first letters of a name","map":[
+  ["aria-label=\"댓글\"", "aria-label=\"Comment\""],
+  ["placeholder=\"댓글을 남겨 주세요. @로 멘션\"", "placeholder=\"Leave a comment. Use @ to mention\""],
+  [">확인 부탁드려요 @<", ">Take a look @<"],
+  ["aria-label=\"멤버 멘션\"", "aria-label=\"Mention someone\""],
+  ["aria-label=\"댓글 보내기\"", "aria-label=\"Send comment\""],
+  ["aria-label=\"멤버\"", "aria-label=\"Members\""],
+  ["'멤버 {n}명'", "'{n} members'"],
+  ["'일치하는 멤버가 없어요'", "'No matching members'"],
+  ["'{name} 님을 멘션했어요'", "'Mentioned {name}'"],
+  ["'댓글을 남겼어요'", "'Comment posted'"],
+  ["'서지훈'", "'Jihoon Seo'"],
+  ["'한서연'", "'Seoyeon Han'"],
+  ["'김민준'", "'Minjun Kim'"],
+  ["'이수아'", "'Sua Lee'"],
+  ["'개발'", "'Dev'"],
+  ["'디자인'", "'Design'"],
+  ["'마케팅'", "'Marketing'"]
+]} -->
+<style>
+.u451{position:relative;width:340px;height:300px}
+.u451-box{position:absolute;left:22px;right:22px;top:50px;padding:13px 10px 9px 15px;border-radius:18px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 14px 30px -18px var(--ux-shadow-strong);cursor:text;transition:box-shadow .2s var(--ux-ease)}
+.u451-box:focus-within{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 14px 30px -18px var(--ux-shadow-strong)}
+.u451-ed{position:relative;padding-right:4px}
+.u451-ta,.u451-hl,.u451-mz{display:block;width:100%;height:66px;margin:0;padding:0;border:0;font-size:14.5px;font-weight:400;line-height:22px;letter-spacing:-.01em;white-space:pre-wrap;overflow-wrap:break-word;word-break:keep-all}
+.u451-ta{position:relative;z-index:1;resize:none;background:none;outline:none;color:transparent;caret-color:var(--ux-ink);overflow-y:auto;scrollbar-width:none}
+.u451-ta::-webkit-scrollbar{display:none}
+.u451-ta::placeholder{color:var(--ux-ink-3);opacity:1}
+.u451-ta::selection{background:var(--ux-accent-soft);color:transparent}
+.u451 .u451-ta:focus-visible{outline:none}
+.u451-hl,.u451-mz{position:absolute;left:0;top:0;width:calc(100% - 4px);overflow:hidden;color:var(--ux-ink);pointer-events:none}
+.u451-mz{visibility:hidden}
+.u451-m{color:var(--ux-accent);background:var(--ux-accent-soft);border-radius:5px;box-shadow:0 0 0 2px var(--ux-accent-soft)}
+.u451-m.is-pop{display:inline-block;animation:u451-pop .55s cubic-bezier(.34,1.7,.5,1) both}
+@keyframes u451-pop{0%{transform:scale(.5) translateY(3px);opacity:0}55%{transform:scale(1.12);opacity:1}100%{transform:none}}
+.u451-ft{display:flex;align-items:center;justify-content:space-between;margin-top:6px;margin-left:-6px}
+.u451-at,.u451-send{flex:none;width:32px;height:32px;padding:0;border:0;display:grid;place-items:center;transition:background-color .2s var(--ux-ease),color .2s var(--ux-ease),transform .45s var(--ux-spring)}
+.u451-at{border-radius:10px;background:none;color:var(--ux-ink-3)}
+.u451-at:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u451-at:active,.u451-send:active{transform:scale(.88);transition-duration:.2s,.2s,.1s}
+.u451-at svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u451-send{border-radius:50%;background:var(--ux-surface-3);color:var(--ux-ink-3);cursor:default}
+.u451-send.is-on{background:var(--ux-accent);color:var(--ux-accent-ink);cursor:pointer}
+.u451.is-open .u451-send{opacity:0;transform:scale(.6)}
+.u451-send{transition:background-color .2s var(--ux-ease),color .2s var(--ux-ease),transform .45s var(--ux-spring),opacity .2s var(--ux-ease)}
+.u451-send svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.u451 .u451-at:focus-visible,.u451 .u451-send:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u451-pop{position:absolute;z-index:3;left:0;top:0;width:198px;padding:5px;border-radius:14px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 24px 44px -18px var(--ux-shadow-strong),0 4px 10px -4px var(--ux-shadow);transform-origin:16px 0;opacity:0;transform:translateY(-6px) scale(.92);visibility:hidden;transition:opacity .14s var(--ux-ease),transform .2s var(--ux-ease),visibility 0s linear .2s}
+.u451.is-open .u451-pop{opacity:1;transform:none;visibility:visible;transition:opacity .16s var(--ux-ease),transform .52s cubic-bezier(.3,1.45,.5,1),visibility 0s}
+.u451-lb{position:relative}
+.u451-pill{position:absolute;left:5px;right:5px;top:5px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--ux-ink) 7%,transparent);transform:translateY(var(--u451-py,0px));transition:transform .42s cubic-bezier(.3,1.5,.5,1)}
+.u451-o{position:relative;display:flex;align-items:center;gap:10px;height:38px;padding:0 9px;border-radius:10px;cursor:pointer;overflow:hidden;transition:height .32s var(--ux-ease),opacity .2s var(--ux-ease),transform .32s var(--ux-ease)}
+.u451-o.is-out{height:0;opacity:0;transform:scale(.94)}
+.u451-pop.is-snap .u451-o,.u451-pop.is-snap .u451-pill{transition:none}
+.u451-av{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:11.5px;font-weight:700;letter-spacing:0;color:#FFFFFF;background:linear-gradient(145deg,var(--u451-a),var(--u451-b));box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 -3px 6px rgba(0,0,0,.12)}
+.u451-nm{flex:1;min-width:0;font-size:13.5px;font-weight:500;color:var(--ux-ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s}
+.u451-nm mark{background:none;color:var(--ux-ink);font-weight:700}
+.u451-o[aria-selected="true"] .u451-nm{color:var(--ux-ink)}
+.u451-rl{flex:none;font-size:11.5px;color:var(--ux-ink-3)}
+.u451-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u451">
+  <div class="u451-box">
+    <div class="u451-ed">
+      <div class="u451-hl" aria-hidden="true"></div>
+      <div class="u451-mz" aria-hidden="true"></div>
+      <textarea class="u451-ta" rows="3" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="댓글" placeholder="댓글을 남겨 주세요. @로 멘션" spellcheck="false" autocomplete="off">확인 부탁드려요 @</textarea>
+    </div>
+    <div class="u451-ft">
+      <button type="button" class="u451-at" aria-label="멤버 멘션"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.7"/><path d="M15.7 12v1.3a2.5 2.5 0 0 0 5 0V12a8.7 8.7 0 1 0-3.4 6.9"/></svg></button>
+      <button type="button" class="u451-send" aria-label="댓글 보내기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5.5M6 11l6-6 6 6"/></svg></button>
+    </div>
+  </div>
+  <div class="u451-pop"><i class="u451-pill" aria-hidden="true"></i><div class="u451-lb" role="listbox" aria-label="멤버"></div></div>
+  <p class="u451-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var box = q('.u451-box'), ed = q('.u451-ed'), ta = q('.u451-ta'), hl = q('.u451-hl'), mz = q('.u451-mz');
+  var pop = q('.u451-pop'), pill = q('.u451-pill'), lb = q('.u451-lb'), live = q('.u451-live'), send = q('.u451-send'), atb = q('.u451-at');
+  var uid = 'u451' + Math.random().toString(36).slice(2, 7);
+  lb.id = uid + 'l';
+  ta.setAttribute('aria-controls', lb.id);
+  var T = { count: '멤버 {n}명', none: '일치하는 멤버가 없어요', added: '{name} 님을 멘션했어요', sent: '댓글을 남겼어요' };
+  // [이름, 팀, 아바타 그라디언트 두 색]
+  var PEOPLE = [['서지훈', '개발', '#7CCBFF', '#3B6CF0'], ['한서연', '디자인', '#FFB48C', '#F2557A'], ['김민준', 'PM', '#8EE3BE', '#139A72'], ['이수아', '마케팅', '#D2C2FF', '#7458F0']];
+  var names = PEOPLE.map(function (p) { return p[0]; });
+  var LH = 22, ROW = 38;
+  var open = false, anchor = -1, vis = [], act = 0, popAt = -1, dismissed = -1;
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  lb.innerHTML = PEOPLE.map(function (p, i) {
+    return '<div class="u451-o" role="option" id="' + uid + i + '" aria-selected="false"><span class="u451-av" aria-hidden="true" style="--u451-a:' + p[2] + ';--u451-b:' + p[3] + '">' + esc(p[0].charAt(0)) + '</span><span class="u451-nm">' + esc(p[0]) + '</span><span class="u451-rl">' + esc(p[1]) + '</span></div>';
+  }).join('');
+  var rows = [].slice.call(lb.children);
+  var reM = new RegExp('@(' + names.slice().sort(function (a, b) { return b.length - a.length; }).map(function (n) { return n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|') + ')', 'g');
+
+  // 글자는 투명한 입력칸 뒤의 거울 층이 그립니다. 멤버 이름은 이 층에서만 칩 모양이 되어, 커서 위치는 입력칸과 똑같이 맞습니다
+  function paintText() {
+    var v = ta.value, out = '', last = 0, m;
+    reM.lastIndex = 0;
+    while ((m = reM.exec(v))) {
+      out += esc(v.slice(last, m.index)) + '<span class="u451-m' + (m.index === popAt ? ' is-pop' : '') + '">' + esc(m[0]) + '</span>';
+      last = m.index + m[0].length;
+    }
+    hl.innerHTML = out + esc(v.slice(last)) + '​';
+    popAt = -1;
+    var pp = hl.querySelector('.is-pop');
+    if (pp) pp.addEventListener('animationend', function () { pp.classList.remove('is-pop'); });
+    hl.scrollTop = ta.scrollTop;
+    send.classList.toggle('is-on', !!v.trim());
+  }
+  // @가 놓인 글자 위치를 거울 층으로 재서, 목록을 그 글자 바로 아래(공간이 모자라면 위)에 붙입니다
+  function place() {
+    mz.textContent = ta.value.slice(0, anchor);
+    var mk = document.createElement('span');
+    mk.textContent = '@';
+    mz.appendChild(mk);
+    var ax = box.offsetLeft + ed.offsetLeft + mk.offsetLeft;
+    var ay = box.offsetTop + ed.offsetTop + mk.offsetTop - ta.scrollTop;
+    var x = Math.max(10, Math.min(root.offsetWidth - pop.offsetWidth - 10, ax - 12));
+    var h = 10 + vis.length * ROW, y = ay + LH + 6, up = y + h > root.offsetHeight - 6;
+    if (up) y = ay - h - 6;
+    pop.style.left = x + 'px';
+    pop.style.top = y + 'px';
+    pop.style.transformOrigin = (ax - x + 6) + 'px ' + (up ? '100%' : '0');
+  }
+  function paint(snap) {
+    rows.forEach(function (r, i) { r.setAttribute('aria-selected', vis[act] === i ? 'true' : 'false'); });
+    if (snap) pill.style.transition = 'none';
+    pill.style.setProperty('--u451-py', act * ROW + 'px');
+    if (snap) { void pill.offsetWidth; pill.style.transition = ''; }
+    ta.setAttribute('aria-activedescendant', uid + vis[act]);
+  }
+  function filter(query) {
+    var t = query.toLowerCase();
+    vis = [];
+    rows.forEach(function (r, i) {
+      var n = names[i], k = n.toLowerCase().indexOf(t), on = k >= 0;
+      if (on) vis.push(i);
+      r.classList.toggle('is-out', !on);
+      r.setAttribute('aria-hidden', on ? 'false' : 'true');
+      r.querySelector('.u451-nm').innerHTML = on && t ? esc(n.slice(0, k)) + '<mark>' + esc(n.slice(k, k + t.length)) + '</mark>' + esc(n.slice(k + t.length)) : esc(n);
+    });
+    return vis.length;
+  }
+  function setOpen(v) {
+    open = v;
+    root.classList.toggle('is-open', v);
+    ta.setAttribute('aria-expanded', v ? 'true' : 'false');
+    if (!v) ta.removeAttribute('aria-activedescendant');
+  }
+  function detect() {
+    var c = ta.selectionStart, m = /(^|\s)@([^\s@]{0,16})$/.exec(ta.value.slice(0, c));
+    if (!m) { dismissed = -1; setOpen(false); return; }
+    var a = c - m[2].length - 1;
+    if (a === dismissed) return;
+    var fresh = !open || a !== anchor;
+    anchor = a;
+    if (fresh) pop.classList.add('is-snap');
+    var n = filter(m[2]);
+    if (!n) { setOpen(false); live.textContent = T.none; pop.classList.remove('is-snap'); return; }
+    if (fresh) act = 0; else act = Math.min(act, n - 1);
+    place();
+    paint(fresh);
+    if (fresh) { void pop.offsetWidth; pop.classList.remove('is-snap'); }
+    setOpen(true);
+    live.textContent = T.count.replace('{n}', n);
+  }
+  function pick(i) {
+    var v = ta.value, c = ta.selectionStart, ins = '@' + names[i] + ' ';
+    ta.value = v.slice(0, anchor) + ins + v.slice(c);
+    var pos = anchor + ins.length;
+    ta.setSelectionRange(pos, pos);
+    popAt = anchor;
+    setOpen(false);
+    paintText();
+    live.textContent = T.added.replace('{name}', names[i]);
+  }
+
+  ta.addEventListener('input', function () { paintText(); detect(); });
+  ta.addEventListener('scroll', function () { hl.scrollTop = ta.scrollTop; if (open) place(); });
+  ta.addEventListener('click', detect);
+  ta.addEventListener('keyup', function (e) { if (/^(ArrowLeft|ArrowRight|Home|End)$/.test(e.key)) detect(); });
+  ta.addEventListener('blur', function () { setOpen(false); });
+  ta.addEventListener('keydown', function (e) {
+    if (open && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+      e.preventDefault();
+      act = (act + (e.key === 'ArrowDown' ? 1 : -1) + vis.length) % vis.length;
+      paint(false);
+      return;
+    }
+    if (open && (e.key === 'Enter' || e.key === 'Tab')) { e.preventDefault(); pick(vis[act]); return; }
+    if (open && e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); dismissed = anchor; setOpen(false); return; }
+    // 칩 바로 뒤에서 지우면 이름 전체를 한 번에 지웁니다
+    if (e.key === 'Backspace' && ta.selectionStart === ta.selectionEnd) {
+      var c = ta.selectionStart, before = ta.value.slice(0, c);
+      for (var i = 0; i < names.length; i++) {
+        var tok = '@' + names[i];
+        if (before.slice(-tok.length) === tok) {
+          e.preventDefault();
+          ta.value = before.slice(0, -tok.length) + ta.value.slice(c);
+          ta.setSelectionRange(c - tok.length, c - tok.length);
+          paintText();
+          detect();
+          return;
+        }
+      }
+    }
+  });
+  pop.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  lb.addEventListener('pointermove', function (e) {
+    var o = e.target.closest('.u451-o');
+    if (!o) return;
+    var k = vis.indexOf(rows.indexOf(o));
+    if (k >= 0 && k !== act) { act = k; paint(false); }
+  });
+  lb.addEventListener('click', function (e) {
+    var o = e.target.closest('.u451-o');
+    if (o && !o.classList.contains('is-out')) pick(rows.indexOf(o));
+  });
+  box.addEventListener('mousedown', function (e) { if (e.target === box || e.target === ed) { e.preventDefault(); ta.focus({ preventScroll: true }); } });
+  atb.addEventListener('mousedown', function (e) { e.preventDefault(); });
+  // @ 버튼: 커서 자리(입력칸에 초점이 없으면 글 끝)에 @를 넣고 목록을 엽니다
+  atb.addEventListener('click', function () {
+    var v = ta.value, focused = document.activeElement === ta;
+    var s = focused ? ta.selectionStart : v.length, en = focused ? ta.selectionEnd : v.length;
+    var pre = v.slice(0, s), ins = (pre && !/\s$/.test(pre) ? ' ' : '') + '@';
+    ta.value = pre + ins + v.slice(en);
+    ta.focus({ preventScroll: true });
+    ta.setSelectionRange(s + ins.length, s + ins.length);
+    dismissed = -1;
+    paintText();
+    detect();
+  });
+  send.addEventListener('click', function () {
+    if (!ta.value.trim()) return;
+    setOpen(false);
+    var done = function () { if (!root.isConnected) return; ta.value = ''; paintText(); live.textContent = T.sent; };
+    if (hl.animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) hl.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-10px)' }], { duration: 240, easing: 'cubic-bezier(.4,0,.6,1)' }).onfinish = done;
+    else done();
+  });
+
+  paintText();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+  detect();
+})();
+</script>

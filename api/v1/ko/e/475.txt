@@ -1,0 +1,131 @@
+<!-- Lucian UX/UI Prompt #475 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#475 -->
+<!--
+Element: 모프 팝오버
+ID: 475 · Category: 메뉴·탭 · Tags: popover, menu, morph, shape-transition, dropdown, spring
+What it does: ‘새로 만들기’ 알약 버튼이 한 덩어리로 늘어나며 메뉴 판이 됩니다. 폭과 높이와 모서리가 함께 출렁이며 커지고, + 아이콘은 돌아서 ×가 되며, 문서·폴더·업로드·템플릿 항목이 차례로 떠오릅니다. 항목을 고르면 판이 다시 알약으로 줄어들며 + 자리에 체크가 돌며 잠깐 ‘폴더를 만들었어요’로 폭을 바꿨다가 돌아옵니다.
+How to use it: 버튼을 눌러 메뉴를 열고 항목을 골라 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#475
+-->
+<style>
+.u475{position:relative;width:340px;height:300px}
+/* 하나의 모양: 알약(닫힘)과 메뉴 판(열림) 사이를 폭·높이·모서리가 함께 출렁이며 오갑니다 */
+.u475-sh{--u475-w:150px;position:absolute;left:50%;top:36px;width:var(--u475-w);height:44px;border-radius:22px;overflow:hidden;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 2px 4px -2px var(--ux-shadow),0 12px 26px -14px var(--ux-shadow-strong);transform:translateX(-50%);transition:width .5s cubic-bezier(.34,1.3,.5,1),height .46s cubic-bezier(.4,0,.25,1.1),border-radius .45s var(--ux-ease),box-shadow .4s var(--ux-ease)}
+.u475-sh.is-open{width:236px;height:228px;border-radius:20px;box-shadow:0 0 0 1px var(--ux-line-2),0 4px 8px -4px var(--ux-shadow),0 30px 50px -24px var(--ux-shadow-strong);transition:width .52s cubic-bezier(.32,1.32,.5,1),height .56s cubic-bezier(.32,1.25,.5,1),border-radius .45s var(--ux-ease),box-shadow .4s var(--ux-ease)}
+.u475-tg{position:absolute;left:0;top:0;right:0;height:44px;padding:0;border:0;border-radius:22px;background:none;color:var(--ux-ink);transition:background-color .2s}
+.u475-sh:not(.is-open) .u475-tg:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u475-sh:not(.is-open) .u475-tg:active{background:var(--ux-surface-3)}
+.u475 .u475-tg:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-3px}
+.u475-pi{position:absolute;left:13px;top:13px;width:18px;height:18px;border-radius:50%;background:var(--ux-accent);color:var(--ux-accent-ink);display:grid;place-items:center;transition:transform .55s cubic-bezier(.34,1.7,.5,1),background-color .3s,color .3s}
+.u475-pi svg{position:absolute;left:4px;top:4px;width:10px;height:10px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s,transform .45s cubic-bezier(.34,1.7,.5,1)}
+.u475-pi .k{opacity:0;transform:scale(.3) rotate(-45deg)}
+.u475-pi .k path{stroke-dasharray:12;stroke-dashoffset:12;transition:stroke-dashoffset .3s var(--ux-ease) .12s}
+.u475-sh.is-open .u475-pi{transform:rotate(135deg);background:var(--ux-surface-3);color:var(--ux-ink-2)}
+.u475-lb{position:absolute;left:39px;top:0;height:44px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:650;letter-spacing:-.015em;white-space:nowrap;transform-origin:0 50%;transition:transform .45s var(--ux-ease),color .3s,opacity .16s,filter .16s}
+.u475-sh.is-open .u475-lb{transform:scale(.9);color:var(--ux-ink-3)}
+.u475-lb.is-swap{opacity:0;filter:blur(4px)}
+.u475-sh.is-done .u475-pi{background:var(--ux-mint);color:var(--ux-surface);transform:rotate(360deg)}
+.u475-sh.is-done .u475-pi .p{opacity:0;transform:scale(.3)}
+.u475-sh.is-done .u475-pi .k{opacity:1;transform:none}
+.u475-sh.is-done .u475-pi .k path{stroke-dashoffset:0}
+.u475-mn{position:absolute;left:6px;right:6px;top:44px;visibility:hidden;transition:visibility 0s .25s}
+.u475-sh.is-open .u475-mn{visibility:visible;transition:visibility 0s}
+.u475-hl{position:absolute;left:0;right:0;top:0;height:44px;border-radius:13px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));opacity:0;transform:translateY(var(--u475-y,0));transition:transform .38s cubic-bezier(.34,1.4,.5,1),opacity .2s}
+.u475-mn.is-hl .u475-hl{opacity:1}
+.u475-it{position:relative;display:flex;align-items:center;gap:11px;width:100%;height:44px;padding:0 10px;border:0;border-radius:13px;background:none;color:var(--ux-ink);font-size:13.5px;font-weight:600;text-align:left;opacity:0;transform:translateY(-8px) scale(.97);filter:blur(3px);transition:opacity .12s,transform .2s,filter .12s}
+.u475-sh.is-open .u475-it{opacity:1;transform:none;filter:none;transition:opacity .3s var(--ux-ease),transform .5s cubic-bezier(.34,1.5,.5,1),filter .3s;transition-delay:calc(var(--u475-i) * 45ms + 110ms)}
+.u475 .u475-it:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u475-it i{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:color-mix(in srgb,var(--u475-c) 15%,transparent);color:var(--u475-c);transition:transform .45s cubic-bezier(.34,1.8,.5,1)}
+.u475-it:hover i,.u475-it:focus-visible i{transform:scale(1.1) rotate(-6deg)}
+.u475-it svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.u475-it:nth-child(2){--u475-c:#3B82F6;--u475-c:light-dark(#2F7BEA,#7DB4FF)}
+.u475-it:nth-child(3){--u475-c:#E29A1E;--u475-c:light-dark(#D98C12,#FFC15E)}
+.u475-it:nth-child(4){--u475-c:var(--ux-mint)}
+.u475-it:nth-child(5){--u475-c:var(--ux-accent)}
+</style>
+<div class="ux u475">
+  <div class="u475-sh">
+    <button type="button" class="u475-tg" aria-haspopup="menu" aria-expanded="false"><span class="u475-pi" aria-hidden="true"><svg class="p" viewBox="0 0 10 10"><path d="M5 1.5v7M1.5 5h7"/></svg><svg class="k" viewBox="0 0 10 10"><path d="m2 5.2 2 2 4-4.4"/></svg></span><span class="u475-lb"></span></button>
+    <div class="u475-mn" role="menu">
+      <span class="u475-hl" aria-hidden="true"></span>
+      <button type="button" class="u475-it" role="menuitem" tabindex="-1" style="--u475-i:0" data-ok="문서를 만들었어요"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></i>새 문서</button>
+      <button type="button" class="u475-it" role="menuitem" tabindex="-1" style="--u475-i:1" data-ok="폴더를 만들었어요"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H9l2 2.5h7.5A2.5 2.5 0 0 1 21 10v6.5a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z"/></svg></i>새 폴더</button>
+      <button type="button" class="u475-it" role="menuitem" tabindex="-1" style="--u475-i:2" data-ok="파일을 올렸어요"><i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></i>파일 올리기</button>
+      <button type="button" class="u475-it" role="menuitem" tabindex="-1" style="--u475-i:3" data-ok="템플릿을 열었어요"><i aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><path d="M17 13.5v7M13.5 17h7"/></svg></i>템플릿에서 시작</button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var sh = root.querySelector('.u475-sh'), tg = root.querySelector('.u475-tg'), lb = root.querySelector('.u475-lb');
+  var mn = root.querySelector('.u475-mn'), hl = root.querySelector('.u475-hl'), items = [].slice.call(root.querySelectorAll('.u475-it'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LABEL = '새로 만들기', open = false, timers = [];
+  var id = 'u475' + Math.random().toString(36).slice(2, 7);
+  mn.id = id; tg.setAttribute('aria-controls', id);
+  mn.setAttribute('aria-label', LABEL);
+  function later(fn, ms) { var t = setTimeout(function () { if (root.isConnected) fn(); }, ms); timers.push(t); return t; }
+  // 알약의 폭은 글자 폭에 맞춥니다: 아이콘 자리 39px + 글자 + 오른쪽 여백 18px
+  function fit() { var w = lb.getBoundingClientRect().width / (root.getBoundingClientRect().width / root.offsetWidth || 1); if (w) sh.style.setProperty('--u475-w', Math.ceil(39 + w + 18) + 'px'); }
+  function label(text, ok) {
+    lb.textContent = text;
+    sh.classList.toggle('is-done', !!ok);
+    fit();
+  }
+  function swap(text, ok) {
+    if (rm) { label(text, ok); return; }
+    lb.classList.add('is-swap');
+    later(function () { label(text, ok); lb.classList.remove('is-swap'); }, 160);
+  }
+  function mark(i) {
+    mn.classList.toggle('is-hl', i >= 0);
+    if (i >= 0) hl.style.setProperty('--u475-y', items[i].offsetTop + 'px');
+  }
+  function setOpen(v, focusFirst) {
+    if (v === open) return;
+    open = v;
+    sh.classList.toggle('is-open', v);
+    tg.setAttribute('aria-expanded', String(v));
+    mark(-1);
+    if (v && focusFirst) later(function () { items[0].focus(); mark(0); }, rm ? 0 : 60);
+  }
+  tg.addEventListener('click', function () { setOpen(!open); });
+  tg.addEventListener('keydown', function (e) {
+    if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !open) { e.preventDefault(); setOpen(true, true); }
+    if (e.key === 'Escape' && open) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+  });
+  items.forEach(function (it, i) {
+    it.addEventListener('pointerenter', function () { mark(i); });
+    it.addEventListener('focus', function () { mark(i); });
+    it.addEventListener('click', function () {
+      setOpen(false);
+      tg.focus({ preventScroll: true });
+      // 판이 알약으로 줄어든 뒤, 한동안 결과 문구로 폭을 바꿨다가 처음 글자로 돌아옵니다
+      clearTimeout(lb._t);
+      later(function () { swap(it.dataset.ok, true); }, rm ? 0 : 260);
+      lb._t = later(function () { swap(LABEL, false); }, rm ? 1400 : 2000);
+    });
+  });
+  mn.addEventListener('pointerleave', function () { if (!mn.contains(document.activeElement)) mark(-1); });
+  mn.addEventListener('keydown', function (e) {
+    var i = items.indexOf(document.activeElement), n = items.length, j = -1;
+    if (e.key === 'ArrowDown') j = (i + 1) % n;
+    else if (e.key === 'ArrowUp') j = (i - 1 + n) % n;
+    else if (e.key === 'Home') j = 0;
+    else if (e.key === 'End') j = n - 1;
+    else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false); tg.focus({ preventScroll: true }); return; }
+    else if (e.key === 'Tab') { setOpen(false); return; }
+    if (j >= 0) { e.preventDefault(); items[j].focus(); }
+  });
+  // 바깥을 누르면 닫습니다
+  function outside(e) {
+    if (!root.isConnected) { document.removeEventListener('pointerdown', outside, true); return; }
+    if (open && !sh.contains(e.target)) setOpen(false);
+  }
+  document.addEventListener('pointerdown', outside, true);
+  label(LABEL, false);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { if (root.isConnected && !open) fit(); });
+})();
+</script>

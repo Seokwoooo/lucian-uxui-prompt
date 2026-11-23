@@ -1,0 +1,272 @@
+<!-- Lucian UX/UI Prompt #468 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#468 -->
+<!--
+Element: Signature pad
+ID: 468 · Category: Forms & Input · Tags: signature, canvas, drawing, pen, stamp, form, confirmation
+What it does: A pad for signing with a finger or a pen. Slow strokes come out bold and quick ones thin, so the line carries weight like a real pen. Press Done and the signature fades for a beat, then lands with a thump as a red-ink stamp, with “Signed” and the date set into its border. Clear lets you start over at any time.
+How to use it: Sign the pad, then press Done
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#468
+-->
+<style>
+.u468{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u468-cd{width:300px;padding:10px;border-radius:22px;background:var(--ux-surface);background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 44px -24px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow)}
+.u468-pd{position:relative;height:158px;border-radius:15px;background:var(--ux-surface-2);background:light-dark(#F7F6F3,#181922);box-shadow:inset 0 0 0 1px var(--ux-line);overflow:hidden;touch-action:none;cursor:crosshair}
+.u468-pd.is-thump{animation:u468-thump .42s cubic-bezier(.3,1.6,.5,1)}
+@keyframes u468-thump{30%{transform:translateY(2px) scale(.992)}}
+.u468-ph{position:absolute;left:0;right:0;top:50px;text-align:center;font-size:14px;font-weight:550;color:var(--ux-ink-3);pointer-events:none;transition:opacity .3s var(--ux-ease),transform .4s var(--ux-ease)}
+.u468.is-ink .u468-ph,.u468.is-done .u468-ph{opacity:0;transform:translateY(-6px)}
+.u468-bl{position:absolute;left:22px;right:22px;top:118px;height:1.5px;border-radius:1px;background:var(--ux-line-2);pointer-events:none;transition:opacity .3s var(--ux-ease)}
+.u468-x{position:absolute;left:22px;top:96px;width:12px;height:12px;stroke:var(--ux-ink-3);stroke-width:1.8;stroke-linecap:round;pointer-events:none;transition:opacity .3s var(--ux-ease)}
+.u468.is-done .u468-bl,.u468.is-done .u468-x{opacity:0}
+.u468-cv,.u468-sc{position:absolute;inset:0;width:100%;height:100%}
+.u468-cv{color:var(--ux-ink);transition:color .01s,opacity .25s var(--ux-ease),transform .3s var(--ux-ease)}
+.u468.is-done .u468-cv{opacity:0;transform:scale(.94)}
+.u468-cv.is-fade{opacity:0;transition:opacity .22s var(--ux-ease)}
+.u468-sc{color:#D2433A;color:light-dark(#D2433A,#FF8A7A);opacity:0;pointer-events:none;transition:color .01s}
+.u468.is-done .u468-sc{opacity:1;animation:u468-stamp .5s cubic-bezier(.3,1.5,.55,1) .16s both}
+@keyframes u468-stamp{0%{opacity:0;transform:scale(1.45) rotate(4deg)}55%{opacity:1;transform:scale(.95) rotate(0)}100%{opacity:1;transform:none}}
+.u468-rp{position:absolute;left:50%;top:50%;width:200px;height:110px;margin:-55px 0 0 -100px;border-radius:16px;box-shadow:0 0 0 2px #D2433A;box-shadow:0 0 0 2px light-dark(#D2433A,#FF8A7A);opacity:0;pointer-events:none}
+.u468.is-done .u468-rp{animation:u468-rp .6s var(--ux-ease) .36s}
+@keyframes u468-rp{0%{opacity:.5;transform:rotate(-5deg) scale(1)}100%{opacity:0;transform:rotate(-5deg) scale(1.25)}}
+.u468-ac{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:10px}
+.u468-ac button{position:relative;height:40px;border:0;border-radius:12px;font-size:13.5px;font-weight:650;white-space:nowrap;transition:background-color .25s var(--ux-ease),color .25s var(--ux-ease),transform .35s var(--ux-spring),opacity .25s}
+.u468-ac button:active:not(:disabled){transform:scale(.96)}
+.u468 .u468-ac button:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u468-cl{background:var(--ux-surface-2);color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line)}
+.u468-cl:hover:not(:disabled){background:var(--ux-surface-3)}
+.u468-ok{display:flex;align-items:center;justify-content:center;gap:6px;background:var(--ux-ink);color:var(--ux-surface)}
+.u468-ac button:disabled{opacity:.42;cursor:not-allowed}
+.u468.is-done .u468-ok:disabled{opacity:1;background:color-mix(in srgb,var(--ux-mint) 16%,transparent);color:var(--ux-mint);cursor:default}
+.u468-ok svg{width:0;height:16px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:width .3s var(--ux-ease)}
+.u468-ok svg path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s var(--ux-ease) .55s}
+.u468.is-done .u468-ok svg{width:16px}
+.u468.is-done .u468-ok svg path{stroke-dashoffset:0}
+.u468-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.u468-tmp{position:absolute;width:0;height:0;overflow:hidden}
+</style>
+<div class="ux u468">
+  <div class="u468-cd">
+    <div class="u468-pd">
+      <span class="u468-ph" aria-hidden="true">Sign here</span>
+      <i class="u468-bl"></i>
+      <svg class="u468-x" viewBox="0 0 12 12" aria-hidden="true"><path d="m2 2 8 8m0-8-8 8"/></svg>
+      <canvas class="u468-cv" role="img" aria-label="Signature area"></canvas>
+      <canvas class="u468-sc" aria-hidden="true"></canvas>
+      <i class="u468-rp"></i>
+    </div>
+    <div class="u468-ac">
+      <button type="button" class="u468-cl" disabled>Clear</button>
+      <button type="button" class="u468-ok" disabled><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3.2 8.4 3 3 6.6-7"/></svg><span>Done</span></button>
+    </div>
+  </div>
+  <svg class="u468-tmp" aria-hidden="true"><path class="u468-gp"/></svg>
+  <p class="u468-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var pd = root.querySelector('.u468-pd'), cv = root.querySelector('.u468-cv'), sc = root.querySelector('.u468-sc'), cl = root.querySelector('.u468-cl'), ok = root.querySelector('.u468-ok'), okL = ok.querySelector('span'), live = root.querySelector('.u468-live'), gp = root.querySelector('.u468-gp');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { clear: 'Clear', again: 'Sign again', ok: 'Done', done: 'Signed', seal: 'SIGNED', said: 'Signature complete' };
+  var W = 280, H = 158, DPR = Math.min(3, Math.max(2, window.devicePixelRatio || 1));
+  var cx = cv.getContext('2d'), sx = sc.getContext('2d');
+  [cv, sc].forEach(function (c) { c.width = W * DPR; c.height = H * DPR; });
+  cx.scale(DPR, DPR); sx.scale(DPR, DPR);
+  var strokes = [], cur = null, done = false, ink = '', demoT = 0;
+  var MAXW = 3.8, MINW = 0.9;
+  function colorOf(c) { return getComputedStyle(c).color; }
+  function dots(g, x0, y0, w0, x1, y1, w1, cxp, cyp) {
+    var len = Math.hypot(cxp - x0, cyp - y0) + Math.hypot(x1 - cxp, y1 - cyp), n = Math.max(1, Math.ceil(len / 0.45));
+    g.beginPath();
+    for (var i = 0; i <= n; i++) {
+      var t = i / n, a = (1 - t) * (1 - t), b = 2 * (1 - t) * t, c = t * t;
+      var x = a * x0 + b * cxp + c * x1, y = a * y0 + b * cyp + c * y1, r = (w0 + (w1 - w0) * t) / 2;
+      g.moveTo(x + r, y); g.arc(x, y, r, 0, Math.PI * 2);
+    }
+    g.fill();
+  }
+  function seg(g, s, k) {
+    var p = s[k], q = s[k - 1];
+    if (k === 0) { g.beginPath(); g.arc(p.x, p.y, p.w / 2, 0, Math.PI * 2); g.fill(); return; }
+    if (k === 1) { dots(g, q.x, q.y, q.w, (q.x + p.x) / 2, (q.y + p.y) / 2, (q.w + p.w) / 2, (q.x * 3 + p.x) / 4, (q.y * 3 + p.y) / 4); return; }
+    var o = s[k - 2];
+    dots(g, (o.x + q.x) / 2, (o.y + q.y) / 2, (o.w + q.w) / 2, (q.x + p.x) / 2, (q.y + p.y) / 2, (q.w + p.w) / 2, q.x, q.y);
+  }
+  function redraw() {
+    cx.clearRect(0, 0, W, H);
+    cx.fillStyle = ink = colorOf(cv);
+    strokes.forEach(function (s) { for (var k = 0; k < s.length; k++) seg(cx, s, k); });
+  }
+  function add(x, y, t, pr) {
+    var l = cur[cur.length - 1], w = MAXW * 0.7;
+    if (l) {
+      var d = Math.hypot(x - l.x, y - l.y);
+      if (d < 0.8) return;
+      var v = d / Math.max(1, t - l.t);
+      var tw = Math.max(MINW, Math.min(MAXW, MAXW / (1 + v * 1.7)));
+      if (pr) tw = MINW + (MAXW - MINW) * pr;
+      w = l.w * 0.65 + tw * 0.35;
+    }
+    cur.push({ x: x, y: y, t: t, w: w });
+    cx.fillStyle = ink;
+    seg(cx, cur, cur.length - 1);
+  }
+  function begin(x, y, t) {
+    if (done) return;
+    ink = colorOf(cv);
+    cur = [];
+    strokes.push(cur);
+    root.classList.add('is-ink');
+    cl.disabled = ok.disabled = false;
+    add(x, y, t, 0);
+  }
+  function end() {
+    if (!cur) return;
+    cur = null;
+    cl.disabled = ok.disabled = !strokes.length;
+  }
+  function local(e) {
+    var r = pd.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * W / (r.width || 1), y: (e.clientY - r.top) * H / (r.height || 1) };
+  }
+  cv.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0 || done) return;
+    stopDemo();
+    try { cv.setPointerCapture(e.pointerId); } catch (er) {  }
+    var p = local(e);
+    begin(p.x, p.y, e.timeStamp || performance.now());
+  });
+  cv.addEventListener('pointermove', function (e) {
+    if (!cur) return;
+    var list = e.getCoalescedEvents ? e.getCoalescedEvents() : [];
+    if (!list.length) list = [e];
+    list.forEach(function (ev) {
+      var p = local(ev), pr = ev.pointerType === 'pen' && ev.pressure > 0 && ev.pressure < 1 ? ev.pressure : 0;
+      add(p.x, p.y, ev.timeStamp || performance.now(), pr);
+    });
+  });
+  cv.addEventListener('pointerup', end);
+  cv.addEventListener('pointercancel', end);
+  cv.addEventListener('transitionend', function (e) { if (e.propertyName === 'color') redraw(); });
+  sc.addEventListener('transitionend', function (e) { if (e.propertyName === 'color' && done) stamp(); });
+  function speck(g) {
+    g.save();
+    g.globalCompositeOperation = 'destination-out';
+    for (var i = 0; i < 420; i++) {
+      var x = Math.random() * W, y = Math.random() * H, r = Math.random() < 0.85 ? 0.35 + Math.random() * 0.5 : 0.9 + Math.random() * 0.9;
+      g.globalAlpha = 0.5 + Math.random() * 0.5;
+      g.beginPath(); g.arc(x, y, r, 0, Math.PI * 2); g.fill();
+    }
+    g.restore();
+  }
+  function rrect(g, x, y, w, h, r) {
+    g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+  }
+  function bounds() {
+    var a = { x0: 1e9, y0: 1e9, x1: -1e9, y1: -1e9 };
+    strokes.forEach(function (s) { s.forEach(function (p) { a.x0 = Math.min(a.x0, p.x); a.y0 = Math.min(a.y0, p.y); a.x1 = Math.max(a.x1, p.x); a.y1 = Math.max(a.y1, p.y); }); });
+    return a;
+  }
+  function stamp() {
+    var col = colorOf(sc), b = bounds(), FW = 204, FH = 112;
+    var k = Math.min((FW - 36) / Math.max(1, b.x1 - b.x0), (FH - 44) / Math.max(1, b.y1 - b.y0), 0.9);
+    sx.clearRect(0, 0, W, H);
+    sx.save();
+    sx.translate(W / 2, H / 2);
+    sx.rotate(-5 * Math.PI / 180);
+    sx.fillStyle = col; sx.strokeStyle = col;
+    sx.lineWidth = 2.6; rrect(sx, -FW / 2, -FH / 2, FW, FH, 14); sx.stroke();
+    sx.lineWidth = 1; rrect(sx, -FW / 2 + 5, -FH / 2 + 5, FW - 10, FH - 10, 10); sx.stroke();
+    sx.font = '800 10.5px -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Segoe UI",Roboto,sans-serif';
+    sx.textAlign = 'center'; sx.textBaseline = 'middle';
+    var tw = sx.measureText(T.seal).width + 14;
+    sx.clearRect(-tw / 2, -FH / 2 - 4, tw, 14);
+    sx.fillText(T.seal, 0, -FH / 2 + 2.5);
+    var d = new Date(), ds = d.getFullYear() + '. ' + (d.getMonth() + 1) + '. ' + d.getDate();
+    sx.font = '700 9.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif';
+    var dw = sx.measureText(ds).width + 12;
+    sx.clearRect(-dw / 2, FH / 2 - 9, dw, 14);
+    sx.fillText(ds, 0, FH / 2 - 1);
+    sx.translate(-(b.x0 + b.x1) / 2 * k, -(b.y0 + b.y1) / 2 * k + 3);
+    sx.scale(k, k);
+    strokes.forEach(function (s) { for (var i = 0; i < s.length; i++) seg(sx, s, i); });
+    sx.restore();
+    speck(sx);
+  }
+  ok.addEventListener('click', function () {
+    if (done || !strokes.length) return;
+    stopDemo();
+    end();
+    done = true;
+    stamp();
+    root.classList.add('is-done');
+    if (!rm) { pd.classList.remove('is-thump'); void pd.offsetWidth; setTimeout(function () { if (root.isConnected) pd.classList.add('is-thump'); }, 300); }
+    ok.disabled = true;
+    okL.textContent = T.done;
+    cl.textContent = T.again;
+    live.textContent = T.said;
+  });
+  cl.addEventListener('click', function () {
+    stopDemo();
+    var was = done;
+    done = false;
+    cur = null;
+    root.classList.remove('is-done', 'is-ink');
+    pd.classList.remove('is-thump');
+    okL.textContent = T.ok;
+    cl.textContent = T.clear;
+    cl.disabled = ok.disabled = true;
+    live.textContent = '';
+    if (was) { strokes = []; cx.clearRect(0, 0, W, H); return; }
+    cv.classList.add('is-fade');
+    setTimeout(function () { strokes = []; cx.clearRect(0, 0, W, H); cv.classList.remove('is-fade'); }, rm ? 0 : 230);
+  });
+
+  var SIGN = [
+    { d: 'M86 36C88 52 84 78 77 98C71 115 54 120 47 109C41 99 57 91 79 90C90 89 95 82 98 75C98 84 96 93 101 95C106 97 109 86 112 79C112 88 114 96 119 96C124 96 127 86 129 80C129 89 132 96 137 96C143 96 147 86 147 78C150 82 154 86 158 86C152 86 148 92 151 96C155 100 163 97 163 90C163 85 158 84 157 88C162 91 168 90 172 87C167 89 165 95 169 97C174 99 181 94 180 88C179 84 174 85 175 89C181 92 192 86 204 78', ms: 1350 },
+    { d: 'M98 64C99 63 100 62 101 61', ms: 90, gap: 160 },
+    { d: 'M42 122C88 112 160 108 238 100', ms: 260, gap: 170 }
+  ];
+  function stopDemo() { if (demoT) { cancelAnimationFrame(demoT); demoT = 0; if (cur) end(); } }
+  function plan(st) {
+    gp.setAttribute('d', st.d);
+    var L = gp.getTotalLength(), pts = [], n = Math.max(2, Math.ceil(L / 1.6)), prev = null, acc = 0;
+    for (var i = 0; i <= n; i++) {
+      var p = gp.getPointAtLength(L * i / n);
+      pts.push({ x: (p.x - 140) * 1.12 + 150, y: (p.y - 90) * 1.08 + 84, c: 1 });
+    }
+    for (var j = 1; j < pts.length - 1; j++) {
+      var a = Math.atan2(pts[j].y - pts[j - 1].y, pts[j].x - pts[j - 1].x), b = Math.atan2(pts[j + 1].y - pts[j].y, pts[j + 1].x - pts[j].x), t = Math.abs(b - a);
+      if (t > Math.PI) t = 2 * Math.PI - t;
+      pts[j].c = 1 + t * 14;
+    }
+    pts.forEach(function (p) { acc += p.c; p.at = acc; });
+    pts.forEach(function (p) { p.at = p.at / acc * st.ms; });
+    return pts;
+  }
+  root.__u468demo = function () {
+    if (done || !root.isConnected) return;
+    stopDemo();
+    if (strokes.length) { strokes = []; cx.clearRect(0, 0, W, H); }
+    var plans = SIGN.map(plan), si = 0, pi = 0, t0 = performance.now(), base = 0;
+    function tick(now) {
+      demoT = 0;
+      if (!root.isConnected || done) return;
+      var st = SIGN[si], pts = plans[si], el = now - t0 - base;
+      if (pi === 0) { if (el < 0) { demoT = requestAnimationFrame(tick); return; } begin(pts[0].x, pts[0].y, now - el); pi = 1; }
+      while (pi < pts.length && pts[pi].at <= el) { add(pts[pi].x, pts[pi].y, t0 + base + pts[pi].at, 0); pi++; }
+      if (pi >= pts.length) {
+        end();
+        si++; pi = 0;
+        if (si >= SIGN.length) return;
+        base += st.ms + (SIGN[si].gap || 120);
+      }
+      demoT = requestAnimationFrame(tick);
+    }
+    if (rm) { plans.forEach(function (pts) { begin(pts[0].x, pts[0].y, 0); pts.forEach(function (p, i) { if (i) add(p.x, p.y, p.at, 0); }); end(); }); return; }
+    demoT = requestAnimationFrame(tick);
+  };
+  ink = colorOf(cv);
+})();
+</script>
