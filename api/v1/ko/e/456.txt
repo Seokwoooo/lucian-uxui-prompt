@@ -1,0 +1,130 @@
+<!-- Lucian UX/UI Prompt #456 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#456 -->
+<!--
+Element: 고스트 제안
+ID: 456 · Category: 입력·검색 · Tags: autocomplete, ghost-text, inline-suggestion, ai, textarea, keyboard
+What it does: 글을 쓰다 잠깐 멈추면 커서 뒤에 회색 글씨로 나머지 문장이 슬며시 떠오르고, 끝에 작은 Tab 키캡이 붙습니다. Tab을 누르면 먹물이 왼쪽부터 번지듯 회색 글씨가 진한 글씨로 채워지며 내 글이 되고, Esc를 누르면 흐려지며 사라집니다. 제안과 같은 글자를 이어 치면 회색 글씨가 그만큼 줄어듭니다.
+How to use it: 글을 쓰다 멈춘 뒤 Tab으로 받거나 Esc로 지워 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#456
+-->
+<style>
+.u456{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u456-box{position:relative;width:296px;padding:15px 17px;border-radius:18px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 16px 34px -20px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow);cursor:text;transition:box-shadow .2s var(--ux-ease)}
+.u456-box:focus-within{box-shadow:0 0 0 1.5px var(--ux-accent),0 0 0 5px var(--ux-accent-soft),0 16px 34px -20px var(--ux-shadow-strong)}
+.u456-ta,.u456-ov{display:block;width:100%;height:72px;margin:0;padding:0;border:0;font-size:15.5px;font-weight:400;line-height:24px;letter-spacing:-.01em;white-space:pre-wrap;overflow-wrap:break-word;word-break:keep-all}
+.u456-ta{position:relative;z-index:1;resize:none;background:none;outline:none;color:var(--ux-ink);caret-color:var(--ux-accent);overflow:hidden}
+.u456-ta::placeholder{color:var(--ux-ink-3);opacity:1}
+.u456 .u456-ta:focus-visible{outline:none}
+.u456-ov{position:absolute;left:17px;top:15px;width:calc(100% - 34px);overflow:hidden;pointer-events:none;color:transparent}
+.u456-gh{opacity:0;filter:blur(3px);transition:opacity .3s var(--ux-ease),filter .3s var(--ux-ease)}
+.u456.is-ghost .u456-gh{opacity:1;filter:none}
+.u456-gt{background:linear-gradient(90deg,var(--ux-ink) 0 44%,var(--ux-ink-3) 56% 100%);background-size:240% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.u456.is-take .u456-gt{background-position:0 0;transition:background-position .42s cubic-bezier(.45,0,.25,1)}
+.u456-kb{display:inline-block;height:19px;font-family:inherit;margin-left:7px;padding:0 5px;border-radius:5px;vertical-align:1px;font-size:10.5px;font-weight:650;line-height:18px;letter-spacing:.01em;color:var(--ux-ink-3);background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));box-shadow:inset 0 0 0 1px var(--ux-line-2),0 1.5px 0 var(--ux-line-2);transform:translateY(2px) scale(.6);opacity:0;transition:transform .5s cubic-bezier(.34,1.7,.5,1) .14s,opacity .2s var(--ux-ease) .14s,box-shadow .1s}
+.u456.is-ghost .u456-kb{transform:none;opacity:1}
+.u456.is-take .u456-kb{transform:translateY(1.5px) scale(.9);box-shadow:inset 0 0 0 1px var(--ux-line-2),0 0 0 var(--ux-line-2);opacity:0;transition:transform .1s var(--ux-ease),box-shadow .1s,opacity .2s var(--ux-ease) .12s}
+.u456-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u456">
+  <div class="u456-box">
+    <div class="u456-ov" aria-hidden="true"></div>
+    <textarea class="u456-ta" rows="3" aria-label="메시지" placeholder="메시지를 입력하세요" spellcheck="false" autocomplete="off">내일 회의는</textarea>
+  </div>
+  <p class="u456-sr u456-hint">Tab 키로 회색 제안을 받고, Esc로 지울 수 있어요</p>
+  <p class="u456-sr u456-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var box = q('.u456-box'), ta = q('.u456-ta'), ov = q('.u456-ov'), hint = q('.u456-hint'), live = q('.u456-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u456' + Math.random().toString(36).slice(2, 7);
+  hint.id = uid;
+  ta.setAttribute('aria-describedby', uid);
+  var T = { sug: '제안: {s}', took: '제안을 넣었어요' };
+  var SUG = ['내일 회의는 오후 3시로 미룰까요?', '자료는 오늘 안에 공유드릴게요.', '확인 부탁드립니다. 감사합니다!'];
+  var PAUSE = 420;
+  var ghost = '', shown = false, taking = false, dismissed = false, tm = 0, hideT = 0;
+
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // 지금까지 쓴 글로 시작하는 문장을 찾아, 그 나머지를 제안으로 씁니다(두 글자부터, 커서가 글 끝에 있을 때만)
+  function find() {
+    var v = ta.value;
+    if (v.length < 2 || ta.selectionStart !== v.length || ta.selectionEnd !== v.length) return '';
+    for (var i = 0; i < SUG.length; i++) if (SUG[i].length > v.length && SUG[i].indexOf(v) === 0) return SUG[i].slice(v.length);
+    return '';
+  }
+  // 입력칸 뒤 거울 층: 쓴 글은 투명하게 자리만 차지하고, 그 뒤에 회색 제안과 Tab 키캡을 그립니다
+  function paint() {
+    ov.innerHTML = '<span>' + esc(ta.value) + '</span>' + (ghost ? '<span class="u456-gh"><span class="u456-gt">' + esc(ghost) + '</span><kbd class="u456-kb">Tab</kbd></span>' : '');
+    ov.scrollTop = ta.scrollTop;
+  }
+  function show(g) {
+    clearTimeout(hideT);
+    ghost = g;
+    paint();
+    void ov.offsetWidth;
+    shown = true;
+    root.classList.add('is-ghost');
+    live.textContent = T.sug.replace('{s}', g.trim());
+  }
+  function hide() {
+    clearTimeout(tm);
+    if (!shown) { ghost = ''; paint(); return; }
+    shown = false;
+    root.classList.remove('is-ghost');
+    hideT = setTimeout(function () { if (root.isConnected && !shown) { ghost = ''; paint(); } }, rm ? 0 : 320);
+  }
+  function schedule() {
+    clearTimeout(tm);
+    tm = setTimeout(function () {
+      if (!root.isConnected || dismissed || taking) return;
+      var g = find();
+      if (g) show(g);
+    }, rm ? 0 : PAUSE);
+  }
+  // Tab: 회색 글씨 위로 진한 색이 왼쪽부터 번진 뒤, 그 글을 입력칸에 그대로 넣습니다(자리가 같아 바뀌는 순간이 보이지 않습니다)
+  function accept() {
+    if (!shown || taking) return false;
+    taking = true;
+    root.classList.add('is-take');
+    var full = ta.value + ghost;
+    setTimeout(function () {
+      if (!root.isConnected) return;
+      ta.value = full;
+      ta.setSelectionRange(full.length, full.length);
+      shown = false;
+      ghost = '';
+      root.classList.remove('is-ghost', 'is-take');
+      paint();
+      taking = false;
+      live.textContent = T.took;
+    }, rm ? 0 : 460);
+    return true;
+  }
+  ta.addEventListener('input', function () {
+    if (taking) return;
+    dismissed = false;
+    var g = find();
+    // 제안과 같은 글자를 이어 치면 회색 글씨만 그만큼 줄이고, 아니면 숨긴 뒤 잠깐 멈추면 다시 찾습니다
+    if (shown && g && g.length < ghost.length) { ghost = g; paint(); return; }
+    hide();
+    schedule();
+  });
+  ta.addEventListener('keydown', function (e) {
+    if (e.key === 'Tab' && !e.shiftKey && shown) { e.preventDefault(); accept(); }
+    else if (e.key === 'ArrowRight' && shown && ta.selectionStart === ta.value.length) { e.preventDefault(); accept(); }
+    else if (e.key === 'Escape' && shown) { e.preventDefault(); e.stopPropagation(); dismissed = true; hide(); }
+  });
+  ta.addEventListener('click', function () { if (shown && ta.selectionStart !== ta.value.length) hide(); });
+  ta.addEventListener('blur', function () { if (shown) hide(); });
+  ta.addEventListener('scroll', function () { ov.scrollTop = ta.scrollTop; });
+  box.addEventListener('mousedown', function (e) { if (e.target === box) { e.preventDefault(); ta.focus({ preventScroll: true }); } });
+
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+  var g0 = find();
+  if (g0) show(g0); else paint();
+})();
+</script>

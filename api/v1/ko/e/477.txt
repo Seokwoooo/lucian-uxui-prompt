@@ -1,0 +1,220 @@
+<!-- Lucian UX/UI Prompt #477 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#477 -->
+<!--
+Element: 이모지 피커
+ID: 477 · Category: 입력·검색 · Tags: emoji-picker, reaction, search, tabs, magnify, chat
+What it does: 메시지 말풍선 아래에 붙는 작은 이모지 피커입니다. 검색칸, 최근 쓴 이모지 줄, 표정·손짓·하트·음식·활동 탭이 있고, 커서를 올린 이모지는 통통하게 커집니다. 하나를 고르면 그 이모지가 포물선을 그리며 날아올라 말풍선 모서리에 반응으로 톡 붙고, 최근 줄 맨 앞에도 끼어듭니다.
+How to use it: 이모지에 커서를 올려 보고 하나를 골라 보세요. 탭을 바꾸거나 검색할 수도 있어요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#477
+-->
+<style>
+.u477{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;padding-top:8px}
+.u477-msg{position:relative;display:flex;align-items:flex-end;gap:8px;width:288px;height:60px}
+.u477-av{flex:none;width:26px;height:26px;border-radius:50%;margin-bottom:20px;background:linear-gradient(140deg,#FFB86B,#F2508C);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.35);display:grid;place-items:center;color:#FFFFFF;font-size:11px;font-weight:800;letter-spacing:0}
+.u477-bb{position:relative;margin-bottom:20px;padding:8px 13px;border-radius:16px 16px 16px 5px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-3));box-shadow:0 0 0 1px var(--ux-line),0 6px 14px -10px var(--ux-shadow-strong);font-size:13.5px;font-weight:550;white-space:nowrap}
+.u477-rx{position:absolute;right:-8px;bottom:-19px;display:flex;flex-direction:row-reverse;gap:3px;margin:0;padding:0;list-style:none}
+.u477-rx li{display:flex;align-items:center;gap:3px;height:24px;padding:0 7px 0 5px;border-radius:12px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1.5px var(--ux-accent),0 4px 10px -4px var(--ux-shadow-strong);font-size:15px;line-height:1;animation:u477-pop .55s cubic-bezier(.34,1.9,.5,1) both}
+.u477-rx li b{font-size:11px;font-weight:750;color:var(--ux-accent)}
+.u477-rx li.is-bump{animation:u477-bump .45s cubic-bezier(.34,1.9,.5,1)}
+@keyframes u477-pop{0%{transform:scale(0)}60%{transform:scale(1.18)}100%{transform:none}}
+@keyframes u477-bump{40%{transform:scale(1.22)}}
+.u477-pk{width:288px;padding:9px;border-radius:18px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 2px 4px -2px var(--ux-shadow),0 24px 44px -26px var(--ux-shadow-strong)}
+.u477-sr{position:relative;display:block}
+.u477-sr svg{position:absolute;left:10px;top:50%;width:14px;height:14px;margin-top:-7px;fill:none;stroke:var(--ux-ink-3);stroke-width:2.2;stroke-linecap:round;pointer-events:none}
+.u477-q{width:100%;height:32px;padding:0 10px 0 31px;border:0;border-radius:10px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface));box-shadow:inset 0 0 0 1px var(--ux-line);font-size:12.5px;color:var(--ux-ink);outline:none;transition:box-shadow .2s}
+.u477-q::placeholder{color:var(--ux-ink-3)}
+.u477-q:focus{box-shadow:inset 0 0 0 1px var(--ux-accent),0 0 0 3px var(--ux-accent-soft)}
+.u477 .u477-q:focus-visible{outline:none}
+.u477-rc{display:flex;align-items:center;height:32px;margin:4px 0 2px;padding:0 0 0 6px;border-bottom:1px solid var(--ux-line)}
+.u477-rc>svg{flex:none;width:14px;height:14px;margin-right:6px;fill:none;stroke:var(--ux-ink-3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u477-rl{display:flex;flex:1;min-width:0;overflow:hidden}
+.u477-tabs{position:relative;display:flex;height:30px;margin:2px 0 3px}
+.u477-tab{position:relative;z-index:1;flex:1;display:grid;place-items:center;padding:0;border:0;border-radius:8px;background:none;color:var(--ux-ink-3);transition:color .25s}
+.u477-tab:hover{color:var(--ux-ink-2)}
+.u477-tab[aria-selected="true"]{color:var(--ux-accent)}
+.u477 .u477-tab:focus-visible{outline:2px solid var(--ux-accent);outline-offset:-2px}
+.u477-tab svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s cubic-bezier(.34,1.8,.5,1)}
+.u477-tab[aria-selected="true"] svg{transform:scale(1.12)}
+.u477-ind{position:absolute;left:0;top:2px;bottom:2px;width:20%;border-radius:8px;background:var(--ux-accent-soft);transform:translateX(calc(var(--u477-i,0) * 100%));transition:transform .45s cubic-bezier(.34,1.35,.5,1),opacity .2s}
+.u477-tabs.is-off .u477-ind{opacity:0}
+.u477-g{display:grid;grid-template-columns:repeat(8,1fr);grid-auto-rows:30px;height:90px;overflow:hidden}
+.u477-g.is-in button{animation:u477-in .4s cubic-bezier(.34,1.5,.5,1) both;animation-delay:calc(var(--u477-d,0) * 12ms)}
+@keyframes u477-in{from{opacity:0;transform:translateY(6px) scale(.8)}}
+.u477-e{position:relative;display:grid;place-items:center;width:100%;height:30px;padding:0;border:0;border-radius:9px;background:none;font-size:20px;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.u477-e::before{content:"";position:absolute;inset:1px 2px;border-radius:9px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));opacity:0;transform:scale(.6);transition:opacity .15s,transform .3s cubic-bezier(.34,1.6,.5,1)}
+.u477-e span{position:relative;display:block;transition:transform .38s cubic-bezier(.34,1.9,.5,1)}
+.u477-e:hover::before,.u477-e:focus-visible::before{opacity:1;transform:none}
+.u477-e:hover span,.u477-e:focus-visible span{transform:scale(1.42) translateY(-1px)}
+.u477-e:active span{transform:scale(1.15);transition-duration:.1s}
+.u477 .u477-e:focus-visible{outline:none}
+.u477 .u477-e:focus-visible::before{box-shadow:inset 0 0 0 2px var(--ux-accent)}
+.u477-rl .u477-e{width:30px;flex:none}
+.u477-rl .u477-e.is-new{animation:u477-pop .5s cubic-bezier(.34,1.8,.5,1) both}
+.u477-no{grid-column:1/-1;align-self:center;margin:0;font-size:12px;color:var(--ux-ink-3);text-align:center}
+.u477-fly{position:absolute;z-index:5;margin:0;font-size:20px;line-height:1;pointer-events:none;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+.u477-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u477">
+  <div class="u477-msg">
+    <span class="u477-av" aria-hidden="true">S</span>
+    <div class="u477-bb">오늘 저녁 같이 먹을래요?<ul class="u477-rx" aria-label="반응"></ul></div>
+  </div>
+  <div class="u477-pk" role="group" aria-label="이모지 선택">
+    <label class="u477-sr"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></svg><input class="u477-q" type="search" autocomplete="off" spellcheck="false"></label>
+    <div class="u477-rc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg><div class="u477-rl" role="group" aria-label="최근 사용"></div></div>
+    <div class="u477-tabs" role="tablist" aria-label="분류">
+      <span class="u477-ind" aria-hidden="true"></span>
+      <button type="button" class="u477-tab" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 14.2a4.2 4.2 0 0 0 7 0"/><path d="M9.2 9.6v.6M14.8 9.6v.6"/></svg></button>
+      <button type="button" class="u477-tab" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 11.5V6a1.5 1.5 0 0 1 3 0v5M11 10.5V4.6a1.5 1.5 0 0 1 3 0v6M14 10.5V6.2a1.5 1.5 0 0 1 3 0v7.3c0 3.9-2.6 6.5-6 6.5-2.4 0-3.9-1.2-5.2-3.2L4.2 14a1.5 1.5 0 0 1 2.4-1.8L8 13.6"/></svg></button>
+      <button type="button" class="u477-tab" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19.5s-7.5-4.4-7.5-9.8A4.2 4.2 0 0 1 12 7.4a4.2 4.2 0 0 1 7.5 2.3c0 5.4-7.5 9.8-7.5 9.8Z"/></svg></button>
+      <button type="button" class="u477-tab" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 9.5h11v4.5a5.5 5.5 0 0 1-11 0Z"/><path d="M16.5 10.5h1.2a2.3 2.3 0 0 1 0 4.6h-1.6M8.5 3.8c-.8 1 .8 1.6 0 2.8M12 3.8c-.8 1 .8 1.6 0 2.8"/></svg></button>
+      <button type="button" class="u477-tab" role="tab"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5c-2.3 2.3-3.4 5.1-3.4 8.5s1.1 6.2 3.4 8.5M12 3.5c2.3 2.3 3.4 5.1 3.4 8.5s-1.1 6.2-3.4 8.5M3.8 9.5h16.4M3.8 14.5h16.4"/></svg></button>
+    </div>
+    <div class="u477-g" role="tabpanel"></div>
+  </div>
+  <p class="u477-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = root.querySelector('.u477-q'), rl = root.querySelector('.u477-rl'), grid = root.querySelector('.u477-g');
+  var tabsEl = root.querySelector('.u477-tabs'), tabs = [].slice.call(root.querySelectorAll('.u477-tab')), rx = root.querySelector('.u477-rx'), live = root.querySelector('.u477-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var NAMES = '표정|손짓|하트|음식|활동'.split('|');
+  var EMO = [
+    '😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 😉 😍 🥰 😘 😋 😎 🤩 🥳 🤔 😮 😢 😭 😴',
+    '👍 👎 👏 🙌 🙏 👋 🤝 ✌️ 🤞 🤟 👌 🤙 👊 ✊ 💪 🤲 👀 🙋 🙆 🙅 🤷 🤦 💁 🙇',
+    '❤️ 🧡 💛 💚 💙 💜 🖤 🤍 💖 💕 💞 💔 💯 ✨ 🔥 ⭐ 🌟 💫 ✅ ❗ ❓ 💤 🎵 💬',
+    '🍎 🍓 🍑 🍉 🍋 🥑 🍕 🍔 🍟 🌮 🍣 🍜 🍙 🍗 🥟 🍰 🍩 🍪 🍫 🍦 ☕ 🧋 🍺 🥂',
+    '🎉 🎊 🎁 🎂 🎈 🏆 🥇 ⚽ 🏀 ⚾ 🎾 🎮 🎧 🎨 📷 🎬 📚 💻 ✈️ 🚗 🏖️ ⛺ 🌙 ☀️'
+  ];
+  // 검색어: 이모지 순서대로 '|'로 나눈 낱말들
+  var KW = [
+    '웃음|활짝|기쁨 웃음|싱글벙글|깔깔|진땀 휴|눈물 웃음 웃겨|폭소 웃겨|미소|천사 착함|살짝 미소|윙크|반함 하트 눈|사랑 하트|뽀뽀|맛있다 냠|멋짐 선글라스|반짝 신남|파티 축하|생각 고민|놀람 헉|슬픔 눈물|엉엉 울음|졸림 잠',
+    '좋아요 최고|별로 싫어요|박수 짝짝|만세|부탁 감사 기도|안녕 손 인사|악수|브이 승리|행운 기원|사랑해|오케이 좋아|전화|주먹|파이팅 응원|힘 근육|두 손|눈 보기|손 들기|동그라미 좋아|엑스 안돼|몰라|아이고 망함|안내|죄송 인사',
+    '빨강 하트 사랑|주황 하트|노랑 하트|초록 하트|파랑 하트|보라 하트|검정 하트|하양 하트|반짝 하트|두 하트|도는 하트|상처 하트 이별|백점 완벽|반짝 빛|불 최고|별|빛나는 별|별 어지러움|체크 완료|느낌표 중요|물음표 질문|잠 졸림|음표 노래|말풍선 대화',
+    '사과|딸기|복숭아|수박|레몬|아보카도|피자|햄버거|감자튀김|타코|초밥|라면 국수|주먹밥|치킨|만두|케이크|도넛|쿠키|초콜릿|아이스크림|커피|버블티|맥주|건배',
+    '축하 파티|색종이 축하|선물|생일 케이크|풍선|우승 트로피|금메달 일등|축구|농구|야구|테니스|게임|음악 헤드폰|그림 미술|사진 카메라|영화|책 공부|노트북 일|비행기 여행|자동차|해변 휴가|캠핑|달 밤|해 맑음'
+  ];
+  var T = { ph: '이모지 검색', none: '찾는 이모지가 없어요', done: ' 반응을 남겼어요' };
+  var ALL = [];
+  EMO.forEach(function (row, c) {
+    var ks = KW[c].split('|');
+    row.split(' ').forEach(function (e, k) { ALL.push({ e: e, c: c, k: ks[k] || '' }); });
+  });
+  var recent = ['👍', '😂', '❤️', '🎉', '🙏', '🔥', '😍'], tab = 0, timers = [];
+  q.placeholder = T.ph;
+  q.setAttribute('aria-label', T.ph);
+  function later(fn, ms) { var t = setTimeout(function () { if (root.isConnected) fn(); }, ms); timers.push(t); return t; }
+  function cell(e) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'u477-e'; b.dataset.e = e; b.setAttribute('aria-label', e);
+    b.innerHTML = '<span aria-hidden="true"></span>';
+    b.firstChild.textContent = e;
+    return b;
+  }
+  // 칸 목록 그리기: 탭을 고르면 그 분류 24개, 검색 중이면 맞는 것들만
+  function render(list, anim) {
+    grid.textContent = '';
+    if (!list.length) { var p = document.createElement('p'); p.className = 'u477-no'; p.textContent = T.none; grid.appendChild(p); return; }
+    list.slice(0, 24).forEach(function (o, k) { var b = cell(o.e); b.style.setProperty('--u477-d', k); b.tabIndex = k ? -1 : 0; grid.appendChild(b); });
+    grid.classList.remove('is-in');
+    if (anim && !rm) { void grid.offsetWidth; grid.classList.add('is-in'); }
+  }
+  function setTab(i, anim) {
+    tab = i;
+    tabs.forEach(function (t, k) { t.setAttribute('aria-selected', String(k === i)); t.tabIndex = k === i ? 0 : -1; });
+    tabsEl.style.setProperty('--u477-i', i);
+    tabsEl.querySelector('.u477-ind').style.setProperty('--u477-i', i);
+    tabsEl.classList.remove('is-off');
+    grid.setAttribute('aria-label', NAMES[i]);
+    render(ALL.filter(function (o) { return o.c === i; }), anim);
+  }
+  function renderRecent(fresh) {
+    rl.textContent = '';
+    recent.forEach(function (e, k) { var b = cell(e); if (fresh && !k) b.classList.add('is-new'); rl.appendChild(b); });
+  }
+  // 고르기: 이모지가 포물선을 그리며 말풍선 모서리로 날아가 반응으로 붙습니다
+  function pick(btn) {
+    var e = btn.dataset.e, rr = root.getBoundingClientRect(), sc = rr.width / root.offsetWidth || 1;
+    var from = btn.firstChild.getBoundingClientRect();
+    var pill = [].slice.call(rx.children).filter(function (li) { return li.dataset.e === e; })[0], fresh = !pill;
+    if (fresh) {
+      pill = document.createElement('li');
+      pill.dataset.e = e;
+      pill.innerHTML = '<span></span><b>1</b>';
+      pill.firstChild.textContent = e;
+      pill.style.visibility = 'hidden';
+      rx.appendChild(pill);
+      while (rx.children.length > 3) rx.removeChild(rx.firstChild);
+    }
+    var to = pill.firstChild.getBoundingClientRect();
+    var land = function () {
+      pill.style.visibility = '';
+      if (!fresh) { pill.classList.remove('is-bump'); void pill.offsetWidth; pill.classList.add('is-bump'); }
+      live.textContent = e + T.done;
+    };
+    recent = [e].concat(recent.filter(function (x) { return x !== e; })).slice(0, 7);
+    renderRecent(true);
+    if (rm || !document.body.animate) { land(); return; }
+    var fly = document.createElement('span');
+    fly.className = 'u477-fly'; fly.textContent = e; fly.setAttribute('aria-hidden', 'true');
+    fly.style.left = (from.left - rr.left) / sc + 'px';
+    fly.style.top = (from.top - rr.top) / sc + 'px';
+    root.appendChild(fly);
+    var dx = (to.left - from.left + (to.width - from.width) / 2) / sc, dy = (to.top - from.top + (to.height - from.height) / 2) / sc;
+    var s1 = to.height / from.height;
+    var a = fly.animate([
+      { transform: 'translate(0,0) scale(1.4)' },
+      { transform: 'translate(' + dx * 0.35 + 'px,' + (dy * 0.45 - 46) + 'px) scale(1.7) rotate(-12deg)', offset: 0.45 },
+      { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + s1 + ') rotate(0deg)' }
+    ], { duration: 640, easing: 'cubic-bezier(.4,.1,.3,1)', fill: 'forwards' });
+    a.onfinish = function () { fly.remove(); land(); };
+  }
+  root.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.u477-e');
+    if (b && root.contains(b)) pick(b);
+  });
+  tabs.forEach(function (t, k) { t.addEventListener('click', function () { if (q.value) q.value = ''; setTab(k, true); }); });
+  tabsEl.addEventListener('keydown', function (e) {
+    var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+    if (!d) return;
+    e.preventDefault();
+    var k = (tab + d + tabs.length) % tabs.length;
+    if (q.value) q.value = '';
+    setTab(k, true);
+    tabs[k].focus();
+  });
+  q.addEventListener('input', function () {
+    var s = q.value.trim().toLowerCase();
+    if (!s) { setTab(tab, false); return; }
+    tabsEl.classList.add('is-off');
+    tabs.forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+    render(ALL.filter(function (o) { return o.k.toLowerCase().indexOf(s) >= 0 || NAMES[o.c].toLowerCase().indexOf(s) >= 0; }), false);
+  });
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowDown' || (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229)) {
+      var f = grid.querySelector('.u477-e');
+      if (!f) return;
+      e.preventDefault();
+      if (e.key === 'Enter') pick(f); else f.focus();
+    }
+  });
+  // 칸 사이를 방향키로 움직입니다(한 줄에 8개)
+  grid.addEventListener('keydown', function (e) {
+    var cells = [].slice.call(grid.querySelectorAll('.u477-e')), i = cells.indexOf(document.activeElement);
+    if (i < 0) return;
+    var j = { ArrowRight: i + 1, ArrowLeft: i - 1, ArrowDown: i + 8, ArrowUp: i - 8, Home: 0, End: cells.length - 1 }[e.key];
+    if (j == null) return;
+    e.preventDefault();
+    if (j < 0 && e.key === 'ArrowUp') { tabs[tab].focus(); return; }
+    j = Math.max(0, Math.min(cells.length - 1, j));
+    cells.forEach(function (c, k) { c.tabIndex = k === j ? 0 : -1; });
+    cells[j].focus();
+  });
+  tabs.forEach(function (t, k) { t.setAttribute('aria-label', NAMES[k]); });
+  renderRecent(false);
+  setTab(0, false);
+})();
+</script>

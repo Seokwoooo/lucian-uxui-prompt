@@ -1,0 +1,149 @@
+<!-- Lucian UX/UI Prompt #474 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#474 -->
+<!--
+Element: 유리 음악 플레이어
+ID: 474 · Category: 카드·콘텐츠 · Tags: music-player, glassmorphism, play-pause-morph, scrubber, album-art, illustration
+What it does: 앨범 아트의 노을빛이 뒤로 번져 비치는 유리 미니 플레이어입니다. 재생을 누르면 삼각형이 두 막대로 갈라지며 일시정지로 바뀌고, 작게 물러나 있던 앨범 아트가 통통 커지며 뒤의 빛이 숨 쉬듯 밝아집니다. 진행 막대를 잡으면 두툼해지고 시간이 따라 바뀝니다.
+How to use it: 재생을 누르고 진행 막대를 끌어 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#474
+-->
+<style>
+.u474{position:relative;width:340px;height:300px;display:grid;place-items:center;isolation:isolate}
+/* 뒤에서 비치는 빛: 앨범 아트의 색을 크게 흐려 깔아 둡니다 */
+.u474-gl{position:absolute;left:50%;top:50%;z-index:-1;width:250px;height:170px;margin:-85px 0 0 -125px;border-radius:50%;background:radial-gradient(closest-side at 30% 40%,#FF8A5B,transparent),radial-gradient(closest-side at 70% 45%,#F2508C,transparent),radial-gradient(closest-side at 50% 75%,#7B4DD8,transparent);filter:blur(30px);opacity:.5;transform:scale(.88);transition:opacity .8s var(--ux-ease),transform 1s cubic-bezier(.3,1.3,.5,1)}
+.u474.is-play .u474-gl{opacity:.85;transform:scale(1.04)}
+.u474.is-play .u474-gl{animation:u474-breathe 3.2s ease-in-out .9s infinite}
+@keyframes u474-breathe{50%{transform:scale(1.12) rotate(4deg);opacity:.95}}
+.u474-c{position:relative;width:288px;padding:14px 16px 12px 14px;border-radius:24px;background:var(--ux-glass);background:light-dark(rgba(255,255,255,.5),rgba(28,26,40,.42));backdrop-filter:blur(22px) saturate(1.7);-webkit-backdrop-filter:blur(22px) saturate(1.7);box-shadow:inset 0 0 0 1px var(--ux-glass-line),inset 0 1px 0 rgba(255,255,255,.5),0 24px 44px -26px var(--ux-shadow-strong);box-shadow:inset 0 0 0 1px var(--ux-glass-line),inset 0 1px 0 light-dark(rgba(255,255,255,.9),rgba(255,255,255,.14)),0 24px 44px -26px var(--ux-shadow-strong)}
+.u474-top{display:flex;align-items:center;gap:13px}
+.u474-art{position:relative;flex:none;width:64px;height:64px;border-radius:14px;overflow:hidden;box-shadow:0 6px 14px -8px rgba(80,20,60,.6);transform:scale(.9);transition:transform .7s cubic-bezier(.34,1.7,.5,1),box-shadow .5s}
+.u474.is-play .u474-art{transform:scale(1);box-shadow:0 12px 22px -10px rgba(120,30,80,.75)}
+.u474-art svg{display:block;width:100%;height:100%}
+.u474-tx{flex:1;min-width:0}
+.u474-tt{display:flex;align-items:center;gap:7px;margin:0;font-size:15px;font-weight:750;letter-spacing:-.02em;white-space:nowrap}
+.u474-tt span{overflow:hidden;text-overflow:ellipsis}
+.u474-ar{margin:3px 0 0;font-size:12.5px;font-weight:550;color:var(--ux-ink-2)}
+/* 재생 중 표시: 막대 세 개가 오르내립니다 */
+.u474-eq{flex:none;display:flex;align-items:flex-end;gap:2px;height:11px;opacity:0;transform:scale(.6);transition:opacity .25s,transform .4s cubic-bezier(.34,1.7,.5,1)}
+.u474-eq i{width:2.5px;height:100%;border-radius:2px;background:#F2508C;background:light-dark(#E8457F,#FF7AA8);transform-origin:50% 100%;transform:scaleY(.35);animation:u474-eq .9s ease-in-out infinite;animation-play-state:paused}
+.u474-eq i:nth-child(2){animation-delay:-.3s;animation-duration:.75s}
+.u474-eq i:nth-child(3){animation-delay:-.55s;animation-duration:1.05s}
+@keyframes u474-eq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+.u474.is-play .u474-eq{opacity:1;transform:none}
+.u474.is-play .u474-eq i{animation-play-state:running}
+.u474-pl{position:relative;flex:none;display:grid;place-items:center;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:var(--ux-ink);color:var(--ux-surface);box-shadow:0 8px 18px -8px var(--ux-shadow-strong);transition:transform .5s cubic-bezier(.34,1.8,.5,1),box-shadow .3s}
+.u474-pl:hover{transform:scale(1.06)}
+.u474-pl:active{transform:scale(.9);transition-duration:.12s}
+.u474 .u474-pl:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+/* 재생↔일시정지: 삼각형의 왼쪽·오른쪽 반쪽이 각각 막대 하나로 모양을 바꿉니다 */
+.u474-ic{position:relative;width:15px;height:17px;transform:translateX(1.5px);transition:transform .4s cubic-bezier(.5,0,.2,1)}
+.u474-ic i{position:absolute;inset:0;background:currentColor;transition:clip-path .38s cubic-bezier(.5,0,.2,1.2)}
+.u474-ic i:first-child{clip-path:polygon(0% 0%,50% 25%,50% 75%,0% 100%)}
+.u474-ic i:last-child{clip-path:polygon(50% 25%,100% 50%,100% 50%,50% 75%)}
+.u474.is-play .u474-ic{transform:none}
+.u474.is-play .u474-ic i:first-child{clip-path:polygon(4% 0%,36% 0%,36% 100%,4% 100%)}
+.u474.is-play .u474-ic i:last-child{clip-path:polygon(64% 0%,96% 0%,96% 100%,64% 100%)}
+.u474-sk{position:relative;height:22px;margin:10px 0 0;cursor:pointer;touch-action:none;outline:none}
+.u474-tr{position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;border-radius:3px;background:rgba(22,21,27,.12);background:light-dark(rgba(22,21,27,.12),rgba(255,255,255,.16));overflow:hidden;transition:height .4s cubic-bezier(.34,1.8,.5,1),margin-top .4s cubic-bezier(.34,1.8,.5,1)}
+.u474-fi{position:absolute;left:0;top:0;bottom:0;width:calc(var(--u474-p) * 100%);background:var(--ux-ink);opacity:.82}
+.u474-th{position:absolute;left:calc(var(--u474-p) * 100%);top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--ux-ink);box-shadow:0 2px 6px var(--ux-shadow-strong);transform:scale(0);transition:transform .4s cubic-bezier(.34,1.8,.5,1)}
+.u474-sk:hover .u474-th,.u474-sk.is-drag .u474-th{transform:scale(1)}
+.u474-sk:hover .u474-tr{height:6px;margin-top:-3px}
+.u474-sk.is-drag .u474-tr{height:8px;margin-top:-4px}
+.u474-sk.is-drag .u474-th{transform:scale(1.25)}
+.u474-sk:focus-visible .u474-th{transform:scale(1);outline:2px solid var(--ux-accent);outline-offset:2px}
+.u474-tm{display:flex;justify-content:space-between;margin-top:1px;font-size:11px;font-weight:600;color:var(--ux-ink-2);font-variant-numeric:tabular-nums;letter-spacing:0}
+.u474-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u474">
+  <i class="u474-gl" aria-hidden="true"></i>
+  <section class="u474-c" aria-labelledby="u474-t">
+    <div class="u474-top">
+      <div class="u474-art" aria-hidden="true"><svg viewBox="0 0 64 64">
+        <defs>
+          <linearGradient id="u474-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5A3FC8"/><stop offset=".45" stop-color="#E9508A"/><stop offset=".8" stop-color="#FF9A5C"/></linearGradient>
+          <linearGradient id="u474-sun" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1B8"/><stop offset="1" stop-color="#FFB25E"/></linearGradient>
+          <linearGradient id="u474-sea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B2A8F"/><stop offset="1" stop-color="#1D1550"/></linearGradient>
+          <clipPath id="u474-cut"><rect x="0" y="0" width="64" height="27"/><rect x="0" y="29" width="64" height="2.6"/><rect x="0" y="33.4" width="64" height="2"/><rect x="0" y="37" width="64" height="1.4"/></clipPath>
+        </defs>
+        <rect width="64" height="64" fill="url(#u474-sky)"/>
+        <circle cx="10" cy="11" r=".8" fill="#FFFFFF" opacity=".8"/><circle cx="50" cy="8" r=".6" fill="#FFFFFF" opacity=".7"/><circle cx="56" cy="17" r=".5" fill="#FFFFFF" opacity=".6"/>
+        <circle cx="32" cy="39" r="15" fill="url(#u474-sun)" clip-path="url(#u474-cut)"/>
+        <path d="M0 40h64v24H0Z" fill="url(#u474-sea)"/>
+        <path d="M18 43.5h28M22 47h20M26 50.5h12M29 54h6" stroke="#FFB774" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>
+        <path d="M0 40c8-2.6 14-2.6 20-.8 7 2 12 .4 18-1.2 9-2.4 17-1 26 1.4V40Z" fill="#2B1F74" opacity=".55"/>
+        <path d="M41 19.5q2-1.6 4 0q2-1.6 4 0M47.5 24q1.4-1.1 2.8 0q1.4-1.1 2.8 0" fill="none" stroke="#3A1F66" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".75"/>
+      </svg></div>
+      <div class="u474-tx">
+        <h3 class="u474-tt" id="u474-t"><span>노을 한 조각</span><span class="u474-eq" aria-hidden="true"><i></i><i></i><i></i></span></h3>
+        <p class="u474-ar">윤슬</p>
+      </div>
+      <button type="button" class="u474-pl" aria-label="재생"><span class="u474-ic" aria-hidden="true"><i></i><i></i></span></button>
+    </div>
+    <div class="u474-sk" role="slider" tabindex="0" aria-label="재생 위치" aria-valuemin="0" aria-valuemax="204"><div class="u474-tr"><i class="u474-fi"></i></div><i class="u474-th"></i></div>
+    <div class="u474-tm" aria-hidden="true"><span class="u474-el">1:12</span><span class="u474-re">-2:12</span></div>
+  </section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var pl = root.querySelector('.u474-pl'), sk = root.querySelector('.u474-sk'), el = root.querySelector('.u474-el'), re = root.querySelector('.u474-re');
+  var T = { play: '재생', pause: '일시정지', of: '중 ' };
+  // 그림 안의 그라디언트 id가 다른 사본과 겹치지 않게 이 사본만의 이름을 붙입니다
+  var art = root.querySelector('.u474-art'), uid = 'u474' + Math.random().toString(36).slice(2, 7);
+  art.innerHTML = art.innerHTML.replace(/u474-(sky|sun|sea|cut)/g, uid + '$1');
+  var DUR = 204, t = 72, playing = false, last = 0, raf = 0, drag = false;
+  function fmt(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+  function draw() {
+    sk.style.setProperty('--u474-p', (t / DUR).toFixed(4));
+    el.textContent = fmt(t);
+    re.textContent = '-' + fmt(DUR - t);
+    sk.setAttribute('aria-valuenow', String(Math.round(t)));
+    sk.setAttribute('aria-valuetext', fmt(DUR) + ' ' + T.of + fmt(t));
+  }
+  function tick(now) {
+    if (!root.isConnected) { playing = false; return; }
+    if (!playing) return;
+    if (!drag) t += (now - last) / 1000;
+    last = now;
+    if (t >= DUR) { t = 0; set(false); }
+    draw();
+    raf = requestAnimationFrame(tick);
+  }
+  function set(on) {
+    playing = on;
+    root.classList.toggle('is-play', on);
+    pl.setAttribute('aria-label', on ? T.pause : T.play);
+    cancelAnimationFrame(raf);
+    if (on) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  pl.addEventListener('click', function () { set(!playing); });
+  // 진행 막대: 누른 자리로 바로 옮기고, 끄는 동안 막대가 두툼해집니다
+  function seek(x) {
+    var r = sk.getBoundingClientRect();
+    t = Math.max(0, Math.min(1, (x - r.left) / r.width)) * DUR;
+    draw();
+  }
+  sk.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;
+    drag = true;
+    sk.classList.add('is-drag');
+    try { sk.setPointerCapture(e.pointerId); } catch (er) { /* 시연 포인터는 붙잡지 않아도 됩니다 */ }
+    seek(e.clientX);
+    e.preventDefault();
+  });
+  sk.addEventListener('pointermove', function (e) { if (drag) seek(e.clientX); });
+  function end() { if (!drag) return; drag = false; sk.classList.remove('is-drag'); last = performance.now(); }
+  sk.addEventListener('pointerup', end);
+  sk.addEventListener('pointercancel', end);
+  sk.addEventListener('lostpointercapture', end);
+  sk.addEventListener('keydown', function (e) {
+    var d = { ArrowRight: 5, ArrowUp: 5, ArrowLeft: -5, ArrowDown: -5, PageUp: 30, PageDown: -30 }[e.key];
+    if (e.key === 'Home') t = 0; else if (e.key === 'End') t = DUR - 1; else if (d) t = Math.max(0, Math.min(DUR - 1, t + d)); else return;
+    e.preventDefault();
+    draw();
+  });
+  draw();
+})();
+</script>

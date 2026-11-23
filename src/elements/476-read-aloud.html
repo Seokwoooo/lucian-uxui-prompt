@@ -1,0 +1,121 @@
+<!-- @meta {"title":"읽어 주기","category":"텍스트 모션","summary":"‘이 글 듣기’를 누르면 문단의 어절이 읽는 속도에 맞춰 하나씩 왼쪽부터 차오르듯 밝아지고, 읽은 자리까지 보라색 밑줄이 따라 그어집니다. 버튼의 삼각형은 두 막대로 바뀌어 일시정지가 되고, 다시 누르면 멈춘 자리에서 이어 읽습니다. 어절을 누르면 그 자리로 건너뜁니다.","hint":"재생 버튼을 눌러 보고, 중간에 멈췄다 이어 보세요","shape":"square","hue":"#F43F5E","hue2":"#8B5CF6","tags":["read-aloud","karaoke","text-highlight","audio","progress-underline","play-pause"]} -->
+<!-- @demo [["wait",500],["tap",".u476-pl",0,{"after":1900}],["tap",".u476-pl",0,{"glide":80,"after":750}],["tap",".u476-pl",0,{"glide":80,"after":3400}],["reset"]] -->
+<!-- @en {"title":"Read aloud","summary":"Press Listen and the paragraph lights up word by word at reading pace, each word filling from the left while a violet underline follows up to where it has read. The triangle splits into a pause icon, and pressing again picks up right where it stopped. Click any word to jump there.","hint":"Press play, then pause and resume midway","map":[
+  [">이 글 듣기<", ">Listen<"],
+  [">좋은 디자인은 눈에 잘 띄지 않습니다. 사람들은 화면이 아니라, 하려던 일을 보니까요.<", ">Good design is hard to notice. People don’t look at the screen, they look at what they came to do.<"],
+  ["play: '읽어 주기'", "play: 'Read aloud'"],
+  ["pause: '일시정지'", "pause: 'Pause'"],
+  ["aria-label=\"읽어 주기\"", "aria-label=\"Read aloud\""]
+]} -->
+<style>
+.u476{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u476-c{position:relative;width:296px;padding:14px 18px 18px;border-radius:20px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 20px 40px -26px var(--ux-shadow-strong)}
+.u476-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.u476-pl{position:relative;flex:none;display:grid;place-items:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:var(--ux-accent);color:var(--ux-accent-ink);box-shadow:0 6px 14px -8px var(--ux-accent);transition:transform .5s cubic-bezier(.34,1.8,.5,1)}
+.u476-pl:hover{transform:scale(1.06)}
+.u476-pl:active{transform:scale(.9);transition-duration:.12s}
+.u476 .u476-pl:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+/* 재생 진행 고리 */
+.u476-rg{position:absolute;inset:-4px;width:44px;height:44px;transform:rotate(-90deg);pointer-events:none}
+.u476-rg circle{fill:none;stroke:var(--ux-accent);stroke-width:2;stroke-linecap:round;stroke-dasharray:132;stroke-dashoffset:calc(132 - 132 * var(--u476-t,0));opacity:.45}
+.u476-ic{position:relative;width:12px;height:13px;transform:translateX(1px);transition:transform .35s cubic-bezier(.5,0,.2,1)}
+.u476-ic i{position:absolute;inset:0;background:currentColor;transition:clip-path .34s cubic-bezier(.5,0,.2,1.2)}
+.u476-ic i:first-child{clip-path:polygon(0% 0%,50% 25%,50% 75%,0% 100%)}
+.u476-ic i:last-child{clip-path:polygon(50% 25%,100% 50%,100% 50%,50% 75%)}
+.u476.is-play .u476-ic{transform:none}
+.u476.is-play .u476-ic i:first-child{clip-path:polygon(6% 0%,38% 0%,38% 100%,6% 100%)}
+.u476.is-play .u476-ic i:last-child{clip-path:polygon(62% 0%,94% 0%,94% 100%,62% 100%)}
+.u476-hd b{flex:1;font-size:13.5px;font-weight:700;letter-spacing:-.015em}
+.u476-tm{font-size:11.5px;font-weight:600;color:var(--ux-ink-3);font-variant-numeric:tabular-nums;letter-spacing:0}
+/* 어절: 글자색을 그라디언트로 칠해 왼쪽부터 차오르게 하고, 아래에 밑줄이 같이 자랍니다 */
+.u476-tx{position:relative;z-index:0;margin:0;font-size:16px;font-weight:600;line-height:1.78;letter-spacing:-.02em;color:var(--ux-ink-3)}
+.u476-w{--u476-p:0;--u476-lit:var(--ux-ink);--u476-dim:color-mix(in srgb,var(--ux-ink) 26%,transparent);position:relative;color:transparent;background-image:linear-gradient(90deg,var(--u476-lit) calc(var(--u476-p) * 125% - 25%),var(--u476-dim) calc(var(--u476-p) * 125%));-webkit-background-clip:text;background-clip:text;cursor:pointer;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.u476-w::after{content:"";position:absolute;left:0;right:0;bottom:1px;height:2px;border-radius:2px;background:var(--ux-accent);opacity:.7;transform-origin:0 50%;transform:scaleX(var(--u476-p));pointer-events:none}
+.u476-w.is-done{--u476-p:1}
+.u476-w.is-done::after{opacity:.3;transition:opacity .8s var(--ux-ease)}
+.u476-w.is-now::before{content:"";position:absolute;left:-3px;right:-1px;top:1px;bottom:2px;border-radius:6px;background:var(--ux-accent-soft);z-index:-1;opacity:0;animation:u476-now .5s var(--ux-ease) forwards;pointer-events:none}
+@keyframes u476-now{0%{opacity:0;transform:scale(.85)}35%{opacity:1;transform:scale(1.04)}100%{opacity:.7;transform:none}}
+</style>
+<div class="ux u476">
+  <section class="u476-c">
+    <div class="u476-hd">
+      <button type="button" class="u476-pl" aria-label="읽어 주기"><svg class="u476-rg" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21"/></svg><span class="u476-ic" aria-hidden="true"><i></i><i></i></span></button>
+      <b>이 글 듣기</b>
+      <span class="u476-tm" aria-hidden="true">0:00 / 0:05</span>
+    </div>
+    <p class="u476-tx">좋은 디자인은 눈에 잘 띄지 않습니다. 사람들은 화면이 아니라, 하려던 일을 보니까요.</p>
+  </section>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var pl = root.querySelector('.u476-pl'), tx = root.querySelector('.u476-tx'), tm = root.querySelector('.u476-tm');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { play: '읽어 주기', pause: '일시정지' };
+  // 어절마다 span을 만들고(뒤 띄어쓰기 포함), 글자 수와 문장부호로 읽는 시간을 정합니다
+  var parts = tx.textContent.trim().split(/(\s+)/), words = [], at = 0;
+  tx.textContent = '';
+  for (var i = 0; i < parts.length; i += 2) {
+    var w = parts[i], sp = parts[i + 1] || '';
+    var s = document.createElement('span');
+    s.className = 'u476-w';
+    s.textContent = w + sp;
+    tx.appendChild(s);
+    var hangul = (w.match(/[\uAC00-\uD7A3]/g) || []).length, latin = (w.match(/[A-Za-z0-9]/g) || []).length;
+    var dur = 150 + 62 * hangul + 34 * latin;
+    var gap = /[.!?]$/.test(w) ? 320 : /[,;:]$/.test(w) ? 150 : 0;
+    words.push({ el: s, start: at, dur: dur });
+    at += dur + gap;
+  }
+  var TOTAL = at, t = 0, playing = false, last = 0, raf = 0, cur = -2;
+  function fmt(ms) { var s = Math.floor(ms / 1000); return Math.floor(s / 60) + ':' + ('0' + s % 60).slice(-2); }
+  function paint() {
+    var now = -1;
+    words.forEach(function (o, k) {
+      var p = Math.max(0, Math.min(1, (t - o.start) / o.dur));
+      if (rm && p > 0) p = 1;
+      if (t >= o.start && t < o.start + o.dur) now = k;
+      o.el.classList.toggle('is-done', p >= 1);
+      if (p > 0 && p < 1) o.el.style.setProperty('--u476-p', p.toFixed(3)); else o.el.style.removeProperty('--u476-p');
+    });
+    if (now !== cur) {
+      if (cur >= 0 && words[cur]) words[cur].el.classList.remove('is-now');
+      if (now >= 0 && playing) words[now].el.classList.add('is-now');
+      cur = now;
+    }
+    pl.style.setProperty('--u476-t', (t / TOTAL).toFixed(4));
+    tm.textContent = fmt(t >= TOTAL ? TOTAL + 999 : t) + ' / ' + fmt(TOTAL + 999);
+  }
+  function tick(nowT) {
+    if (!root.isConnected) { playing = false; return; }
+    if (!playing) return;
+    t += nowT - last;
+    last = nowT;
+    if (t >= TOTAL) { t = TOTAL; paint(); set(false); return; }
+    paint();
+    raf = requestAnimationFrame(tick);
+  }
+  function set(on) {
+    playing = on;
+    root.classList.toggle('is-play', on);
+    pl.setAttribute('aria-label', on ? T.pause : T.play);
+    cancelAnimationFrame(raf);
+    if (!on && cur >= 0 && words[cur]) { words[cur].el.classList.remove('is-now'); cur = -2; }
+    if (on) { last = performance.now(); raf = requestAnimationFrame(tick); }
+  }
+  pl.addEventListener('click', function () {
+    if (!playing && t >= TOTAL) { t = 0; paint(); }
+    set(!playing);
+  });
+  // 어절을 누르면 그 어절의 처음으로 건너뜁니다
+  tx.addEventListener('click', function (e) {
+    var k = words.map(function (o) { return o.el; }).indexOf(e.target);
+    if (k < 0) return;
+    t = words[k].start;
+    cur = -2;
+    paint();
+    if (!playing) set(true);
+  });
+  paint();
+})();
+</script>

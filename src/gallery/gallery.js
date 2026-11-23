@@ -64,20 +64,21 @@
   var T = {
     ko: {
       docTitle: 'Lucian UX/UI Prompt',
-      docDesc: '실제로 돌아가는 UX/UI 요소 450개. 카드에서 Claude·Codex용 프롬프트나 코드를 바로 복사해 프로젝트에 넣으세요.',
+      docDesc: '실제로 돌아가는 UX/UI 요소 480개. 카드에서 Claude·Codex용 프롬프트나 코드를 바로 복사해 프로젝트에 넣으세요.',
       skip: '요소 목록으로 건너뛰기',
       brand: 'Lucian UX/UI Prompt, 맨 위로',
       guideBtn: '적용 방법',
       langGroup: '언어',
       h1: 'Lucian UX/UI Prompt', w1: 'Lucian', w2: 'UX/UI', w3: 'Prompt',
-      intro: '실제로 돌아가는 UI 요소 450개. 마음에 드는 카드에서 Claude나 Codex를 누르고 붙여넣으면, 내 프로젝트에 맞게 만들어 줍니다.',
+      intro: '실제로 돌아가는 UI 요소 480개. 마음에 드는 카드에서 Claude나 Codex를 누르고 붙여넣으면, 내 프로젝트에 맞게 만들어 줍니다.',
       side: '사이드바', menuOpen: '메뉴 열기', menuClose: '메뉴 닫기',
       browseH: '둘러보기', collH: '컬렉션', takeH: '가져가기', setSaved: '저장됨',
       installT: '스킬로 설치하기', installS: 'Claude Code·Codex가 번호만으로 요소를 꺼내 씁니다.',
       searchGo: '맨 위로', searchClear: '검색 지우기', searchTry: '찾아보기: ', catsPrev: '앞쪽 분류 보기', catsNext: '뒤쪽 분류 보기',
       searchEx: ['가격표', '로그인', '차트', '토글', '장바구니', '히어로', '로딩', '캘린더', '파일 업로드', '알림'],
       qN: function (n) { return n + '개'; },
-      cbCode: '코드 복사', cbCopied: '복사됨',
+      cbCode: '코드 복사', cbCopied: '복사됨', cbCopy: '복사',
+      pickClaude: 'Claude로 복사', pickCodex: 'Codex로 복사', pickCode: '코드 복사', pickGroup: '무엇으로 복사할지', pickCodeName: '코드',
       aClaude: function (t) { return t + ', Claude용 프롬프트 복사'; },
       aCodex: function (t) { return t + ', Codex용 프롬프트 복사'; },
       aCode: function (t) { return t + ', 코드 복사'; },
@@ -129,20 +130,21 @@
     },
     en: {
       docTitle: 'Lucian UX/UI Prompt',
-      docDesc: '450 working UX/UI elements. Copy a prompt for Claude or Codex, or the code, straight from each card.',
+      docDesc: '480 working UX/UI elements. Copy a prompt for Claude or Codex, or the code, straight from each card.',
       skip: 'Skip to the elements',
       brand: 'Lucian UX/UI Prompt, back to top',
       guideBtn: 'How to use',
       langGroup: 'Language',
       h1: 'Lucian UX/UI Prompt', w1: 'Lucian', w2: 'UX/UI', w3: 'Prompt',
-      intro: '450 UI elements, running live. Press Claude or Codex on a card, paste it into your agent, and it builds the element into your project.',
+      intro: '480 UI elements, running live. Press Claude or Codex on a card, paste it into your agent, and it builds the element into your project.',
       side: 'Sidebar', menuOpen: 'Open menu', menuClose: 'Close menu',
       browseH: 'Browse', collH: 'Collections', takeH: 'Take it', setSaved: 'Saved',
       installT: 'Install the skill', installS: 'Claude Code and Codex pull any element by its number.',
       searchGo: 'Back to top', searchClear: 'Clear search', searchTry: 'Try: ', catsPrev: 'Show earlier categories', catsNext: 'Show more categories',
       searchEx: ['pricing', 'login', 'chart', 'toggle', 'cart', 'hero', 'loading', 'calendar', 'file upload', 'toast'],
       qN: function (n) { return n + ' found'; },
-      cbCode: 'Copy code', cbCopied: 'Copied',
+      cbCode: 'Copy code', cbCopied: 'Copied', cbCopy: 'Copy',
+      pickClaude: 'Copy for Claude', pickCodex: 'Copy for Codex', pickCode: 'Copy code', pickGroup: 'What to copy', pickCodeName: 'Code',
       aClaude: function (t) { return 'Copy a prompt for Claude to add ' + t; },
       aCodex: function (t) { return 'Copy a prompt for Codex to add ' + t; },
       aCode: function (t) { return 'Copy the code for ' + t; },
@@ -268,12 +270,41 @@
   // 코드가 이미 들어 있는 요소(단일 파일판)는 처음에 한 번에 등록합니다
   regCss(ITEMS);
   // 요소 HTML을 넣고 스크립트를 새로 만들어 붙입니다. 스크립트 바로 앞 형제가 요소의 루트입니다
+  // 요소가 document·window에 건 처리기는 다른 카드에서 나온 시연 이벤트를 받지 않게 감쌉니다(옆 카드 시연 클릭에 메뉴가 닫히지 않게)
+  function eventScope(fit) {
+    var map = [];
+    function guard(listener) {
+      if (typeof listener === 'function') return function (e) { if (e && e.__uxFit && e.__uxFit !== fit) return; return listener.apply(this, arguments); };
+      if (listener && typeof listener.handleEvent === 'function') return { handleEvent: function (e) { if (e && e.__uxFit && e.__uxFit !== fit) return; return listener.handleEvent(e); } };
+      return listener;
+    }
+    function facade(target) {
+      return new Proxy(target, {
+        get: function (object, key) {
+          if (key === 'addEventListener') return function (type, listener, options) {
+            var w = guard(listener); map.push([object, type, listener, w]); object.addEventListener(type, w, options);
+          };
+          if (key === 'removeEventListener') return function (type, listener, options) {
+            for (var i = 0; i < map.length; i++) if (map[i][0] === object && map[i][1] === type && map[i][2] === listener) { object.removeEventListener(type, map[i][3], options); map.splice(i, 1); return; }
+            object.removeEventListener(type, listener, options);
+          };
+          if (key === 'document') return docF;
+          if (key === 'window' || key === 'self') return winF;
+          var value = Reflect.get(object, key, object);
+          return typeof value === 'function' && !/^[A-Z]/.test(String(key)) ? value.bind(object) : value;
+        }
+      });
+    }
+    var docF = facade(document), winF = facade(window);
+    return [docF, winF];
+  }
   function mountInto(fit, it) {
     if (cssKey[it.id] !== cssLang(it)) regCss(ITEMS);
     var c = loc(it);
     fit.innerHTML = c.html.replace(STYLE_RE, '');
     var s = document.createElement('script');
-    s.textContent = c.js;
+    s._ux = eventScope(fit);
+    s.textContent = '(function(document,window,self){\n' + c.js + '\n}).call(window,document.currentScript._ux[0],document.currentScript._ux[1],document.currentScript._ux[1]);';
     fit.appendChild(s);
   }
   function unmount(fit) { dropPlayer(fit); fit.innerHTML = ''; fit.removeAttribute('data-k'); }
@@ -312,6 +343,9 @@
 
   /* ---------- 자동 재생: 화면에 보이는 요소가 스스로 조작 시연을 반복합니다 ---------- */
   // 켜고 끄기는 저장됩니다. 저장한 값이 없으면 동작 줄이기 설정을 따릅니다
+  // 카드 아래 막대에서 고른 복사 대상(Claude·Codex·코드). 모든 카드가 같이 쓰고 다음 방문에도 기억합니다
+  var PICK_KEY = 'ux-gallery-pick';
+  var pick = (function () { var s = store.get(PICK_KEY); return s === 'codex' || s === 'code' ? s : 'claude'; })();
   var autoOn = (function () { var s = store.get(AUTO_KEY); return s === 'on' ? true : s === 'off' ? false : !reduce.matches; })();
   var players = [];
   var PID = 41;
@@ -508,6 +542,8 @@
       if (type === 'pointermove' && !extra) init.button = -1;
       ev = new PointerEvent(type, init);
     } else ev = new MouseEvent(type, init);
+    // 어느 카드의 시연인지 표시합니다. 다른 카드 요소가 document에 건 '바깥 클릭' 감지는 이 이벤트를 무시합니다
+    ev.__uxFit = P.fit;
     try { if (type === 'click') holdScroll(function () { el.dispatchEvent(ev); }); else el.dispatchEvent(ev); } catch (e) { /* 요소 처리기 오류는 요소 쪽에서 보고됩니다 */ }
   }
   // 시연 클릭이 라벨에 닿으면 브라우저가 연결된 입력칸으로 초점을 옮깁니다(위의 focus() 막기를 거치지 않는 내장 동작).
@@ -747,6 +783,8 @@
   }
 
   // 사용자가 요소를 직접 만지면 시연을 멈추고, 손을 뗀 뒤 잠시 지나면 처음부터 다시 시연합니다
+  // 단일 파일판은 할 일이 없습니다. 사이트판은 마우스가 올라오면 멈춰 둔 요소 타이머를 깨웁니다
+  function hoverSync() {}
   function bindTakeover(host) {
     var P = function () { var f = $('.g-fit', host); return f && f._pl; };
     var touch = function (e) {
@@ -767,8 +805,8 @@
     };
     ['pointerdown', 'keydown', 'input', 'focusin'].forEach(function (type) { host.addEventListener(type, touch, true); });
     host.addEventListener('pointermove', function (e) { var p = P(); if (e.isTrusted && p && p.user) p.lastUser = performance.now(); }, true);
-    host.addEventListener('pointerenter', function (e) { var p = P(); if (e.isTrusted && p && e.pointerType === 'mouse') p.mouseIn = true; });
-    host.addEventListener('pointerleave', function (e) { var p = P(); if (e.isTrusted && p) { p.mouseIn = false; p.lastUser = Math.max(p.lastUser, performance.now() - 800); } });
+    host.addEventListener('pointerenter', function (e) { var p = P(); if (e.isTrusted && p && e.pointerType === 'mouse') { p.mouseIn = true; hoverSync(p); } });
+    host.addEventListener('pointerleave', function (e) { var p = P(); if (e.isTrusted && p) { p.mouseIn = false; p.lastUser = Math.max(p.lastUser, performance.now() - 800); hoverSync(p); } });
   }
   setInterval(function () {
     var now = performance.now();
@@ -889,14 +927,39 @@
     $('.g-cap-s', el).textContent = c.category + ' · ' + it.id;
     $('.g-exp', el).setAttribute('aria-label', L.open(c.title));
     $('.g-save', el).setAttribute('aria-label', L.aSave(c.title));
-    $$('.g-cb', el).forEach(function (b) {
-      var k = b.dataset.act;
-      b.setAttribute('aria-label', k === 'claude' ? L.aClaude(c.title) : k === 'codex' ? L.aCodex(c.title) : L.aCode(c.title));
-      $('span', b).textContent = b.classList.contains('is-copied') ? L.cbCopied : cbLabel(k);
-    });
+    syncPick(el, it);
     syncCardTheme(el);
   }
-  function cbLabel(k) { return k === 'claude' ? 'Claude' : k === 'codex' ? 'Codex' : t('cbCode'); }
+  function cbLabel(k) { return k === 'copy' ? t('cbCopy') : k === 'claude' ? 'Claude' : k === 'codex' ? 'Codex' : t('cbCode'); }
+  function pickText(k) { return t(k === 'codex' ? 'pickCodex' : k === 'code' ? 'pickCode' : 'pickClaude'); }
+  // 카드 아래 막대: 고른 대상 표시, 가운데 문구, 오른쪽 복사 버튼의 이름
+  function syncPick(el, it, swap) {
+    it = it || ITEMS[+el.dataset.idx];
+    if (!it) return;
+    var c = loc(it), L = T[lang];
+    var g = $('.g-pick', el); if (!g) return;
+    g.setAttribute('aria-label', L.pickGroup);
+    $$('.g-pk', el).forEach(function (b) {
+      var on = b.dataset.pick === pick;
+      b.setAttribute('aria-checked', String(on));
+      b.tabIndex = on ? 0 : -1;
+      b.setAttribute('aria-label', b.dataset.pick === 'claude' ? 'Claude' : b.dataset.pick === 'codex' ? 'Codex' : L.pickCodeName);
+    });
+    var tx = $('.g-pick-t', el), sp = $('span', tx);
+    if (sp.textContent !== pickText(pick)) {
+      sp.textContent = pickText(pick);
+      if (swap) { tx.classList.remove('is-swap'); void tx.offsetWidth; tx.classList.add('is-swap'); }
+    }
+    var cb = $('.g-cb', el);
+    cb.setAttribute('aria-label', pick === 'claude' ? L.aClaude(c.title) : pick === 'codex' ? L.aCodex(c.title) : L.aCode(c.title));
+    if (!cb.classList.contains('is-copied')) $('span', cb).textContent = L.cbCopy;
+  }
+  function setPick(k, from) {
+    if (k !== 'claude' && k !== 'codex' && k !== 'code') return;
+    var changed = k !== pick;
+    pick = k; store.set(PICK_KEY, k);
+    $$('.g-tile', grid).forEach(function (el) { syncPick(el, null, changed && el === from); });
+  }
   // 카드 무대의 실제 테마(카드별 설정이 없으면 전체 테마)
   function stageTheme(tl) { return tl.getAttribute('data-stage') || (isDark() ? 'dark' : 'light'); }
   function syncCardTheme(tl) {
@@ -922,9 +985,12 @@
       '<div class="g-info"><div class="g-cap"><button class="g-cap-t" type="button" data-act="prompt"><span></span></button><p class="g-cap-s"></p></div>' +
         '<button class="g-ic g-save" type="button" data-act="save" aria-pressed="' + on + '">' + ICON.mark + '</button></div>' +
       '<div class="g-acts">' +
-        '<button class="g-cb" type="button" data-act="claude">' + ICON.claude + ICON.ok + '<span></span></button>' +
-        '<button class="g-cb" type="button" data-act="codex">' + ICON.codex + ICON.ok + '<span></span></button>' +
-        '<button class="g-cb" type="button" data-act="code">' + ICON.codeTag + ICON.ok + '<span></span></button></div>';
+        '<div class="g-pick" role="radiogroup">' +
+          '<button class="g-pk" type="button" role="radio" data-pick="claude">' + ICON.claude + '</button>' +
+          '<button class="g-pk" type="button" role="radio" data-pick="codex">' + ICON.codex + '</button>' +
+          '<button class="g-pk" type="button" role="radio" data-pick="code">' + ICON.codeTag + '</button></div>' +
+        '<button class="g-pick-t" type="button" data-act="copy" tabindex="-1" aria-hidden="true"><span></span></button>' +
+        '<button class="g-cb" type="button" data-act="copy">' + ICON.copy.replace('<svg ', '<svg class="g-icn" ') + ICON.ok + '<span></span></button></div>';
     tileText(el, it);
     bindTakeover(el);
     el.addEventListener('animationend', function () { el.classList.remove('is-new'); }, { once: true });
@@ -1038,17 +1104,28 @@
 
   grid.addEventListener('click', function (e) {
     // 요소도 data-open, data-act를 쓸 수 있으므로 요소 바깥의 갤러리 버튼만 봅니다
-    var b = e.target.closest('.g-exp, [data-act]');
+    var b = e.target.closest('.g-exp, [data-act], [data-pick]');
     if (!b || b.closest('.ux')) return;
     var tl = b.closest('.g-tile');
     if (!tl) return;
     var i = +tl.dataset.idx;
     if (b.classList.contains('g-exp')) { openReel(i, tl); return; }
+    if (b.dataset.pick) { setPick(b.dataset.pick, tl); return; }
     var act = b.dataset.act;
     if (act === 'prompt') openPrompt(i);
     else if (act === 'save') toggleSave(ITEMS[i], b);
     else if (act === 'theme') toggleCardTheme(tl);
+    else if (act === 'copy') cardCopy(i, pick, $('.g-cb', tl));
     else if (act === 'claude' || act === 'codex' || act === 'code') cardCopy(i, act, b);
+  });
+  // 고르기 버튼은 좌우 방향키로 옮깁니다(라디오 묶음)
+  grid.addEventListener('keydown', function (e) {
+    var b = e.target.closest && e.target.closest('.g-pk');
+    if (!b || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'ArrowUp' && e.key !== 'ArrowDown')) return;
+    e.preventDefault();
+    var tl = b.closest('.g-tile'), all = $$('.g-pk', tl), k = all.indexOf(b) + (e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 1);
+    var nb = all[(k + all.length) % all.length];
+    setPick(nb.dataset.pick, tl); nb.focus();
   });
   // 카드만 반대 테마로 봅니다. 전체 테마와 같아지면 카드 설정을 풉니다
   function toggleCardTheme(tl) {

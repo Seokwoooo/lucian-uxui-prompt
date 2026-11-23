@@ -1,0 +1,151 @@
+<!-- Lucian UX/UI Prompt #470 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#470 -->
+<!--
+Element: Undo button
+ID: 470 · Category: Buttons · Tags: undo, delete, list, countdown, ring, spring, toast
+What it does: Press a trash button in the file list and that row slides aside and disappears while the rows below glide up. At the same moment an “Undo” pill springs up at the bottom, its ring shrinking over five seconds as a number counts down. Press it and the row bounces back into place; leave it and the pill drops away as the delete becomes final. Hovering the pill pauses the timer.
+How to use it: Delete a row with the trash button, then press Undo
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#470
+-->
+<style>
+.u470{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;padding-top:42px}
+.u470-cd{width:284px;padding:6px;border-radius:20px;background:var(--ux-surface);background:light-dark(#FFFFFF,var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 22px 44px -24px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow)}
+.u470-ls{margin:0;padding:0;list-style:none}
+.u470-r{display:grid;grid-template-rows:1fr;transition:grid-template-rows .42s cubic-bezier(.65,0,.35,1) .12s}
+.u470-r>div{min-height:0;overflow:hidden}
+.u470-in{position:relative;display:flex;align-items:center;gap:11px;height:56px;padding:0 6px 0 9px;border-radius:14px;transition:transform .32s var(--ux-ease),opacity .22s var(--ux-ease),background-color .2s}
+.u470-in:hover{background:var(--ux-surface-2)}
+.u470-r+.u470-r .u470-in::before{content:"";position:absolute;left:52px;right:10px;top:0;height:1px;background:var(--ux-line)}
+.u470-r.is-gone{grid-template-rows:0fr}
+.u470-r.is-gone .u470-in{transform:translateX(-46px) scale(.96);opacity:0}
+.u470-r.is-back{transition:grid-template-rows .4s cubic-bezier(.2,.8,.2,1)}
+.u470-r.is-back .u470-in{transition:transform .62s cubic-bezier(.34,1.56,.64,1) .08s,opacity .3s var(--ux-ease) .08s,background-color .2s}
+.u470-ic{flex:none;position:relative;width:32px;height:38px;border-radius:7px 11px 7px 7px;display:grid;place-items:end center;padding-bottom:6px;font-style:normal;font-size:8.5px;font-weight:800;letter-spacing:.03em;color:#FFFFFF;background:var(--u470-c)}
+.u470-ic::before{content:"";position:absolute;right:0;top:0;width:10px;height:10px;border-radius:0 11px 0 4px;background:rgba(255,255,255,.35)}
+.u470-tx{flex:1;min-width:0}
+.u470-tx b{display:block;font-size:13.5px;font-weight:620;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.u470-tx small{display:block;margin-top:2px;font-size:11.5px;color:var(--ux-ink-3);white-space:nowrap}
+.u470-del{flex:none;width:34px;height:34px;padding:0;border:0;border-radius:10px;display:grid;place-items:center;background:none;color:var(--ux-ink-3);transition:background-color .2s,color .2s,transform .35s var(--ux-spring)}
+.u470-del:hover{background:color-mix(in srgb,var(--ux-danger) 12%,transparent);color:var(--ux-danger)}
+.u470-del:active{transform:scale(.88)}
+.u470 .u470-del:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u470-del svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
+.u470-del .lid{transform-origin:17px 6.5px;transition:transform .35s cubic-bezier(.34,1.8,.5,1)}
+.u470-del:hover .lid{transform:translateY(-1.5px) rotate(14deg)}
+.u470-em{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ux-ease)}
+.u470-em>p{min-height:0;overflow:hidden;margin:0;text-align:center;font-size:13px;color:var(--ux-ink-3)}
+.u470-em.is-on{grid-template-rows:1fr}
+.u470-em.is-on>p{padding:18px 0}
+.u470-undo{position:absolute;left:50%;bottom:26px;display:flex;align-items:center;gap:9px;height:42px;padding:0 18px 0 10px;border:0;border-radius:21px;background:var(--ux-ink);color:var(--ux-surface);font-size:13.5px;font-weight:650;white-space:nowrap;box-shadow:0 14px 30px -12px var(--ux-shadow-strong),0 2px 6px -2px var(--ux-shadow);transform:translate(-50%,22px) scale(.86);opacity:0;visibility:hidden;transition:transform .45s var(--ux-ease),opacity .25s var(--ux-ease),visibility 0s .45s}
+.u470-undo.is-on{transform:translate(-50%,0) scale(var(--u470-k,1));opacity:1;visibility:visible;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .2s var(--ux-ease),visibility 0s}
+.u470-undo.is-on:hover{--u470-k:1.04}
+.u470-undo.is-on:active{--u470-k:.94;transition-duration:.12s}
+.u470 .u470-undo:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u470-rg{position:relative;width:24px;height:24px;display:grid;place-items:center}
+.u470-rg svg{position:absolute;inset:0;width:24px;height:24px;transform:rotate(-90deg)}
+.u470-rg circle{fill:none;stroke-width:2.4}
+.u470-rg .bg{stroke:currentColor;opacity:.2}
+.u470-rg .fg{stroke:currentColor;stroke-linecap:round}
+.u470-rg b{font-size:10.5px;font-weight:750;font-variant-numeric:tabular-nums}
+.u470-ar{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .5s var(--ux-spring)}
+.u470-undo:hover .u470-ar{transform:rotate(-40deg)}
+.u470-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u470">
+  <div class="u470-cd">
+    <ul class="u470-ls" aria-label="Files">
+      <li class="u470-r"><div><div class="u470-in"><i class="u470-ic" style="--u470-c:#E5484D" aria-hidden="true">PDF</i><span class="u470-tx"><b>meeting-notes-nov.pdf</b><small>2.4 MB · Yesterday</small></span><button type="button" class="u470-del" aria-label="Delete meeting-notes-nov.pdf"><svg viewBox="0 0 18 18" aria-hidden="true"><path class="lid" d="M2.5 4.5h13M7 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/><path d="M4 6.5l.8 8.2a1.5 1.5 0 0 0 1.5 1.3h5.4a1.5 1.5 0 0 0 1.5-1.3L14 6.5M7.5 9v4M10.5 9v4"/></svg></button></div></div></li>
+      <li class="u470-r"><div><div class="u470-in"><i class="u470-ic" style="--u470-c:#7B61FF" aria-hidden="true">FIG</i><span class="u470-tx"><b>brand-guide.fig</b><small>18 MB · 3 days ago</small></span><button type="button" class="u470-del" aria-label="Delete brand-guide.fig"><svg viewBox="0 0 18 18" aria-hidden="true"><path class="lid" d="M2.5 4.5h13M7 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/><path d="M4 6.5l.8 8.2a1.5 1.5 0 0 0 1.5 1.3h5.4a1.5 1.5 0 0 0 1.5-1.3L14 6.5M7.5 9v4M10.5 9v4"/></svg></button></div></div></li>
+      <li class="u470-r"><div><div class="u470-in"><i class="u470-ic" style="--u470-c:#1F9D62" aria-hidden="true">XLS</i><span class="u470-tx"><b>quote-final.xlsx</b><small>86 KB · Last week</small></span><button type="button" class="u470-del" aria-label="Delete quote-final.xlsx"><svg viewBox="0 0 18 18" aria-hidden="true"><path class="lid" d="M2.5 4.5h13M7 4.5V3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1.5"/><path d="M4 6.5l.8 8.2a1.5 1.5 0 0 0 1.5 1.3h5.4a1.5 1.5 0 0 0 1.5-1.3L14 6.5M7.5 9v4M10.5 9v4"/></svg></button></div></div></li>
+    </ul>
+    <div class="u470-em"><p>No files</p></div>
+  </div>
+  <button type="button" class="u470-undo" tabindex="-1" aria-hidden="true">
+    <span class="u470-rg" aria-hidden="true"><svg viewBox="0 0 24 24"><circle class="bg" cx="12" cy="12" r="10"/><circle class="fg" cx="12" cy="12" r="10"/></svg><b>5</b></span>
+    <span>Undo</span>
+    <svg class="u470-ar" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 3.5 2 6l2.5 2.5"/><path d="M2.5 6h7a4 4 0 0 1 0 8H7"/></svg>
+  </button>
+  <p class="u470-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var ls = root.querySelector('.u470-ls'), em = root.querySelector('.u470-em'), undo = root.querySelector('.u470-undo'), fg = root.querySelector('.u470-rg .fg'), num = root.querySelector('.u470-rg b'), live = root.querySelector('.u470-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = {
+    del: function (n) { return n + ' deleted. You can undo for 5 seconds'; },
+    back: function (n) { return n + ' restored'; }
+  };
+  var LIFE = 5000, C = 2 * Math.PI * 10, slot = null, raf = 0, last = 0, paused = false, backT = 0;
+  function rows() { return [].slice.call(ls.querySelectorAll('.u470-r:not(.is-gone)')); }
+  function nameOf(r) { return r.querySelector('.u470-tx b').textContent; }
+  function empty() { em.classList.toggle('is-on', !rows().length); }
+  function tick(now) {
+    raf = 0;
+    if (!root.isConnected || !slot) return;
+    if (!paused) slot.left -= Math.min(100, now - last);
+    last = now;
+    var f = Math.max(0, slot.left / LIFE);
+    fg.style.strokeDasharray = (C * f).toFixed(2) + ' ' + C.toFixed(2);
+    num.textContent = String(Math.max(1, Math.ceil(slot.left / 1000)));
+    if (slot.left <= 0) { commit(); return; }
+    raf = requestAnimationFrame(tick);
+  }
+  function showPill(on, keyboard) {
+    undo.classList.toggle('is-on', on);
+    undo.tabIndex = on ? 0 : -1;
+    if (on) undo.removeAttribute('aria-hidden'); else undo.setAttribute('aria-hidden', 'true');
+    if (on && keyboard) undo.focus();
+  }
+  function commit() {
+    if (!slot) return;
+    var r = slot.row;
+    slot = null;
+    cancelAnimationFrame(raf); raf = 0;
+    if (r.parentNode) r.parentNode.removeChild(r);
+    showPill(false);
+    empty();
+  }
+  ls.addEventListener('click', function (e) {
+    var b = e.target.closest('.u470-del');
+    if (!b) return;
+    var r = b.closest('.u470-r');
+    if (r.classList.contains('is-gone')) return;
+    if (slot) commit();
+    var keyboard = e.detail === 0;
+    r.classList.remove('is-back');
+    r.classList.add('is-gone');
+    r.querySelector('.u470-del').tabIndex = -1;
+    slot = { row: r, left: LIFE, name: nameOf(r) };
+    paused = false;
+    last = performance.now();
+    fg.style.strokeDasharray = C.toFixed(2) + ' ' + C.toFixed(2);
+    num.textContent = '5';
+    showPill(true, keyboard);
+    live.textContent = T.del(slot.name);
+    setTimeout(empty, rm ? 0 : 400);
+    raf = requestAnimationFrame(tick);
+  });
+  undo.addEventListener('click', function (e) {
+    if (!slot) return;
+    var r = slot.row, n = slot.name, keyboard = e.detail === 0;
+    slot = null;
+    cancelAnimationFrame(raf); raf = 0;
+    clearTimeout(backT);
+    r.classList.add('is-back');
+    r.classList.remove('is-gone');
+    var del = r.querySelector('.u470-del');
+    del.tabIndex = 0;
+    em.classList.remove('is-on');
+    showPill(false);
+    live.textContent = T.back(n);
+    if (keyboard) del.focus();
+    backT = setTimeout(function () { if (root.isConnected) r.classList.remove('is-back'); }, rm ? 0 : 800);
+  });
+  undo.addEventListener('pointerenter', function () { paused = true; });
+  undo.addEventListener('pointerleave', function () { paused = false; });
+  undo.addEventListener('focus', function () { paused = true; });
+  undo.addEventListener('blur', function () { paused = false; });
+})();
+</script>

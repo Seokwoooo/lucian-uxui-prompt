@@ -1,0 +1,180 @@
+<!-- Lucian UX/UI Prompt #478 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#478 -->
+<!--
+Element: QR code share
+ID: 478 · Category: Cards & Content · Tags: qr-code, share, copy-link, scan-line, svg, clipboard
+What it does: A share card that hands over a link as a QR code. The code isn’t a picture: the address is really encoded and drawn as SVG, so a phone camera opens it. When it scrolls into view the corner brackets close in and a beam of light sweeps down across it. Press Copy link and the button turns mint, reading Copied as a check draws in.
+How to use it: Press Copy link. You can also scan the code with a phone camera
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#478
+-->
+<style>
+.u478{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u478-c{position:relative;width:228px;padding:16px;border-radius:22px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line),0 1px 2px var(--ux-shadow),0 22px 44px -26px var(--ux-shadow-strong)}
+
+.u478-q{position:relative;width:140px;height:140px;margin:6px auto 0;border-radius:16px;background:#FFFFFF;box-shadow:0 0 0 1px rgba(22,21,27,.08),0 8px 18px -12px rgba(22,21,27,.35)}
+.u478-q svg{position:absolute;inset:0;width:100%;height:100%;border-radius:16px}
+.u478-q .m{fill:#16151B}
+.u478-q .f{fill:none;stroke:#16151B}
+.u478-q .e{fill:#6A57F2}
+.u478-br{position:absolute;inset:-7px;pointer-events:none;opacity:0;transform:scale(1.14);transition:opacity .3s var(--ux-ease),transform .6s cubic-bezier(.34,1.6,.5,1)}
+.u478-br i{position:absolute;width:18px;height:18px;border:2.5px solid var(--ux-accent);border-radius:7px}
+.u478-br i:nth-child(1){left:0;top:0;border-right:0;border-bottom:0;border-radius:9px 0 0 0}
+.u478-br i:nth-child(2){right:0;top:0;border-left:0;border-bottom:0;border-radius:0 9px 0 0}
+.u478-br i:nth-child(3){left:0;bottom:0;border-right:0;border-top:0;border-radius:0 0 0 9px}
+.u478-br i:nth-child(4){right:0;bottom:0;border-left:0;border-top:0;border-radius:0 0 9px 0}
+.u478.is-in .u478-br{opacity:1;transform:none}
+.u478-sc{position:absolute;inset:0;border-radius:16px;overflow:hidden;pointer-events:none}
+.u478-sc i{position:absolute;left:-10%;right:-10%;top:0;height:46px;margin-top:-46px;background:linear-gradient(180deg,transparent,rgba(106,87,242,.16) 70%,rgba(106,87,242,.5) 96%,transparent);opacity:0}
+.u478-sc i::after{content:"";position:absolute;left:8%;right:8%;bottom:1px;height:2px;border-radius:2px;background:#6A57F2;box-shadow:0 0 10px 2px rgba(106,87,242,.6)}
+.u478.is-in .u478-sc i{animation:u478-scan 4.2s cubic-bezier(.45,.05,.35,1) .45s infinite}
+@keyframes u478-scan{0%{opacity:0;transform:translateY(0)}6%{opacity:1}38%{opacity:1;transform:translateY(186px)}44%,100%{opacity:0;transform:translateY(186px)}}
+.u478-u{margin:14px 0 10px;font-size:12px;font-weight:600;color:var(--ux-ink-2);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0}
+.u478-cp{position:relative;display:grid;width:100%;height:40px;padding:0;border:0;border-radius:12px;background:var(--ux-ink);color:var(--ux-surface);font-size:13.5px;font-weight:700;overflow:hidden;transition:transform .45s cubic-bezier(.34,1.7,.5,1),background-color .35s var(--ux-ease)}
+.u478-cp:hover{transform:translateY(-1px)}
+.u478-cp:active{transform:scale(.96);transition-duration:.1s}
+.u478 .u478-cp:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u478-cp>span{grid-area:1/1;display:flex;align-items:center;justify-content:center;gap:7px;transition:opacity .2s,transform .45s cubic-bezier(.34,1.6,.5,1),filter .2s}
+.u478-cp>span+span{opacity:0;transform:translateY(12px);filter:blur(3px)}
+.u478-cp svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.u478-cp .ck path{stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .35s var(--ux-ease) .18s}
+.u478-cp.is-ok{background:var(--ux-mint);animation:u478-ok .5s cubic-bezier(.34,1.7,.5,1)}
+@keyframes u478-ok{35%{transform:scale(1.05)}}
+.u478-cp.is-ok>span:first-child{opacity:0;transform:translateY(-12px);filter:blur(3px)}
+.u478-cp.is-ok>span+span{opacity:1;transform:none;filter:none}
+.u478-cp.is-ok .ck path{stroke-dashoffset:0}
+.u478-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u478" data-url="https://lucianlabs.dev/uxui-prompt">
+  <section class="u478-c">
+    <div class="u478-q"><span class="u478-br" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="u478-sc" aria-hidden="true"><i></i></span></div>
+    <p class="u478-u"></p>
+    <button type="button" class="u478-cp"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4.2 4.2 0 0 0 6 0l3-3a4.2 4.2 0 0 0-6-6l-1 1"/><path d="M14 10a4.2 4.2 0 0 0-6 0l-3 3a4.2 4.2 0 0 0 6 6l1-1"/></svg>Copy link</span><span aria-hidden="true"><svg class="ck" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Copied</span></button>
+  </section>
+  <p class="u478-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var url = root.dataset.url, box = root.querySelector('.u478-q'), cp = root.querySelector('.u478-cp'), live = root.querySelector('.u478-live');
+  root.querySelector('.u478-u').textContent = url.replace(/^https?:\/\//, '');
+
+  var EC = [null, [10, 1, 16], [16, 1, 28], [26, 1, 44], [18, 2, 32], [24, 2, 43], [16, 4, 27]];
+  var AL = [null, [], [6, 18], [6, 22], [6, 26], [6, 30], [6, 34]];
+  function mul(x, y) { var z = 0; for (var i = 7; i >= 0; i--) { z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z; }
+  function rsDiv(n) {
+    var r = []; for (var i = 0; i < n - 1; i++) r.push(0); r.push(1);
+    var g = 1;
+    for (i = 0; i < n; i++) { for (var j = 0; j < r.length; j++) { r[j] = mul(r[j], g); if (j + 1 < r.length) r[j] ^= r[j + 1]; } g = mul(g, 2); }
+    return r;
+  }
+  function rsRem(data, div) {
+    var r = div.map(function () { return 0; });
+    data.forEach(function (b) { var f = b ^ r.shift(); r.push(0); div.forEach(function (c, i) { r[i] ^= mul(c, f); }); });
+    return r;
+  }
+  function qr(text) {
+    var bytes = [].slice.call(new TextEncoder().encode(text)), v = 1;
+    while (v < 6 && 12 + bytes.length * 8 > EC[v][1] * EC[v][2] * 8) v++;
+    var ecn = EC[v][0], nb = EC[v][1], dpb = EC[v][2], cap = nb * dpb * 8;
+    var bits = [];
+    function put(val, len) { for (var i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); }
+    put(4, 4); put(bytes.length, 8); bytes.forEach(function (b) { put(b, 8); });
+    put(0, Math.min(4, cap - bits.length));
+    while (bits.length % 8) bits.push(0);
+    for (var pad = 0xEC; bits.length < cap; pad ^= 0xEC ^ 0x11) put(pad, 8);
+    var data = []; for (var i = 0; i < bits.length; i += 8) { var b = 0; for (var k = 0; k < 8; k++) b = b << 1 | bits[i + k]; data.push(b); }
+    var div = rsDiv(ecn), blocks = [], ecs = [];
+    for (i = 0; i < nb; i++) { var blk = data.slice(i * dpb, (i + 1) * dpb); blocks.push(blk); ecs.push(rsRem(blk, div)); }
+    var all = [];
+    for (i = 0; i < dpb; i++) blocks.forEach(function (bk) { all.push(bk[i]); });
+    for (i = 0; i < ecn; i++) ecs.forEach(function (e) { all.push(e[i]); });
+    var n = 17 + 4 * v, M = [], F = [];
+    for (i = 0; i < n; i++) { M.push(new Array(n).fill(false)); F.push(new Array(n).fill(false)); }
+    function set(x, y, d) { M[y][x] = d; F[y][x] = true; }
+    for (i = 0; i < n; i++) { set(6, i, i % 2 === 0); set(i, 6, i % 2 === 0); }
+    [[3, 3], [n - 4, 3], [3, n - 4]].forEach(function (c) {
+      for (var dy = -4; dy <= 4; dy++) for (var dx = -4; dx <= 4; dx++) {
+        var x = c[0] + dx, y = c[1] + dy, d = Math.max(Math.abs(dx), Math.abs(dy));
+        if (x >= 0 && x < n && y >= 0 && y < n) set(x, y, d !== 2 && d !== 4);
+      }
+    });
+    var al = AL[v], last = al.length - 1;
+    al.forEach(function (ax, ii) { al.forEach(function (ay, jj) {
+      if ((ii === 0 && jj === 0) || (ii === 0 && jj === last) || (ii === last && jj === 0)) return;
+      for (var dy = -2; dy <= 2; dy++) for (var dx = -2; dx <= 2; dx++) set(ax + dx, ay + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }); });
+    function format(mask) {
+      var d = (0 << 3) | mask, r = d;
+      for (var i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+      var fb = ((d << 10) | r) ^ 0x5412, bit = function (i) { return ((fb >>> i) & 1) === 1; };
+      for (i = 0; i <= 5; i++) set(8, i, bit(i));
+      set(8, 7, bit(6)); set(8, 8, bit(7)); set(7, 8, bit(8));
+      for (i = 9; i < 15; i++) set(14 - i, 8, bit(i));
+      for (i = 0; i < 8; i++) set(n - 1 - i, 8, bit(i));
+      for (i = 8; i < 15; i++) set(8, n - 15 + i, bit(i));
+      set(8, n - 8, true);
+    }
+    format(0);
+    var bi = 0, total = all.length * 8;
+    for (var right = n - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (var vert = 0; vert < n; vert++) for (var j = 0; j < 2; j++) {
+        var x = right - j, up = ((right + 1) & 2) === 0, y = up ? n - 1 - vert : vert;
+        if (!F[y][x] && bi < total) { M[y][x] = ((all[bi >>> 3] >>> (7 - (bi & 7))) & 1) === 1; bi++; }
+      }
+    }
+    var MASKS = [
+      function (x, y) { return (x + y) % 2 === 0; }, function (x, y) { return y % 2 === 0; },
+      function (x) { return x % 3 === 0; }, function (x, y) { return (x + y) % 3 === 0; },
+      function (x, y) { return (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; }, function (x, y) { return x * y % 2 + x * y % 3 === 0; },
+      function (x, y) { return (x * y % 2 + x * y % 3) % 2 === 0; }, function (x, y) { return ((x + y) % 2 + x * y % 3) % 2 === 0; }
+    ];
+    function apply(m) { for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (!F[y][x] && MASKS[m](x, y)) M[y][x] = !M[y][x]; }
+    function penalty() {
+      var p = 0, dark = 0, y, x, lines = [];
+      for (y = 0; y < n; y++) { var row = '', col = ''; for (x = 0; x < n; x++) { row += M[y][x] ? 1 : 0; col += M[x][y] ? 1 : 0; if (M[y][x]) dark++; } lines.push(row, col); }
+      lines.forEach(function (s) {
+        (s.match(/0{5,}|1{5,}/g) || []).forEach(function (r) { p += r.length - 2; });
+        p += 40 * ((s.match(/(?=10111010000|00001011101)/g) || []).length);
+      });
+      for (y = 0; y < n - 1; y++) for (x = 0; x < n - 1; x++) { var c = M[y][x]; if (c === M[y][x + 1] && c === M[y + 1][x] && c === M[y + 1][x + 1]) p += 3; }
+      return p + 10 * Math.floor(Math.abs(dark * 20 / (n * n) - 10));
+    }
+    var best = 0, bestP = Infinity;
+    for (var m = 0; m < 8; m++) { apply(m); format(m); var sc = penalty(); if (sc < bestP) { bestP = sc; best = m; } apply(m); }
+    apply(best); format(best);
+    return { n: n, M: M, F: F };
+  }
+
+  var Q = qr(url), n = Q.n, pad = 3, W = n + pad * 2, d = '';
+  function inFinder(x, y) { return (x < 7 && y < 7) || (x >= n - 7 && y < 7) || (x < 7 && y >= n - 7); }
+  for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (Q.M[y][x] && !inFinder(x, y)) d += 'M' + (x + pad + 0.06) + ' ' + (y + pad + 0.06) + 'h.88v.88h-.88z';
+  var eyes = '';
+  [[0, 0], [n - 7, 0], [0, n - 7]].forEach(function (c) {
+    var X = c[0] + pad, Y = c[1] + pad;
+    eyes += '<rect class="f" x="' + (X + 0.5) + '" y="' + (Y + 0.5) + '" width="6" height="6" rx="1.7" stroke-width="1"/>' +
+      '<rect class="e" x="' + (X + 2) + '" y="' + (Y + 2) + '" width="3" height="3" rx=".9"/>';
+  });
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + W);
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'QR code: ' + url);
+  svg.setAttribute('shape-rendering', 'geometricPrecision');
+  svg.innerHTML = '<path class="m" d="' + d + '"/>' + eyes;
+  box.insertBefore(svg, box.firstChild);
+
+  var t1 = 0;
+  cp.addEventListener('click', function () {
+    try { if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(url).catch(function () {}); } catch (e) {  }
+    cp.classList.remove('is-ok'); void cp.offsetWidth; cp.classList.add('is-ok');
+    live.textContent = 'Link copied';
+    clearTimeout(t1);
+    t1 = setTimeout(function () { if (root.isConnected) { cp.classList.remove('is-ok'); live.textContent = ''; } }, 2200);
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); root.classList.add('is-in'); } }, { threshold: .4 });
+    io.observe(root);
+  } else root.classList.add('is-in');
+})();
+</script>

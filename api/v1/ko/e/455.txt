@@ -1,0 +1,147 @@
+<!-- Lucian UX/UI Prompt #455 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#455 -->
+<!--
+Element: 도구 실행 승인
+ID: 455 · Category: 알림·피드백 · Tags: ai, agent, approval, tool-call, terminal, permission, morph
+What it does: AI 에이전트가 터미널 명령을 실행하기 전에 묻는 승인 카드입니다. ‘허용’을 누르면 카드가 한 줄 알약으로 줄어들어 돌다가 ‘테스트 12개 통과’ 체크로 끝나고, ‘거부’를 누르면 명령 위로 줄이 그어집니다. ‘항상 허용’을 켜고 허용하면 알약에 그 표시가 남습니다. 잠시 뒤 다음 요청이 다시 펼쳐집니다.
+How to use it: ‘항상 허용’을 켜고 ‘허용’을, 또는 ‘거부’를 눌러 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#455
+-->
+<style>
+.u455{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u455-c{position:relative;width:296px;border-radius:18px;overflow:hidden;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 18px 36px -20px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow);transition:width .58s cubic-bezier(.3,1.22,.5,1),height .58s cubic-bezier(.3,1.22,.5,1),border-radius .5s var(--ux-ease)}
+.u455-c:not([data-s="ask"]){border-radius:22px}
+.u455 .u455-c:focus{outline:none}
+.u455 .u455-c:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u455-full{width:296px;padding:14px;transition:opacity .22s var(--ux-ease) .1s,transform .45s var(--ux-ease) .05s,filter .22s var(--ux-ease) .1s}
+.u455-c:not([data-s="ask"]) .u455-full{opacity:0;transform:scale(.96);filter:blur(3px);transition-delay:0s}
+.u455-hd{display:flex;align-items:center;gap:11px}
+.u455-tl{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--ux-ink);color:var(--ux-surface);color:light-dark(var(--ux-surface),var(--ux-page))}
+.u455-tl svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.u455-tt{min-width:0;display:flex;flex-direction:column;gap:2px}
+.u455-tt b{font-size:14.5px;font-weight:650;letter-spacing:-.015em}
+.u455-tt small{font-size:12px;color:var(--ux-ink-3)}
+.u455-cd{display:flex;align-items:center;gap:9px;height:40px;margin-top:12px;padding:0 13px;border-radius:11px;background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),rgba(0,0,0,.3));box-shadow:inset 0 0 0 1px var(--ux-line);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.u455-cd span{color:var(--ux-ink-3)}
+.u455-cd code{font:inherit;color:var(--ux-ink)}
+.u455-ft{display:flex;align-items:center;gap:8px;margin-top:13px}
+.u455-al{position:relative;display:flex;align-items:center;gap:7px;margin-right:auto;font-size:12.5px;font-weight:500;color:var(--ux-ink-2);cursor:pointer;user-select:none;-webkit-user-select:none}
+.u455-cb{position:absolute;opacity:0;width:16px;height:16px;margin:0;pointer-events:none}
+.u455-bx{position:relative;flex:none;width:17px;height:17px;border-radius:5px;display:grid;place-items:center;box-shadow:inset 0 0 0 1.5px var(--ux-line-2);color:var(--ux-accent-ink);transition:background-color .2s var(--ux-ease),box-shadow .2s var(--ux-ease)}
+.u455-bx svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u455-bx path{stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .3s var(--ux-ease)}
+.u455-al:hover .u455-bx{box-shadow:inset 0 0 0 1.5px var(--ux-ink-3)}
+.u455-cb:checked+.u455-bx{background:var(--ux-accent);box-shadow:inset 0 0 0 1.5px var(--ux-accent);animation:u455-pop .45s cubic-bezier(.34,1.7,.5,1)}
+.u455-cb:checked+.u455-bx path{stroke-dashoffset:0;transition-delay:.06s}
+.u455-cb:focus-visible+.u455-bx{outline:2px solid var(--ux-accent);outline-offset:2px}
+@keyframes u455-pop{40%{transform:scale(.8)}75%{transform:scale(1.12)}}
+.u455-b{height:34px;padding:0 15px;border:0;border-radius:10px;font-size:13.5px;font-weight:650;transition:background-color .15s,box-shadow .15s,transform .45s var(--ux-spring)}
+.u455-b:active{transform:scale(.93);transition-duration:.15s,.15s,.1s}
+.u455-no{background:none;color:var(--ux-ink);box-shadow:inset 0 0 0 1px var(--ux-line-2)}
+.u455-no:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3))}
+.u455-ok{background:var(--ux-ink);color:var(--ux-surface);color:light-dark(var(--ux-surface),var(--ux-page))}
+.u455-ok:hover{background:color-mix(in srgb,var(--ux-ink) 86%,var(--ux-surface))}
+.u455 .u455-b:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u455-line{position:absolute;left:0;top:0;height:44px;margin:0;display:inline-flex;align-items:center;gap:9px;padding:0 17px 0 12px;white-space:nowrap;opacity:0;transform:translateY(8px);transition:opacity .25s var(--ux-ease),transform .4s var(--ux-ease);pointer-events:none}
+.u455-c:not([data-s="ask"]) .u455-line{opacity:1;transform:none;transition:opacity .35s var(--ux-ease) .2s,transform .55s cubic-bezier(.3,1.4,.5,1) .2s}
+.u455-li{position:relative;flex:none;width:20px;height:20px}
+.u455-li>*{position:absolute;inset:0;margin:auto;border-radius:50%;opacity:0;transform:scale(.3);transition:opacity .2s var(--ux-ease),transform .5s cubic-bezier(.34,1.7,.5,1)}
+.u455-sp{width:16px;height:16px;border:2px solid var(--ux-accent-soft);border-top-color:var(--ux-accent);animation:u455-spin .7s linear infinite}
+@keyframes u455-spin{to{rotate:360deg}}
+.u455-ck,.u455-xx{width:20px;height:20px;display:grid;place-items:center}
+.u455-ck{background:var(--ux-mint);color:#FFFFFF;color:light-dark(#FFFFFF,var(--ux-page))}
+.u455-xx{background:var(--ux-surface-3);color:var(--ux-ink-2)}
+.u455-li svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u455-c[data-s="run"] .u455-sp,.u455-c[data-s="ok"] .u455-ck,.u455-c[data-s="no"] .u455-xx{opacity:1;transform:none}
+.u455-lc{position:relative;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;color:var(--ux-ink);transition:color .3s var(--ux-ease) .4s}
+.u455-lc::after{content:"";position:absolute;left:-3px;right:-3px;top:50%;height:1.5px;margin-top:-.5px;border-radius:2px;background:var(--ux-ink-2);transform:scaleX(0);transform-origin:0 50%;transition:transform .5s cubic-bezier(.6,0,.2,1) .45s}
+.u455-c[data-s="no"] .u455-lc{color:var(--ux-ink-3)}
+.u455-c[data-s="no"] .u455-lc::after{transform:scaleX(1)}
+.u455-lt{font-size:13px;color:var(--ux-ink-3)}
+.u455-c[data-s="ok"] .u455-lt{color:var(--ux-ink-2)}
+.u455-tag{height:20px;padding:0 7px;border-radius:6px;display:inline-flex;align-items:center;font-size:11px;font-weight:650;color:var(--ux-accent);background:var(--ux-accent-soft)}
+</style>
+<div class="ux u455">
+  <div class="u455-c" data-s="ask" role="group" aria-label="명령 실행 승인">
+    <div class="u455-full">
+      <div class="u455-hd">
+        <span class="u455-tl" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6.5 8 4 4-4 4M12.5 16.5h5"/></svg></span>
+        <span class="u455-tt"><b>터미널 명령 실행</b><small>에이전트가 실행하려고 해요</small></span>
+      </div>
+      <div class="u455-cd"><span aria-hidden="true">$</span><code>npm test</code></div>
+      <div class="u455-ft">
+        <label class="u455-al"><input type="checkbox" class="u455-cb"><span class="u455-bx" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span>항상 허용</label>
+        <button type="button" class="u455-b u455-no">거부</button>
+        <button type="button" class="u455-b u455-ok">허용</button>
+      </div>
+    </div>
+    <p class="u455-line" role="status">
+      <span class="u455-li" aria-hidden="true"><i class="u455-sp"></i><span class="u455-ck"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span><span class="u455-xx"><svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7 7 17"/></svg></span></span>
+      <code class="u455-lc">npm test</code><span class="u455-lt"></span><span class="u455-tag" hidden></span>
+    </p>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var c = q('.u455-c'), full = q('.u455-full'), line = q('.u455-line'), lt = q('.u455-lt'), tag = q('.u455-tag');
+  var cb = q('.u455-cb'), ok = q('.u455-ok'), no = q('.u455-no');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { run: '실행 중…', ok: '테스트 12개 통과', no: '거부됨', always: '항상 허용' };
+  var W = 296, H = 44, gen = 0;
+  tag.textContent = T.always;
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, ms); }
+  function fitLine() { c.style.width = Math.ceil(line.offsetWidth) + 'px'; }
+  // 글이 바뀔 때는 살짝 위로 빠졌다가 아래에서 올라오고, 알약 폭도 새 글에 맞춰 줄거나 늘어납니다
+  function swap(text) {
+    if (rm || !lt.animate) { lt.textContent = text; fitLine(); return; }
+    lt.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px)' }], { duration: 140, easing: 'ease-in' }).onfinish = function () {
+      if (!root.isConnected) return;
+      lt.textContent = text;
+      fitLine();
+      lt.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+    };
+  }
+  // 카드 → 한 줄 알약: 지금 크기를 숫자로 고정한 뒤 알약 크기로 줄여 전환이 이어지게 합니다
+  function collapse(state) {
+    gen += 1;
+    var had = c.contains(document.activeElement);
+    c.style.width = c.offsetWidth + 'px';
+    c.style.height = c.offsetHeight + 'px';
+    void c.offsetWidth;
+    c.dataset.s = state;
+    full.inert = true;
+    lt.textContent = state === 'no' ? T.no : T.run;
+    tag.hidden = !(cb.checked && state !== 'no');
+    c.style.height = H + 'px';
+    fitLine();
+    if (had) { c.tabIndex = -1; c.focus({ preventScroll: true }); }
+  }
+  // 잠시 뒤 다음 요청: 알약이 다시 카드로 펼쳐집니다
+  function comeBack() {
+    gen += 1;
+    var had = document.activeElement === c;
+    cb.checked = false;
+    c.dataset.s = 'ask';
+    full.inert = false;
+    c.style.width = W + 'px';
+    c.style.height = full.offsetHeight + 'px';
+    if (had) ok.focus({ preventScroll: true });
+    c.removeAttribute('tabindex');
+    later(function () { c.style.width = ''; c.style.height = ''; }, 650);
+  }
+  ok.addEventListener('click', function () {
+    if (c.dataset.s !== 'ask') return;
+    collapse('run');
+    later(function () { c.dataset.s = 'ok'; swap(T.ok); }, 1500);
+    later(comeBack, 3600);
+  });
+  no.addEventListener('click', function () {
+    if (c.dataset.s !== 'ask') return;
+    collapse('no');
+    later(comeBack, 2800);
+  });
+})();
+</script>

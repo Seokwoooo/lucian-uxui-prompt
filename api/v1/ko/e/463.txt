@@ -1,0 +1,164 @@
+<!-- Lucian UX/UI Prompt #463 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#463 -->
+<!--
+Element: 디텐트 다이얼
+ID: 463 · Category: 토글·선택 · Tags: knob, dial, rotary, detent, volume, spring, tactile
+What it does: 오디오 기기의 볼륨 손잡이처럼 생긴 다이얼입니다. 가장자리에 홈이 파인 손잡이를 돌리면 눈금마다 걸리는 느낌으로 딸깍딸깍 넘어가고, 지나온 눈금에 불이 켜지며 아래 스피커 아이콘의 음파와 숫자가 함께 바뀝니다. 손을 떼면 가장 가까운 눈금으로 스프링처럼 살짝 넘쳤다가 자리를 잡습니다. 화살표 키로도 한 칸씩 돌아갑니다.
+How to use it: 손잡이를 잡고 돌려 보세요. 화살표 키도 됩니다
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#463
+-->
+<style>
+.u463{position:relative;width:340px;height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.u463-dial{position:relative;width:204px;height:204px}
+.u463-tk{position:absolute;left:50%;top:50%;width:3px;height:10px;margin:-5px 0 0 -1.5px;border-radius:2px;background:var(--ux-line-2);transform:rotate(var(--u463-a)) translateY(-90px) scaleY(var(--u463-s,1));transition:background-color .18s var(--ux-ease),transform .35s var(--ux-spring)}
+.u463-tk.is-big{--u463-s:1.45}
+.u463-tk.is-on{background:color-mix(in srgb,var(--ux-accent) 70%,transparent)}
+.u463-tk.is-cur{--u463-s:1.9;background:var(--ux-accent);box-shadow:0 0 8px color-mix(in srgb,var(--ux-accent) 60%,transparent)}
+.u463-mm{position:absolute;bottom:22px;font-size:10px;font-weight:650;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u463-mm:first-of-type{left:30px}
+.u463-mm:last-of-type{right:26px}
+.u463-well{position:absolute;inset:30px;border-radius:50%;background:var(--ux-surface-2);background:light-dark(#ECEAF1,#0E0F15);box-shadow:inset 0 2px 6px var(--ux-shadow),inset 0 0 0 1px var(--ux-line)}
+.u463-kb{position:absolute;inset:40px;border-radius:50%;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 16px 26px -12px var(--ux-shadow-strong),0 3px 6px -2px var(--ux-shadow)}
+.u463-kb:active{cursor:grabbing}
+.u463 .u463-kb:focus-visible{outline:2px solid var(--ux-accent);outline-offset:6px}
+.u463-kn{position:absolute;inset:0;border-radius:50%;background:repeating-conic-gradient(#DAD9E1 0 3deg,#F7F7FA 3deg 6deg);background:repeating-conic-gradient(light-dark(#D6D5DD,#262732) 0 3deg,light-dark(#F7F7FA,#3B3C49) 3deg 6deg);transform:rotate(var(--u463-ang,0deg))}
+.u463-lt{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 22%,rgba(255,255,255,.55),transparent 55%),radial-gradient(circle at 70% 88%,rgba(0,0,0,.22),transparent 62%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.u463-cap{position:absolute;inset:11px;border-radius:50%;background:radial-gradient(circle at 38% 28%,#FFFFFF,#ECEBF1 60%,#D9D8E0);background:radial-gradient(circle at 38% 28%,light-dark(#FFFFFF,#454655),light-dark(#ECEBF1,#2D2E3A) 60%,light-dark(#D9D8E0,#24252F));box-shadow:0 2px 4px rgba(0,0,0,.22),0 0 0 1px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 3px rgba(0,0,0,.08)}
+.u463-cap::after{content:"";position:absolute;inset:0;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.05) 0 1px,rgba(0,0,0,.025) 1px 2.5px)}
+.u463-ind{position:absolute;inset:11px;border-radius:50%;transform:rotate(var(--u463-ang,0deg));pointer-events:none}
+.u463-ind::before{content:"";position:absolute;left:50%;top:8px;width:4px;height:15px;margin-left:-2px;border-radius:2px;background:var(--ux-accent);box-shadow:0 0 6px color-mix(in srgb,var(--ux-accent) 55%,transparent),inset 0 1px 1px rgba(0,0,0,.2)}
+.u463-ro{display:flex;align-items:center;justify-content:center;gap:8px;height:34px;color:var(--ux-ink)}
+.u463-sp{width:22px;height:22px;fill:none;stroke:var(--ux-ink-2);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.u463-sp .bx{fill:var(--ux-ink-2);stroke:none}
+.u463-sp .w{opacity:.15;transition:opacity .2s var(--ux-ease)}
+.u463-sp .x{opacity:0;transition:opacity .2s var(--ux-ease)}
+.u463[data-w="1"] .u463-sp .w1,.u463[data-w="2"] .u463-sp .w1,.u463[data-w="2"] .u463-sp .w2,.u463[data-w="3"] .u463-sp .w{opacity:1}
+.u463[data-w="0"] .u463-sp .w{opacity:0}
+.u463[data-w="0"] .u463-sp .x{opacity:1}
+.u463-v{position:relative;width:34px;height:30px;overflow:hidden;font-size:24px;line-height:30px;font-weight:720;letter-spacing:-.02em;font-variant-numeric:tabular-nums;text-align:left}
+.u463-v span{position:absolute;left:0;top:0}
+.u463-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u463" data-w="2">
+  <div class="u463-dial">
+    <span class="u463-mm" aria-hidden="true">0</span><span class="u463-mm" aria-hidden="true">10</span>
+    <i class="u463-well"></i>
+    <div class="u463-kb" role="slider" tabindex="0" aria-label="볼륨" aria-valuemin="0" aria-valuemax="10" aria-valuenow="4">
+      <i class="u463-kn"></i><i class="u463-lt"></i><i class="u463-cap"></i><i class="u463-ind"></i>
+    </div>
+  </div>
+  <div class="u463-ro" aria-hidden="true">
+    <svg class="u463-sp" viewBox="0 0 24 24"><path class="bx" d="M3.5 9.2h3L11 5.4c.5-.4 1.2 0 1.2.6v12c0 .6-.7 1-1.2.6l-4.5-3.8h-3c-.6 0-1-.4-1-1V10.2c0-.6.4-1 1-1z"/><path class="w w1" d="M15.2 9.6a3.4 3.4 0 0 1 0 4.8"/><path class="w w2" d="M17.6 7.4a6.6 6.6 0 0 1 0 9.2"/><path class="w w3" d="M20 5.2a9.8 9.8 0 0 1 0 13.6"/><path class="x" d="m15.5 9.5 5 5m0-5-5 5"/></svg>
+    <b class="u463-v"><span>4</span></b>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var dial = root.querySelector('.u463-dial'), kb = root.querySelector('.u463-kb'), vb = root.querySelector('.u463-v');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var N = 10, SPAN = 270, STEP = SPAN / N, A0 = -SPAN / 2;
+  var value = 4, ang = A0 + value * STEP, vel = 0, target = ang, raf = 0, drag = null, snappy = false;
+  var ticks = [];
+  for (var i = 0; i <= N; i++) {
+    var t = document.createElement('i');
+    t.className = 'u463-tk' + (i % 5 === 0 ? ' is-big' : '');
+    t.style.setProperty('--u463-a', (A0 + i * STEP) + 'deg');
+    dial.insertBefore(t, dial.firstChild);
+    ticks.push(t);
+  }
+  function lights() {
+    ticks.forEach(function (t, i) {
+      t.classList.toggle('is-on', i < value);
+      t.classList.toggle('is-cur', i === value);
+    });
+    root.dataset.w = value === 0 ? '0' : value <= 3 ? '1' : value <= 7 ? '2' : '3';
+    kb.setAttribute('aria-valuenow', String(value));
+    kb.setAttribute('aria-valuetext', '볼륨 ' + value);
+  }
+  // 숫자는 커질 때 아래에서, 작아질 때 위에서 굴러 들어옵니다
+  function roll(dir) {
+    // 빠르게 여러 칸을 넘기면 나가던 숫자는 바로 치우고, 지금 숫자만 밀어냅니다
+    var all = vb.querySelectorAll('span'), old = all[all.length - 1], s = document.createElement('span');
+    for (var i = 0; i < all.length - 1; i++) all[i].remove();
+    s.textContent = String(value);
+    vb.appendChild(s);
+    if (rm || !s.animate) { if (old) old.remove(); return; }
+    s.animate([{ transform: 'translateY(' + (dir * 22) + 'px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 300, easing: 'cubic-bezier(.34,1.5,.64,1)' });
+    if (old) old.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateY(' + (-dir * 22) + 'px)', opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' }).onfinish = function () { old.remove(); };
+  }
+  function setValue(v) {
+    v = Math.max(0, Math.min(N, v));
+    if (v === value) return;
+    var dir = v > value ? 1 : -1;
+    value = v;
+    lights();
+    roll(dir);
+  }
+  function paint() { kb.style.setProperty('--u463-ang', ang.toFixed(2) + 'deg'); }
+  function frame() {
+    raf = 0;
+    if (!root.isConnected) return;
+    var k = snappy ? 1100 : 340, c = snappy ? 60 : 19;
+    for (var i = 0; i < 4; i++) { var a = k * (target - ang) - c * vel; vel += a / 240; ang += vel / 240; }
+    paint();
+    if (Math.abs(target - ang) < 0.02 && Math.abs(vel) < 0.05) { ang = target; vel = 0; paint(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function go(t, fast) {
+    target = t; snappy = !!fast;
+    if (rm) { ang = t; vel = 0; paint(); return; }
+    if (!raf) raf = requestAnimationFrame(frame);
+  }
+  // 눈금 사이에서는 가운데에 붙어 있다가 반을 넘으면 다음 눈금으로 빠르게 넘어가는 자석 곡선
+  function detent(raw) {
+    var n = Math.round((raw - A0) / STEP), c = A0 + n * STEP, off = (raw - c) / (STEP / 2);
+    var m = Math.sign(off) * Math.pow(Math.abs(off), 2.4);
+    return { n: n, a: c + m * STEP / 2 };
+  }
+  function angleAt(e) {
+    var r = kb.getBoundingClientRect();
+    return Math.atan2(e.clientX - (r.left + r.width / 2), -(e.clientY - (r.top + r.height / 2))) * 180 / Math.PI;
+  }
+  kb.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;
+    drag = { last: angleAt(e), raw: target };
+    try { kb.setPointerCapture(e.pointerId); } catch (er) { /* 무시 */ }
+  });
+  kb.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var a = angleAt(e), d = a - drag.last;
+    if (d > 180) d -= 360; else if (d < -180) d += 360;
+    drag.last = a;
+    drag.raw = Math.max(A0 - 24, Math.min(-A0 + 24, drag.raw + d));
+    // 양 끝을 넘겨 돌리면 고무처럼 조금만 따라갑니다
+    var raw = drag.raw < A0 ? A0 + (drag.raw - A0) * 0.3 : drag.raw > -A0 ? -A0 + (drag.raw + A0) * 0.3 : drag.raw;
+    var dt = detent(Math.max(A0, Math.min(-A0, raw)));
+    setValue(dt.n);
+    go(raw < A0 || raw > -A0 ? raw : dt.a, true);
+  });
+  function up() {
+    if (!drag) return;
+    drag = null;
+    go(A0 + value * STEP, false);
+  }
+  kb.addEventListener('pointerup', up);
+  kb.addEventListener('pointercancel', up);
+  kb.addEventListener('keydown', function (e) {
+    var k = e.key, v = value;
+    if (k === 'ArrowRight' || k === 'ArrowUp') v += 1;
+    else if (k === 'ArrowLeft' || k === 'ArrowDown') v -= 1;
+    else if (k === 'PageUp') v += 2;
+    else if (k === 'PageDown') v -= 2;
+    else if (k === 'Home') v = 0;
+    else if (k === 'End') v = N;
+    else return;
+    e.preventDefault();
+    setValue(v);
+    go(A0 + value * STEP, false);
+  });
+  lights();
+  paint();
+})();
+</script>

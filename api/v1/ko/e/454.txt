@@ -1,0 +1,136 @@
+<!-- Lucian UX/UI Prompt #454 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#454 -->
+<!--
+Element: 에이전트 작업 단계
+ID: 454 · Category: 로딩·진행 · Tags: ai, agent, steps, progress, timeline, spinner
+What it does: AI 에이전트가 일하는 순서를 세로 목록으로 보여 줍니다. 파일 읽기 → 계획 세우기 → 코드 수정 → 테스트 실행이 차례로 돌다가 체크로 톡 바뀌고, 그때마다 단계를 잇는 선이 아래로 차오르며 오른쪽에 결과가 붙습니다. 다 끝나면 아래 줄이 ‘완료’ 요약으로 바뀌고, ↻로 다시 돌려 볼 수 있습니다.
+How to use it: 끝까지 지켜본 뒤 ↻를 눌러 다시 돌려 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#454
+-->
+<style>
+.u454{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u454-c{position:relative;width:282px;padding:9px 0 0;border-radius:18px;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2));box-shadow:0 0 0 1px var(--ux-line-2),0 16px 34px -20px var(--ux-shadow-strong),0 2px 6px -3px var(--ux-shadow)}
+.u454-l{position:relative;margin:0;padding:0 16px;list-style:none}
+.u454-tr{position:absolute;left:26px;top:19px;width:1.5px;height:114px;border-radius:2px;background:var(--ux-line-2);overflow:hidden}
+.u454-tr i{position:absolute;inset:0;background:var(--ux-mint);transform-origin:50% 0;transform:scaleY(var(--u454-p,0));transition:transform .6s cubic-bezier(.5,0,.2,1)}
+.u454 .u454-l:focus{outline:none}
+.u454-s{position:relative;display:flex;align-items:center;gap:12px;height:38px}
+.u454-ic{position:relative;flex:none;width:21px;height:21px;border-radius:50%;background:var(--ux-surface);background:light-dark(var(--ux-surface),var(--ux-surface-2))}
+.u454-ic>*{position:absolute;left:50%;top:50%;border-radius:50%;transition:opacity .25s var(--ux-ease),transform .5s cubic-bezier(.34,1.7,.5,1)}
+.u454-d{width:9px;height:9px;margin:-4.5px;box-shadow:inset 0 0 0 1.5px var(--ux-ink-3);opacity:.7}
+.u454-sp{width:17px;height:17px;margin:-8.5px;border:2px solid var(--ux-accent-soft);border-top-color:var(--ux-accent);opacity:0;transform:scale(.4);animation:u454-spin .7s linear infinite}
+@keyframes u454-spin{to{rotate:360deg}}
+.u454-ck{width:21px;height:21px;margin:-10.5px;display:grid;place-items:center;background:var(--ux-mint);color:var(--ux-surface);color:light-dark(#FFFFFF,var(--ux-page));opacity:0;transform:scale(.3)}
+.u454-ck svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.u454-ck path{stroke-dasharray:18;stroke-dashoffset:18;transition:stroke-dashoffset .35s var(--ux-ease) .12s}
+.u454-s[data-s="run"] .u454-d,.u454-s[data-s="done"] .u454-d{opacity:0;transform:scale(.3)}
+.u454-s[data-s="run"] .u454-sp{opacity:1;transform:none}
+.u454-s[data-s="done"] .u454-ck{opacity:1;transform:none}
+.u454-s[data-s="done"] .u454-ck path{stroke-dashoffset:0}
+.u454-t{flex:1;min-width:0;font-size:14px;font-weight:500;color:var(--ux-ink-3);white-space:nowrap;transition:color .35s var(--ux-ease)}
+.u454-s[data-s="run"] .u454-t{color:var(--ux-ink-3);background:linear-gradient(100deg,var(--ux-ink-3) 0 36%,var(--ux-ink) 50%,var(--ux-ink-3) 64% 100%);background-size:280% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:u454-sh 1.5s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes u454-sh{to{background-position:0 0}}
+.u454-s[data-s="done"] .u454-t{color:var(--ux-ink)}
+.u454-m{flex:none;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ux-ink-3);opacity:0;transform:translateX(6px);transition:opacity .3s var(--ux-ease),transform .5s cubic-bezier(.3,1.5,.5,1)}
+.u454-s[data-s="done"] .u454-m{opacity:1;transform:none;transition-delay:.15s}
+.u454-m .p{color:var(--ux-mint)}
+.u454-m .n{color:var(--ux-danger)}
+.u454-f{position:relative;display:flex;align-items:center;gap:10px;height:48px;margin-top:7px;padding:0 10px 0 16px;border-top:1px solid var(--ux-line)}
+.u454-fi{position:relative;flex:none;width:21px;height:21px}
+.u454-fi>*{position:absolute;inset:0;margin:auto;transition:opacity .25s var(--ux-ease),transform .5s cubic-bezier(.34,1.7,.5,1)}
+.u454-pu{width:7px;height:7px;border-radius:50%;background:var(--ux-accent);box-shadow:0 0 0 0 var(--ux-accent-soft);animation:u454-pulse 1.4s ease-out infinite}
+@keyframes u454-pulse{0%{box-shadow:0 0 0 0 var(--ux-accent-soft)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.u454-ok{width:21px;height:21px;fill:none;stroke:var(--ux-mint);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4) rotate(-30deg)}
+.u454-fx{flex:1;min-width:0;display:grid;font-size:13.5px}
+.u454-fx>span{grid-area:1/1;display:flex;align-items:baseline;gap:6px;white-space:nowrap;transition:opacity .3s var(--ux-ease),transform .45s var(--ux-ease),filter .3s var(--ux-ease)}
+.u454-fx b{font-weight:600}
+.u454-fx small{font-size:12.5px;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u454-fw b{font-weight:500;color:var(--ux-ink-2)}
+.u454-fd{opacity:0;transform:translateY(8px);filter:blur(3px)}
+.u454-re{flex:none;width:30px;height:30px;padding:0;border:0;border-radius:9px;display:grid;place-items:center;background:none;color:var(--ux-ink-3);opacity:0;transform:scale(.6) rotate(-90deg);visibility:hidden;transition:opacity .25s var(--ux-ease),transform .5s cubic-bezier(.34,1.6,.5,1),background-color .15s,color .15s,visibility 0s linear .5s}
+.u454-re:hover{background:var(--ux-surface-2);background:light-dark(var(--ux-surface-2),var(--ux-surface-3));color:var(--ux-ink)}
+.u454-re svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;transition:transform .5s var(--ux-ease)}
+.u454-re:active svg{transform:rotate(-120deg)}
+.u454 .u454-re:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u454.is-done .u454-pu{opacity:0;transform:scale(0)}
+.u454.is-done .u454-ok{opacity:1;transform:none}
+.u454.is-done .u454-fw{opacity:0;transform:translateY(-8px);filter:blur(3px)}
+.u454.is-done .u454-fd{opacity:1;transform:none;filter:none}
+.u454.is-done .u454-re{opacity:1;transform:none;visibility:visible;transition-delay:.2s,.2s,0s,0s,0s}
+.u454-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u454">
+  <div class="u454-c">
+    <i class="u454-tr" aria-hidden="true"><i></i></i>
+    <ol class="u454-l" aria-label="작업 단계">
+      <li class="u454-s" data-s="wait"><span class="u454-ic" aria-hidden="true"><i class="u454-d"></i><i class="u454-sp"></i><span class="u454-ck"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span></span><span class="u454-t">파일 읽기</span><span class="u454-m">파일 3개</span></li>
+      <li class="u454-s" data-s="wait"><span class="u454-ic" aria-hidden="true"><i class="u454-d"></i><i class="u454-sp"></i><span class="u454-ck"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span></span><span class="u454-t">계획 세우기</span><span class="u454-m">4단계</span></li>
+      <li class="u454-s" data-s="wait"><span class="u454-ic" aria-hidden="true"><i class="u454-d"></i><i class="u454-sp"></i><span class="u454-ck"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span></span><span class="u454-t">코드 수정</span><span class="u454-m"><span class="p">+24</span> <span class="n">−8</span></span></li>
+      <li class="u454-s" data-s="wait"><span class="u454-ic" aria-hidden="true"><i class="u454-d"></i><i class="u454-sp"></i><span class="u454-ck"><svg viewBox="0 0 24 24"><path d="m6 12.5 4 4 8-9"/></svg></span></span><span class="u454-t">테스트 실행</span><span class="u454-m">12개 통과</span></li>
+    </ol>
+    <div class="u454-f">
+      <span class="u454-fi" aria-hidden="true"><i class="u454-pu"></i><svg class="u454-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2"/><path d="m8 12.3 2.8 2.8L16.2 9.6"/></svg></span>
+      <span class="u454-fx"><span class="u454-fw"><b>작업 중</b><small class="u454-el"></small></span><span class="u454-fd" aria-hidden="true"><b>완료</b><small class="u454-tot"></small></span></span>
+      <button type="button" class="u454-re" aria-label="다시 실행" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v3.8h3.8"/></svg></button>
+    </div>
+  </div>
+  <p class="u454-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var list = root.querySelector('.u454-l'), steps = [].slice.call(root.querySelectorAll('.u454-s')), fill = root.querySelector('.u454-tr i');
+  var el = root.querySelector('.u454-el'), tot = root.querySelector('.u454-tot'), re = root.querySelector('.u454-re');
+  var fw = root.querySelector('.u454-fw'), fd = root.querySelector('.u454-fd'), live = root.querySelector('.u454-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { sec: '{s}초', total: '{s}초 동안 작업', done: '작업을 마쳤어요', stepDone: ' 완료', stepRun: ' 진행 중' };
+  var START = 350, STEP = 1150, WORK = 980;
+  var gen = 0, t0 = 0, tick = 0;
+  function later(fn, ms) { var g = gen; setTimeout(function () { if (root.isConnected && g === gen) fn(); }, rm ? 0 : ms); }
+  function label(i) { return steps[i].querySelector('.u454-t').textContent; }
+  function setStep(i, s) {
+    steps[i].dataset.s = s;
+    if (s === 'run') { steps[i].setAttribute('aria-current', 'step'); live.textContent = label(i) + T.stepRun; }
+    else steps[i].removeAttribute('aria-current');
+    if (s === 'done') live.textContent = label(i) + T.stepDone;
+  }
+  // 잇는 선은 지금 돌고 있는 단계의 동그라미까지 차오릅니다
+  function setFill(k) { fill.style.setProperty('--u454-p', (k / (steps.length - 1)).toFixed(3)); }
+  function secs() { return Math.max(1, Math.round((Date.now() - t0) / 1000)); }
+  function run() {
+    gen += 1;
+    clearInterval(tick);
+    root.classList.remove('is-done');
+    fw.removeAttribute('aria-hidden'); fd.setAttribute('aria-hidden', 'true');
+    re.tabIndex = -1;
+    steps.forEach(function (s, i) { setStep(i, 'wait'); });
+    setFill(0);
+    t0 = Date.now();
+    el.textContent = T.sec.replace('{s}', 0);
+    var g = gen;
+    tick = setInterval(function () { if (!root.isConnected || g !== gen) { clearInterval(tick); return; } el.textContent = T.sec.replace('{s}', Math.floor((Date.now() - t0) / 1000)); }, 1000);
+    steps.forEach(function (s, i) {
+      later(function () { setStep(i, 'run'); setFill(i); }, START + i * STEP);
+      later(function () { setStep(i, 'done'); if (i === steps.length - 1) setFill(i); }, START + i * STEP + WORK);
+    });
+    later(function () {
+      clearInterval(tick);
+      tot.textContent = '· ' + T.total.replace('{s}', rm ? 5 : secs());
+      root.classList.add('is-done');
+      fd.removeAttribute('aria-hidden'); fw.setAttribute('aria-hidden', 'true');
+      re.tabIndex = 0;
+      if (document.activeElement === list) re.focus({ preventScroll: true });
+      live.textContent = T.done;
+    }, START + (steps.length - 1) * STEP + WORK + 220);
+  }
+  // 다시 실행하면 버튼이 숨으므로 초점을 목록에 맡겨 두었다가, 끝나면 버튼으로 돌려줍니다
+  re.addEventListener('click', function () {
+    if (!root.classList.contains('is-done')) return;
+    var had = document.activeElement === re;
+    run();
+    if (had) { list.tabIndex = -1; list.focus({ preventScroll: true }); }
+  });
+  run();
+})();
+</script>

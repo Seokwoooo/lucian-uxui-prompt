@@ -1,0 +1,116 @@
+<!-- Lucian UX/UI Prompt #460 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#460 -->
+<!--
+Element: Gooey menu
+ID: 460 · Category: Buttons · Tags: fab, gooey, speed-dial, menu, svg-filter, spring
+What it does: Press the floating + button and a soft blob stretches like a droplet, then splits off into four action buttons (photo, camera, voice memo, file) as the + turns into an ×. Close it or pick an action and the buttons get sucked back in stickily and merge into one again.
+How to use it: Press + to open it, then pick an action
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#460
+-->
+<style>
+.u460{position:relative;width:340px;height:300px}
+.u460-defs{position:absolute;width:0;height:0;overflow:hidden}
+.u460-st{position:absolute;left:170px;top:190px;width:0;height:0}
+.u460-sh{position:absolute;left:-140px;top:-140px;width:280px;height:280px;filter:drop-shadow(0 10px 14px var(--ux-shadow));pointer-events:none}
+.u460-goo{position:absolute;inset:0}
+.u460-bb{position:absolute;left:140px;top:140px;width:52px;height:52px;margin:-26px;border-radius:50%;background:var(--ux-accent);transform:translate(var(--u460-tx,0px),var(--u460-ty,0px)) scale(var(--u460-sc,.5));transition:transform .5s cubic-bezier(.55,-.35,.4,1);transition-delay:calc((3 - var(--u460-i,0)) * 35ms)}
+.u460-bb.is-fab{width:62px;height:62px;margin:-31px;transform:none;transition:none}
+.u460.is-open .u460-bb:not(.is-fab){--u460-sc:1;transition:transform .7s cubic-bezier(.3,1.45,.45,1);transition-delay:calc(var(--u460-i,0) * 45ms)}
+.u460.is-open .u460-bb.is-hov{--u460-sc:1.12;transition:transform .45s cubic-bezier(.34,1.6,.5,1)}
+.u460-ic{position:absolute;left:0;top:0;width:0;height:0}
+.u460-a{position:absolute;left:-26px;top:-26px;width:52px;height:52px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:none;color:var(--ux-accent-ink);opacity:0;visibility:hidden;transform:translate(var(--u460-tx,0px),var(--u460-ty,0px)) scale(.5);transition:transform .5s cubic-bezier(.55,-.35,.4,1),opacity .14s var(--ux-ease),visibility 0s linear .5s;transition-delay:calc((3 - var(--u460-i,0)) * 35ms),0s,0s}
+.u460.is-open .u460-a{opacity:1;visibility:visible;transform:translate(var(--u460-tx,0px),var(--u460-ty,0px));transition:transform .7s cubic-bezier(.3,1.45,.45,1),opacity .25s var(--ux-ease),visibility 0s;transition-delay:calc(var(--u460-i,0) * 45ms),calc(var(--u460-i,0) * 45ms + .16s),0s}
+.u460-a svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.u460 .u460-a:focus-visible,.u460 .u460-fab:focus-visible{outline:2px solid var(--ux-accent);outline-offset:4px}
+.u460-fab{position:absolute;left:-31px;top:-31px;width:62px;height:62px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:none;color:var(--ux-accent-ink)}
+.u460-fab svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;transition:transform .55s cubic-bezier(.34,1.6,.5,1)}
+.u460.is-open .u460-fab svg{transform:rotate(135deg)}
+.u460-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u460">
+  <svg class="u460-defs" aria-hidden="true" focusable="false"><filter class="u460-f" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="9" result="b"/><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -11" result="g"/><feComposite in="SourceGraphic" in2="g" operator="atop"/></filter></svg>
+  <div class="u460-st">
+    <div class="u460-sh" aria-hidden="true">
+      <div class="u460-goo"><i class="u460-bb" style="--u460-i:0"></i><i class="u460-bb" style="--u460-i:1"></i><i class="u460-bb" style="--u460-i:2"></i><i class="u460-bb" style="--u460-i:3"></i><i class="u460-bb is-fab"></i></div>
+    </div>
+    <button type="button" class="u460-fab" aria-label="Create" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+    <div class="u460-ic" role="group" aria-label="Create options">
+      <button type="button" class="u460-a" style="--u460-i:0" aria-label="Photo" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="3.5"/><circle cx="9" cy="10" r="1.7"/><path d="m4.5 17.5 4.6-4.6a1.5 1.5 0 0 1 2.1 0l1.8 1.8M13 14.7l2.1-2.1a1.5 1.5 0 0 1 2.1 0l2.8 2.8"/></svg></button>
+      <button type="button" class="u460-a" style="--u460-i:1" aria-label="Camera" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A2.5 2.5 0 0 1 6.5 6h1.3l1.4-2h5.6l1.4 2h1.3A2.5 2.5 0 0 1 20 8.5v8a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 16.5z"/><circle cx="12" cy="12.4" r="3.4"/></svg></button>
+      <button type="button" class="u460-a" style="--u460-i:2" aria-label="Voice memo" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></button>
+      <button type="button" class="u460-a" style="--u460-i:3" aria-label="File" tabindex="-1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7.5A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></button>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var q = function (s) { return root.querySelector(s); };
+  var fab = q('.u460-fab'), group = q('.u460-ic'), filt = q('.u460-f'), goo = q('.u460-goo'), fabBlob = q('.u460-bb.is-fab');
+  var blobs = [].slice.call(root.querySelectorAll('.u460-bb:not(.is-fab)')), acts = [].slice.call(root.querySelectorAll('.u460-a'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u460' + Math.random().toString(36).slice(2, 7);
+  filt.id = uid + 'g';
+  var gooT = 0;
+  function gooOn(v) {
+    clearTimeout(gooT);
+    if (v) goo.style.filter = 'url(#' + uid + 'g)';
+    else gooT = setTimeout(function () { if (root.isConnected && !open) goo.style.filter = ''; }, rm ? 0 : 900);
+  }
+  group.id = uid + 'm';
+  fab.setAttribute('aria-controls', group.id);
+  var R = 94, open = false;
+  [-157.5, -112.5, -67.5, -22.5].forEach(function (deg, i) {
+    var a = deg * Math.PI / 180, x = (Math.cos(a) * R).toFixed(1) + 'px', y = (Math.sin(a) * R).toFixed(1) + 'px';
+    acts[i].dataset.x = x; acts[i].dataset.y = y;
+  });
+  function squish(k) {
+    if (rm || !fabBlob.animate) return;
+    fabBlob.animate([{ transform: 'scale(1)' }, { transform: 'scale(' + k + ')', offset: .3 }, { transform: 'scale(1.06)', offset: .65 }, { transform: 'scale(1)' }], { duration: 560, easing: 'ease-out' });
+  }
+  function setOpen(v, focusFab) {
+    if (open === v) return;
+    open = v;
+    gooOn(v);
+    root.classList.toggle('is-open', v);
+    fab.setAttribute('aria-expanded', v ? 'true' : 'false');
+    [blobs, acts].forEach(function (list) {
+      list.forEach(function (el, i) {
+        el.style.setProperty('--u460-tx', v ? acts[i].dataset.x : '0px');
+        el.style.setProperty('--u460-ty', v ? acts[i].dataset.y : '0px');
+      });
+    });
+    acts.forEach(function (b) { b.tabIndex = v ? 0 : -1; });
+    blobs.forEach(function (b) { b.classList.remove('is-hov'); });
+    squish(v ? 0.86 : 0.9);
+    if (!v && focusFab) fab.focus({ preventScroll: true });
+  }
+  fab.addEventListener('click', function () { setOpen(!open); });
+  acts.forEach(function (b, i) {
+    var on = function () { if (open) blobs[i].classList.add('is-hov'); }, off = function () { blobs[i].classList.remove('is-hov'); };
+    b.addEventListener('pointerenter', on);
+    b.addEventListener('pointerleave', off);
+    b.addEventListener('focus', on);
+    b.addEventListener('blur', off);
+    b.addEventListener('click', function () {
+      if (!open) return;
+      var had = document.activeElement === b;
+      if (!rm && blobs[i].animate) blobs[i].animate([{ transform: 'translate(' + b.dataset.x + ',' + b.dataset.y + ') scale(1.1)' }, { transform: 'translate(' + b.dataset.x + ',' + b.dataset.y + ') scale(1.28)' }, { transform: 'translate(' + b.dataset.x + ',' + b.dataset.y + ') scale(1)' }], { duration: 260, easing: 'ease-out' });
+      setTimeout(function () { if (root.isConnected) setOpen(false, had); }, rm ? 0 : 200);
+    });
+  });
+  root.addEventListener('keydown', function (e) {
+    if (!open) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); setOpen(false, true); return; }
+    var i = acts.indexOf(document.activeElement);
+    if (/^Arrow(Left|Up|Right|Down)$/.test(e.key)) {
+      e.preventDefault();
+      var d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1;
+      acts[i < 0 ? (d > 0 ? 0 : 3) : (i + d + 4) % 4].focus({ preventScroll: true });
+    }
+  });
+  root.addEventListener('focusout', function (e) { if (open && e.relatedTarget && !root.contains(e.relatedTarget)) setOpen(false); });
+  root.addEventListener('pointerdown', function (e) { if (open && !e.target.closest('button')) setOpen(false); });
+})();
+</script>

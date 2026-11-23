@@ -166,6 +166,8 @@ svg{display:block}
 .g-stage[data-theme]{background:var(--ux-page)}
 .g-fit{position:absolute;left:50%;top:50%;width:max-content;transform:translate(-50%,-50%);transform-origin:50% 50%;pointer-events:none}
 .g-fit>.ux{pointer-events:auto}
+/* 갤러리가 카드·무대에 거는 짧은 변수(--h, --h2, --d)가 요소 안으로 흘러들지 않게 끊습니다(요소의 var(--d, 기본값)이 기본값을 쓰도록) */
+.g-fit{--h:initial;--h2:initial;--d:initial}
 /* 폭을 컨테이너에 맞추는 요소는 420px 상자 가운데에 놓습니다(배율은 상자 크기로 맞춥니다) */
 .g-fit.is-fluid{display:flex;align-items:center;justify-content:center;width:420px}
 .g-fit.is-fluid>.ux{flex-shrink:0}
@@ -204,9 +206,25 @@ svg{display:block}
 @keyframes g-pop{0%{transform:scale(.6)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
 
 /* 버튼 줄: Claude · Codex · 코드 복사. 누른 자리에서 "복사됨"으로 바뀌었다가 돌아옵니다 */
-.g-acts{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
-.g-cb{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;height:38px;padding:0 8px;border-radius:9px;background:var(--g-btn);color:var(--g-ink-2);font-size:13px;font-weight:500;white-space:nowrap;transition:color .15s var(--g-std),background-color .15s var(--g-std),transform .4s var(--ux-spring)}
-.g-cb:hover{color:var(--g-ink);background:var(--g-btn-h)}
+/* 카드 아래 막대: 왼쪽 고르기(Claude·Codex·코드) + 가운데 문구 + 오른쪽 복사 버튼 */
+.g-acts{flex:none;display:flex;align-items:center;gap:6px;height:44px;padding:4px;border-radius:12px;background:var(--g-btn);border:1px solid var(--g-line)}
+.g-pick{flex:none;display:flex;gap:2px;padding:2px;border-radius:9px;background:var(--g-btn)}
+.g-pk{width:32px;height:30px;border-radius:7px;display:grid;place-items:center;color:var(--g-ink-2);opacity:.45;transition:opacity .15s var(--g-std),background-color .2s var(--g-std),transform .4s var(--ux-spring)}
+.g-pk:hover{opacity:.8}
+.g-pk:active{transform:scale(.9)}
+.g-pk[aria-checked="true"]{opacity:1;background:var(--g-btn-h);color:var(--g-ink);box-shadow:inset 0 0 0 1px var(--g-line)}
+.g-pk svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.g-pk .g-logo-claude,.g-pk .g-logo-codex{width:16px;height:16px;stroke:none}
+.g-pk .g-logo-claude{fill:#D97757}
+.g-pk .g-logo-codex{fill:var(--g-ink)}
+.g-pick-t{flex:1;min-width:0;height:100%;padding:0 4px 0 6px;text-align:left;font-size:13px;font-weight:500;color:var(--g-ink);white-space:nowrap;overflow:hidden;cursor:pointer}
+.g-pick-t span{display:block;overflow:hidden;text-overflow:ellipsis}
+.g-pick-t.is-swap span{animation:g-swap .38s var(--ux-spring)}
+@keyframes g-swap{from{opacity:0;transform:translateY(7px)}}
+.g-cb{--g-cta:#16151B;--g-cta-ink:#fff;flex:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:0;height:34px;padding:0 13px;border-radius:9px;background:var(--g-cta);color:var(--g-cta-ink);font-size:12.5px;font-weight:600;white-space:nowrap;transition:background-color .2s var(--g-std),color .2s var(--g-std),transform .4s var(--ux-spring)}
+:root[data-theme="dark"] .g-cb{--g-cta:#F5F2EC;--g-cta-ink:#16151B}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .g-cb{--g-cta:#F5F2EC;--g-cta-ink:#16151B}}
+.g-cb:hover{filter:brightness(1.06)}
 .g-cb:active{transform:scale(.96)}
 .g-cb span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .g-cb svg{flex:none;width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
@@ -215,7 +233,7 @@ svg{display:block}
 .g-cb .g-logo-claude{fill:#D97757}
 .g-cb .g-logo-codex{fill:var(--g-ink)}
 .g-cb .g-ok{display:none}
-.g-cb.is-copied{color:var(--g-ink)}
+.g-cb.is-copied{background:#34D399;color:#062016}
 .g-cb.is-copied .g-icn{display:none}
 .g-cb.is-copied .g-ok{display:block;animation:g-pop .4s var(--ux-spring)}
 .g-cb.is-busy{color:var(--g-ink-3);pointer-events:none}

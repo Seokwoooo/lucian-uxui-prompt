@@ -1,0 +1,228 @@
+<!-- Lucian UX/UI Prompt #469 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#469 -->
+<!--
+Element: 페이지 넘김
+ID: 469 · Category: 카드·콘텐츠 · Tags: page-flip, booklet, 3d, page-curl, drag, illustration, spring
+What it does: 사진을 붙여 만든 작은 제주 여행 노트입니다. 오른쪽 쪽에 커서를 올리면 모서리가 살짝 들리고, 누르거나 왼쪽으로 끌면 종이가 둥글게 휘어지며 넘어갑니다. 넘기는 동안 종이의 굽은 면에 음영이 지고 아래 쪽에는 그림자가 드리우며, 끄는 만큼 따라오다 놓으면 가까운 쪽으로 사뿐히 내려앉습니다. 왼쪽 쪽을 누르면 앞으로 돌아갑니다.
+How to use it: 오른쪽 쪽을 누르거나 왼쪽으로 끌어 넘겨 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#469
+-->
+<style>
+.u469{position:relative;width:340px;height:300px;display:grid;place-items:center}
+.u469-bk{position:relative;width:264px;height:172px}
+.u469-cv{position:absolute;inset:-5px -6px -6px -6px;border-radius:9px;background:#2F7A72;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12),0 22px 36px -18px var(--ux-shadow-strong),0 3px 8px -3px var(--ux-shadow)}
+.u469-cv::after{content:"";position:absolute;left:50%;top:-1px;bottom:-2px;width:8px;margin-left:-4px;border-radius:2px;background:#245F59}
+.u469-pg,.u469-lf{position:absolute;top:0;width:132px;height:172px}
+.u469-pg{overflow:hidden}
+.u469-pg.l{left:0;border-radius:4px 0 0 4px;box-shadow:-1.5px 1.5px 0 -.5px #E7E1D3,-3px 3px 0 -1px #F4EFE4}
+.u469-pg.r{left:132px;border-radius:0 4px 4px 0;box-shadow:1.5px 1.5px 0 -.5px #E7E1D3,3px 3px 0 -1px #F4EFE4}
+.u469-lf{left:132px;z-index:20;visibility:hidden;pointer-events:none}
+.u469-lf.is-on{visibility:visible}
+.u469-s{position:absolute;left:0;top:0;width:22px;height:172px;transform-origin:0 50%}
+.u469-f{position:absolute;top:0;bottom:0;left:-.5px;right:-.5px;overflow:hidden}
+.u469-f.b{transform:scaleX(-1);visibility:hidden}
+.u469-s.is-b .u469-f{visibility:hidden}
+.u469-s.is-b .u469-f.b{visibility:visible}
+.u469-f>.u469-pc{left:calc(var(--u469-o) + .5px)}
+.u469-sd{position:absolute;inset:0;background:#000;opacity:var(--u469-d,0);pointer-events:none}
+.u469-pc{position:absolute;top:0;width:132px;height:172px;display:flex;flex-direction:column;align-items:center;padding-top:16px;background:#FFFDF8;background:light-dark(#FFFDF8,#262732);color:var(--ux-ink)}
+.u469-pc.r{background-image:linear-gradient(90deg,rgba(60,40,10,.13),rgba(60,40,10,0) 16%)}
+.u469-pc.l{background-image:linear-gradient(270deg,rgba(60,40,10,.13),rgba(60,40,10,0) 16%)}
+.u469-ph{position:relative;display:block;padding:3px;border-radius:4px;background:#FFFFFF;box-shadow:0 1px 2px rgba(40,30,10,.18),0 4px 10px -6px rgba(40,30,10,.35);transform:rotate(var(--u469-r,0deg))}
+.u469-ph svg{display:block;width:100px;height:70px;border-radius:2px}
+.u469-tp{position:absolute;left:50%;top:-6px;width:34px;height:11px;margin-left:-17px;background:var(--u469-t);opacity:.82;transform:rotate(calc(var(--u469-r,0deg) * -2.5));clip-path:polygon(0 8%,6% 0,12% 10%,18% 0,24% 8%,100% 0,94% 50%,100% 100%,88% 92%,82% 100%,76% 90%,0 100%,5% 50%)}
+.u469-pc b{margin-top:13px;font-size:12.5px;font-weight:720;letter-spacing:-.02em}
+.u469-pc small{margin-top:3px;font-size:10px;color:var(--ux-ink-3);white-space:nowrap}
+.u469-pc em{position:absolute;bottom:9px;font-style:normal;font-size:9px;font-weight:650;color:var(--ux-ink-3);font-variant-numeric:tabular-nums}
+.u469-pc.l em{left:12px}
+.u469-pc.r em{right:12px}
+.u469-cs{position:absolute;top:0;width:132px;height:172px;opacity:0;pointer-events:none}
+.u469-cs.r{left:132px;background:linear-gradient(90deg,rgba(20,10,0,.32),rgba(20,10,0,0) 70%)}
+.u469-cs.l{left:0;background:linear-gradient(270deg,rgba(20,10,0,.32),rgba(20,10,0,0) 70%)}
+.u469-hit{position:absolute;top:0;z-index:40;width:132px;height:172px;padding:0;border:0;background:none;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none}
+.u469-hit:disabled{cursor:default}
+.u469-prev{left:0;border-radius:4px 0 0 4px}
+.u469-next{left:132px;border-radius:0 4px 4px 0}
+.u469 .u469-hit:focus-visible{outline:2px solid var(--ux-accent);outline-offset:3px}
+.u469-src{display:none}
+.u469-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u469">
+  <div class="u469-bk" role="group" aria-label="제주 여행 노트">
+    <i class="u469-cv"></i>
+    <div class="u469-pg l"></div>
+    <div class="u469-pg r"></div>
+    <i class="u469-cs r"></i><i class="u469-cs l"></i>
+    <button type="button" class="u469-hit u469-prev" aria-label="이전 쪽" disabled></button>
+    <button type="button" class="u469-hit u469-next" aria-label="다음 쪽"></button>
+  </div>
+  <div class="u469-src" aria-hidden="true">
+    <div class="u469-pc l"><span class="u469-ph" style="--u469-r:-2deg"><i class="u469-tp" style="--u469-t:#9FE0C8"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#CFE6FF"/><circle cx="78" cy="17" r="7" fill="#FFD56B"/><g fill="#FFFFFF" opacity=".9"><ellipse cx="18" cy="17" rx="9" ry="3"/><ellipse cx="25" cy="14.5" rx="6" ry="3"/></g><path d="M0 60 26 28c4-5 9-6 13-2l12 10c4-3 9-3 13 0l36 22v12H0z" fill="#7E9C86"/><path d="M26 28c4-5 9-6 13-2l5 4-5 2-4-3-4 4-4-2-6 4z" fill="#FFFFFF"/><path d="M0 63c22-9 44-9 62-3s28 3 38-1v11H0z" fill="#557F62"/><g fill="#3F6A4D"><path d="M12 62l4-9 4 9z"/><path d="M19 61l3-7 3 7z"/><path d="M84 61l4-9 4 9z"/></g></svg></span><b>한라산</b><small>새벽 다섯 시, 영실 코스</small><em>1</em></div>
+    <div class="u469-pc r"><span class="u469-ph" style="--u469-r:2.2deg"><i class="u469-tp" style="--u469-t:#FFC6D3"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#FFF0D6"/><path d="M4 12c24 8 50 6 92-4" fill="none" stroke="#8B5E3C" stroke-width="2.6" stroke-linecap="round"/><g fill="#4E9E5A"><path d="M24 15c-5-8-15-7-18-1 6 4 12 5 18 1z"/><path d="M50 14c2-9 12-11 17-6-4 6-10 8-17 6z"/><path d="M78 9c-3-7 2-12 8-12 1 6-2 10-8 12z"/><path d="M40 17c-1 8-9 12-15 9 2-6 8-9 15-9z"/></g><path d="M34 18v8M58 15v6M76 11v20" stroke="#6E4A2C" stroke-width="1.4"/><circle cx="34" cy="38" r="12.5" fill="#FF9A2E"/><circle cx="58" cy="33" r="11.5" fill="#FFA63A"/><circle cx="76" cy="48" r="10.5" fill="#FF922A"/><g fill="#FFD08F" opacity=".9"><circle cx="29.5" cy="33.5" r="3.2"/><circle cx="54" cy="29" r="2.8"/><circle cx="72.5" cy="44.5" r="2.6"/></g><g fill="#E07A12" opacity=".5"><circle cx="38" cy="43" r=".9"/><circle cx="33" cy="45" r=".8"/><circle cx="62" cy="38" r=".8"/><circle cx="79" cy="53" r=".8"/></g></svg></span><b>귤밭</b><small>한 바구니에 오천 원</small><em>2</em></div>
+    <div class="u469-pc l"><span class="u469-ph" style="--u469-r:1.8deg"><i class="u469-tp" style="--u469-t:#FFE08A"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#DDF2FF"/><path d="M10 36c6-6 16-6 22 0z" fill="#6BAE96"/><rect y="35" width="100" height="35" fill="#45CBC2"/><path d="M0 45h100v25H0z" fill="#2FA3C4"/><g stroke="#FFFFFF" stroke-width="1.3" fill="none" stroke-linecap="round" opacity=".85"><path d="M8 41q4-3 8 0t8 0"/><path d="M44 50q4-3 8 0t8 0"/><path d="M20 55q3-2 6 0"/></g><path d="M0 58c26-8 52-6 70-1s22 2 30 0v13H0z" fill="#F4E3BA"/><path d="M73 40l2-22h6l2 22z" fill="#FFFFFF"/><path d="M74.2 33.5h7.6l.4 4h-8.4zM75 24.5h6l.4 4h-6.8z" fill="#E5534B"/><rect x="74.5" y="14" width="7" height="5" rx="1" fill="#FFE07A"/><path d="M73.5 14l4.5-4 4.5 4z" fill="#E5534B"/></svg></span><b>협재 바다</b><small>물빛이 연둣빛이었다</small><em>3</em></div>
+    <div class="u469-pc r"><span class="u469-ph" style="--u469-r:-1.6deg"><i class="u469-tp" style="--u469-t:#B9D4FF"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#E4F2FF"/><g fill="#FFFFFF" opacity=".9"><ellipse cx="70" cy="14" rx="10" ry="3.2"/><ellipse cx="78" cy="11.5" rx="6" ry="3"/></g><path d="M0 38c30-8 66-8 100-2v34H0z" fill="#8FC266"/><g fill="#FFD93D"><circle cx="8" cy="40" r="3"/><circle cx="16" cy="37" r="3.4"/><circle cx="25" cy="40" r="3"/><circle cx="34" cy="36" r="3.4"/><circle cx="44" cy="39" r="3"/><circle cx="54" cy="35" r="3.4"/><circle cx="63" cy="38" r="3"/><circle cx="73" cy="35" r="3.4"/><circle cx="83" cy="38" r="3"/><circle cx="93" cy="36" r="3.4"/><circle cx="12" cy="45" r="2.6"/><circle cx="30" cy="44" r="2.6"/><circle cx="49" cy="43" r="2.6"/><circle cx="68" cy="43" r="2.6"/><circle cx="88" cy="43" r="2.6"/></g><g fill="#565A68"><rect x="-2" y="50" width="16" height="10" rx="4"/><rect x="13" y="48" width="18" height="12" rx="5"/><rect x="30" y="51" width="14" height="9" rx="4"/><rect x="43" y="48" width="19" height="12" rx="5"/><rect x="61" y="50" width="15" height="10" rx="4"/><rect x="75" y="47" width="18" height="13" rx="5"/><rect x="92" y="50" width="12" height="10" rx="4"/><rect x="4" y="59" width="20" height="12" rx="5"/><rect x="23" y="59" width="17" height="12" rx="5"/><rect x="39" y="59" width="21" height="12" rx="5"/><rect x="59" y="59" width="17" height="12" rx="5"/><rect x="75" y="59" width="22" height="12" rx="5"/></g><g fill="#7A7F90" opacity=".7"><circle cx="20" cy="51" r="1.2"/><circle cx="50" cy="51" r="1.2"/><circle cx="83" cy="50" r="1.2"/><circle cx="30" cy="62" r="1.2"/><circle cx="66" cy="62" r="1.2"/></g></svg></span><b>돌담길</b><small>바람이 정말 셌다</small><em>4</em></div>
+    <div class="u469-pc l"><span class="u469-ph" style="--u469-r:-2.4deg"><i class="u469-tp" style="--u469-t:#C9B8FF"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#FFB98C"/><rect width="100" height="20" fill="#FFA08F"/><circle cx="64" cy="33" r="9" fill="#FFE7B4"/><path d="M0 50c14-14 32-26 52-14 10-6 26-4 48 8v26H0z" fill="#6F5B8F"/><path d="M0 58c20-6 50-8 100-2v14H0z" fill="#5A4A78"/><g stroke="#F8EAD6" stroke-width="1.2" fill="none" stroke-linecap="round"><path d="M8 70c0-8 2-13 6-16"/><path d="M12 70c1-7 4-11 8-13"/><path d="M18 70c-1-6 0-10 3-13"/><path d="M80 70c0-7 2-12 6-15"/><path d="M85 70c1-6 3-10 7-12"/><path d="M90 70c-1-5 0-9 3-12"/></g></svg></span><b>새별오름</b><small>억새가 은빛으로 출렁</small><em>5</em></div>
+    <div class="u469-pc r"><span class="u469-ph" style="--u469-r:1.6deg"><i class="u469-tp" style="--u469-t:#9FE0C8"></i><svg viewBox="0 0 100 70"><rect width="100" height="70" fill="#C2E1FF"/><path d="M12 50q20-14 44-22" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><g transform="translate(56 18) rotate(-22) scale(1.25)"><path d="M21.6 12c0-.85-.75-1.4-1.6-1.4h-5.1L9.9 3.4H7.6l2.5 7.2H5.4L3.7 8.5H2.1l.95 3.5-.95 3.5h1.6l1.7-2.1h4.7l-2.5 7.2h2.3l5-7.2H20c.85 0 1.6-.55 1.6-1.4z" fill="#4659D9"/></g><g fill="#FFFFFF"><ellipse cx="16" cy="62" rx="16" ry="6"/><ellipse cx="34" cy="64" rx="14" ry="6"/><ellipse cx="70" cy="63" rx="18" ry="6"/><ellipse cx="92" cy="60" rx="12" ry="6"/></g></svg></span><b>집으로</b><small>다음엔 가을에 또</small><em>6</em></div>
+  </div>
+  <p class="u469-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var bk = root.querySelector('.u469-bk'), prev = root.querySelector('.u469-prev'), next = root.querySelector('.u469-next'), live = root.querySelector('.u469-live');
+  var pgL = root.querySelector('.u469-pg.l'), pgR = root.querySelector('.u469-pg.r'), csR = root.querySelector('.u469-cs.r'), csL = root.querySelector('.u469-cs.l');
+  var src = [].slice.call(root.querySelectorAll('.u469-src .u469-pc'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { pages: function (a, b, t) { return a + '–' + b + '쪽 · ' + t; } };
+  var PW = 132, N = 6, SW = PW / N, CURL = 11, PERSP = 820, LAST = src.length / 2 - 1, LIFT = 0.07;
+  function clone(n) { var c = src[n - 1].cloneNode(true); c.setAttribute('aria-hidden', 'true'); return c; }
+  function show(box, n) { box.textContent = ''; box.appendChild(clone(n)); }
+  // 넘기는 종이: 세로 띠 6개. 띠마다 앞 띠보다 조금 더 꺾어 종이가 둥글게 휘게 하고, 각 띠에 원근을 따로 줘서 3D 맥락 없이 그립니다
+  var lf = document.createElement('div');
+  lf.className = 'u469-lf';
+  var strips = [];
+  for (var i = 0; i < N; i++) {
+    var s = document.createElement('div'), f = document.createElement('div'), b = document.createElement('div');
+    s.className = 'u469-s'; f.className = 'u469-f'; b.className = 'u469-f b';
+    var df = document.createElement('i'), db = document.createElement('i');
+    df.className = db.className = 'u469-sd';
+    f.appendChild(df); b.appendChild(db);
+    s.appendChild(f); s.appendChild(b);
+    lf.appendChild(s);
+    strips.push({ el: s, f: f, b: b, df: df, db: db });
+  }
+  bk.insertBefore(lf, csR);
+  // 종이 한 장의 앞(오른쪽 쪽)과 뒤(왼쪽 쪽)를 띠마다 잘라 붙입니다
+  function mount(front, back) {
+    strips.forEach(function (st, i) {
+      var cf = clone(front), cb = clone(back);
+      cf.style.setProperty('--u469-o', -(i * SW) + 'px');
+      cb.style.setProperty('--u469-o', -((N - 1 - i) * SW) + 'px');
+      if (st.f.firstChild !== st.df) st.f.removeChild(st.f.firstChild);
+      if (st.b.firstChild !== st.db) st.b.removeChild(st.b.firstChild);
+      st.f.insertBefore(cf, st.df); st.b.insertBefore(cb, st.db);
+    });
+  }
+  var cur = 0, mode = '', p = 0, v = 0, t = 0, dir = 1, raf = 0, drag = null, flying = false;
+  function paint() {
+    var q = Math.max(0, Math.min(1, p)), d = -CURL * Math.sin(Math.PI * q) * dir;
+    var base = Math.max(-180, Math.min(0, -180 * q - d * (N - 1) * 0.5)), chain = 'perspective(' + PERSP + 'px) rotateY(' + base.toFixed(2) + 'deg)', a = base;
+    strips.forEach(function (st, i) {
+      if (i) { chain += ' translateX(' + SW + 'px) rotateY(' + d.toFixed(2) + 'deg)'; a += d; }
+      st.el.style.transform = chain;
+      var c = Math.cos(a * Math.PI / 180);
+      st.el.classList.toggle('is-b', c < 0);
+      // 앞면은 세울수록, 뒷면은 눕기 전까지 어둡습니다
+      st.df.style.setProperty('--u469-d', ((1 - c) * 0.2).toFixed(3));
+      st.db.style.setProperty('--u469-d', ((1 + c) * 0.2).toFixed(3));
+    });
+    var k = mode ? Math.sin(Math.PI * q) : 0;
+    csR.style.opacity = (k * (q < 0.5 ? 1 : 0.35)).toFixed(3);
+    csL.style.opacity = (k * (q > 0.5 ? 1 : 0.35)).toFixed(3);
+  }
+  function spread() { show(pgL, cur * 2 + 1); show(pgR, cur * 2 + 2); }
+  // 앞으로: 오른쪽 쪽을 들어 올리고 그 밑에는 다음 펼침의 오른쪽 쪽을 깔아 둡니다. 뒤로: 반대
+  function setup(m) {
+    if (mode) return mode === m;
+    if (m === 'fwd' && cur >= LAST || m === 'back' && cur <= 0) return false;
+    mode = m;
+    if (m === 'fwd') { mount(cur * 2 + 2, cur * 2 + 3); p = t = 0; dir = 1; }
+    else { mount(cur * 2, cur * 2 + 1); p = t = 1; dir = -1; }
+    v = 0;
+    paint();
+    lf.classList.add('is-on');
+    if (m === 'fwd') show(pgR, cur * 2 + 4); else show(pgL, cur * 2 - 1);
+    return true;
+  }
+  function teardown() {
+    var done = mode === 'fwd' ? p >= 1 : p <= 0;
+    if (done) cur += mode === 'fwd' ? 1 : -1;
+    spread();
+    lf.classList.remove('is-on');
+    mode = ''; flying = false;
+    csR.style.opacity = csL.style.opacity = 0;
+    prev.disabled = cur === 0;
+    next.disabled = cur === LAST;
+    if (done) say();
+  }
+  // 지금 펼친 두 쪽의 제목을 화면 읽기 프로그램에 알려 줍니다
+  function say() { var a = cur * 2 + 1; live.textContent = T.pages(a, a + 1, src[a - 1].querySelector('b').textContent + ', ' + src[a].querySelector('b').textContent); }
+  function frame() {
+    raf = 0;
+    if (!root.isConnected || !mode) return;
+    if (!drag) {
+      for (var i = 0; i < 4; i++) { var acc = 48 * (t - p) - 12.6 * v; v += acc / 240; p += v / 240; }
+      if (p > 1) { p = 1; v = -v * 0.2; }
+      if (p < 0) { p = 0; v = -v * 0.2; }
+      if (Math.abs(t - p) < 0.0015 && Math.abs(v) < 0.01) { p = t; v = 0; }
+    }
+    paint();
+    var rest = mode === 'fwd' ? 0 : 1;
+    if (!drag && p === t && (t === 0 || t === 1) && (flying || t === rest)) { teardown(); return; }
+    if (drag || p !== t) raf = requestAnimationFrame(frame);
+  }
+  function run() { if (!raf) raf = requestAnimationFrame(frame); }
+  function aim(to) { t = to; if (rm) { p = to; v = 0; paint(); frame(); return; } run(); }
+  function go(d) {
+    if (drag || flying) return;
+    if (!setup(d > 0 ? 'fwd' : 'back')) return;
+    flying = true;
+    if (mode === 'fwd') dir = 1; else dir = -1;
+    aim(d > 0 ? 1 : 0);
+  }
+  // 커서를 올리면 모서리가 살짝 들립니다
+  function hover(d, on) {
+    if (drag || flying || rm) return;
+    var m = d > 0 ? 'fwd' : 'back';
+    if (on) { if (setup(m)) aim(d > 0 ? LIFT : 1 - LIFT); }
+    else if (mode === m) aim(d > 0 ? 0 : 1);
+  }
+  function down(e, d) {
+    if (e.button !== 0 || flying) return;
+    if (!setup(d > 0 ? 'fwd' : 'back')) return;
+    var r = bk.getBoundingClientRect(), k = bk.offsetWidth / (r.width || 1);
+    drag = { d: d, x0: (e.clientX - r.left) * k - PW, k: k, left: r.left, p0: p, moved: false, lx: e.clientX, lt: performance.now(), v: 0 };
+    v = 0;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (er) { /* 무시 */ }
+    run();
+  }
+  function move(e) {
+    if (!drag) return;
+    var x = (e.clientX - drag.left) * drag.k - PW, now = performance.now();
+    if (Math.abs(x - drag.x0) > 4) drag.moved = true;
+    if (!drag.moved) return;
+    drag.v = drag.v * 0.5 + ((e.clientX - drag.lx) * drag.k / Math.max(1, now - drag.lt)) * 0.5;
+    drag.lx = e.clientX; drag.lt = now;
+    // 종이 끝이 손가락을 따라오도록, 끝 위치에서 넘김 정도를 거꾸로 구합니다
+    var edge = (drag.d > 0 ? PW : -PW) + (x - drag.x0);
+    p = Math.acos(Math.max(-1, Math.min(1, edge / PW))) / Math.PI;
+    paint();
+  }
+  function up() {
+    if (!drag) return;
+    var g = drag;
+    drag = null;
+    flying = true;
+    if (!g.moved) { aim(g.d > 0 ? 1 : 0); return; }
+    aim(p - g.v * 0.25 > 0.5 ? 1 : 0);
+  }
+  [prev, next].forEach(function (btn, k) {
+    var d = k ? 1 : -1;
+    btn.addEventListener('pointerenter', function () { hover(d, true); });
+    btn.addEventListener('pointerleave', function () { hover(d, false); });
+    btn.addEventListener('pointerdown', function (e) { down(e, d); });
+    btn.addEventListener('pointermove', move);
+    btn.addEventListener('pointerup', up);
+    btn.addEventListener('pointercancel', up);
+    // 키보드(Enter·Space)로 누른 경우만 click으로 넘깁니다. 포인터는 pointerup에서 처리했습니다
+    btn.addEventListener('click', function (e) { if (e.detail === 0) go(d); });
+  });
+  root.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+  });
+  spread();
+  say();
+})();
+</script>

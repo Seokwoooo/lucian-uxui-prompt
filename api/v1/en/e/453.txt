@@ -1,0 +1,94 @@
+<!-- Lucian UX/UI Prompt #453 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#453 -->
+<!--
+Element: Thinking text
+ID: 453 · Category: Loading & Progress · Tags: ai, thinking, shimmer, reasoning, disclosure, loading
+What it does: The “Thinking…” line an AI shows before it answers. A soft light sweeps across the words while the star beside them slowly turns and breathes. Tap it to expand and the thoughts stream in one line at a time; when it’s done it folds itself away and settles into a calm “Thought for 4s”. You can still tap it afterwards to read the thoughts again.
+How to use it: Tap “Thinking…” to expand it
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#453
+-->
+<style>
+.u453{position:relative;width:340px;height:300px}
+.u453-w{position:absolute;left:58px;width:250px;top:116px}
+.u453-h{display:inline-flex;align-items:center;gap:8px;height:34px;margin-left:-9px;padding:0 9px;border:0;border-radius:11px;background:none;font-size:15px;font-weight:500;letter-spacing:-.01em;color:var(--ux-ink-2);transition:background-color .2s var(--ux-ease),color .2s var(--ux-ease)}
+.u453-h:hover{background:color-mix(in srgb,var(--ux-ink) 6%,transparent);color:var(--ux-ink)}
+.u453 .u453-h:focus-visible{outline:2px solid var(--ux-accent);outline-offset:1px}
+.u453-ic{flex:none;width:18px;height:18px;color:var(--ux-accent);transition:color .5s var(--ux-ease)}
+.u453-ic svg{display:block;width:18px;height:18px;fill:currentColor}
+.u453.is-done .u453-ic{color:var(--ux-ink-3)}
+.u453-tx{display:grid}
+.u453-tx>span{grid-area:1/1;white-space:nowrap;transition:opacity .4s var(--ux-ease),transform .5s var(--ux-ease),filter .4s var(--ux-ease)}
+.u453-a{color:var(--ux-ink-3);background:linear-gradient(100deg,var(--ux-ink-3) 0 36%,var(--ux-ink) 50%,var(--ux-ink-3) 64% 100%);background-size:280% 100%;background-position:100% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:u453-sh 1.9s cubic-bezier(.45,0,.55,1) infinite}
+@keyframes u453-sh{to{background-position:0 0}}
+.u453-b{opacity:0;transform:translateY(7px);filter:blur(3px)}
+.u453.is-done .u453-a{opacity:0;transform:translateY(-7px);filter:blur(3px)}
+.u453.is-done .u453-b{opacity:1;transform:none;filter:none}
+.u453-cv{flex:none;width:15px;height:15px;margin-left:-2px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;opacity:.75;transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.u453-h[aria-expanded="true"] .u453-cv{transform:rotate(90deg)}
+.u453-pn{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s cubic-bezier(.3,.9,.3,1)}
+.u453-h[aria-expanded="true"]+.u453-pn{grid-template-rows:1fr}
+.u453-in{min-height:0;overflow:hidden}
+.u453-ls{margin:6px 0 2px 8px;padding:1px 0 1px 17px;border-left:1.5px solid var(--ux-line-2);opacity:0;transform:translateY(-4px);transition:opacity .3s var(--ux-ease),transform .45s var(--ux-ease)}
+.u453-h[aria-expanded="true"]+.u453-pn .u453-ls{opacity:1;transform:none;transition-delay:.06s}
+.u453-ln{display:grid;grid-template-rows:0fr;opacity:0;transform:translateY(5px);filter:blur(3px);transition:grid-template-rows .45s var(--ux-ease),opacity .45s var(--ux-ease) .08s,transform .55s cubic-bezier(.3,1.4,.5,1) .08s,filter .45s var(--ux-ease) .08s}
+.u453-ln.is-on{grid-template-rows:1fr;opacity:1;transform:none;filter:none}
+.u453-ln>span{min-height:0;overflow:hidden}
+.u453-ln>span>span{display:block;padding:3px 0;font-size:13.5px;line-height:20px;color:var(--ux-ink-2);transition:color .5s var(--ux-ease)}
+.u453.is-done .u453-ln>span>span{color:var(--ux-ink-3)}
+.u453-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u453">
+  <div class="u453-w">
+    <button type="button" class="u453-h" aria-expanded="false">
+      <span class="u453-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 1.6c.8 5.3 5.1 9.6 10.4 10.4-5.3.8-9.6 5.1-10.4 10.4C11.2 17.1 6.9 12.8 1.6 12 6.9 11.2 11.2 6.9 12 1.6Z"/></svg></span>
+      <span class="u453-tx"><span class="u453-a">Thinking…</span><span class="u453-b" aria-hidden="true">Thought for 4s</span></span>
+      <svg class="u453-cv" viewBox="0 0 24 24" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg>
+    </button>
+    <div class="u453-pn">
+      <div class="u453-in">
+        <div class="u453-ls">
+          <p class="u453-ln"><span><span>Do the east and west on separate days</span></span></p>
+          <p class="u453-ln"><span><span>Rain on day two, so keep it indoors</span></span></p>
+          <p class="u453-ln"><span><span>Finish the last day near the airport</span></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="u453-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var h = root.querySelector('.u453-h'), pn = root.querySelector('.u453-pn'), ic = root.querySelector('.u453-ic svg');
+  var a = root.querySelector('.u453-a'), b = root.querySelector('.u453-b'), live = root.querySelector('.u453-live');
+  var lns = [].slice.call(root.querySelectorAll('.u453-ln'));
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var uid = 'u453' + Math.random().toString(36).slice(2, 7);
+  pn.id = uid;
+  h.setAttribute('aria-controls', uid);
+  var T = { done: 'Thought for 4 seconds' };
+  var SPIN = 2400, THINK = 4000;
+  var spin = null;
+  function later(fn, ms) { setTimeout(function () { if (root.isConnected) fn(); }, rm ? 0 : ms); }
+  function setOpen(v) { h.setAttribute('aria-expanded', v ? 'true' : 'false'); }
+  h.addEventListener('click', function () { setOpen(h.getAttribute('aria-expanded') !== 'true'); });
+  h.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && h.getAttribute('aria-expanded') === 'true') { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+  });
+  if (!rm && ic.animate) spin = ic.animate([{ transform: 'rotate(0deg) scale(1)' }, { transform: 'rotate(180deg) scale(.78)' }, { transform: 'rotate(360deg) scale(1)' }], { duration: SPIN, iterations: Infinity });
+  [450, 1500, 2650].forEach(function (t, i) { later(function () { lns[i].classList.add('is-on'); }, t); });
+  later(function () {
+    root.classList.add('is-done');
+    a.setAttribute('aria-hidden', 'true');
+    b.removeAttribute('aria-hidden');
+    setOpen(false);
+    live.textContent = T.done;
+    if (spin) {
+      var p = ((spin.currentTime || 0) % SPIN) / SPIN, deg = p * 360, s = p < .5 ? 1 - .44 * p : .78 + .44 * (p - .5);
+      spin.cancel();
+      ic.animate([{ transform: 'rotate(' + deg + 'deg) scale(' + s + ')' }, { transform: 'rotate(' + (Math.ceil((deg + 25) / 90) * 90) + 'deg) scale(1)' }], { duration: 750, easing: 'cubic-bezier(.3,1.45,.5,1)', fill: 'forwards' });
+    }
+  }, THINK);
+})();
+</script>

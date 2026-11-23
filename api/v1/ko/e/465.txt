@@ -1,0 +1,161 @@
+<!-- Lucian UX/UI Prompt #465 · MIT License (c) 2026 Seokwoooo · https://lucianlabs.dev/uxui-prompt/#465 -->
+<!--
+Element: 끈 당겨 켜기
+ID: 465 · Category: 토글·선택 · Tags: pull-cord, lamp, switch, illustration, spring, physics, glow
+What it does: 천장에 매달린 겨자색 펜던트 조명과 그 아래 늘어진 당김 끈입니다. 끝의 나무 구슬을 아래로 끌어당겼다 놓으면 끈이 스프링처럼 튀어 오르며 흔들리고, 전등갓도 살짝 따라 흔들립니다. 그 순간 전구가 두어 번 깜빡이다 따뜻한 빛을 아래로 쏟아 내고, 다시 당기면 빛이 천천히 꺼집니다. 그림 속 색은 테마와 상관없이 같습니다.
+How to use it: 끈 끝의 구슬을 아래로 당겼다 놓아 보세요
+Footprint: fixed size, square
+Needs: tokens.css (the --ux-* theme tokens and the .ux base). Map the tokens to the project's theme variables.
+Live demo: https://lucianlabs.dev/uxui-prompt/#465
+-->
+<style>
+.u465{position:relative;width:340px;height:300px}
+.u465-sv{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.u465-ln{opacity:0;transition:opacity .45s var(--ux-ease)}
+.u465.is-on .u465-ln{opacity:1;animation:u465-flick .62s linear}
+@keyframes u465-flick{0%{opacity:0}12%{opacity:.75}22%{opacity:.15}34%{opacity:.9}46%{opacity:.45}62%,100%{opacity:1}}
+.u465-cd{fill:none;stroke:var(--ux-ink-3);stroke-width:1.6;stroke-linecap:round}
+.u465-pc{fill:none;stroke:#8B7A63;stroke-width:1.5;stroke-linecap:round}
+.u465-in{transition:fill .35s var(--ux-ease)}
+.u465.is-on .u465-in{fill:#FFE6A3}
+.u465-bu{transition:fill .35s var(--ux-ease)}
+.u465.is-on .u465-bu{fill:#FFF9E3}
+.u465-bd{position:absolute;left:178px;top:206px;width:36px;height:44px;padding:0;border:0;border-radius:12px;background:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transform-origin:50% 0;transform:translate(var(--u465-bx,0px),var(--u465-by,0px)) rotate(var(--u465-br,0deg))}
+.u465-bd:active{cursor:grabbing}
+.u465 .u465-bd:focus-visible{outline:2px solid var(--ux-accent);outline-offset:2px}
+.u465-bd svg{position:absolute;left:50%;top:0;width:18px;height:28px;margin-left:-9px;overflow:visible;filter:drop-shadow(0 3px 3px rgba(60,30,10,.28));transition:transform .3s var(--ux-spring)}
+.u465-bd:hover svg{transform:scale(1.08)}
+.u465-bd.is-tick svg{animation:u465-tick .28s cubic-bezier(.34,1.8,.5,1)}
+@keyframes u465-tick{40%{transform:scale(1.18,.9)}}
+.u465-live{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+</style>
+<div class="ux u465">
+  <svg class="u465-sv" viewBox="0 0 340 300" aria-hidden="true">
+    <defs>
+      <linearGradient id="u465-cone" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFD58A" stop-opacity=".62"/><stop offset=".55" stop-color="#FFC56E" stop-opacity=".2"/><stop offset="1" stop-color="#FFB85C" stop-opacity="0"/></linearGradient>
+      <radialGradient id="u465-glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE3A0" stop-opacity=".75"/><stop offset=".4" stop-color="#FFC977" stop-opacity=".28"/><stop offset="1" stop-color="#FFB45C" stop-opacity="0"/></radialGradient>
+      <radialGradient id="u465-pool" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFCF80" stop-opacity=".42"/><stop offset="1" stop-color="#FFCF80" stop-opacity="0"/></radialGradient>
+      <linearGradient id="u465-sh" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6C861"/><stop offset=".6" stop-color="#E4A436"/><stop offset="1" stop-color="#C98722"/></linearGradient>
+      <linearGradient id="u465-br" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9C7432"/><stop offset=".4" stop-color="#E8C77F"/><stop offset="1" stop-color="#8E672A"/></linearGradient>
+    </defs>
+    <g transform="translate(20 0)">
+    <g class="u465-lamp">
+      <g class="u465-ln">
+        <path d="M98 130h104l92 176H6z" fill="url(#u465-cone)"/>
+        <ellipse cx="150" cy="282" rx="128" ry="18" fill="url(#u465-pool)"/>
+        <circle cx="150" cy="132" r="92" fill="url(#u465-glow)"/>
+      </g>
+      <path class="u465-cd" d="M150 -40V58"/>
+      <rect x="141" y="54" width="18" height="16" rx="3" fill="url(#u465-br)"/>
+      <path d="M86 128c0-34 26-60 64-60s64 26 64 60z" fill="url(#u465-sh)"/>
+      <path d="M141 70.5c3 1.6 15 1.6 18 0" fill="none" stroke="#9C6E22" stroke-opacity=".45" stroke-width="2" stroke-linecap="round"/>
+      <path d="M100 112c4-20 20-34 40-38" fill="none" stroke="#FFF2C8" stroke-opacity=".55" stroke-width="4" stroke-linecap="round"/>
+      <ellipse class="u465-in" cx="150" cy="128" rx="64" ry="7" fill="#7E5A22"/>
+      <circle class="u465-bu" cx="150" cy="132" r="12" fill="#EEE8DA"/>
+      <path d="M145 130c2-3 8-3 10 0" fill="none" stroke="#C9A35F" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+    </g>
+    <path class="u465-pc" d="M176 126V206"/>
+    </g>
+  </svg>
+  <button type="button" class="u465-bd" role="switch" aria-checked="false" aria-label="조명">
+    <svg viewBox="0 0 18 28" aria-hidden="true"><path d="M9 1.5c1.2 0 2 .9 2 2.2v1.6c3.6 1.6 5.6 5.6 5.6 10.4 0 6-3.4 10.3-7.6 10.3S1.4 21.7 1.4 15.7c0-4.8 2-8.8 5.6-10.4V3.7c0-1.3.8-2.2 2-2.2z" fill="#B97A42"/><path d="M5.2 11.5c-1 1.6-1.4 3.4-1.3 5.4" fill="none" stroke="#E8B884" stroke-width="1.6" stroke-linecap="round"/><path d="M12.6 9.6c1.4 1.4 2.2 3.4 2.4 5.6M3.4 19.4c1.6.8 3.4 1.2 5.6 1.2" fill="none" stroke="#8E5A2C" stroke-width=".9" stroke-linecap="round" opacity=".6"/></svg>
+  </button>
+  <p class="u465-live" role="status"></p>
+</div>
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  var bd = root.querySelector('.u465-bd'), pc = root.querySelector('.u465-pc'), lamp = root.querySelector('.u465-lamp'), live = root.querySelector('.u465-live');
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var T = { on: '조명을 켰어요', off: '조명을 껐어요' };
+  var uid = 'u465' + Math.random().toString(36).slice(2, 7);
+  root.querySelectorAll('svg [id]').forEach(function (n) {
+    var o = n.id;
+    n.id = uid + o;
+    root.querySelectorAll('[fill="url(#' + o + ')"]').forEach(function (m) { m.setAttribute('fill', 'url(#' + uid + o + ')'); });
+  });
+  // 고정점: 전등은 천장(150,-40)에 매달려 있고, 끈은 소켓(176,126)에서 구슬 꼭대기(176,206)까지 늘어집니다
+  var PX = 150, PY = -40, AX = 176, AY = 126, RX = 176, RY = 206, PULL = 26;
+  function S() { return { v: 0, t: 0, s: 0 }; }
+  var by = S(), bx = S(), lm = S();
+  var on = false, drag = null, raf = 0, ticked = false;
+  function paint() {
+    var th = lm.v * Math.PI / 180, c = Math.cos(th), s = Math.sin(th);
+    var ax = PX + (AX - PX) * c - (AY - PY) * s, ay = PY + (AX - PX) * s + (AY - PY) * c;
+    var ex = RX + bx.v, ey = RY + by.v;
+    // 끈은 흔들리는 반대쪽으로 살짝 휘어 보입니다
+    var mx = (ax + ex) / 2 - bx.s * 0.012, my = (ay + ey) / 2;
+    pc.setAttribute('d', 'M' + ax.toFixed(2) + ' ' + ay.toFixed(2) + 'Q' + mx.toFixed(2) + ' ' + my.toFixed(2) + ' ' + ex.toFixed(2) + ' ' + ey.toFixed(2));
+    lamp.setAttribute('transform', 'rotate(' + lm.v.toFixed(3) + ' ' + PX + ' ' + PY + ')');
+    bd.style.setProperty('--u465-bx', bx.v.toFixed(2) + 'px');
+    bd.style.setProperty('--u465-by', by.v.toFixed(2) + 'px');
+    bd.style.setProperty('--u465-br', (-Math.atan2(ex - mx, ey - my) * 180 / Math.PI).toFixed(2) + 'deg');
+  }
+  function step(p, k, c, dt) { var a = k * (p.t - p.v) - c * p.s; p.s += a * dt; p.v += p.s * dt; }
+  function frame() {
+    raf = 0;
+    if (!root.isConnected) return;
+    for (var i = 0; i < 4; i++) {
+      if (!drag) { step(by, 210, 6.5, 1 / 240); step(bx, 34, 1.6, 1 / 240); }
+      step(lm, 26, 2.2, 1 / 240);
+    }
+    paint();
+    var calm = [by, bx, lm].every(function (p) { return Math.abs(p.v - p.t) < 0.02 && Math.abs(p.s) < 0.05; });
+    if (drag || !calm) raf = requestAnimationFrame(frame);
+    else { by.v = bx.v = lm.v = 0; paint(); }
+  }
+  function run() { if (!raf) raf = requestAnimationFrame(frame); }
+  function toggle() {
+    on = !on;
+    root.classList.toggle('is-on', on);
+    bd.setAttribute('aria-checked', String(on));
+    live.textContent = on ? T.on : T.off;
+  }
+  function release(fromY, sway) {
+    if (rm) { by.v = bx.v = lm.v = 0; by.s = bx.s = lm.s = 0; paint(); return; }
+    by.v = fromY; by.s = -fromY * 6;
+    bx.s += sway; lm.s += sway * 0.05 + (fromY > 0 ? 3 : 0);
+    run();
+  }
+  bd.addEventListener('pointerdown', function (e) {
+    if (e.button !== 0) return;
+    var r = root.getBoundingClientRect();
+    drag = { x: e.clientX, y: e.clientY, k: root.offsetWidth / (r.width || 1), bx: bx.v, moved: false };
+    ticked = false;
+    by.s = bx.s = 0;
+    try { bd.setPointerCapture(e.pointerId); } catch (er) { /* 무시 */ }
+    run();
+  });
+  bd.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = (e.clientX - drag.x) * drag.k, dy = (e.clientY - drag.y) * drag.k;
+    if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+    // 아래로는 당길수록 무거워지고, 위로는 거의 올라가지 않습니다
+    by.v = dy > 0 ? 64 * (1 - Math.exp(-dy / 64)) : dy * 0.12;
+    bx.v = Math.max(-26, Math.min(26, drag.bx + dx * 0.45));
+    if (!ticked && by.v > PULL) { ticked = true; bd.classList.remove('is-tick'); void bd.offsetWidth; bd.classList.add('is-tick'); }
+    paint();
+  });
+  var skip = false;
+  function up() {
+    if (!drag) return;
+    var d = drag;
+    drag = null;
+    if (!d.moved) return;
+    // 끌고 난 뒤 따라오는 click은 한 번 건너뜁니다
+    skip = true;
+    setTimeout(function () { skip = false; }, 0);
+    if (by.v > PULL) toggle();
+    release(by.v, bx.v * -2 + (by.v > PULL ? 40 : 0));
+  }
+  bd.addEventListener('pointerup', up);
+  bd.addEventListener('pointercancel', up);
+  // 클릭(또는 Enter·Space)은 끈을 한 번 당겼다 놓는 것과 같습니다
+  bd.addEventListener('click', function () {
+    if (skip) { skip = false; return; }
+    toggle();
+    release(40, 46);
+  });
+  paint();
+})();
+</script>
